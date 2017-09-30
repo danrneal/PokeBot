@@ -1,0 +1,12 @@
+tokens:					## list of bot_tokens [token1, token2, ...]
+bot_client_ids:		 	## list of bot client_ids [client_id1, client_id2, ...]
+feed_channels:			## channel id that pokealarm posts to [channel1, channel2, ...]
+command_channels:		## channel id that users input subscription commands [channel1, channel2, ...]
+areas:					## list of areas [area1, area2, ...] [optional]
+alert_role:				## role name of users who can use the bot (default = '@everyone')
+map_role:				## role for features like map inlay and geocoding [optional]
+muted_role:				## role for muted users [optional]
+gmaps_api_key:			## gmaps api keys with geocoding and static map enabled [optional but required for map inlay and neighborhood data] [key1, key2, ...]
+geocode1:				## primary geocode for premium users [optional]
+geocode2:				## fallback geocode for premium users if primary geocode fails [optional]
+all_areas:				## set to True to subscribe to all areas by default (default = False)

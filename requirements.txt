@@ -1,0 +1,5 @@
+asyncio
+discord.py
+geocoder
+configargparse
+bs4

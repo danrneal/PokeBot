@@ -1,0 +1,6 @@
+*.pyc
+config/*
+!config/config.ini.example
+__pycache__
+dicts/users.json
+null
