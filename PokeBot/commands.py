@@ -16,7 +16,7 @@ args = get_args()
 dicts = Dicts()
 
 
-async def donate(client, message, bot_number):
+async def donate(bot_number, message):
     em = discord.Embed(
         title="DONATION INFORMATION",
         description=(
@@ -37,7 +37,7 @@ async def donate(client, message, bot_number):
     await message.delete()
 
 
-async def status(client, message, bot_number):
+async def status(client, bot_number, message):
     await asyncio.sleep(bot_number * 0.1)
     delete_msg = await message.channel.send((
         'PokeBot {} (of {}) standing by.'
@@ -54,7 +54,7 @@ async def status(client, message, bot_number):
         await delete_msg.delete()
 
 
-async def commands(client, message, bot_number):
+async def commands(bot_number, message):
     await dicts.bots[bot_number]['out_queue'].put((
         1, dicts.bots[bot_number]['count'], {
             'destination': message.channel,
@@ -65,7 +65,7 @@ async def commands(client, message, bot_number):
     await message.delete()
 
 
-async def dex(client, message, bot_number):
+async def dex(bot_number, message):
     pokemon = message.content.lower().split()[1]
     if pokemon in dicts.pokemon:
         dex_number = dicts.pokemon.index(pokemon) + 1
@@ -254,8 +254,10 @@ async def dex(client, message, bot_number):
         await dicts.bots[bot_number]['out_queue'].put((
             1, dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
-                'msg': ("That's not any pokemon I know of, check your " +
-                        "spelling `{}`").format(message.author.display_name)
+                'msg': (
+                    "`{}` is not any pokemon I know of, check your spelling " +
+                    "`{}`"
+                ).format(pokemon.title(), message.author.display_name)
             }
         ))
         dicts.bots[bot_number]['count'] += 1
@@ -378,149 +380,172 @@ async def _set(client, message, bot_number):
             dicts.count[bot_number] += 1
 
 
-async def delete(client, message, bot_number):
+async def delete(bot_number, message):
     msg = message.content.lower().replace('!delete ', '').replace(
         '!delete\n', '').replace('!remove ', '').replace(
         '!remove\n', '').replace('%', '').replace(
         'nidoran♀', 'nidoranf').replace('nidoran♂', 'nidoranm').replace(
         'mr. mime', 'mr.mime').replace(',\n', ',').replace('\n', ',').replace(
         ', ', ',').split(',')
-    if message.author.id not in dicts.users[bot_number]:
-        dicts.q[bot_number].put((1, dicts.count[bot_number], {
-            'destination': message.channel,
-            'msg': ("There is nothing to delete, `{}`, you don't have any " +
-                    "alerts set.").format(message.author.display_name)
-        }))
-        dicts.count[bot_number] += 1
+    if str(message.author.id) not in dicts.users[bot_number]['filters']:
+        await dicts.bots[bot_number]['out_queue'].put((
+            1, dicts.bots[bot_number]['count'], {
+                'destination': message.channel,
+                'msg': (
+                    "There is nothing to delete, `{}`, you don't have any " +
+                    "alerts set."
+                ).format(message.author.display_name)
+            }
+        ))
+        dicts.bots[bot_number]['count'] += 1
     else:
+        del_count = 0
         for command in msg:
-            error, chars, pokemon, genders = parse_command(command)
-            if error is True:
-                dicts.q[bot_number].put((1, dicts.count[bot_number], {
-                    'destination': message.channel,
-                    'msg': ('`{}`, this pokemon does not have that ' +
-                            'gender.').format(message.author.display_name)
-                }))
-                dicts.count[bot_number] += 1
-                continue
-            if 'all' in chars:
-                chars.remove('all')
-            if len(chars) > 0:
-                dicts.q[bot_number].put((1, dicts.count[bot_number], {
-                    'destination': message.channel,
-                    'msg': ('`{}`, your command has an unrecognized ' +
-                            'argument.').format(message.author.display_name)
-                }))
-                dicts.count[bot_number] += 1
-                continue
-            update = False
-            for poke in pokemon:
-                if poke in dicts.users[bot_number][message.author.id]['pokemon']:
-                    if len(pokemon) > 1:
-                        genders = get_default_genders(poke)
-                    for gender in genders:
-                        if gender in dicts.users[bot_number][
-                                message.author.id]['pokemon'][poke]:
-                            update = True
-                            dicts.users[bot_number][message.author.id][
-                                'pokemon'][poke].pop(gender)
-                    if len(dicts.users[bot_number][message.author.id][
-                            'pokemon'][poke]) == 0:
-                        dicts.users[bot_number][message.author.id][
-                            'pokemon'].pop(poke)
-            if (len(dicts.users[bot_number][message.author.id][
-                'pokemon']) == 0 and
-                ((args.all_areas is False and
-                  len(dicts.users[bot_number][message.author.id][
-                      'areas']) == 0) or
-                 (args.all_areas is True and
-                  len(dicts.users[bot_number][message.author.id][
-                      'areas']) == len(args.areas)))):
-                dicts.users[bot_number].pop(message.author.id)
-            if len(pokemon) > 1:
-                pokemon = 'pokemon'
-                gender = ''
-            else:
-                pokemon = pokemon[0].replace('nidoranf', 'nidoran♀').replace(
-                    'nidoranm', 'nidoran♂').replace(
-                        'mr.mime', 'mr. mime').title()
-                if (len(genders) == 1 and
-                    pokemon not in dicts.male_only and
-                    pokemon not in dicts.female_only and
-                        pokemon not in dicts.genderless):
-                    gender = ' `{}`'.format(genders[0].replace(
-                        'female', '♀').replace('male', '♂'))
+            if command not in dicts.pokemon and command != 'all':
+                await dicts.bots[bot_number]['out_queue'].put((
+                    1, dicts.bots[bot_number]['count'], {
+                        'destination': message.channel,
+                        'msg': (
+                            "{} is not any pokemon I know of, check your " +
+                            "spelling `{}`"
+                        ).format(command.title(), message.author.display_name)
+                    }
+                ))
+                dicts.bots[bot_number]['count'] += 1
+            elif command in dicts.pokemon:
+                pkmn_id = get_pkmn_id(command)
+                if pkmn_id in dicts.bots[bot_number]['filters'][
+                        str(message.author.id)]['pokemon_settings']['filters']:
+                    dicts.bots[bot_number]['filters'][
+                        str(message.author.id)]['pokemon_settings'][
+                            'filters'].pop(pkmn_id)
+                    del_count += 1
                 else:
-                    gender = ''
-            if update is True:
-                update_dicts(len(args.tokens))
-                dicts.q[bot_number].put((1, dicts.count[bot_number], {
-                    'destination': message.channel,
-                    'msg': ('`{}`, I will no longer alert you if a `{}`{} ' +
-                            'spawns.').format(
-                                message.author.display_name, pokemon, gender)
-                }))
-                dicts.count[bot_number] += 1
+                    await dicts.bots[bot_number]['out_queue'].put((
+                        1, dicts.bots[bot_number]['count'], {
+                            'destination': message.channel,
+                            'msg': (
+                                '`{}`, I was not previously alerting you if ' +
+                                'a(n) `{}` spawns.'
+                            ).format(
+                                message.author.display_name, command.title()
+                            )
+                        }
+                    ))
+                    dicts.bots[bot_number]['count'] += 1
             else:
-                dicts.q[bot_number].put((1, dicts.count[bot_number], {
+                if len(dicts.bots[bot_number]['filters'][
+                    str(message.author.id)]['pokemon_settings'][
+                        'filters']) > 0:
+                    dicts.bots[bot_number]['filters'][
+                        str(message.author.id)]['pokemon_settings'][
+                            'filters'] = {}
+                    del_count += len(dicts.bots[bot_number]['filters'][
+                        str(message.author.id)]['pokemon_settings'][
+                            'filters'])
+                else:
+                    await dicts.bots[bot_number]['out_queue'].put((
+                        1, dicts.bots[bot_number]['count'], {
+                            'destination': message.channel,
+                            'msg': (
+                                '`{}`, I was not previously alerting you of ' +
+                                'any pokemon spawns.'
+                            ).format(message.author.display_name)
+                        }
+                    ))
+                    dicts.bots[bot_number]['count'] += 1
+        if del_count > 0:
+            if (len(dicts.bots[bot_number]['filters'][str(message.author.id)][
+                    'pokemon_settings']['filters']) == 0 and
+                len(dicts.bots[bot_number]['filters'][str(message.author.id)][
+                    'raid_settings']['filters']) == 0 and
+                ((dicts.bots[bot_number]['filters'][str(message.author.id)][
+                    'areas'] == [] and
+                  args.all_areas is False) or
+                 (dicts.bots[bot_number]['filters'][str(message.author.id)][
+                     'areas'] == dicts.bots[bot_number]['geofences']))):
+                dicts.bots[bot_number]['filters'].pop(str(message.author.id))
+            update_dicts()
+            await dicts.bots[bot_number]['out_queue'].put((
+                1, dicts.bots[bot_number]['count'], {
                     'destination': message.channel,
-                    'msg': ('`{}`, I was not previously alerting you if a ' +
-                            '`{}`{} spawns.').format(
-                                message.author.display_name, pokemon, gender)
-                }))
-                dicts.count[bot_number] += 1
+                    'msg': (
+                        '`{}`, I have removed `{}` pokemon spawn filters.'
+                ).format(message.author.display_name, str(del_count))
+            }))
+            dicts.bots[bot_number]['count'] += 1
 
 
-async def pause(client, message, bot_number):
-    if message.author.id not in dicts.users[bot_number]:
-        dicts.q[bot_number].put((1, dicts.count[bot_number], {
-            'destination': message.channel,
-            'msg': ("There is nothing to pause, `{}`, I'm not alerting you " +
-                    "to any pokemon.").format(message.author.display_name)
-        }))
-        dicts.count[bot_number] += 1
-    elif dicts.users[bot_number][message.author.id]['paused'] is True:
-        dicts.q[bot_number].put((1, dicts.count[bot_number], {
-            'destination': message.channel,
-            'msg': 'Your alerts are already paused, `{}`.'.format(
-                message.author.display_name)
-        }))
-        dicts.count[bot_number] += 1
+async def pause(bot_number, message):
+    if str(message.author.id) not in dicts.users[bot_number]['filters']:
+        await dicts.bots[bot_number]['out_queue'].put((
+            1, dicts.bots[bot_number]['count'], {
+                'destination': message.channel,
+                'msg': (
+                    "There is nothing to pause, `{}`, I'm not alerting you " +
+                    "to any pokemon."
+                ).format(message.author.display_name)
+            }
+        ))
+        dicts.bots[bot_number]['count'] += 1
+    elif dicts.users[bot_number]['filters'][str(message.author.id)][
+            'paused'] is True:
+        await dicts.bots[bot_number]['out_queue'].put((
+            1, dicts.bots[bot_number]['count'], {
+                'destination': message.channel,
+                'msg': 'Your alerts are already paused, `{}`.'.format(
+                    message.author.display_name)
+            }
+        ))
+        dicts.bots[bot_number]['count'] += 1
     else:
-        dicts.users[bot_number][message.author.id]['paused'] = True
-        update_dicts(len(args.tokens))
-        dicts.q[bot_number].put((1, dicts.count[bot_number], {
-            'destination': message.channel,
-            'msg': 'Your alerts have been paused, `{}`.'.format(
-                message.author.display_name)
-        }))
-        dicts.count[bot_number] += 1
+        dicts.users[bot_number]['filters'][str(message.author.id)][
+            'paused'] = True
+        update_dicts()
+        await dicts.bots[bot_number]['out_queue'].put((
+            1, dicts.bots[bot_number]['count'], {
+                'destination': message.channel,
+                'msg': 'Your alerts have been paused, `{}`.'.format(
+                    message.author.display_name)
+            }
+        ))
+        dicts.bots[bot_number]['count'] += 1
 
 
-async def resume(client, message, bot_number):
-    if message.author.id not in dicts.users[bot_number]:
-        dicts.q[bot_number].put((1, dicts.count[bot_number], {
-            'destination': message.channel,
-            'msg': ("There is nothing to resume, `{}`, I'm not alerting you " +
-                    "to any pokemon.").format(message.author.display_name)
-        }))
-        dicts.count[bot_number] += 1
-    elif dicts.users[bot_number][message.author.id]['paused'] is False:
-        dicts.q[bot_number].put((1, dicts.count[bot_number], {
-            'destination': message.channel,
-            'msg': 'Your alerts were not previously paused, `{}`.'.format(
-                message.author.display_name)
-        }))
-        dicts.count[bot_number] += 1
+async def resume(bot_number, message):
+    if str(message.author.id) not in dicts.users[bot_number]['filters']:
+        await dicts.bots[bot_number]['out_queue'].put((
+            1, dicts.bots[bot_number]['count'], {
+                'destination': message.channel,
+                'msg': (
+                    "There is nothing to resume, `{}`, I'm not alerting you " +
+                    "to any pokemon."
+                ).format(message.author.display_name)
+            }
+        ))
+        dicts.bots[bot_number]['count'] += 1
+    elif dicts.users[bot_number]['filters'][str(message.author.id)][
+            'paused'] is False:
+        await dicts.bots[bot_number]['out_queue'].put((
+            1, dicts.bots[bot_number]['count'], {
+                'destination': message.channel,
+                'msg': 'Your alerts were not previously paused, `{}`.'.format(
+                    message.author.display_name)
+            }
+        ))
+        dicts.bots[bot_number]['count'] += 1
     else:
-        dicts.users[bot_number][message.author.id]['paused'] = False
-        update_dicts(len(args.tokens))
-        dicts.q[bot_number].put((1, dicts.count[bot_number], {
-            'destination': message.channel,
-            'msg': 'You alerts have been resumed, `{}`.'.format(
-                message.author.display_name)
-        }))
-        dicts.count[bot_number] += 1
+        dicts.users[bot_number]['filters'][str(message.author.id)][
+            'paused'] = False
+        update_dicts()
+        await dicts.bots[bot_number]['out_queue'].put((
+            1, dicts.bots[bot_number]['count'], {
+                'destination': message.channel,
+                'msg': 'You alerts have been resumed, `{}`.'.format(
+                    message.author.display_name)
+            }
+        ))
+        dicts.bots[bot_number]['count'] += 1
 
 
 async def pause_area(client, message, bot_number):
@@ -760,22 +785,25 @@ async def alerts(client, message, bot_number):
 
 async def areas(client, message, bot_number):
     areas = '__AVAILABLE AREAS__ (Your active areas are in **bold**.)\n\n'
-    for area in args.areas:
-        if (message.author.id in dicts.users[bot_number] and
-                area in dicts.users[bot_number][message.author.id]['areas']):
+    for area in dicts.bots[bot_number]['geofences']:
+        if (str(message.author.id) in dicts.bots[bot_number]['filters'] and
+                area in dicts.bots[bot_number]['areas']):
             areas += '**{}**, '.format(area.title())
         else:
-            areas += '{}, '.format(area.title())
+            areas += '{}, '.format(area.title())    
     areas = [areas[:-2]]
-    areas[0] += ('\n\nYou can change your settings by using `!pause ' +
-                 '[area]` or `!resume [area]` in #custom_filters')
+    areas[0] += (
+        '\n\nYou can change your settings by using `!pause [area]` or ' +
+        '`!resume [area]` in #custom_filters'
+    )
     while len(areas[-1]) > 2000:
         for areas_split in truncate(areas.pop()):
             areas.append(areas_split)
     for dm in areas:
-        dicts.q[bot_number].put((1, dicts.count[bot_number], {
-            'destination': discord.utils.get(
-                client.get_all_members(), id=message.author.id),
-            'msg': dm
-        }))
-        dicts.count[bot_number] += 1
+        await dicts.bots[bot_number]['out_queue'].put((
+            1, dicts.bots[bot_number]['count'], {
+                'destination': message.author,
+                'msg': dm
+            }
+        ))
+        dicts.bots[bot_number]['count'] += 1

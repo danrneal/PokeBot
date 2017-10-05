@@ -89,9 +89,9 @@ class Bot(discord.Client):
             elif (args.muted_role is not None and
                   len(set(dicts.bots[bot_number]['roles'][
                       args.muted_role]).intersection(set(after.roles))) > 0 and
-                  dicts.bots[bot_number][after.id]['filters'][
+                  dicts.bots[bot_number][str(after.id)]['filters'][
                       'paused'] is False):
-                dicts.bots[bot_number][after.id]['filters']['paused'] = True
+                dicts.bots[bot_number][str(after.id)]['filters']['paused'] = True
                 update_dicts()
                 await dicts.bots[bot_number]['out_queue'].put((
                     1, dicts.bots[bot_number]['count'], {
@@ -116,30 +116,29 @@ class Bot(discord.Client):
         bot_number = args.bot_client_ids.index(self.user.id)
         if isinstance(message.channel, discord.abc.GuildChannel) is True:
             if message.content.lower() == '!status':
-                await status(self, message, bot_number)
+                await status(self, bot_number, message)
             elif message.author.id % len(args.tokens) == bot_number:
                 if message.content.lower() in ['!commands', '!help']:
-                    await commands(self, message, bot_number)
+                    await commands(bot_number, message)
                 elif message.content.lower().startswith('!dex '):
-                    await dex(self, message, bot_number)
+                    await dex(bot_number, message)
                 elif message.content.lower() == '!donate':
-                    await donate(self, message, bot_number)
-##                elif message.channel.id in args.command_channels:
+                    await donate(bot_number, message)
+                elif message.channel.id in args.command_channels:
 ##                    if message.content.lower().startswith('!set '):
 ##                        await _set(self, message, bot_number)
-##                    elif message.content.lower().startswith(
-##                            ('!delete ', '!remove ')):
-##                        await delete(self, message, bot_number)
-##                    elif message.content.lower() in ['!pause', '!p']:
-##                        await pause(self, message, bot_number)
-##                    elif message.content.lower() in ['!resume', '!r']:
-##                        await resume(self, message, bot_number)
+                    if message.content.lower().startswith(
+                            ('!delete ', '!remove ')):
+                        await delete(bot_number, message)
+                    elif message.content.lower() in ['!pause', '!p']:
+                        await pause(bot_number, message)
+                    elif message.content.lower() in ['!resume', '!r']:
+                        await resume(bot_number, message)
 ##                    elif message.content.lower().startswith('!pause '):
 ##                        await pause_area(self, message, bot_number)
 ##                    elif message.content.lower().startswith('!resume '):
 ##                        await resume_area(self, message, bot_number)
 ##                    elif message.content.lower().startswith('!alerts'):
 ##                        await alerts(self, message, bot_number)
-##                    elif message.content.lower() == '!areas':
-##                        await areas(self, message, bot_number)
-##
+                    elif message.content.lower() == '!areas':
+                        await areas(self, message, bot_number)

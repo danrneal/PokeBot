@@ -8,6 +8,7 @@ import os
 import sys
 import geocoder
 import re
+from random import randint
 from datetime import datetime, timedelta
 from .DiscordAlarm import DiscordAlarm
 from .Filter import load_pokemon_section, Geofence, load_egg_section
@@ -20,7 +21,7 @@ dicts = Dicts()
 
 
 class Manager(object):
-    
+
     def __init__(self, name, locale, timezone, max_attempts, geofence_file,
                  filter_file, alarm_file):
         self.__name = str(name).lower()
@@ -277,9 +278,6 @@ class Manager(object):
         if len(self.__geofences) > 0 and pkmn['geofence'] == 'unknown':
             return
         pkmn['pkmn'] = name
-        seconds_left = (
-            pkmn['disappear_time'] - datetime.utcnow()
-        ).total_seconds()
         time_str = get_time_as_str(pkmn['disappear_time'], self.__timezone)
         iv = pkmn['iv']
         quick_id = pkmn['quick_id']
@@ -337,8 +335,6 @@ class Manager(object):
             return
         time_str = get_time_as_str(egg['raid_end'], self.__timezone)
         start_time_str = get_time_as_str(egg['raid_begin'], self.__timezone)
-        seconds_left = (egg['raid_begin'] - datetime.utcnow()).total_seconds()
-        gym_info = self.__gym_info.get(gym_id, {})
         egg.update({
             "gym_name": self.__gym_info.get(gym_id, {}).get('name', 'unknown'),
             "gym_description": self.__gym_info.get(gym_id, {}).get(
@@ -402,8 +398,6 @@ class Manager(object):
             return
         time_str = get_time_as_str(raid['raid_end'], self.__timezone)
         start_time_str = get_time_as_str(raid['raid_begin'], self.__timezone)
-        seconds_left = (raid_end - datetime.utcnow()).total_seconds()
-        gym_info = self.__gym_info.get(gym_id, {})
         raid.update({
             'pkmn': name,
             "gym_name": self.__gym_info.get(gym_id, {}).get('name', 'unknown'),

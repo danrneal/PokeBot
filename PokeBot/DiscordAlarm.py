@@ -103,8 +103,6 @@ class DiscordAlarm(Alarm):
         self.__max_attempts = max_attempts
         self.__avatar_url = settings.pop('avatar_url', "")
         self.__map = settings.pop('map', {})
-        self.__static_map_key = args.gmaps_keys[randint(0, len(
-            args.gmaps_keys) - 1)]
         self.__pokemon = self.create_alert_settings(
             settings.pop('pokemon', {}), self._defaults['pokemon'])
         self.__egg = self.create_alert_settings(
@@ -126,7 +124,8 @@ class DiscordAlarm(Alarm):
             'body': settings.pop('body', default['body']),
             'color': default['color'],
             'map': get_static_map_url(
-                settings.pop('map', self.__map), self.__static_map_key)
+                settings.pop('map', self.__map), args.gmaps_keys[randint(
+                    0, len(args.gmaps_keys) - 1)])
         }
         reject_leftover_parameters(settings, "'Alert level in Discord alarm.")
         return alert

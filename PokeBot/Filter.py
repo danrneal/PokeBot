@@ -139,7 +139,7 @@ class PokemonFilter(Filter):
         self.min_cp = int(settings.pop('min_cp', None) or default['min_cp'])
         self.max_cp = int(settings.pop('max_cp', None) or default['max_cp'])
         self.min_level = int(settings.pop('min_level', None) or
-                              default['min_level'])
+                             default['min_level'])
         self.max_level = int(settings.pop('max_level', None) or
                              default['max_level'])
         self.min_iv = float(settings.pop('min_iv', None) or default['min_iv'])
