@@ -16,7 +16,7 @@ args = get_args()
 dicts = Dicts()
 
 
-async def donate(client, message):
+async def donate(client, message, bot_number):
     em = discord.Embed(
         title="DONATION INFORMATION",
         description=(
@@ -27,39 +27,42 @@ async def donate(client, message):
         ),
         color=int('0x85bb65', 16)
     )
-    dicts.q[bot_number].put((1, dicts.count[bot_number], {
-        'destination': message.channel,
-        'embed': em
-    }))
-    dicts.count[bot_number] += 1
-    await client.delete_message(message)
+    await dicts.bots[bot_number]['out_queue'].put((
+        1, dicts.bots[bot_number]['count'], {
+            'destination': message.channel,
+            'embed': em
+        }
+    ))
+    dicts.bots[bot_number]['count'] += 1
+    await message.delete()
 
 
 async def status(client, message, bot_number):
     await asyncio.sleep(bot_number * 0.1)
-    delete = await client.send_message(
-        message.channel, 'PokeBot {} (of {}) standing by.'.format(
-            bot_number + 1, len(args.tokens)))
+    delete_msg = await message.channel.send((
+        'PokeBot {} (of {}) standing by.'
+    ).format(bot_number + 1, len(args.tokens)))
     if bot_number == 1:
         await asyncio.sleep(0.1 * int(len(args.tokens)))
-        delete_vid = await client.send_message(
-            message.channel, 'https://youtu.be/kxH6YErAIgA')
+        delete_vid = await message.channel.send('https://youtu.be/kxH6YErAIgA')
         await asyncio.sleep(60 - (0.1 * (int(len(args.tokens)) + 1)))
-        await client.delete_message(delete_vid)
-        await client.delete_message(delete)
-        await client.delete_message(message)
+        await delete_vid.delete()
+        await delete_msg.delete()
+        await message.delete()
     else:
         await asyncio.sleep(60 - (0.1 * bot_number))
-        await client.delete_message(delete)
+        await delete_msg.delete()
 
 
 async def commands(client, message, bot_number):
-    dicts.q[bot_number].put((1, dicts.count[bot_number], {
-        'destination': message.channel,
-        'msg': dicts.info_msg
-    }))
-    dicts.count[bot_number] += 1
-    await client.delete_message(message)
+    await dicts.bots[bot_number]['out_queue'].put((
+        1, dicts.bots[bot_number]['count'], {
+            'destination': message.channel,
+            'msg': dicts.info_msg
+        }
+    ))
+    dicts.bots[bot_number]['count'] += 1
+    await message.delete()
 
 
 async def dex(client, message, bot_number):
@@ -240,18 +243,22 @@ async def dex(client, message, bot_number):
             url=('https://raw.githubusercontent.com/kvangent/PokeAlarm/' +
                  'master/icons/{}.png').format(dex_number))
 
-        dicts.q[bot_number].put((1, dicts.count[bot_number], {
-            'destination': message.channel,
-            'embed': em
-        }))
-        dicts.count[bot_number] += 1
+        await dicts.bots[bot_number]['out_queue'].put((
+            1, dicts.bots[bot_number]['count'], {
+                'destination': message.channel,
+                'embed': em
+            }
+        ))
+        dicts.bots[bot_number]['count'] += 1
     else:
-        dicts.q[bot_number].put((1, dicts.count[bot_number], {
-            'destination': message.channel,
-            'msg': ("That's not any pokemon I know of, check your " +
-                      "spelling `{}`").format(message.author.display_name)
-        }))
-        dicts.count[bot_number] += 1
+        await dicts.bots[bot_number]['out_queue'].put((
+            1, dicts.bots[bot_number]['count'], {
+                'destination': message.channel,
+                'msg': ("That's not any pokemon I know of, check your " +
+                        "spelling `{}`").format(message.author.display_name)
+            }
+        ))
+        dicts.bots[bot_number]['count'] += 1
 
 
 async def _set(client, message, bot_number):

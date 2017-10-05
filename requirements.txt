@@ -2,4 +2,7 @@ asyncio
 discord.py
 geocoder
 configargparse
+aiohttp
 bs4
+requests
+pytz

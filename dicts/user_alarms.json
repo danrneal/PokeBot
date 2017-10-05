@@ -1,0 +1,7 @@
+{
+  "pokemon":{
+    "title": "<pkmn> <iv_0>% (<atk>/<def>/<sta>) <tiny_rat><big_karp> <gender>",
+    "url": "<gmaps>",
+    "body": "<geofence>\nLevel 30+ CP: <cp> (Lvl <level>)\n<quick_move>, <charge_move>\nUntil <12h_time> (<time_left>)"
+  }
+ }

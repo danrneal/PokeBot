@@ -1,39 +1,226 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-import asyncio
 import logging
-import discord
-from queue import PriorityQueue
+import asyncio
+import json
+import sys
 from collections import namedtuple
-from .utils import get_args, Dicts
+from aiohttp import web
+from .Manager import Manager
 from .Bot import Bot
+from .WebhookStructs import Webhook
+from .Notification import Notification
+from .utils import get_args, Dicts, get_path, contains_arg, parse_boolean
 
-logging.basicConfig(format='[%(name)10.10s][%(levelname)8.8s] %(message)s',
-                    level=logging.INFO)
+logging.basicConfig(
+    format='[%(name)10.10s][%(levelname)8.8s] %(message)s',
+    level=logging.INFO
+)
 log = logging.getLogger('clients')
-logging.getLogger("aiohttp").setLevel(logging.ERROR)
 
 args = get_args()
 dicts = Dicts()
+data_queue = asyncio.Queue()
 entries = []
 
+def get_managers():
+    for m_ct in range(args.manager_count):
+        m = Manager(
+            name=(
+                args.manager_name[m_ct]
+                if m_ct < len(args.manager_name)
+                else "Manager_{}".format(m_ct)
+            ),
+            alarm_file=(
+                args.alarms[m_ct]
+                if len(args.alarms) > 1
+                else args.alarms[0]
+            ),
+            filter_file=(
+                args.filters[m_ct]
+                if len(args.filters) > 1
+                else args.filters[0]
+            ),
+            geofence_file=(
+                args.geofences[m_ct]
+                if len(args.geofences) > 1
+                else args.geofences[0]
+            ),
+            timezone=(
+                args.timezone[m_ct]
+                if len(args.timezone) > 1
+                else args.timezone[0]
+            ),
+            locale=(
+                args.locale[m_ct]
+                if len(args.locale) > 1
+                else args.locale[0]
+            ),
+            max_attempts=(
+                args.max_attempts[m_ct]
+                if len(args.max_attempts) > 1
+                else args.max_attempts[0]
+            )
+        )
+        if m.get_name() not in dicts.managers:
+            dicts.managers[m.get_name()] = m
+        else:
+            log.critical(
+                "Names of Manager processes must be unique (regardless of " +
+                "capitalization)! Process will exit."
+            )
+            sys.exit(1)
+    return
 
-async def login(tokens, number_of_bots):
+def bot_init():
+    args = get_args()
+    for bot in range(len(args.tokens)):
+        dicts.bots.append({
+            'pokemon_hist': {},
+            'raid_hist': {},
+            'filters': {},
+            'geofences': [],
+            'in_queue': asyncio.Queue(),
+            'out_queue': asyncio.PriorityQueue(),
+            'roles': {},
+            'timestamps': [],
+            'count': 0
+        })
+    try:
+        with open(get_path('../dicts/user_filters.json')) as f:
+            filters = json.load(f)
+            for user_id in filters:
+                if type(filters[user_id]) is not dict:
+                    log.critical(
+                        "User pokemon filter file must be a JSON object: { " +
+                        "\"pokemon\":{...},... }, it may be corrupted"
+                    )
+                    sys.exit(1)
+                dicts.bots[int(user_id) % int(number_of_bots)]['filters'][
+                    user_id]['pokemon_settings'] = {}
+                dicts.bots[int(user_id) % int(number_of_bots)]['filters'][
+                    user_id]['egg_settings'] = {}
+                dicts.bots[int(user_id) % int(number_of_bots)]['filters'][
+                    user_id]['raid_settings'] = {}
+                dicts.bots[int(user_id) % int(number_of_bots)]['filters'][
+                    user_id]['paused'] = parse_boolean(require_and_remove_key(
+                        'paused', filters[user_id], "User Filters file."))
+                dicts.bots[int(user_id) % int(number_of_bots)]['filters'][
+                    user_id]['areas'] = require_and_remove_key(
+                        'areas', filters[user_id], "User Filters file.")
+                dicts.bots[int(user_id) % int(number_of_bots)]['filters'][
+                    user_id]['pokemon_settings'] = load_pokemon_section(
+                        require_and_remove_key(
+                            'pokemon', filters[user_id], "User Filters file."))
+                dicts.bots[int(user_id) % int(number_of_bots)]['filters'][
+                    user_id]['egg_settings'] = load_pokemon_section(
+                        require_and_remove_key(
+                            'eggs', filters[user_id], "User Filters file."))
+                dicts.bots[int(user_id) % int(number_of_bots)]['filters'][
+                    user_id]['raid_settings'] = load_pokemon_section(
+                        require_and_remove_key(
+                            'raids', filters[user_id], "User Filters file."))
+    except IOError:
+        with open(get_path('../dicts/user_filters.json'), 'w') as f:
+            json.dump({}, f, indent=4)
+    if str(args.geofences[0]).lower() != 'none':
+        geofences = []
+        name_pattern = re.compile("(?<=\[)([^]]+)(?=\])")
+        for geofence_file in args.geofences:
+            with open(get_path(geofence_file), 'r') as f:
+                lines = f.read().splitlines()
+            for line in lines:
+                line = line.strip()
+                match_name = name_pattern.search(line)
+                if match_name:
+                    name = match_name.group(0)
+                    geofences.append(name)
+        for bot in dicts.bots:
+            bot['geofences'] = geofences
+    try:
+        with open(get_path('../dicts/user_alarms.json'), 'r') as f:
+            alarm = json.load(f)
+        if type(alarm) is not dict:
+            log.critical("User Alarms file must be a dictionary")
+            sys.exit(1)
+        for bot in dicts.bots:
+            bot['alarm'] = Notification(alarm)
+    except ValueError as e:
+        log.critical((
+            "Encountered error while loading Alarms file: {}: {}"
+        ).format(type(e).__name__, e))
+        log.critical(
+            "Encountered a 'ValueError' while loading the Alarms file. " +
+            "This typically means your file isn't in the correct json " +
+            "format. Try loading your file contents into a json validator."
+        )
+        sys.exit(1)
+    except IOError as e:
+        log.critical((
+            "Encountered error while loading Alarms: {}: {}"
+        ).format(type(e).__name__, e))
+        log.critical((
+            "Unable to find a filters file at {}. Please check that " +
+            "this file exists and has the correct permissions."
+        ).format(file_path))
+        sys.exit(1)
+    except Exception as e:
+        log.critical((
+            "Encountered error while loading Alarms: {}: {}"
+        ).format(type(e).__name__, e))
+        sys.exit(1)
+    return
+
+
+async def index(request):
+    return web.Response(text="PokeBot Running!")
+
+
+async def handler(request):
+    try:
+        data = await request.json()
+        await data_queue.put(data)
+    except Exception as e:
+        log.error("Encountered error while receiving webhook ({}: {})".format(
+            type(e).__name__, e))
+        abort(400)
+    return web.Response()
+
+
+async def manage_webhook_data(queue):
+    while True:
+        if queue.qsize() > 300:
+            log.warning((
+                "Queue length is at {}... this may be causing a delay in " +
+                "notifications."
+            ).format(queue.qsize()))
+        while queue.empty():
+            await asyncio.sleep(1)
+        data = await queue.get()
+        obj = Webhook.make_object(data)
+        if obj is not None:
+            for name, mgr in dicts.managers.items():
+                await mgr.update(obj)
+
+
+async def login():
     bot_num = 0
+    number_of_bots = len(args.tokens)
     for entry in entries:
         bot_num += 1
-        log.info("Logging into account number {} of {}".format(
-            bot_num, number_of_bots))
-        await entry.client.login(tokens.pop(0))
+        await entry.client.login(args.tokens.pop(0))
 
 
 async def wrapped_connect(entry):
     try:
         await entry.client.connect()
     except Exception as e:
-        await entry.client.client.close()
-        log.info('We got an exception: ', e.__class__.__name__, e)
+        try:
+            await entry.client.close()
+        except:
+            pass
+        log.error('We got an exception: ', e.__class__.__name__, e)
         entry.event.set()
 
 
@@ -43,13 +230,21 @@ async def check_close():
 
 
 def start_clients():
-    number_of_bots = len(args.tokens)
+    get_managers()
+    bot_init()
     loop = asyncio.get_event_loop()
     Entry = namedtuple('Entry', 'client event')
     for bot in range(len(args.tokens)):
         entries.append(Entry(client=Bot(), event=asyncio.Event()))
-    loop.run_until_complete(login(args.tokens, number_of_bots))
+    loop.run_until_complete(login())
+    for name, mgr in dicts.managers.items():
+        entries.append(Entry(client=mgr, event=asyncio.Event()))
     for entry in entries:
         loop.create_task(wrapped_connect(entry))
+    loop.create_task(manage_webhook_data(data_queue))
+    app = web.Application()
+    app.router.add_get('/', index)
+    app.router.add_post('/', handler)
+    loop.create_task(web.run_app(app, port=args.port))
     loop.run_until_complete(check_close())
     loop.close()

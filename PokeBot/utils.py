@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*-
 
 import logging
-import configargparse
 import os
 import sys
-import geocoder
-import discord
+import configargparse
+import asyncio
 import json
-from queue import PriorityQueue
+from glob import glob
+from datetime import datetime, timedelta
 
 log = logging.getLogger('utils')
 
@@ -23,64 +23,176 @@ def get_args():
     if '-cf' not in sys.argv and '--config' not in sys.argv:
         config_files = [get_path('../config/config.ini')]
     parser = configargparse.ArgParser(default_config_files=config_files)
-    parser.add_argument('-cf', '--config', is_config_file=True,
-                        help='Configuration file')
-    parser.add_argument('-token', '--tokens', type=str, action='append',
-                        default=[], help='List of tokens for Discord bots',
-                        required=True)
-    parser.add_argument('-bcid', '--bot_client_ids', type=str,
-                        action='append', default=[],
-                        help='List of client ids for Discord Bots',
-                        required=True)
-    parser.add_argument('-feed', '--feed_channels', type=str,
-                        action='append', default=[],
-                        help='Channel ID that PokeAlarm posts to',
-                        required=True)
-    parser.add_argument('-com', '--command_channels', type=str,
-                        action='append', default=[],
-                        help='Channel ID that users input commands',
-                        required=True)
-    parser.add_argument('-area', '--areas', type=str.lower, action='append',
-                        default=[], help='List or areas or geofences')
-    parser.add_argument('-alert', '--alert_role', type=str.lower,
-                        default='@everyone',
-                        help='Role for users that can use the bot')
-    parser.add_argument('-map', '--map_role', type=str.lower,
-                        help='Role for users that get extras')
-    parser.add_argument('-muted', '--muted_role', type=str.lower, default=None,
-                        help='Role for muted users')
-    parser.add_argument('-admin', '--admins', type=str, action='append',
-                        default=[], help='ids for admins')
-    parser.add_argument('-gmaps', '--gmaps_api_key', type=str, action='append',
-                        default=[],
-                        help='Specify a Google API key or list of keys to use')
-    parser.add_argument('-geo1', '--geocode_1', type=str.lower,
-                        default='neighborhood', help='first geocode for DMs')
-    parser.add_argument('-geo2', '--geocode_2', type=str.lower,
-                        default='street', help='fallback geocode for DMs')
-    parser.add_argument('-aa', '--all_areas', action='store_true',
-                        help=('default to sub to all areas when true ' +
-                              'otherwise, default is no areas'), default=False)
-    parser.add_argument('-host', '--host', type=str,
-                        help='Host for webhook', default='127.0.0.1')
-    parser.add_argument('-port', '--port', type=int,
-                        help='Port for webhook', default=4000)
+    parser.add_argument(
+        '-cf', '--config',
+        is_config_file=True,
+        help='Configuration file'
+    )
+    parser.add_argument(
+        '-m', '--manager_count',
+        type=int,
+        default=1,
+        help='Number of managers to start.'
+    )
+    parser.add_argument(
+        '-M', '--manager_name',
+        type=str,
+        action='append',
+        default=[],
+        help='Names of Manager processes to start.'
+    )
+    parser.add_argument(
+        '-a', '--alarms',
+        type=str,
+        action='append',
+        default=['../Alarms/alarms.json'],
+        help='Alarms configuration file. default: alarms.json'
+    )
+    parser.add_argument(
+        '-f', '--filters',
+        type=str,
+        action='append',
+        default=['../Filters/filters.json'],
+        help='Filters configuration file. default: filters.json'
+    )
+    parser.add_argument(
+        '-gf', '--geofences',
+        type=str,
+        action='append',
+        default=[None],
+        help='Geofence configuration file. default: None'
+    )
+    parser.add_argument(
+        '-tz', '--timezone',
+        type=str,
+        action='append',
+        default=[None],
+        help='Timezone used for notifications.  Ex: "America/Los_Angeles"'
+    )
+    parser.add_argument(
+        '-L', '--locale',
+        type=str,
+        action='append',
+        default=['en'],
+        choices=['de', 'en', 'es', 'fr', 'it', 'ko', 'zh_hk'],
+        help=(
+            'Locale for Pokemon and Move names: default en, check locale ' +
+            'folder for more options'
+        )
+    )
+    parser.add_argument(
+        '-ma', '--max_attempts',
+        type=int,
+        default=[3],
+        action='append',
+        help=('Maximum number of attempts an alarm makes to send a ' +
+              'notification.')
+    ) 
+    parser.add_argument(
+        '-port', '--port',
+        type=int,
+        help='Port for webhook',
+        default=4000
+    )
+    parser.add_argument(
+        '-token', '--tokens',
+        type=str,
+        action='append',
+        default=[],
+        help='List of tokens for Discord bots',
+        required=True
+    )
+    parser.add_argument(
+        '-bcid', '--bot_client_ids',
+        type=int,
+        action='append',
+        default=[],
+        help='List of client ids for Discord Bots',
+        required=True
+    )
+    parser.add_argument(
+        '-com', '--command_channels',
+        type=int,
+        action='append',
+        default=[],
+        help='Channel ID that users input commands',
+        required=True
+    )
+    parser.add_argument(
+        '-alert', '--alert_role',
+        type=str.lower,
+        default='@everyone',
+        help='Role for users that can use the bot'
+    )
+    parser.add_argument(
+        '-muted', '--muted_role',
+        type=str.lower,
+        default=None,
+        help='Role for muted users'
+    )
+    parser.add_argument(
+        '-admin', '--admins',
+        type=str,
+        action='append',
+        default=[],
+        help='ids for admins'
+    )
+    parser.add_argument(
+        '-gmaps', '--gmaps_keys',
+        type=str,
+        action='append',
+        default=[],
+        help='Specify a Google API key or list of keys to use'
+    )
+    parser.add_argument(
+        '-aa', '--all_areas',
+        action='store_true',
+        help=(
+            'default to sub to all areas when true otherwise, default is ' +
+            'no areas'
+        ),
+        default=False
+    )
 
     args = parser.parse_args()
 
     if len(args.tokens) != len(args.bot_client_ids):
-        log.error("Token - Client ID mismatch")
+        log.critical("Token - Client ID mismatch")
         sys.exit(1)
+
+    for list_ in [args.filters, args.alarms, args.locale, args.max_attempts,
+                  args.timezone]:
+        if len(list_) > 1:
+            list_.pop(0)
+            size = len(list_)
+            if size != 1 and size != args.manager_count:
+                log.critical(
+                    "Number of arguments must be either 1 for all managers " +
+                    "or {} equal to Manager Count. Please provided the " +
+                    "correct number of arguments.".format(args.manager_count)
+                )
+                log.critical(list_)
+                sys.exit(1)
+
+    for i in range(len(args.timezone)):
+        if str(args.timezone[i]).lower() == "none":
+            args.timezone[i] = None
+            continue
+        try:
+            args.timezone[i] = pytz.timezone(args.timezone[i])
+        except pytz.exceptions.UnknownTimeZoneError:
+            log.critical(
+                "Invalid timezone. For a list of valid timezones, see " +
+                "https://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
+            )
+            sys.exit(1)
 
     return args
 
 
 class Dicts(object):
-    users = []
-    q = []
-    timestamps = []
-    roles = {}
-    count = []
+    managers = {}
+    bots = []
     pokemon = [
         'bulbasaur', 'ivysaur', 'venusaur', 'charmander', 'charmeleon',
         'charizard', 'squirtle', 'wartortle', 'blastoise', 'caterpie',
@@ -182,29 +294,204 @@ class Dicts(object):
         "Commands should be in the #custom_filters channel.\n\n"
     )
 
-
-def get_dicts(number_of_bots):
-    dicts = Dicts()
-    for bot_num in range(number_of_bots):
-        dicts.users.append({})
-        dicts.q.append(PriorityQueue())
-        dicts.timestamps.append([])
-        dicts.count.append(0)
-    with open(get_path('../dicts/users.json')) as users_file:
-        data = json.load(users_file)
-        for user_id in data:
-            dicts.users[int(user_id) % int(number_of_bots)][user_id] = data[
-                user_id]
-    return dicts
+def contains_arg(line, args):
+    for word in args:
+        if ('<{}>'.format(word)) in line:
+            return True
+    return False
 
 
-def update_dicts(number_of_bots):
+def parse_boolean(val):
+    b = str(val).lower()
+    if b in {'t', 'true', 'y', 'yes'}:
+        return True
+    if b in ('f', 'false', 'n', 'no'):
+        return False
+    return None
+
+
+def reject_leftover_parameters(dict_, location):
+    if len(dict_) > 0:
+        log.critical("Unknown parameters at {}: ".format(location))
+        log.critical(dict_.keys())
+        log.critical(
+            "Please consult the documentation for accepted parameters."
+        )
+        sys.exit(1)
+
+
+def require_and_remove_key(key, _dict, location):
+    if key in _dict:
+        return _dict.pop(key)
+    else:
+        log.critical(
+            "The parameter '{}' is required for {}. Please check " +
+            "documentation for correct formatting.".format(key, location))
+        sys.exit(1)
+
+def get_pkmn_id(pokemon_name):
+    name = pokemon_name.lower()
+    if not hasattr(get_pkmn_id, 'ids'):
+        get_pkmn_id.ids = {}
+        files = glob(get_path('../locales/*/pokemon.json'))
+        for file_ in files:
+            with open(file_, 'r', encoding="utf-8") as f:
+                j = json.loads(f.read())
+                for id_ in j:
+                    nm = j[id_].lower()
+                    get_pkmn_id.ids[nm] = int(id_)
+    return get_pkmn_id.ids.get(name)
+
+
+def get_base_height(pokemon_id):
+    if not hasattr(get_base_height, 'info'):
+        get_base_height.info = {}
+        file_ = get_path('../locales/base_stats.json')
+        with open(file_, 'r') as f:
+            j = json.loads(f.read())
+        for id_ in j:
+            get_base_height.info[int(id_)] = j[id_].get('height')
+    return get_base_height.info.get(pokemon_id)
+
+def get_base_weight(pokemon_id):
+    if not hasattr(get_base_weight, 'info'):
+        get_base_weight.info = {}
+        file_ = get_path('../locales/base_stats.json')
+        with open(file_, 'r') as f:
+            j = json.loads(f.read())
+        for id_ in j:
+            get_base_weight.info[int(id_)] = j[id_].get('weight')
+    return get_base_weight.info.get(pokemon_id)
+
+
+def size_ratio(pokemon_id, height, weight):
+    height_ratio = height / get_base_height(pokemon_id)
+    weight_ratio = weight / get_base_weight(pokemon_id)
+    return height_ratio + weight_ratio
+
+
+def get_pokemon_size(pokemon_id, height, weight):
+    size = size_ratio(pokemon_id, height, weight)
+    if size < 1.5:
+        return 'tiny'
+    elif size <= 1.75:
+        return 'small'
+    elif size < 2.25:
+        return 'normal'
+    elif size <= 2.5:
+        return 'large'
+    else:
+        return 'big'
+
+
+def get_pokemon_gender(gender):
+    if gender == 1:
+        return u'\u2642'
+    elif gender == 2:
+        return u'\u2640'
+    elif gender == 3:
+        return u'\u26b2'
+    return '?'
+
+
+def get_color(color_id):
+    try:
+        if float(color_id) == 1:
+            return 0xffb3d9
+        elif float(color_id) == 2:
+            return 0xff3377
+        elif float(color_id) == 3:
+            return 0xffcc99
+        elif float(color_id) == 4:
+            return 0xffcc33
+        elif float(color_id) == 5:
+            return 0x660066
+        elif float(color_id) < 25:
+            return 0x9d9d9d
+        elif float(color_id) < 50:
+            return 0xffffff
+        elif float(color_id) < 82:
+            return 0x1eff00
+        elif float(color_id) < 90:
+            return 0x0070dd
+        elif float(color_id) < 100:
+            return 0xa335ee
+        elif float(color_id) == 100:
+            return 0xff8000
+    except:
+        return 0x4F545C
+
+
+def get_gmaps_link(lat, lng):
+    latlng = '{},{}'.format(repr(lat), repr(lng))
+    return 'http://maps.google.com/maps?q={}'.format(latlng)
+
+	
+def get_applemaps_link(lat, lng):
+	latlng = '{},{}'.format(repr(lat), repr(lng))
+	return 'http://maps.apple.com/maps?daddr={}&z=10&t=s&dirflg=w'.format(
+            latlng)
+
+
+def get_static_map_url(settings, api_key=None):
+    if not parse_boolean(settings.get('enabled', 'True')):
+        return None
+    width = settings.get('width', '250')
+    height = settings.get('height', '125')
+    maptype = settings.get('maptype', 'roadmap')
+    zoom = settings.get('zoom', '12')
+    center = '{},{}'.format('<lat>', '<lng>')
+    query_center = 'center={}'.format(center)
+    query_markers = 'markers=color:red%7C{}'.format(center)
+    query_size = 'size={}x{}'.format(width, height)
+    query_zoom = 'zoom={}'.format(zoom)
+    query_maptype = 'maptype={}'.format(maptype)
+    map_ = ('https://maps.googleapis.com/maps/api/staticmap?' +
+            query_center + '&' + query_markers + '&' +
+            query_maptype + '&' + query_size + '&' + query_zoom)
+    if api_key is not None:
+        map_ += ('&key=%s' % api_key)
+    return map_
+
+
+def get_time_as_str(t, timezone=None):
+    s = (t - datetime.utcnow()).total_seconds()
+    (m, s) = divmod(s, 60)
+    (h, m) = divmod(m, 60)
+    d = timedelta(hours=h, minutes=m, seconds=s)
+    if timezone is not None:
+        disappear_time = datetime.now(tz=timezone) + d
+    else:
+        disappear_time = datetime.now() + d
+    time_left = "%dm %ds" % (m, s) if h == 0 else "%dh %dm" % (h, m)
+    time_12 = (disappear_time.strftime("%I:%M:%S") +
+               disappear_time.strftime("%p").lower())
+    time_24 = disappear_time.strftime("%H:%M:%S")
+    return time_left, time_12, time_24
+
+
+def update_dicts():
     dicts = Dicts()
     master = {}
-    for bot_num in range(number_of_bots):
-        master.update(dicts.users[bot_num])
-    with open(get_path('../dicts/users.json'), 'w') as users_file:
-        json.dump(master, users_file, indent=4)
+    for bot in dicts.bots:
+        master.update(bot['filters'])
+    for user_id in master:
+        master[user_id]['pokemon'] = {}
+        pokemon_settings = master[user_id].pop('pokemon_settings')
+        master[user_id]['pokemon']['enabled'] = pokemon_settings['enabled']
+        for pkmn_id in pokemon_settings['filters']:
+            master[user_id]['pokemon'][dicts.pokemon[int(pkmn_id) - 1]] = []
+            for filter_ in pokemon_settings['filters'][pkmn_id]:
+                master[user_id]['pokemon'][dicts.pokemon[
+                    int(pkmn_id) + 1]].append(filter_.to_dict())
+        master[user_id]['eggs'] = master[user_id].pop('egg_settings')
+        master[user_id]['raids'] = {}
+        raid_settings = master[user_id].pop('raid_settings')
+        master[user_id]['raids']['enabled'] = raid_settings['enabled']
+        for pkmn_id in raid_settings['filters']:
+            master[user_id]['raids'][dicts.pokemon[int(pkmn_id) - 1]] = True
+    with open(get_path('../dicts/user_filters.json'), 'w') as f:
+        json.dump(master, f, indent=4)
 
 
 def parse_command(command):
@@ -278,31 +565,3 @@ def get_default_genders(pokemon):
         genders = ['female', 'male']
     return genders
 
-
-def get_loc(gmap_url, map_key):
-    coords = gmap_url.split('=')[1]
-    g = geocoder.google(coords, method='reverse', key=map_key)
-    if g[args.geocode_1] is not None:
-        return g[args.geocode_1]
-    else:
-        return g[args.geocode_2]
-
-
-def get_static_map_url(gmap_url, map_key):
-    coords = gmap_url.split('=')[1]
-    width = '250'
-    height = '125'
-    maptype = 'roadmap'
-    zoom = '12'
-    center = '{}'.format(coords)
-    query_center = 'center={}'.format(center)
-    query_markers = 'markers=color:red%7C{}'.format(center)
-    query_size = 'size={}x{}'.format(width, height)
-    query_zoom = 'zoom={}'.format(zoom)
-    query_maptype = 'maptype={}'.format(maptype)
-    gmap = ('https://maps.googleapis.com/maps/api/staticmap?' +
-            query_center + '&' + query_markers + '&' +
-            query_maptype + '&' + query_size + '&' + query_zoom)
-    gmap += ('&key=%s' % map_key)
-
-    return gmap
