@@ -82,6 +82,7 @@ def load_egg_section(settings):
     }
     return egg
 
+
 class Filter(object):
 
     @staticmethod
@@ -128,6 +129,7 @@ class Filter(object):
                     valid_genders))
                 sys.exit(1)
         return list_
+
 
 class PokemonFilter(Filter):
 
@@ -180,6 +182,7 @@ class PokemonFilter(Filter):
             "gender": self.genders,
             "ignore_missing": self.ignore_missing
         }
+
 
 class Geofence(object):
 

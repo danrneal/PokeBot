@@ -7,6 +7,7 @@ import asyncio
 import os
 import sys
 import geocoder
+import re
 from datetime import datetime, timedelta
 from .DiscordAlarm import DiscordAlarm
 from .Filter import load_pokemon_section, Geofence, load_egg_section
@@ -96,7 +97,7 @@ class Manager(object):
             geofences = []
             name_pattern = re.compile("(?<=\[)([^]]+)(?=\])")
             coor_patter = re.compile("[-+]?[0-9]*\.?[0-9]*" + "[ \t]*,[ \t]*" +
-                "[-+]?[0-9]*\.?[0-9]*")
+                                     "[-+]?[0-9]*\.?[0-9]*")
             with open(file_path, 'r') as f:
                 lines = f.read().splitlines()
             name = "geofence"
@@ -198,7 +199,7 @@ class Manager(object):
 #            except Exception as e:
 #                log.error("Encountered error during processing: {}: {}".format(
 #                    type(e).__name__, e))
-                
+
     def clean_hist(self):
         old = []
         for id_ in self.__pokemon_hist:
@@ -220,7 +221,6 @@ class Manager(object):
         iv = pkmn['iv']
         size = pkmn['size']
         gender = pkmn['gender']
-        name = pkmn['pkmn']
         for filt_ct in range(len(filters)):
             filt = filters[filt_ct]
             if cp != '?':
@@ -359,7 +359,7 @@ class Manager(object):
         if self.__api_req['REVERSE_LOCATION']:
             egg.update(**self.reverse_location(lat, lng))
         log.info("Egg ({}) notification has been triggered!".format(gym_id))
-        self.__alarm.raid_egg_alert(rgg)
+        self.__alarm.raid_egg_alert(egg)
 
     def process_raid(self, raid):
         if self.__raid_settings['enabled'] is False:
@@ -393,7 +393,7 @@ class Manager(object):
             'charge_id': charge_id
         }
         filters = self.__raid_settings['filters'][pkmn_id]
-        passed = self.check_pokemon_filter(filters, raid_pkmn, dist)
+        passed = self.check_pokemon_filter(filters, raid_pkmn)
         if not passed:
             return
         lat, lng = raid['lat'], raid['lng']

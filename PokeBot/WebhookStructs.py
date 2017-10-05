@@ -8,8 +8,10 @@ from .utils import (get_gmaps_link, get_applemaps_link, get_pokemon_gender,
 
 log = logging.getLogger('WebhookStructs')
 
+
 def check_for_none(type_, val, default):
     return type_(val) if val is not None else default
+
 
 class Webhook:
 

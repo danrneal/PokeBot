@@ -3,7 +3,6 @@
 
 import logging
 import time
-import asyncio
 import requests
 from random import randint
 from .utils import (get_args, require_and_remove_key, get_static_map_url,
@@ -47,7 +46,7 @@ class DiscordAlarm(Alarm):
     _defaults = {
         'pokemon': {
             'username': "<pkmn>",
-            'content':"",
+            'content': "",
             'icon_url': (
                 "https://raw.githubusercontent.com/kvangent/PokeAlarm/" +
                 "master/icons/<pkmn_id>.png"
@@ -104,7 +103,7 @@ class DiscordAlarm(Alarm):
         self.__max_attempts = max_attempts
         self.__avatar_url = settings.pop('avatar_url', "")
         self.__map = settings.pop('map', {})
-        self.__static_map_key =  args.gmaps_keys[randint(0, len(
+        self.__static_map_key = args.gmaps_keys[randint(0, len(
             args.gmaps_keys) - 1)]
         self.__pokemon = self.create_alert_settings(
             settings.pop('pokemon', {}), self._defaults['pokemon'])

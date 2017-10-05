@@ -5,8 +5,8 @@ import logging
 import os
 import sys
 import configargparse
-import asyncio
 import json
+import pytz
 from glob import glob
 from datetime import datetime, timedelta
 
@@ -87,7 +87,7 @@ def get_args():
         action='append',
         help=('Maximum number of attempts an alarm makes to send a ' +
               'notification.')
-    ) 
+    )
     parser.add_argument(
         '-port', '--port',
         type=int,
@@ -288,11 +288,12 @@ class Dicts(object):
         "pokemon,\n\n" +
         "`!status` to see which bots are currently online,\n\n" +
         "`!help` or `!commands` to see this message,\n\n" +
-#        "`!donate` to see donation information for this project.\n\n" +
+        "`!donate` to see donation information for this project.\n\n" +
         "It is possible to add or delete multiple pokemon or areas by " +
         "putting pokemon on seperate lines or separating them with commas.\n" +
         "Commands should be in the #custom_filters channel.\n\n"
     )
+
 
 def contains_arg(line, args):
     for word in args:
@@ -329,6 +330,7 @@ def require_and_remove_key(key, _dict, location):
             "documentation for correct formatting.".format(key, location))
         sys.exit(1)
 
+
 def get_pkmn_id(pokemon_name):
     name = pokemon_name.lower()
     if not hasattr(get_pkmn_id, 'ids'):
@@ -352,6 +354,7 @@ def get_base_height(pokemon_id):
         for id_ in j:
             get_base_height.info[int(id_)] = j[id_].get('height')
     return get_base_height.info.get(pokemon_id)
+
 
 def get_base_weight(pokemon_id):
     if not hasattr(get_base_weight, 'info'):
@@ -426,11 +429,11 @@ def get_gmaps_link(lat, lng):
     latlng = '{},{}'.format(repr(lat), repr(lng))
     return 'http://maps.google.com/maps?q={}'.format(latlng)
 
-	
+
 def get_applemaps_link(lat, lng):
-	latlng = '{},{}'.format(repr(lat), repr(lng))
-	return 'http://maps.apple.com/maps?daddr={}&z=10&t=s&dirflg=w'.format(
-            latlng)
+    latlng = '{},{}'.format(repr(lat), repr(lng))
+    return 'http://maps.apple.com/maps?daddr={}&z=10&t=s&dirflg=w'.format(
+        latlng)
 
 
 def get_static_map_url(settings, api_key=None):
@@ -564,4 +567,3 @@ def get_default_genders(pokemon):
     else:
         genders = ['female', 'male']
     return genders
-

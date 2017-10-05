@@ -2,12 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import logging
-import discord
 import asyncio
-from datetime import datetime
-from random import randint
-from .utils import (get_args, Dicts, get_default_genders,# get_loc,
-                    get_static_map_url)
+from datetime import datetime, timedelta
+from .utils import get_args, Dicts
 
 log = logging.getLogger('processing')
 
@@ -30,6 +27,7 @@ def clean_hist(bot_number):
     for id_ in old:
         del dicts.bots[bot_number]['raid_hist'][id_]
 
+
 def check_pokemon_filter(filters, pkmn):
     passed = False
     cp = pkmn['cp']
@@ -37,7 +35,6 @@ def check_pokemon_filter(filters, pkmn):
     iv = pkmn['iv']
     size = pkmn['size']
     gender = pkmn['gender']
-    name = pkmn['pkmn']
     for filt_ct in range(len(filters)):
         filt = filters[filt_ct]
         if cp != '?':
@@ -86,6 +83,7 @@ def check_egg_filter(settings, egg):
 
 def process_pokemon(bot_number, pkmn):
     user_ids = []
+    pkmn_id = pkmn['pkmn_id']
     for user_id in dicts.bots[bot_number]['filters']:
         if (dicts.bots[bot_number]['filters'][user_id]['pokemon_setttings'][
             'enabled'] is False or
@@ -98,7 +96,7 @@ def process_pokemon(bot_number, pkmn):
         if not passed:
             return
         user_ids.append(user_id)
-    log.info("{} DM notification has been triggered!".format(name))
+    log.info("DM notification has been triggered!")
     if len(user_ids) > 0:
         dicts.bots[bot_number]['alarm'].pokemon_alert(
             bot_number, pkmn, user_ids)
@@ -145,4 +143,3 @@ async def in_q(bot_number):
 #                log.error("Encountered error during DM processing: {}: {}".format(
 #                    type(e).__name__, e))
         await out_q(bot_number)
-

@@ -61,7 +61,7 @@ class Bot(discord.Client):
             update_dicts()
             if user_count > 0:
                 log.info("Bot number {} removed {} user(s) from dicts".format(
-                    bot_number + 1, count))
+                    bot_number + 1, user_count))
             if area_count > 0:
                 log.info((
                     "Bot number {} removed {} user(s) outdated areas"
@@ -83,7 +83,7 @@ class Bot(discord.Client):
                 except:
                     pass
             if alert_role is False:
-                dicts.bots[bot_number]['filters'].pop(str(after_id))
+                dicts.bots[bot_number]['filters'].pop(str(after.id))
                 update_dicts()
                 log.info('Removed {} from dicts'.format(str(after.id)))
             elif (args.muted_role is not None and
@@ -109,7 +109,7 @@ class Bot(discord.Client):
         bot_number = args.bot_client_ids.index(self.user.id)
         if (member.id % len(args.tokens) == bot_number and
                 str(member.id) in dicts.bots[bot_number]['filters']):
-            dicts.bots[bot_number][filters].pop(str(member.id))
+            dicts.bots[bot_number]['filters'].pop(str(member.id))
             update_dicts()
 
     async def on_message(self, message):
@@ -120,7 +120,7 @@ class Bot(discord.Client):
             elif message.author.id % len(args.tokens) == bot_number:
                 if message.content.lower() in ['!commands', '!help']:
                     await commands(self, message, bot_number)
-                elif message.content.lower().startswith ('!dex '):
+                elif message.content.lower().startswith('!dex '):
                     await dex(self, message, bot_number)
                 elif message.content.lower() == '!donate':
                     await donate(self, message, bot_number)

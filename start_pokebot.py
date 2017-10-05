@@ -18,6 +18,7 @@ logging.getLogger("aiohttp").setLevel(logging.ERROR)
 
 args = get_args()
 
+
 def start_bots():
     log.info("{} bot(s) to be started".format(len(args.tokens)))
     log.info("{} command channels set".format(len(args.command_channels)))

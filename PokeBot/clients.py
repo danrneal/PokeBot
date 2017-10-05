@@ -5,13 +5,16 @@ import logging
 import asyncio
 import json
 import sys
+import re
 from collections import namedtuple
 from aiohttp import web
 from .Manager import Manager
 from .Bot import Bot
+from .Filter import load_pokemon_section, load_egg_section
 from .WebhookStructs import Webhook
 from .Notification import Notification
-from .utils import get_args, Dicts, get_path, contains_arg, parse_boolean
+from .utils import (get_args, Dicts, get_path, parse_boolean,
+                    require_and_remove_key)
 
 logging.basicConfig(
     format='[%(name)10.10s][%(levelname)8.8s] %(message)s',
@@ -23,6 +26,7 @@ args = get_args()
 dicts = Dicts()
 data_queue = asyncio.Queue()
 entries = []
+
 
 def get_managers():
     for m_ct in range(args.manager_count):
@@ -73,6 +77,7 @@ def get_managers():
             sys.exit(1)
     return
 
+
 def bot_init():
     args = get_args()
     for bot in range(len(args.tokens)):
@@ -97,27 +102,27 @@ def bot_init():
                         "\"pokemon\":{...},... }, it may be corrupted"
                     )
                     sys.exit(1)
-                dicts.bots[int(user_id) % int(number_of_bots)]['filters'][
+                dicts.bots[int(user_id) % len(args.tokens)]['filters'][
                     user_id]['pokemon_settings'] = {}
-                dicts.bots[int(user_id) % int(number_of_bots)]['filters'][
+                dicts.bots[int(user_id) % len(args.tokens)]['filters'][
                     user_id]['egg_settings'] = {}
-                dicts.bots[int(user_id) % int(number_of_bots)]['filters'][
+                dicts.bots[int(user_id) % len(args.tokens)]['filters'][
                     user_id]['raid_settings'] = {}
-                dicts.bots[int(user_id) % int(number_of_bots)]['filters'][
+                dicts.bots[int(user_id) % len(args.tokens)]['filters'][
                     user_id]['paused'] = parse_boolean(require_and_remove_key(
                         'paused', filters[user_id], "User Filters file."))
-                dicts.bots[int(user_id) % int(number_of_bots)]['filters'][
+                dicts.bots[int(user_id) % len(args.tokens)]['filters'][
                     user_id]['areas'] = require_and_remove_key(
                         'areas', filters[user_id], "User Filters file.")
-                dicts.bots[int(user_id) % int(number_of_bots)]['filters'][
+                dicts.bots[int(user_id) % len(args.tokens)]['filters'][
                     user_id]['pokemon_settings'] = load_pokemon_section(
                         require_and_remove_key(
                             'pokemon', filters[user_id], "User Filters file."))
-                dicts.bots[int(user_id) % int(number_of_bots)]['filters'][
-                    user_id]['egg_settings'] = load_pokemon_section(
+                dicts.bots[int(user_id) % len(args.tokens)]['filters'][
+                    user_id]['egg_settings'] = load_egg_section(
                         require_and_remove_key(
                             'eggs', filters[user_id], "User Filters file."))
-                dicts.bots[int(user_id) % int(number_of_bots)]['filters'][
+                dicts.bots[int(user_id) % len(args.tokens)]['filters'][
                     user_id]['raid_settings'] = load_pokemon_section(
                         require_and_remove_key(
                             'raids', filters[user_id], "User Filters file."))
@@ -163,7 +168,7 @@ def bot_init():
         log.critical((
             "Unable to find a filters file at {}. Please check that " +
             "this file exists and has the correct permissions."
-        ).format(file_path))
+        ).format(get_path('../dicts/user_alarms.json')))
         sys.exit(1)
     except Exception as e:
         log.critical((
@@ -206,7 +211,6 @@ async def manage_webhook_data(queue):
 
 async def login():
     bot_num = 0
-    number_of_bots = len(args.tokens)
     for entry in entries:
         bot_num += 1
         await entry.client.login(args.tokens.pop(0))
