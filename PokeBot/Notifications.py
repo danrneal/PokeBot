@@ -4,7 +4,7 @@
 import logging
 import discord
 from .DiscordAlarm import Alarm
-from .utils import get_args, reject_leftover_parameters, get_color
+from .utils import Dicts, get_args, reject_leftover_parameters, get_color
 
 log = logging.getLogger('DM')
 args = get_args()

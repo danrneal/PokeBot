@@ -6,9 +6,8 @@ import asyncio
 import discord
 import requests
 from bs4 import BeautifulSoup
-from datetime import datetime
 from .utils import (get_args, Dicts, update_dicts, parse_command, is_number,
-                    truncate, get_default_genders)
+                    truncate, get_default_genders, get_pkmn_id)
 
 log = logging.getLogger('commands')
 
@@ -471,8 +470,9 @@ async def delete(bot_number, message):
                 'destination': message.channel,
                 'msg': (
                     '`{}`, I have removed `{}` pokemon spawn filters.'
-            ).format(message.author.display_name, str(del_count))
-        }))
+                ).format(message.author.display_name, str(del_count))
+            }
+        ))
         dicts.bots[bot_number]['count'] += 1
 
 
@@ -553,8 +553,8 @@ async def deactivate(bot_number, message):
         msg = dicts.bots[bot_number]['geofences']
     else:
         msg = message.content.lower().replace('!deactivate ', '').replace(
-            '!deactivate\n', '').replace(',\n', ',').replace('\n', ',').replace(
-                ', ', ',').split(',')
+            '!deactivate\n', '').replace(',\n', ',').replace(
+                '\n', ',').replace(', ', ',').split(',')
     deactivate_count = 0
     for cmd in msg:
         if cmd in dicts.bots[bot_number]['geofences']:
@@ -616,7 +616,7 @@ async def deactivate(bot_number, message):
             'destination': message.channel,
             'msg': (
                 'Your alerts have been deactivated for `{}` areas, `{}`.'
-            ).format(paused_count, message.author.display_name)
+            ).format(deactivate_count, message.author.display_name)
         }
     ))
     dicts.bots[bot_number]['count'] += 1
@@ -676,7 +676,7 @@ async def activate(bot_number, message):
                     str(message.author.id)]['areas']:
                 dicts.bots[bot_number]['filters'][str(message.author.id)][
                     'areas'].append(cmd)
-                deactivate_count += 1
+                activate_count += 1
         else:
             await dicts.bots[bot_number]['out_queue'].put((
                 1, dicts.bots[bot_number]['count'], {
@@ -705,10 +705,10 @@ async def activate(bot_number, message):
             'destination': message.channel,
             'msg': (
                 'Your alerts have been activated for `{}` areas, `{}`.'
-            ).format(paused_count, message.author.display_name)
+            ).format(activate_count, message.author.display_name)
         }
     ))
-    dicts.bots[bot_number]['count'] += 1      
+    dicts.bots[bot_number]['count'] += 1
 
 
 async def alerts(bot_number, message):
@@ -720,7 +720,7 @@ async def alerts(bot_number, message):
                     message.author.display_name)
             }
         ))
-        dicts.bots[bot_number]['count'] += 1       
+        dicts.bots[bot_number]['count'] += 1
     else:
         alerts = "`{}`'s Alert Settings:\nBOT NUMBER: {}\nPAUSED: ".format(
             message.author.display_name, str(bot_number + 1))
@@ -754,7 +754,7 @@ async def alerts(bot_number, message):
             alerts += '__POKEMON__\n\n'
         for pkmn_id in dicts.bots[bot_number]['filters'][
                 str(message.author.id)]['pokemon_settings']['filters']:
-            alters += '{}:'.format(dicts.pokemon[pkmn_id - 1])
+            alerts += '{}:'.format(dicts.pokemon[pkmn_id - 1])
             for filter_ in dicts.bots[bot_number]['filters'][
                 str(message.author.id)]['pokemon_settings']['filters'][
                     pkmn_id]:
@@ -801,7 +801,7 @@ async def areas(bot_number, message):
                 area in dicts.bots[bot_number]['areas']):
             areas += '**{}**, '.format(area.title())
         else:
-            areas += '{}, '.format(area.title())    
+            areas += '{}, '.format(area.title())
     areas = [areas[:-2]]
     areas[0] += (
         '\n\nYou can change your settings by using `!pause [area]` or ' +

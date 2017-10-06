@@ -4,7 +4,6 @@
 import logging
 import discord
 import asyncio
-from datetime import datetime
 from .utils import get_args, Dicts, update_dicts
 from .processing import in_q
 from .commands import (donate, status, commands, dex, _set, delete, pause,
