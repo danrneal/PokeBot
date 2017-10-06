@@ -387,7 +387,7 @@ async def delete(bot_number, message):
         'nidoran♀', 'nidoranf').replace('nidoran♂', 'nidoranm').replace(
         'mr. mime', 'mr.mime').replace(',\n', ',').replace('\n', ',').replace(
         ', ', ',').split(',')
-    if str(message.author.id) not in dicts.users[bot_number]['filters']:
+    if str(message.author.id) not in dicts.bots[bot_number]['filters']:
         await dicts.bots[bot_number]['out_queue'].put((
             1, dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
@@ -454,30 +454,30 @@ async def delete(bot_number, message):
                         }
                     ))
                     dicts.bots[bot_number]['count'] += 1
+        if (len(dicts.bots[bot_number]['filters'][str(message.author.id)][
+                'pokemon_settings']['filters']) == 0 and
+            len(dicts.bots[bot_number]['filters'][str(message.author.id)][
+                'raid_settings']['filters']) == 0 and
+            ((dicts.bots[bot_number]['filters'][str(message.author.id)][
+                'areas'] == [] and
+              args.all_areas is False) or
+             (dicts.bots[bot_number]['filters'][str(message.author.id)][
+                 'areas'] == dicts.bots[bot_number]['geofences']))):
+            dicts.bots[bot_number]['filters'].pop(str(message.author.id))
         if del_count > 0:
-            if (len(dicts.bots[bot_number]['filters'][str(message.author.id)][
-                    'pokemon_settings']['filters']) == 0 and
-                len(dicts.bots[bot_number]['filters'][str(message.author.id)][
-                    'raid_settings']['filters']) == 0 and
-                ((dicts.bots[bot_number]['filters'][str(message.author.id)][
-                    'areas'] == [] and
-                  args.all_areas is False) or
-                 (dicts.bots[bot_number]['filters'][str(message.author.id)][
-                     'areas'] == dicts.bots[bot_number]['geofences']))):
-                dicts.bots[bot_number]['filters'].pop(str(message.author.id))
             update_dicts()
-            await dicts.bots[bot_number]['out_queue'].put((
-                1, dicts.bots[bot_number]['count'], {
-                    'destination': message.channel,
-                    'msg': (
-                        '`{}`, I have removed `{}` pokemon spawn filters.'
-                ).format(message.author.display_name, str(del_count))
-            }))
-            dicts.bots[bot_number]['count'] += 1
+        await dicts.bots[bot_number]['out_queue'].put((
+            1, dicts.bots[bot_number]['count'], {
+                'destination': message.channel,
+                'msg': (
+                    '`{}`, I have removed `{}` pokemon spawn filters.'
+            ).format(message.author.display_name, str(del_count))
+        }))
+        dicts.bots[bot_number]['count'] += 1
 
 
 async def pause(bot_number, message):
-    if str(message.author.id) not in dicts.users[bot_number]['filters']:
+    if str(message.author.id) not in dicts.bots[bot_number]['filters']:
         await dicts.bots[bot_number]['out_queue'].put((
             1, dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
@@ -513,7 +513,7 @@ async def pause(bot_number, message):
 
 
 async def resume(bot_number, message):
-    if str(message.author.id) not in dicts.users[bot_number]['filters']:
+    if str(message.author.id) not in dicts.bots[bot_number]['filters']:
         await dicts.bots[bot_number]['out_queue'].put((
             1, dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
@@ -548,242 +548,253 @@ async def resume(bot_number, message):
         dicts.bots[bot_number]['count'] += 1
 
 
-async def pause_area(client, message, bot_number):
-    if message.content.lower() == '!pause all':
-        msg = args.areas
+async def deactivate(bot_number, message):
+    if message.content.lower() == '!deactivate all':
+        msg = dicts.bots[bot_number]['geofences']
     else:
-        msg = message.content.lower().replace('!pause ', '').replace(
-            '!pause\n', '').replace(',\n', ',').replace('\n', ',').replace(
+        msg = message.content.lower().replace('!deactivate ', '').replace(
+            '!deactivate\n', '').replace(',\n', ',').replace('\n', ',').replace(
                 ', ', ',').split(',')
-    paused_count = 0
+    deactivate_count = 0
     for cmd in msg:
-        if cmd in args.areas:
-            if message.author.id not in dicts.users[bot_number]:
+        if cmd in dicts.bots[bot_number]['geofences']:
+            if str(message.author.id) not in dicts.bots[bot_number]['filters']:
                 if args.all_areas is False:
-                    dicts.q[bot_number].put((1, dicts.count[bot_number], {
-                        'destination': message.channel,
-                        'msg': ("All areas are paused by default, " +
-                                "`{}`,").format(message.author.display_name)
-                    }))
-                    dicts.count[bot_number] += 1
+                    await dicts.bots[bot_number]['out_queue'].put((
+                        1, dicts.bots[bot_number]['count'], {
+                            'destination': message.channel,
+                            'msg': (
+                                "`{}`, all areas are off by default."
+                            ).format(message.author.display_name)
+                        }
+                    ))
+                    dicts.bots[bot_number]['count'] += 1
                     break
                 else:
-                    dicts.users[bot_number][message.author.id] = {
-                        'pokemon': {},
+                    dicts.bots[bot_number]['filters'][
+                            str(message.author.id)] = {
+                        'pokemon_settings' = {
+                            'enabled': True,
+                            'filers': {}
+                        }
                         'paused': False,
-                        'areas': args.areas
+                        'areas': dicts.bots[bot_number]['geofences']
                     }
-                    dicts.users[bot_number][message.author.id][
+                    dicts.bots[bot_number]['filters'][str(message.author.id)][
                         'areas'].remove(cmd)
-                    update_dicts(len(args.tokens))
-                    paused_count += 1
-            elif cmd in dicts.users[bot_number][message.author.id][
-                    'areas']:
-                dicts.users[bot_number][message.author.id]['areas'].remove(cmd)
-                update_dicts(len(args.tokens))
-                paused_count += 1
+                    deactivate_count += 1
+            elif cmd in dicts.bots[bot_number]['filters'][
+                    str(message.author.id)]['areas']:
+                dicts.bots[bot_number]['filters'][str(message.author.id)][
+                    'areas'].remove(cmd)
+                deactivate_count += 1
         else:
-            dicts.q[bot_number].put((1, dicts.count[bot_number], {
-                'destination': message.channel,
-                'msg': ("The `{}` area is not any area I know of in this " +
-                        "region, `{}`").format(
-                            cmd, message.author.display_name)
-            }))
-            dicts.count[bot_number] += 1
-    dicts.q[bot_number].put((1, dicts.count[bot_number], {
-        'destination': message.channel,
-        'msg': 'Your alerts have been paused for `{}` areas, `{}`.'.format(
-            paused_count, message.author.display_name)
-    }))
-    dicts.count[bot_number] += 1
+            await dicts.bots[bot_number]['out_queue'].put((
+                1, dicts.bots[bot_number]['count'], {
+                    'destination': message.channel,
+                    'msg': (
+                        "The `{}` area is not any area I know of in this " +
+                        "region, `{}`"
+                    ).format(cmd, message.author.display_name)
+                }
+            ))
+            dicts.bots[bot_number]['count'] += 1
+    if (len(dicts.bots[bot_number]['filters'][str(message.author.id)][
+        'pokemon_settings']['filters']) == 0 and
+        len(dicts.bots[bot_number]['filters'][str(message.author.id)][
+            'raid_settings']['filters']) == 0 and
+        ((dicts.bots[bot_number]['filters'][str(message.author.id)][
+            'areas'] == [] and
+          args.all_areas is False) or
+         (dicts.bots[bot_number]['filters'][str(message.author.id)][
+             'areas'] == dicts.bots[bot_number]['geofences']))):
+        dicts.bots[bot_number]['filters'].pop(str(message.author.id))
+    if deactivate_count > 0:
+        update_dicts()
+    await dicts.bots[bot_number]['out_queue'].put((
+        1, dicts.bots[bot_number]['count'], {
+            'destination': message.channel,
+            'msg': (
+                'Your alerts have been deactivated for `{}` areas, `{}`.'
+            ).format(paused_count, message.author.display_name)
+        }
+    ))
+    dicts.bots[bot_number]['count'] += 1
 
 
-async def resume_area(client, message, bot_number):
-    if (message.content.lower() == '!resume all' and
-            message.author.id in args.admins):
-        msg = args.areas
+async def activate(bot_number, message):
+    if (message.content.lower() == '!activate all' and
+            str(message.author.id) in args.admins):
+        msg = dicts.bots[bot_number]['geofences']
     else:
-        msg = message.content.lower().replace('!resume ', '').replace(
-            '!resume\n', '').replace(',\n', ',').replace('\n', ',').replace(
+        msg = message.content.lower().replace('!activate ', '').replace(
+            '!activate\n', '').replace(',\n', ',').replace('\n', ',').replace(
                 ', ', ',').split(',')
-    resume_count = 0
+    activate_count = 0
     for cmd in msg:
-        if cmd in args.areas:
-            if message.author.id not in dicts.users[bot_number]:
+        if cmd in dicts.bots[bot_number]['geofences']:
+            if str(message.author.id) not in dicts.bots[bot_number]['filters']:
                 if args.all_areas is True:
-                    dicts.q[bot_number].put((1, dicts.count[bot_number], {
-                        'destination': message.channel,
-                        'msg': ("No areas are paused by default, " +
-                                "`{}`.").format(message.author.display_name)
-                    }))
-                    dicts.count[bot_number] += 1
+                    await dicts.bots[bot_number]['out_queue'].put((
+                        1, dicts.bots[bot_number]['count'], {
+                            'destination': message.channel,
+                            'msg': (
+                                "`{}`, all areas are off by default."
+                            ).format(message.author.display_name)
+                        }
+                    ))
+                    dicts.bots[bot_number]['count'] += 1
                     break
                 else:
-                    dicts.users[bot_number][message.author.id] = {
-                        'pokemon': {},
+                    dicts.bots[bot_number][str(message.author.id)] = {
+                        'pokemon_settings' = {
+                            'enabled': True,
+                            'filers': {}
+                        }
                         'paused': False,
                         'areas': []
                     }
-                    dicts.users[bot_number][message.author.id]['areas'].append(
-                        cmd)
-                    update_dicts(len(args.tokens))
-                    resume_count += 1
-            elif (message.author.id not in args.admins and
-                  len(dicts.users[bot_number][message.author.id][
-                      'areas']) > 25):
-                dicts.q[bot_number].put((1, dicts.count[bot_number], {
-                    'destination': message.channel,
-                    'msg': ('You have reached the maximum number of areas ' +
-                            '`{}`, (25) you need to pause some in order to ' +
-                            'resume others.').format(
-                                message.author.display_name)
-                }))
-                dicts.count[bot_number] += 1
+                    dicts.bots[bot_number]['filters'][str(message.author.id)][
+                        'areas'].append(cmd)
+                    activate_count += 1
+            elif (str(message.author.id) not in args.admins and
+                  len(dicts.bots[bot_number][str(message.author.id)][
+                      'areas']) > 50):
+                await dicts.bots[bot_number]['out_queue'].put((
+                    1, dicts.bots[bot_number]['count'], {
+                        'destination': message.channel,
+                        'msg': (
+                            'You have reached the maximum number of areas ' +
+                            '`{}`, (50) you need to pause some in order to ' +
+                            'resume others.'
+                        ).format(message.author.display_name)
+                    }
+                ))
+                dicts.bots[bot_number]['count'] += 1
                 break
-            elif cmd not in dicts.users[bot_number][message.author.id][
-                    'areas']:
-                dicts.users[bot_number][message.author.id]['areas'].append(cmd)
-                update_dicts(len(args.tokens))
-                resume_count += 1
+            elif cmd not in dicts.bots[bot_number]['filters'][
+                    str(message.author.id)]['areas']:
+                dicts.bots[bot_number]['filters'][str(message.author.id)][
+                    'areas'].append(cmd)
+                deactivate_count += 1
         else:
-            dicts.q[bot_number].put((1, dicts.count[bot_number], {
-                'destination': message.channel,
-                'msg': ("The `{}` area is not any area I know of in this " +
-                        "region, `{}`").format(
-                            cmd, message.author.display_name)
-            }))
-            dicts.count[bot_number] += 1
-    dicts.q[bot_number].put((1, dicts.count[bot_number], {
-        'destination': message.channel,
-        'msg': ('Your alerts have been resumed for `{}` areas, `{}`.').format(
-                    resume_count, message.author.display_name)
-    }))
-    dicts.count[bot_number] += 1
-
-
-async def alerts(client, message, bot_number):
-    msg = message.content.lower().replace('!alerts ', '').replace(
-        '!alerts\n', '').replace('!alerts', '').replace('%', '').replace(
-        'nidoran♀', 'nidoranf').replace('nidoran♂', 'nidoranm').replace(
-        'mr. mime', 'mr.mime').replace(',\n', ',').replace('\n', ',').replace(
-        ', ', ',').split(',')
-    if message.author.id not in dicts.users[bot_number]:
-        dicts.q[bot_number].put((1, dicts.count[bot_number], {
+            await dicts.bots[bot_number]['out_queue'].put((
+                1, dicts.bots[bot_number]['count'], {
+                    'destination': message.channel,
+                    'msg': (
+                        "The `{}` area is not any area I know of in this " +
+                        "region, `{}`"
+                    ).format(cmd, message.author.display_name)
+                }
+            ))
+            dicts.bots[bot_number]['count'] += 1
+    if (len(dicts.bots[bot_number]['filters'][str(message.author.id)][
+        'pokemon_settings']['filters']) == 0 and
+        len(dicts.bots[bot_number]['filters'][str(message.author.id)][
+            'raid_settings']['filters']) == 0 and
+        ((dicts.bots[bot_number]['filters'][str(message.author.id)][
+            'areas'] == [] and
+          args.all_areas is False) or
+         (dicts.bots[bot_number]['filters'][str(message.author.id)][
+             'areas'] == dicts.bots[bot_number]['geofences']))):
+        dicts.bots[bot_number]['filters'].pop(str(message.author.id))
+    if activate_count > 0:
+        update_dicts()
+    await dicts.bots[bot_number]['out_queue'].put((
+        1, dicts.bots[bot_number]['count'], {
             'destination': message.channel,
-            'msg': "`{}`, you don't have any alerts set.".format(
-                message.author.display_name)
-        }))
-        dicts.count[bot_number] += 1        
+            'msg': (
+                'Your alerts have been activated for `{}` areas, `{}`.'
+            ).format(paused_count, message.author.display_name)
+        }
+    ))
+    dicts.bots[bot_number]['count'] += 1      
+
+
+async def alerts(bot_number, message):
+    if str(message.author.id) not in dicts.bots[bot_number]['filters']:
+        await dicts.bots[bot_number]['out_queue'].put((
+            1, dicts.bots[bot_number]['count'], {
+                'destination': message.channel,
+                'msg': "`{}`, you don't have any alerts set.".format(
+                    message.author.display_name)
+            }
+        ))
+        dicts.bots[bot_number]['count'] += 1       
     else:
         alerts = "`{}`'s Alert Settings:\nBOT NUMBER: {}\nPAUSED: ".format(
             message.author.display_name, str(bot_number + 1))
-        if dicts.users[bot_number][message.author.id]['paused'] is True:
+        if dicts.users[bot_number]['filters'][str(message.author.id)][
+                'paused'] is True:
             alerts += "TRUE\n\n"
         else:
             alerts += "FALSE\n\n"
         if args.all_areas is True:
             alerts += '__PAUSED AREAS__\n\n'
-            if len(args.areas) == len(dicts.users[bot_number][
-                    message.author.id]['areas']):
+            if len(dicts.users[bot_number]['filters'][str(message.author.id)][
+                    'areas']) == len(dicts.bots[bot_number]['geofences']):
                 alerts += 'None\n'
             else:
-                for area in list(set(args.areas) - set(dicts.users[bot_number][
-                        message.author.id]['areas'])):
+                for area in list(set(dicts.bots[bot_number][
+                    'geofences']) - set(dicts.users[bot_number]['filters'][
+                        str(message.author.id)]['areas'])):
                     alerts += '{}, '.format(area.title())
         else:
             alerts += '__ALERT AREAS__\n\n'
             areas = False
-            for area in dicts.users[bot_number][message.author.id]['areas']:
+            for area in dicts.users[bot_number]['filters'][
+                    str(message.author.id)]['areas']:
                 areas = True
                 alerts += '{}, '.format(area.title())
             if areas is False:
                 alerts += 'None \n'
             alerts = alerts[:-2] + '\n\n'
-        for command in msg:
-            error, chars, pokemon, genders = parse_command(command)
-            if error is True:
-                dicts.q[bot_number].put((1, dicts.count[bot_number], {
-                    'destination': message.channel,
-                    'msg': ('`{}`, this pokemon does not have that ' +
-                            'gender.').format(message.author.display_name)
-                }))
-                dicts.count[bot_number] += 1
-                continue
-            if 'all' in chars:
-                chars.remove('all')
-            elif 'areas' in chars:
-                chars.remove('areas')
-                pokemon = []
-            if len(chars) > 0:
-                error = True
-                dicts.q[bot_number].put((1, dicts.count[bot_number], {
-                    'destination': message.channel,
-                    'msg': ('`{}`, your command has an unrecognized ' +
-                            'argument.').format(message.author.display_name)
-                }))
-                dicts.count[bot_number] += 1
-                continue
-            if pokemon != []:
-                alerts += '__POKEMON__\n\n'
-            for poke in pokemon:
-                if poke in dicts.users[bot_number][message.author.id][
-                        'pokemon']:
-                    poke_str = '{}: '.format(poke)
-                    if len(pokemon) > 1:
-                        genders = get_default_genders(poke)
-                    if (len(genders) > 1 and
-                        dicts.users[bot_number][message.author.id]['pokemon'][
-                            poke].get('female') == dicts.users[bot_number][
-                                message.author.id]['pokemon'][poke].get(
-                                    'male')):
-                        alerts += '{}{}%+, {}CP+, L{}+ (♀, ♂)\n'.format(
-                            poke_str.replace('nidoranf', 'nidoran♀').replace(
-                                'nidoranm', 'nidoran♂').replace(
-                                    'mr.mime', 'mr. mime').title(),
-                                dicts.users[bot_number][message.author.id][
-                                    'pokemon'][poke]['male']['iv'],
-                                dicts.users[bot_number][message.author.id][
-                                    'pokemon'][poke]['male']['cp'],
-                                dicts.users[bot_number][message.author.id][
-                                    'pokemon'][poke]['male']['level'])
-                    else:
-                        for gender in genders:
-                            if gender in dicts.users[bot_number][
-                                    message.author.id]['pokemon'][poke]:
-                                alerts += ('{}{}%+, {}CP+, L{}+ ({}) ' +
-                                '| ').format(
-                                    poke_str.replace(
-                                        'nidoranf', 'nidoran♀').replace(
-                                        'nidoranm', 'nidoran♂').replace(
-                                        'mr.mime', 'mr. mime').title(),
-                                    dicts.users[bot_number][message.author.id][
-                                        'pokemon'][poke][gender]['iv'],
-                                    dicts.users[bot_number][message.author.id][
-                                        'pokemon'][poke][gender]['cp'],
-                                    dicts.users[bot_number][message.author.id][
-                                        'pokemon'][poke][gender]['level'],
-                                    gender.replace(
-                                        'female', '♀').replace(
-                                        'male', '♂').replace(
-                                        'genderless', u"\u26B2")
-                                )
-                                poke_str = ''
-                        alerts = alerts[:-3] + '\n'
-        if error is False:
-            alerts = [alerts]
-            while len(alerts[-1]) > 2000:
-                for alerts_split in truncate(alerts.pop()):
-                    alerts.append(alerts_split)
-            for dm in alerts:
-                dicts.q[bot_number].put((1, dicts.count[bot_number], {
-                    'destination': discord.utils.get(
-                        client.get_all_members(), id=message.author.id),
+        if len(dicts.bots[bot_number]['filters'][str(message.author.id)][
+                'pokemon_settings']['filters']) == 0:
+            alerts += '__POKEMON__\n\n'
+        for pkmn_id in dicts.bots[bot_number]['filters'][
+                str(message.author.id)]['pokemon_settings']['filters']:
+            alters += '{}:'.format(dicts.pokemon[pkmn_id - 1])
+            for filter_ in dicts.bots[bot_number]['filters'][
+                str(message.author.id)]['pokemon_settings']['filters'][
+                    pkmn_id]:
+                if (filter_.min_iv == 0 and
+                    filter_.min_cp == 0 and
+                    filter_.min_level == 0 and
+                    (filter_.genders == [None] or
+                     filter_.genders == ['neutral'])):
+                    alerts += ' All'
+                else:
+                    if filter_.min_iv > 0:
+                        alerts += ' {}%+,'
+                    elif filter_.min_cp > 0:
+                        alerts += ' {}CP+,'
+                    elif filter_.min_level > 0:
+                        alerts += ' L{}+,'
+                    elif filter_.genders != [None]:
+                        if len(filter_.genders) == 2:
+                            alerts += ' (♀, ♂),'
+                        elif filter_.genders == ['female']:
+                            alerts += ' (♀),'
+                        elif filter_.genders == ['male']:
+                            alerts += ' (♂),'
+                alerts[:-1] += ' |'
+            alerts[:-2] += '\n'
+        alerts = [alerts[:-1]]
+        while len(alerts[-1]) > 2000:
+            for alerts_split in truncate(alerts.pop()):
+                alerts.append(alerts_split)
+        for dm in alerts:
+            await dicts.bots[bot_number]['out_queue'].put((
+                1, dicts.bots[bot_number]['count'], {
+                    'destination': message.author,
                     'msg': dm
-                }))
-                dicts.count[bot_number] += 1
+                }
+            ))
+            dicts.bots[bot_number]['count'] += 1
 
 
-async def areas(client, message, bot_number):
+async def areas(bot_number, message):
     areas = '__AVAILABLE AREAS__ (Your active areas are in **bold**.)\n\n'
     for area in dicts.bots[bot_number]['geofences']:
         if (str(message.author.id) in dicts.bots[bot_number]['filters'] and

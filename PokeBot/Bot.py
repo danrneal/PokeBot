@@ -8,7 +8,7 @@ from datetime import datetime
 from .utils import get_args, Dicts, update_dicts
 from .processing import in_q
 from .commands import (donate, status, commands, dex, _set, delete, pause,
-                       resume, pause_area, resume_area, alerts, areas)
+                       resume, deactivate, activate, alerts, areas)
 
 log = logging.getLogger('Bot')
 
@@ -134,11 +134,11 @@ class Bot(discord.Client):
                         await pause(bot_number, message)
                     elif message.content.lower() in ['!resume', '!r']:
                         await resume(bot_number, message)
-##                    elif message.content.lower().startswith('!pause '):
-##                        await pause_area(self, message, bot_number)
-##                    elif message.content.lower().startswith('!resume '):
-##                        await resume_area(self, message, bot_number)
-##                    elif message.content.lower().startswith('!alerts'):
-##                        await alerts(self, message, bot_number)
+                    elif message.content.lower().startswith('!deactivate '):
+                        await deactivate(bot_number, message)
+                    elif message.content.lower().startswith('!activate '):
+                        await activate(bot_number, message)
+                    elif message.content.lower() == '!alerts':
+                        await alerts(bot_number, message)
                     elif message.content.lower() == '!areas':
-                        await areas(self, message, bot_number)
+                        await areas(bot_number, message)
