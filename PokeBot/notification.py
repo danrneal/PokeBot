@@ -75,7 +75,6 @@ class Notification(Alarm):
         reject_leftover_parameters(settings, "'Alert level in DM alarm.")
         return alert
 
-
     def send_alert(self, bot_number, alert, info, user_ids):
         msg = self.replace(alert['content'], info)
         em = discord.Embed(
