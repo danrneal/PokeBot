@@ -62,7 +62,6 @@ class Notification(Alarm):
         reject_leftover_parameters(settings, "'Alarm level in DM alarm.")
         log.info("DM Alarm has been created!")
 
-
     def create_alert_settings(self, settings, default):
         alert = {
             'content': settings.pop('content', default['content']),

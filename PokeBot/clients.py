@@ -189,7 +189,7 @@ async def handler(request):
     except Exception as e:
         log.error("Encountered error while receiving webhook ({}: {})".format(
             type(e).__name__, e))
-        raise HTTPBadRequest()
+        raise web.HTTPBadRequest()
     return web.Response()
 
 

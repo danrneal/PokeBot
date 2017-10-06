@@ -90,7 +90,8 @@ class Bot(discord.Client):
                       args.muted_role]).intersection(set(after.roles))) > 0 and
                   dicts.bots[bot_number][str(after.id)]['filters'][
                       'paused'] is False):
-                dicts.bots[bot_number][str(after.id)]['filters']['paused'] = True
+                dicts.bots[bot_number][str(after.id)]['filters'][
+                    'paused'] = True
                 update_dicts()
                 await dicts.bots[bot_number]['out_queue'].put((
                     1, dicts.bots[bot_number]['count'], {
