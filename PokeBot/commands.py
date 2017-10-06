@@ -573,10 +573,10 @@ async def deactivate(bot_number, message):
                 else:
                     dicts.bots[bot_number]['filters'][
                             str(message.author.id)] = {
-                        'pokemon_settings' = {
+                        'pokemon_settings': {
                             'enabled': True,
                             'filers': {}
-                        }
+                        },
                         'paused': False,
                         'areas': dicts.bots[bot_number]['geofences']
                     }
@@ -647,10 +647,10 @@ async def activate(bot_number, message):
                     break
                 else:
                     dicts.bots[bot_number][str(message.author.id)] = {
-                        'pokemon_settings' = {
+                        'pokemon_settings': {
                             'enabled': True,
                             'filers': {}
-                        }
+                        },
                         'paused': False,
                         'areas': []
                     }
