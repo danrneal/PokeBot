@@ -2,21 +2,20 @@
 # -*- coding: utf-8 -*-
 
 import logging
-import time
-import asyncio
-import requests
+import discord
 from .DiscordAlarm import Alarm
-from .utils import (get_args, require_and_remove_key, get_static_map_url,
-                    reject_leftover_parameters, get_color)
+from .utils import get_args, reject_leftover_parameters, get_color
 
 log = logging.getLogger('DM')
 args = get_args()
+dicts = Dicts()
+
 
 class Notification(Alarm):
 
     _defaults = {
         'pokemon': {
-            'content':"",
+            'content': "",
             'icon_url': (
                 "https://raw.githubusercontent.com/kvangent/PokeAlarm/" +
                 "master/icons/<pkmn_id>.png"
@@ -76,6 +75,7 @@ class Notification(Alarm):
         reject_leftover_parameters(settings, "'Alert level in DM alarm.")
         return alert
 
+
     def send_alert(self, bot_number, alert, info, user_ids):
         msg = self.replace(alert['content'], info)
         em = discord.Embed(
@@ -97,7 +97,6 @@ class Notification(Alarm):
                 }
             ))
             dicts.bots[bot_number]['count'] += 1
-
 
     def pokemon_alert(self, bot_number, pokemon_info, user_ids):
         self.send_alert(self.__pokemon, bot_number, pokemon_info, user_ids)
