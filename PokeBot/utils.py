@@ -269,22 +269,22 @@ def update_dicts():
         pokemon_settings = master[user_id].pop('pokemon_settings')
         master[user_id]['pokemon']['enabled'] = pokemon_settings['enabled']
         for pkmn_id in pokemon_settings['filters']:
-            master[user_id]['pokemon'][dicts.bots[bot_number]['pokemon_name'][
+            master[user_id]['pokemon'][dicts.bots[0]['pokemon_name'][
                 pkmn_id]] = []
             for filter_ in pokemon_settings['filters'][pkmn_id]:
-                master[user_id]['pokemon'][dicts.bots[bot_number][
-                    'pokemon_name'][pkmn_id]].append(filter_.to_dict())
+                master[user_id]['pokemon'][dicts.bots[0]['pokemon_name'][
+                    pkmn_id]].append(filter_.to_dict())
         master[user_id]['eggs'] = master[user_id].pop('egg_settings')
         master[user_id]['raids'] = {}
         raid_settings = master[user_id].pop('raid_settings')
         master[user_id]['raids']['enabled'] = raid_settings['enabled']
         for pkmn_id in raid_settings['filters']:
-            master[user_id]['raids'][dicts.bots[bot_number]['pokemon_name'][
+            master[user_id]['raids'][dicts.bots[0]['pokemon_name'][
                 pkmn_id]] = True
     with open(get_path('../user_dicts/user_filters.json')) as f:
         filters = json.load(f)
     with open(get_path('../user_dicts/user_filters_backup.json'), 'w') as f:
-        json.dump(filters, f, indent=4)            
+        json.dump(filters, f, indent=4)
     with open(get_path('../user_dicts/user_filters.json'), 'w') as f:
         json.dump(master, f, indent=4)
 
