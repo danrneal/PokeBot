@@ -6,8 +6,9 @@ import asyncio
 import discord
 import requests
 from bs4 import BeautifulSoup
-from .utils import (get_args, Dicts, update_dicts, parse_command, is_number,
-                    truncate, get_default_genders, get_pkmn_id)
+from .Filter import load_pokemon_section
+from .utils import (get_args, Dicts, update_dicts, is_number, truncate,
+                    get_pkmn_id, require_and_remove_key)
 
 log = logging.getLogger('commands')
 
@@ -360,8 +361,8 @@ async def _set(client, message, bot_number):
                     1, dicts.bots[bot_number]['count'], {
                         'destination': message.channel,
                         'msg': (
-                            '`{}`, your command has an unrecognized argumnet '+
-                            '(`{}`).'
+                            '`{}`, your command has an unrecognized ' +
+                            'argumnet (`{}`).'
                         ).format(message.author.display_name, char)
                     }
                 ))
@@ -388,7 +389,8 @@ async def _set(client, message, bot_number):
                     'pokemon_settings']['filters'][pokemon] = {
                         "min_iv": min_iv,
                         "min_level": min_level,
-                        "min_cp": min_cp
+                        "min_cp": min_cp,
+                        "gender": gender
                     }
             dicts.bots[bot_number]['filters'][str(message.author.id)][
                 'pokemon_settings'] = load_pokemon_section(
@@ -791,7 +793,7 @@ async def alerts(bot_number, message):
                 if (filter_.min_iv == 0 and
                     filter_.min_cp == 0 and
                     filter_.min_level == 0 and
-                    (filter_.genders == None or
+                    (filter_.genders is None or
                      filter_.genders == ['neutral'])):
                     alerts += ' All'
                 else:
@@ -801,7 +803,7 @@ async def alerts(bot_number, message):
                         alerts += ' {}CP+,'
                     elif filter_.min_level > 0:
                         alerts += ' L{}+,'
-                    elif filter_.genders != None:
+                    elif filter_.genders is not None:
                         if filter_.genders == ['female']:
                             alerts += ' (♀),'
                         elif filter_.genders == ['male']:

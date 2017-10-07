@@ -122,7 +122,7 @@ async def out_q(bot_number):
     await asyncio.sleep(0.5)
 
 
-async def in_q(bot_number):
+async def in_q(client, bot_number):
     last_clean = datetime.utcnow()
     while True:
         if not dicts.bots[bot_number]['in_queue'].empty():
@@ -130,16 +130,13 @@ async def in_q(bot_number):
             if datetime.utcnow() - last_clean > timedelta(minutes=3):
                 clean_hist()
                 last_clean = datetime.utcnow()
-#            try:
-            if obj['type'] == "pokemon":
-                process_pokemon(bot_number, obj)
-            elif obj['type'] == 'egg':
-                process_egg(bot_number, obj)
-            elif obj['type'] == "raid":
-                process_raid(bot_number, obj)
-            else:
-                pass
-#            except Exception as e:
-#                log.error("Encountered error during DM processing: {}: {}".format(
-#                    type(e).__name__, e))
+            try:
+                if obj['type'] == "pokemon":
+                    process_pokemon(client, bot_number, obj)
+                else:
+                    pass
+            except Exception as e:
+                log.error((
+                    "Encountered error during DM processing: {}: {}"
+                ).format(type(e).__name__, e))
         await out_q(bot_number)

@@ -66,7 +66,7 @@ class Bot(discord.Client):
                     "Bot number {} removed {} user(s) outdated areas"
                 ).format(bot_number + 1, area_count))
         log.info("Bot number {} is ready".format(bot_number + 1))
-        await in_q(bot_number)
+        await in_q(self, bot_number)
 
     async def on_member_update(self, before, after):
         bot_number = args.bot_client_ids.index(self.user.id)

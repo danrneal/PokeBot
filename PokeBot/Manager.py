@@ -186,20 +186,20 @@ class Manager(object):
             if datetime.utcnow() - last_clean > timedelta(minutes=3):
                 self.clean_hist()
                 last_clean = datetime.utcnow()
-#            try:
-            if obj['type'] == "pokemon":
-                self.process_pokemon(obj)
-            elif obj['type'] == "gym":
-                self.process_gym(obj)
-            elif obj['type'] == 'egg':
-                self.process_egg(obj)
-            elif obj['type'] == "raid":
-                self.process_raid(obj)
-            else:
-                pass
-#            except Exception as e:
-#                log.error("Encountered error during processing: {}: {}".format(
-#                    type(e).__name__, e))
+            try:
+                if obj['type'] == "pokemon":
+                    self.process_pokemon(obj)
+                elif obj['type'] == "gym":
+                    self.process_gym(obj)
+                elif obj['type'] == 'egg':
+                    self.process_egg(obj)
+                elif obj['type'] == "raid":
+                    self.process_raid(obj)
+                else:
+                    pass
+            except Exception as e:
+                log.error("Encountered error during processing: {}: {}".format(
+                    type(e).__name__, e))
 
     def clean_hist(self):
         old = []
