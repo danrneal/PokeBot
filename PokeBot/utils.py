@@ -5,8 +5,8 @@ import logging
 import os
 import sys
 import configargparse
-import json
 import pytz
+import json
 from glob import glob
 from datetime import datetime, timedelta
 
@@ -72,8 +72,7 @@ def get_args():
     parser.add_argument(
         '-L', '--locale',
         type=str,
-        action='append',
-        default=['en'],
+        default='en',
         choices=['de', 'en', 'es', 'fr', 'it', 'ko', 'zh_hk'],
         help=(
             'Locale for Pokemon and Move names: default en, check locale ' +
@@ -83,8 +82,7 @@ def get_args():
     parser.add_argument(
         '-ma', '--max_attempts',
         type=int,
-        default=[3],
-        action='append',
+        default=3,
         help=('Maximum number of attempts an alarm makes to send a ' +
               'notification.')
     )
@@ -156,12 +154,23 @@ def get_args():
 
     args = parser.parse_args()
 
+    files = glob(get_path('../alarms/*.json'))
+    for file_ in files:
+        args.alarms.append(file_)
+
+    files = glob(get_path('../filters/*.json'))
+    for file_ in files:
+        args.filters.append(file_)
+
+    files = glob(get_path('../geofences/*.json'))
+    for file_ in files:
+        args.geofences.append(file_)
+
     if len(args.tokens) != len(args.bot_client_ids):
         log.critical("Token - Client ID mismatch")
         sys.exit(1)
 
-    for list_ in [args.filters, args.alarms, args.locale, args.max_attempts,
-                  args.timezone]:
+    for list_ in [args.filters, args.alarms, args.geofences, args.timezone]:
         if len(list_) > 1:
             list_.pop(0)
             size = len(list_)
@@ -173,6 +182,15 @@ def get_args():
                 )
                 log.critical(list_)
                 sys.exit(1)
+
+    for i in range(len(args.alarms)):
+        if args.alarms[i].split('/')[-1].replace(
+            '_alarms.json', '') == args.filters[i].split('/')[-1].replace(
+                '_filters.json', ''):
+            args.manager_name.append(args.alarms[i].split('/')[-1].strip(
+                '_alarms.json'))
+        else:
+            break
 
     for i in range(len(args.timezone)):
         if str(args.timezone[i]).lower() == "none":
@@ -193,63 +211,9 @@ def get_args():
 class Dicts(object):
     managers = {}
     bots = []
-    pokemon = [
-        'bulbasaur', 'ivysaur', 'venusaur', 'charmander', 'charmeleon',
-        'charizard', 'squirtle', 'wartortle', 'blastoise', 'caterpie',
-        'metapod', 'butterfree', 'weedle', 'kakuna', 'beedrill', 'pidgey',
-        'pidgeotto', 'pidgeot', 'rattata', 'raticate', 'spearow', 'fearow',
-        'ekans', 'arbok', 'pikachu', 'raichu', 'sandshrew', 'sandslash',
-        'nidoranf', 'nidorina', 'nidoqueen', 'nidoranm', 'nidorino',
-        'nidoking', 'clefairy', 'clefable', 'vulpix', 'ninetales',
-        'jigglypuff', 'wigglytuff', 'zubat', 'golbat', 'oddish', 'gloom',
-        'vileplume', 'paras', 'parasect', 'venonat', 'venomoth', 'diglett',
-        'dugtrio', 'meowth', 'persian', 'psyduck', 'golduck', 'mankey',
-        'primeape', 'growlithe', 'arcanine', 'poliwag', 'poliwhirl',
-        'poliwrath', 'abra', 'kadabra', 'alakazam', 'machop', 'machoke',
-        'machamp', 'bellsprout', 'weepinbell', 'victreebel', 'tentacool',
-        'tentacruel', 'geodude', 'graveler', 'golem', 'ponyta', 'rapidash',
-        'slowpoke', 'slowbro', 'magnemite', 'magneton', "farfetch'd", 'doduo',
-        'dodrio', 'seel', 'dewgong', 'grimer', 'muk', 'shellder', 'cloyster',
-        'gastly', 'haunter', 'gengar', 'onix', 'drowzee', 'hypno', 'krabby',
-        'kingler', 'voltorb', 'electrode', 'exeggcute', 'exeggutor', 'cubone',
-        'marowak', 'hitmonlee', 'hitmonchan', 'lickitung', 'koffing',
-        'weezing', 'rhyhorn', 'rhydon', 'chansey', 'tangela', 'kangaskhan',
-        'horsea', 'seadra', 'goldeen', 'seaking', 'staryu', 'starmie',
-        'mr.mime', 'scyther', 'jynx', 'electabuzz', 'magmar', 'pinsir',
-        'tauros', 'magikarp', 'gyarados', 'lapras', 'ditto', 'eevee',
-        'vaporeon', 'jolteon', 'flareon', 'porygon', 'omanyte', 'omastar',
-        'kabuto', 'kabutops', 'aerodactyl', 'snorlax', 'articuno', 'zapdos',
-        'moltres', 'dratini', 'dragonair', 'dragonite', 'mewtwo', 'mew',
-        'chikorita', 'bayleef', 'meganium', 'cyndaquil', 'quilava',
-        'typhlosion', 'totodile', 'croconaw', 'feraligatr', 'sentret',
-        'furret', 'hoothoot', 'noctowl', 'ledyba', 'ledian', 'spinarak',
-        'ariados', 'crobat', 'chinchou', 'lanturn', 'pichu', 'cleffa',
-        'igglybuff', 'togepi', 'togetic', 'natu', 'xatu', 'mareep', 'flaaffy',
-        'ampharos', 'bellossom', 'marill', 'azumarill', 'sudowoodo',
-        'politoed', 'hoppip', 'skiploom', 'jumpluff', 'aipom', 'sunkern',
-        'sunflora', 'yanma', 'wooper', 'quagsire', 'espeon', 'umbreon',
-        'murkrow', 'slowking', 'misdreavus', 'unown', 'wobbuffet', 'girafarig',
-        'pineco', 'forretress', 'dunsparce', 'gligar', 'steelix', 'snubbull',
-        'granbull', 'qwilfish', 'scizor', 'shuckle', 'heracross', 'sneasel',
-        'teddiursa', 'ursaring', 'slugma', 'magcargo', 'swinub', 'piloswine',
-        'corsola', 'remoraid', 'octillery', 'delibird', 'mantine', 'skarmory',
-        'houndour', 'houndoom', 'kingdra', 'phanpy', 'donphan', 'porygon2',
-        'stantler', 'smeargle', 'tyrogue', 'hitmontop', 'smoochum', 'elekid',
-        'magby', 'miltank', 'blissey', 'raikou', 'entei', 'suicune',
-        'larvitar', 'pupitar', 'tyranitar', 'lugia', 'ho-oh', 'celebi'
-    ]
-    male_only = [
-        'nidoranm', 'nidorino', 'nidoking', 'hitmonlee', 'hitmonchan',
-        'tauros', 'tyrogue', 'hitmontop'
-    ]
-    female_only = [
-        'nidoranf', 'nidorina', 'nidoqueen', 'chansey', 'kangaskhan', 'jynx',
-        'smoochum', 'militank', 'blissey'
-    ]
-    genderless = [
-        'magnemite', 'magneton', 'voltorb', 'electrode', 'staryu', 'starmie',
-        'porygon', 'porygon2'
-    ]
+    female_only = [29, 30, 31, 113, 115, 124, 238, 241, 242]
+    male_only = [32, 33, 34, 106, 107, 128, 236, 237]
+    genderless = [81, 82, 100, 101, 120, 121, 137, 201, 233]
     type_col = {
         'bug': 0xA8B820,
         'dark': 0x705848,
@@ -280,10 +244,10 @@ class Dicts(object):
         "can be left blank,\n\n" +
         "`!pause` or `!p` to pause all notifcations,\n\n" +
         "`!resume` or `!r` to resume all alerts,\n\n" +
-        "`!pause [area]` to pause a given area,\n\n" +
-        "`!resume [area]` to resume a given area,\n\n" +
+        "`!activate [area]` to resume a given area,\n\n" +
+        "`!deactivate [area]` to pause a given area,\n\n" +
         "`!areas` to see what areas area available to pause or resume,\n\n" +
-        "`!alerts [pokemon/all/areas]` to see your alert settings,\n\n"
+        "`!alerts` to see your alert settings,\n\n"
         "`!dex [pokemon]` to get pokedex information for a given " +
         "pokemon,\n\n" +
         "`!status` to see which bots are currently online,\n\n" +
@@ -305,17 +269,23 @@ def update_dicts():
         pokemon_settings = master[user_id].pop('pokemon_settings')
         master[user_id]['pokemon']['enabled'] = pokemon_settings['enabled']
         for pkmn_id in pokemon_settings['filters']:
-            master[user_id]['pokemon'][dicts.pokemon[int(pkmn_id) - 1]] = []
+            master[user_id]['pokemon'][dicts.bots[bot_number]['pokemon_name'][
+                pkmn_id]] = []
             for filter_ in pokemon_settings['filters'][pkmn_id]:
-                master[user_id]['pokemon'][dicts.pokemon[
-                    int(pkmn_id) + 1]].append(filter_.to_dict())
+                master[user_id]['pokemon'][dicts.bots[bot_number][
+                    'pokemon_name'][pkmn_id]].append(filter_.to_dict())
         master[user_id]['eggs'] = master[user_id].pop('egg_settings')
         master[user_id]['raids'] = {}
         raid_settings = master[user_id].pop('raid_settings')
         master[user_id]['raids']['enabled'] = raid_settings['enabled']
         for pkmn_id in raid_settings['filters']:
-            master[user_id]['raids'][dicts.pokemon[int(pkmn_id) - 1]] = True
-    with open(get_path('../dicts/user_filters.json'), 'w') as f:
+            master[user_id]['raids'][dicts.bots[bot_number]['pokemon_name'][
+                pkmn_id]]] = True
+    with open(get_path('../user_dicts/user_filters.json')) as f:
+        filters = json.load(f)
+    with open(get_path('../user_dicts/user_filters_backup.json'), 'w') as f:
+        json.dump(filters, f, indent=4)            
+    with open(get_path('../user_dicts/user_filters.json'), 'w') as f:
         json.dump(master, f, indent=4)
 
 

@@ -81,29 +81,38 @@ def check_egg_filter(settings, egg):
     return True
 
 
-def process_pokemon(bot_number, pkmn):
+def process_pokemon(client, bot_number, pkmn):
     user_ids = []
     pkmn_id = pkmn['pkmn_id']
     for user_id in dicts.bots[bot_number]['filters']:
-        if (dicts.bots[bot_number]['filters'][user_id]['pokemon_setttings'][
+        if (dicts.bots[bot_number]['filters'][user_id] is True or
+            pkmn['geofence'] not in dicts.bots[bot_number]['filters'][user_id][
+                'areas'] or
+            dicts.bots[bot_number]['filters'][user_id]['pokemon_setttings'][
             'enabled'] is False or
             pkmn_id not in dicts.bots[bot_number]['filters'][user_id][
                 'pokemon_setttings']['filters']):
-            return
+            break
         filters = dicts.bots[bot_number]['filters'][user_id][
             'pokemon_setttings']['filters'][pkmn_id]
         passed = check_pokemon_filter(filters, pkmn)
         if not passed:
-            return
+            break
         user_ids.append(user_id)
     log.info("DM notification has been triggered!")
     if len(user_ids) > 0:
+        log.info("{} DM notification has been triggered!".format(pkmn['name']))
         dicts.bots[bot_number]['alarm'].pokemon_alert(
-            bot_number, pkmn, user_ids)
+            client, bot_number, pkmn, user_ids)
 
 
 async def out_q(bot_number):
     while not dicts.bots[bot_number]['out_queue'].empty():
+        if dicts.bots[bot_number]['out_queue'].qsize() > 300:
+            log.warning((
+                "Out queue length is at {}... this may be causing a delay " +
+                "in notifications, consider adding more bots."
+            ).format(dicts.bots[bot_number]['out_queue'].qsize()))
         while len(dicts.bots[bot_number]['timestamps']) >= 120:
             if (datetime.utcnow() - dicts.bots[bot_number]['timestamps'][
                     0]).total_seconds() > 60:
@@ -115,8 +124,7 @@ async def out_q(bot_number):
             msg_params[2].get('msg'),
             embed=msg_params[2].get('embed')
         )
-        log.info('Sent msg to {}'.format(
-            msg_params[2]['destination'].name))
+        log.info('Sent msg to {}'.format(msg_params[2]['destination'].name))
         dicts.bots[bot_number]['timestamps'].append(datetime.utcnow())
     dicts.bots[bot_number]['count'] = 0
     await asyncio.sleep(0.5)
@@ -125,6 +133,11 @@ async def out_q(bot_number):
 async def in_q(client, bot_number):
     last_clean = datetime.utcnow()
     while True:
+        if dicts.bots[bot_number]['in_queue'].qsize() > 300:
+            log.warning((
+                "In queue length is at {}... this may be causing a delay " +
+                "in notifications, consider adding more bots."
+            ).format(dicts.bots[bot_number]['in_queue'].qsize()))
         if not dicts.bots[bot_number]['in_queue'].empty():
             obj = await dicts.bots[bot_number]['in_queue'].get()
             if datetime.utcnow() - last_clean > timedelta(minutes=3):

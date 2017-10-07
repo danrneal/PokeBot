@@ -7,34 +7,13 @@ import discord
 import requests
 from bs4 import BeautifulSoup
 from .Filter import load_pokemon_section
-from .utils import (get_args, Dicts, update_dicts, is_number, truncate,
-                    get_pkmn_id, require_and_remove_key)
+from .utils import (get_args, Dicts, update_dicts, require_and_remove_key,
+                    is_number, truncate, get_pkmn_id)
 
 log = logging.getLogger('commands')
 
 args = get_args()
 dicts = Dicts()
-
-
-async def donate(bot_number, message):
-    em = discord.Embed(
-        title="DONATION INFORMATION",
-        description=(
-            "Support this project!\n" +
-            "https://www.paypal.me/dneal12\n\n" +
-            "Please note: this donation goes directly into the \n" +
-            "pocket of the bot dev, not this Discord server."
-        ),
-        color=int('0x85bb65', 16)
-    )
-    await dicts.bots[bot_number]['out_queue'].put((
-        1, dicts.bots[bot_number]['count'], {
-            'destination': message.channel,
-            'embed': em
-        }
-    ))
-    dicts.bots[bot_number]['count'] += 1
-    await message.delete()
 
 
 async def status(client, bot_number, message):
@@ -263,6 +242,27 @@ async def dex(bot_number, message):
         dicts.bots[bot_number]['count'] += 1
 
 
+async def donate(bot_number, message):
+    em = discord.Embed(
+        title="DONATION INFORMATION",
+        description=(
+            "Support this project!\n" +
+            "https://www.paypal.me/dneal12\n\n" +
+            "Please note: this donation goes directly into the \n" +
+            "pocket of the bot dev, not this Discord server."
+        ),
+        color=int('0x85bb65', 16)
+    )
+    await dicts.bots[bot_number]['out_queue'].put((
+        1, dicts.bots[bot_number]['count'], {
+            'destination': message.channel,
+            'embed': em
+        }
+    ))
+    dicts.bots[bot_number]['count'] += 1
+    await message.delete()
+
+
 async def _set(client, message, bot_number):
     msg = message.content.lower().replace('!set ', '').replace(
         '!set\n', '').replace('%', '').replace('nidoran♀', 'nidoranf').replace(
@@ -271,12 +271,16 @@ async def _set(client, message, bot_number):
     set_count = 0
     for command in msg:
         chars = command.split()
-        if len(set(chars).intersection(set(dicts.pokemon))) == 0:
-            pokemon = dicts.pokemon
-            gender = None
-        else:
-            pokemon = [list(set(chars).intersection(set(dicts.pokemon)))[0]]
-            chars.remove(pokemon[0])
+        for char in chars:
+            if get_pkmn_id(char) is not None:
+                pokemon = [get_pkmn_id(char)]
+                chars.remove(char)
+                break
+            else:
+                pokemon = list(range(1, len(dicts.bots[bot_number][
+                    'pokemon_name'])+1))
+                gender = None
+        if len(pokemon) == 1:
             if (len(set(chars).intersection(set(['female', 'f']))) > 0 and
                 pokemon[0] not in dicts.male_only and
                     pokemon[0] not in dicts.genderless):
@@ -384,21 +388,21 @@ async def _set(client, message, bot_number):
             else:
                 dicts.bots[bot_number]['filters'][str(message.author.id)][
                     'areas'] = []
-            for pkmn in pokemon:
-                dicts.bots[bot_number]['filters'][str(message.author.id)][
-                    'pokemon_settings']['filters'][pokemon] = {
-                        "min_iv": min_iv,
-                        "min_level": min_level,
-                        "min_cp": min_cp,
-                        "gender": gender
-                    }
+        for pkmn_id in pokemon:
             dicts.bots[bot_number]['filters'][str(message.author.id)][
-                'pokemon_settings'] = load_pokemon_section(
-                    require_and_remove_key(
-                        'pokemon_settings', dicts.bots[bot_number]['filters'][
-                            str(message.author.id)], "User command."))
-            set_count += 1
+                'pokemon_settings']['filters'][pkmn_id] = {
+                    "min_iv": min_iv,
+                    "min_level": min_level,
+                    "min_cp": min_cp,
+                    "gender": gender
+                }
+                set_count += 1
     if set_count > 0:
+        dicts.bots[bot_number]['filters'][str(message.author.id)][
+            'pokemon_settings'] = load_pokemon_section(
+                require_and_remove_key(
+                    'pokemon_settings', dicts.bots[bot_number]['filters'][
+                        str(message.author.id)], "User command."))
         update_dicts()
     await dicts.bots[bot_number]['out_queue'].put((
         1, dicts.bots[bot_number]['count'], {
@@ -432,7 +436,7 @@ async def delete(bot_number, message):
     else:
         del_count = 0
         for command in msg:
-            if command not in dicts.pokemon and command != 'all':
+            if command != 'all' and get_pkmn_id(command) is None:
                 await dicts.bots[bot_number]['out_queue'].put((
                     1, dicts.bots[bot_number]['count'], {
                         'destination': message.channel,
@@ -443,7 +447,7 @@ async def delete(bot_number, message):
                     }
                 ))
                 dicts.bots[bot_number]['count'] += 1
-            elif command in dicts.pokemon:
+            elif get_pkmn_id(command) is not None:
                 pkmn_id = get_pkmn_id(command)
                 if pkmn_id in dicts.bots[bot_number]['filters'][
                         str(message.author.id)]['pokemon_settings']['filters']:
@@ -580,80 +584,6 @@ async def resume(bot_number, message):
         dicts.bots[bot_number]['count'] += 1
 
 
-async def deactivate(bot_number, message):
-    if message.content.lower() == '!deactivate all':
-        msg = dicts.bots[bot_number]['geofences']
-    else:
-        msg = message.content.lower().replace('!deactivate ', '').replace(
-            '!deactivate\n', '').replace(',\n', ',').replace(
-                '\n', ',').replace(', ', ',').split(',')
-    deactivate_count = 0
-    for cmd in msg:
-        if cmd in dicts.bots[bot_number]['geofences']:
-            if str(message.author.id) not in dicts.bots[bot_number]['filters']:
-                if args.all_areas is False:
-                    await dicts.bots[bot_number]['out_queue'].put((
-                        1, dicts.bots[bot_number]['count'], {
-                            'destination': message.channel,
-                            'msg': (
-                                "`{}`, all areas are off by default."
-                            ).format(message.author.display_name)
-                        }
-                    ))
-                    dicts.bots[bot_number]['count'] += 1
-                    break
-                else:
-                    dicts.bots[bot_number]['filters'][
-                            str(message.author.id)] = {
-                        'pokemon_settings': {
-                            'enabled': True,
-                            'filers': {}
-                        },
-                        'paused': False,
-                        'areas': dicts.bots[bot_number]['geofences']
-                    }
-                    dicts.bots[bot_number]['filters'][str(message.author.id)][
-                        'areas'].remove(cmd)
-                    deactivate_count += 1
-            elif cmd in dicts.bots[bot_number]['filters'][
-                    str(message.author.id)]['areas']:
-                dicts.bots[bot_number]['filters'][str(message.author.id)][
-                    'areas'].remove(cmd)
-                deactivate_count += 1
-        else:
-            await dicts.bots[bot_number]['out_queue'].put((
-                1, dicts.bots[bot_number]['count'], {
-                    'destination': message.channel,
-                    'msg': (
-                        "The `{}` area is not any area I know of in this " +
-                        "region, `{}`"
-                    ).format(cmd, message.author.display_name)
-                }
-            ))
-            dicts.bots[bot_number]['count'] += 1
-    if (len(dicts.bots[bot_number]['filters'][str(message.author.id)][
-        'pokemon_settings']['filters']) == 0 and
-        len(dicts.bots[bot_number]['filters'][str(message.author.id)][
-            'raid_settings']['filters']) == 0 and
-        ((dicts.bots[bot_number]['filters'][str(message.author.id)][
-            'areas'] == [] and
-          args.all_areas is False) or
-         (dicts.bots[bot_number]['filters'][str(message.author.id)][
-             'areas'] == dicts.bots[bot_number]['geofences']))):
-        dicts.bots[bot_number]['filters'].pop(str(message.author.id))
-    if deactivate_count > 0:
-        update_dicts()
-    await dicts.bots[bot_number]['out_queue'].put((
-        1, dicts.bots[bot_number]['count'], {
-            'destination': message.channel,
-            'msg': (
-                'Your alerts have been deactivated for `{}` areas, `{}`.'
-            ).format(deactivate_count, message.author.display_name)
-        }
-    ))
-    dicts.bots[bot_number]['count'] += 1
-
-
 async def activate(bot_number, message):
     if (message.content.lower() == '!activate all' and
             str(message.author.id) in args.admins):
@@ -743,6 +673,80 @@ async def activate(bot_number, message):
     dicts.bots[bot_number]['count'] += 1
 
 
+async def deactivate(bot_number, message):
+    if message.content.lower() == '!deactivate all':
+        msg = dicts.bots[bot_number]['geofences']
+    else:
+        msg = message.content.lower().replace('!deactivate ', '').replace(
+            '!deactivate\n', '').replace(',\n', ',').replace(
+                '\n', ',').replace(', ', ',').split(',')
+    deactivate_count = 0
+    for cmd in msg:
+        if cmd in dicts.bots[bot_number]['geofences']:
+            if str(message.author.id) not in dicts.bots[bot_number]['filters']:
+                if args.all_areas is False:
+                    await dicts.bots[bot_number]['out_queue'].put((
+                        1, dicts.bots[bot_number]['count'], {
+                            'destination': message.channel,
+                            'msg': (
+                                "`{}`, all areas are off by default."
+                            ).format(message.author.display_name)
+                        }
+                    ))
+                    dicts.bots[bot_number]['count'] += 1
+                    break
+                else:
+                    dicts.bots[bot_number]['filters'][
+                            str(message.author.id)] = {
+                        'pokemon_settings': {
+                            'enabled': True,
+                            'filers': {}
+                        },
+                        'paused': False,
+                        'areas': dicts.bots[bot_number]['geofences']
+                    }
+                    dicts.bots[bot_number]['filters'][str(message.author.id)][
+                        'areas'].remove(cmd)
+                    deactivate_count += 1
+            elif cmd in dicts.bots[bot_number]['filters'][
+                    str(message.author.id)]['areas']:
+                dicts.bots[bot_number]['filters'][str(message.author.id)][
+                    'areas'].remove(cmd)
+                deactivate_count += 1
+        else:
+            await dicts.bots[bot_number]['out_queue'].put((
+                1, dicts.bots[bot_number]['count'], {
+                    'destination': message.channel,
+                    'msg': (
+                        "The `{}` area is not any area I know of in this " +
+                        "region, `{}`"
+                    ).format(cmd, message.author.display_name)
+                }
+            ))
+            dicts.bots[bot_number]['count'] += 1
+    if (len(dicts.bots[bot_number]['filters'][str(message.author.id)][
+        'pokemon_settings']['filters']) == 0 and
+        len(dicts.bots[bot_number]['filters'][str(message.author.id)][
+            'raid_settings']['filters']) == 0 and
+        ((dicts.bots[bot_number]['filters'][str(message.author.id)][
+            'areas'] == [] and
+          args.all_areas is False) or
+         (dicts.bots[bot_number]['filters'][str(message.author.id)][
+             'areas'] == dicts.bots[bot_number]['geofences']))):
+        dicts.bots[bot_number]['filters'].pop(str(message.author.id))
+    if deactivate_count > 0:
+        update_dicts()
+    await dicts.bots[bot_number]['out_queue'].put((
+        1, dicts.bots[bot_number]['count'], {
+            'destination': message.channel,
+            'msg': (
+                'Your alerts have been deactivated for `{}` areas, `{}`.'
+            ).format(deactivate_count, message.author.display_name)
+        }
+    ))
+    dicts.bots[bot_number]['count'] += 1
+
+
 async def alerts(bot_number, message):
     if str(message.author.id) not in dicts.bots[bot_number]['filters']:
         await dicts.bots[bot_number]['out_queue'].put((
@@ -786,7 +790,8 @@ async def alerts(bot_number, message):
             alerts += '__POKEMON__\n\n'
         for pkmn_id in dicts.bots[bot_number]['filters'][
                 str(message.author.id)]['pokemon_settings']['filters']:
-            alerts += '{}:'.format(dicts.pokemon[pkmn_id - 1])
+            alerts += '{}:'.format(dicts.bots[bot_number]['pokemon_name'][
+                pkmn_id])
             for filter_ in dicts.bots[bot_number]['filters'][
                 str(message.author.id)]['pokemon_settings']['filters'][
                     pkmn_id]:

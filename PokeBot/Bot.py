@@ -4,10 +4,10 @@
 import logging
 import discord
 import asyncio
-from .utils import get_args, Dicts, update_dicts
 from .processing import in_q
-from .commands import (donate, status, commands, dex, _set, delete, pause,
-                       resume, deactivate, activate, alerts, areas)
+from .utils import get_args, Dicts, update_dicts
+from .commands import (status, commands, dex, donate, _set, delete, pause,
+                       resume, activate, deactivate, alerts, areas)
 
 log = logging.getLogger('Bot')
 
@@ -41,7 +41,7 @@ class Bot(discord.Client):
                         break
                 except:
                     pass
-            if alert_role is True and member.id not in users:
+            if alert_role is True and str(member.id) not in users:
                 users.append(str(member.id))
         user_count = 0
         area_count = 0
@@ -84,7 +84,7 @@ class Bot(discord.Client):
             if alert_role is False:
                 dicts.bots[bot_number]['filters'].pop(str(after.id))
                 update_dicts()
-                log.info('Removed {} from dicts'.format(str(after.id)))
+                log.info('Removed {} from dicts'.format(after.display_name))
             elif (args.muted_role is not None and
                   len(set(dicts.bots[bot_number]['roles'][
                       args.muted_role]).intersection(set(after.roles))) > 0 and
@@ -104,6 +104,7 @@ class Bot(discord.Client):
                     }
                 ))
                 dicts.bots[bot_number]['count'] += 1
+                log.info('Paused {} on mute.'.fotmat(after.display_name)
 
     async def on_member_remove(self, member):
         bot_number = args.bot_client_ids.index(self.user.id)
@@ -111,6 +112,7 @@ class Bot(discord.Client):
                 str(member.id) in dicts.bots[bot_number]['filters']):
             dicts.bots[bot_number]['filters'].pop(str(member.id))
             update_dicts()
+            log.info('Removed {} from dicts.'.format(member.display_name)
 
     async def on_message(self, message):
         bot_number = args.bot_client_ids.index(self.user.id)
@@ -134,10 +136,10 @@ class Bot(discord.Client):
                         await pause(bot_number, message)
                     elif message.content.lower() in ['!resume', '!r']:
                         await resume(bot_number, message)
-                    elif message.content.lower().startswith('!deactivate '):
-                        await deactivate(bot_number, message)
                     elif message.content.lower().startswith('!activate '):
                         await activate(bot_number, message)
+                    elif message.content.lower().startswith('!deactivate '):
+                        await deactivate(bot_number, message)
                     elif message.content.lower() == '!alerts':
                         await alerts(bot_number, message)
                     elif message.content.lower() == '!areas':

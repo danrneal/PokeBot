@@ -3,8 +3,8 @@
 
 import logging
 from datetime import datetime
-from .utils import (get_gmaps_link, get_applemaps_link, get_pokemon_gender,
-                    get_pokemon_size)
+from .utils import (get_pokemon_size, get_pokemon_gender, get_gmaps_link,
+                    get_applemaps_link)
 
 log = logging.getLogger('WebhookStructs')
 

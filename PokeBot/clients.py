@@ -3,17 +3,17 @@
 
 import logging
 import asyncio
-import json
-import sys
 import re
+import sys
+import json
 from collections import namedtuple
 from aiohttp import web
 from .Manager import Manager
 from .Bot import Bot
 from .Filter import load_pokemon_section, load_egg_section
-from .WebhookStructs import Webhook
 from .Notification import Notification
-from .utils import (get_args, Dicts, get_path, parse_boolean,
+from .WebhookStructs import Webhook
+from .utils import (get_path, get_args, Dicts, parse_boolean,
                     require_and_remove_key)
 
 logging.basicConfig(
@@ -55,16 +55,6 @@ def get_managers():
                 args.timezone[m_ct]
                 if len(args.timezone) > 1
                 else args.timezone[0]
-            ),
-            locale=(
-                args.locale[m_ct]
-                if len(args.locale) > 1
-                else args.locale[0]
-            ),
-            max_attempts=(
-                args.max_attempts[m_ct]
-                if len(args.max_attempts) > 1
-                else args.max_attempts[0]
             )
         )
         if m.get_name() not in dicts.managers:
@@ -80,20 +70,81 @@ def get_managers():
 
 def bot_init():
     args = get_args()
-    for bot in range(len(args.tokens)):
+    for bot_number in range(len(args.tokens)):
         dicts.bots.append({
+            'api_req': False,
+            'pokemon_name': {},
+            'filters': {},
             'pokemon_hist': {},
             'raid_hist': {},
-            'filters': {},
             'geofences': [],
             'in_queue': asyncio.Queue(),
             'out_queue': asyncio.PriorityQueue(),
-            'roles': {},
             'timestamps': [],
-            'count': 0
+            'count': 0,
+            'roles': {},
         })
+        locale_path = os.path.join(get_path('../locales'), '{}'.format(
+            args.locale))
+        with open(os.path.join(locale_path, 'pokemon.json'), 'r') as f:
+            names = json.loads(f.read())
+            for pkmn_id, value in names.items():
+                dicts.bots[bot_number]['pokemon_name'][int(pkmn_id)] = value  
+        try:
+            with open(get_path('../user_dicts/user_alarms.json'), 'r') as f:
+                alarm = json.load(f)
+            if type(alarm) is not dict:
+                log.critical("User Alarms file must be a dictionary")
+                sys.exit(1)
+            args = {
+                'street', 'street_num', 'address', 'postal',
+                'neighborhood', 'sublocality', 'city', 'county', 'state',
+                'country'
+            }
+            dicts.bots[bot_number]['api_req'] = dicts.bots[bot_number][
+                'api_req'] or contains_arg(str(alarm), args)
+            dicts.bots[bot_number]['alarm'] = Notification(alarm)
+            log.info('Active DM alarm found.')
+        except ValueError as e:
+            log.critical((
+                "Encountered error while loading Alarms file: {}: {}"
+            ).format(type(e).__name__, e))
+            log.critical(
+                "Encountered a 'ValueError' while loading the Alarms file. " +
+                "This typically means your file isn't in the correct json " +
+                "format. Try loading your file contents into a json validator."
+            )
+            sys.exit(1)
+        except IOError as e:
+            log.critical((
+                "Encountered error while loading Alarms: {}: {}"
+            ).format(type(e).__name__, e))
+            log.critical((
+                "Unable to find a filters file at {}. Please check that " +
+                "this file exists and has the correct permissions."
+            ).format(get_path('../user_dicts/user_alarms.json')))
+            sys.exit(1)
+        except Exception as e:
+            log.critical((
+                "Encountered error while loading Alarms: {}: {}"
+            ).format(type(e).__name__, e))
+            sys.exit(1)
+        if str(args.geofences[0]).lower() != 'none':
+            geofences = []
+            name_pattern = re.compile("(?<=\[)([^]]+)(?=\])")
+            for geofence_file in args.geofences:
+                with open(get_path(geofence_file), 'r') as f:
+                    lines = f.read().splitlines()
+                for line in lines:
+                    line = line.strip()
+                    match_name = name_pattern.search(line)
+                    if match_name:
+                        name = match_name.group(0)
+                        geofences.append(name)
+            dicts.bots[bot_number]['geofences'] = geofences
+            log.info("{} geofences added.".format(len(geofences))     
     try:
-        with open(get_path('../dicts/user_filters.json')) as f:
+        with open(get_path('../user_dicts/user_filters.json')) as f:
             filters = json.load(f)
             for user_id in filters:
                 if type(filters[user_id]) is not dict:
@@ -126,55 +177,11 @@ def bot_init():
                     user_id]['raid_settings'] = load_pokemon_section(
                         require_and_remove_key(
                             'raids', filters[user_id], "User Filters file."))
+        log.info('Loaded DM filters.')
     except IOError:
-        with open(get_path('../dicts/user_filters.json'), 'w') as f:
+        with open(get_path('../user_dicts/user_filters.json'), 'w') as f:
             json.dump({}, f, indent=4)
-    if str(args.geofences[0]).lower() != 'none':
-        geofences = []
-        name_pattern = re.compile("(?<=\[)([^]]+)(?=\])")
-        for geofence_file in args.geofences:
-            with open(get_path(geofence_file), 'r') as f:
-                lines = f.read().splitlines()
-            for line in lines:
-                line = line.strip()
-                match_name = name_pattern.search(line)
-                if match_name:
-                    name = match_name.group(0)
-                    geofences.append(name)
-        for bot in dicts.bots:
-            bot['geofences'] = geofences
-    try:
-        with open(get_path('../dicts/user_alarms.json'), 'r') as f:
-            alarm = json.load(f)
-        if type(alarm) is not dict:
-            log.critical("User Alarms file must be a dictionary")
-            sys.exit(1)
-        for bot in dicts.bots:
-            bot['alarm'] = Notification(alarm)
-    except ValueError as e:
-        log.critical((
-            "Encountered error while loading Alarms file: {}: {}"
-        ).format(type(e).__name__, e))
-        log.critical(
-            "Encountered a 'ValueError' while loading the Alarms file. " +
-            "This typically means your file isn't in the correct json " +
-            "format. Try loading your file contents into a json validator."
-        )
-        sys.exit(1)
-    except IOError as e:
-        log.critical((
-            "Encountered error while loading Alarms: {}: {}"
-        ).format(type(e).__name__, e))
-        log.critical((
-            "Unable to find a filters file at {}. Please check that " +
-            "this file exists and has the correct permissions."
-        ).format(get_path('../dicts/user_alarms.json')))
-        sys.exit(1)
-    except Exception as e:
-        log.critical((
-            "Encountered error while loading Alarms: {}: {}"
-        ).format(type(e).__name__, e))
-        sys.exit(1)
+    log.info('DM bot successfully created.')
     return
 
 

@@ -22,11 +22,10 @@ dicts = Dicts()
 
 class Manager(object):
 
-    def __init__(self, name, locale, timezone, max_attempts, geofence_file,
-                 filter_file, alarm_file):
+    def __init__(self, name, alarm_file, filter_file, geofence_file, timezone):
         self.__name = str(name).lower()
-        self.__api_req = {'REVERSE_LOCATION': False}
-        self.__locale = locale
+        self.__api_req = False
+        self.__locale = args.locale
         self.__pokemon_name = {}
         self.__move_name = {}
         self.update_locales()
@@ -50,6 +49,45 @@ class Manager(object):
 
     def get_name(self):
         return self.__name
+
+    def load_alarms_file(self, file_path, max_attempts):
+        try:
+            with open(file_path, 'r') as f:
+                alarm = json.load(f)
+            if type(alarm) is not dict:
+                log.critical("Alarms file must be a dictionary")
+                sys.exit(1)
+            args = {
+                'street', 'street_num', 'address', 'postal',
+                'neighborhood', 'sublocality', 'city', 'county', 'state',
+                'country'
+            }
+            self.__api_req = self.__api_req or contains_arg(str(alarm), args)
+            self.__alarm = DiscordAlarm(alarm, max_attempts)
+            log.info("Active Discord alarm found.")
+            return
+        except ValueError as e:
+            log.critical((
+                "Encountered error while loading Alarms file: {}: {}"
+            ).format(type(e).__name__, e))
+            log.critical(
+                "Encountered a 'ValueError' while loading the Alarms file. " +
+                "This typically means your file isn't in the correct json " +
+                "format. Try loading your file contents into a json validator."
+            )
+        except IOError as e:
+            log.critical((
+                "Encountered error while loading Alarms: {}: {}"
+            ).format(type(e).__name__, e))
+            log.critical((
+                "Unable to find a filters file at {}. Please check that " +
+                "this file exists and has the correct permissions."
+            ).format(file_path))
+        except Exception as e:
+            log.critical((
+                "Encountered error while loading Alarms: {}: {}"
+            ).format(type(e).__name__, e))
+        sys.exit(1)
 
     def load_filter_file(self, file_path):
         try:
@@ -93,7 +131,6 @@ class Manager(object):
         sys.exit(1)
 
     def load_geofence_file(self, file_path):
-        count = 0
         try:
             geofences = []
             name_pattern = re.compile("(?<=\[)([^]]+)(?=\])")
@@ -109,7 +146,6 @@ class Manager(object):
                 if match_name:
                     if len(points) > 0:
                         geofences.append(Geofence(name, points))
-                        count += 1
                         points = []
                     name = match_name.group(0)
                 elif coor_patter.match(line):
@@ -124,7 +160,7 @@ class Manager(object):
                     )
                     sys.exit(1)
             geofences.append(Geofence(name, points))
-            log.info("{} geofences added.".format(str(count + 1)))
+            log.info("{} geofences added.".format(len(geofences)))
             self.__geofences = geofences
             return
         except IOError as e:
@@ -134,46 +170,6 @@ class Manager(object):
         except Exception as e:
             log.critical((
                 "Encountered error while loading Geofence: {}: {}"
-            ).format(type(e).__name__, e))
-        sys.exit(1)
-
-    def load_alarms_file(self, file_path, max_attempts):
-        try:
-            with open(file_path, 'r') as f:
-                alarm = json.load(f)
-            if type(alarm) is not dict:
-                log.critical("Alarms file must be a dictionary")
-                sys.exit(1)
-            args = {
-                'street', 'street_num', 'address', 'postal',
-                'neighborhood', 'sublocality', 'city', 'county', 'state',
-                'country'
-            }
-            self.__api_req['REVERSE_LOCATION'] = self.__api_req[
-                'REVERSE_LOCATION'] or contains_arg(str(alarm), args)
-            self.__alarm = DiscordAlarm(alarm, max_attempts)
-            log.info("Active Discord alarm found.")
-            return
-        except ValueError as e:
-            log.critical((
-                "Encountered error while loading Alarms file: {}: {}"
-            ).format(type(e).__name__, e))
-            log.critical(
-                "Encountered a 'ValueError' while loading the Alarms file. " +
-                "This typically means your file isn't in the correct json " +
-                "format. Try loading your file contents into a json validator."
-            )
-        except IOError as e:
-            log.critical((
-                "Encountered error while loading Alarms: {}: {}"
-            ).format(type(e).__name__, e))
-            log.critical((
-                "Unable to find a filters file at {}. Please check that " +
-                "this file exists and has the correct permissions."
-            ).format(file_path))
-        except Exception as e:
-            log.critical((
-                "Encountered error while loading Alarms: {}: {}"
             ).format(type(e).__name__, e))
         sys.exit(1)
 
@@ -302,7 +298,7 @@ class Manager(object):
         passed = self.check_pokemon_filter(filters, pkmn)
         if not passed:
             return
-        if self.__api_req['REVERSE_LOCATION']:
+        if self.__api_req:
             pkmn.update(**self.reverse_location(lat, lng))
         log.info("{} notification has been triggered!".format(name))
         self.__alarm.pokemon_alert(pkmn)
@@ -317,8 +313,6 @@ class Manager(object):
             }
 
     def process_egg(self, egg):
-        if self.__egg_settings['enabled'] is False:
-            return
         gym_id = egg['id']
         raid_end = egg['raid_end']
         if gym_id in self.__raid_hist:
@@ -326,9 +320,6 @@ class Manager(object):
             if old_raid_end == raid_end:
                 return
         self.__raid_hist[gym_id] = dict(raid_end=raid_end, pkmn_id=0)
-        passed = self.check_egg_filter(self.__egg_settings, egg)
-        if not passed:
-            return
         lat, lng = egg['lat'], egg['lng']
         egg['geofence'] = self.check_geofences('Raid', lat, lng)
         if len(self.__geofences) > 0 and egg['geofence'] == 'unknown':
@@ -341,8 +332,8 @@ class Manager(object):
                 'description', 'unknown'),
             "gym_url": self.__gym_info.get(gym_id, {}).get(
                 'url', (
-                    'https://gitlab.com/alphapokes/PokeBot/raw/master/' +
-                    'icons/gym_0.png'
+                    'https://raw.githubusercontent.com/kvangent/PokeAlarm/' +
+                    'master/icons/gym_0.png'
                 )
             ),
             'time_left': time_str[0],
@@ -352,14 +343,19 @@ class Manager(object):
             'begin_12h_time': start_time_str[1],
             'begin_24h_time': start_time_str[2],
         })
-        if self.__api_req['REVERSE_LOCATION']:
+        for bot in dicts.bots:
+            bot['in_queue'].put(egg)
+        if self.__egg_settings['enabled'] is False:
+            return
+        passed = self.check_egg_filter(self.__egg_settings, egg)
+        if not passed:
+            return
+        if self.__api_req:
             egg.update(**self.reverse_location(lat, lng))
         log.info("Egg ({}) notification has been triggered!".format(gym_id))
         self.__alarm.raid_egg_alert(egg)
 
     def process_raid(self, raid):
-        if self.__raid_settings['enabled'] is False:
-            return
         gym_id = raid['id']
         pkmn_id = raid['pkmn_id']
         raid_end = raid['raid_end']
@@ -369,7 +365,9 @@ class Manager(object):
             if old_raid_end == raid_end and old_raid_pkmn == pkmn_id:
                 return
         self.__raid_hist[gym_id] = dict(raid_end=raid_end, pkmn_id=pkmn_id)
-        if pkmn_id not in self.__raid_settings['filters']:
+        lat, lng = raid['lat'], raid['lng']
+        raid['geofence'] = self.check_geofences('Raid', lat, lng)
+        if len(self.__geofences) > 0 and raid['geofence'] == 'unknown':
             return
         quick_id = raid['quick_id']
         charge_id = raid['charge_id']
@@ -388,14 +386,6 @@ class Manager(object):
             'quick_id': quick_id,
             'charge_id': charge_id
         }
-        filters = self.__raid_settings['filters'][pkmn_id]
-        passed = self.check_pokemon_filter(filters, raid_pkmn)
-        if not passed:
-            return
-        lat, lng = raid['lat'], raid['lng']
-        raid['geofence'] = self.check_geofences('Raid', lat, lng)
-        if len(self.__geofences) > 0 and raid['geofence'] == 'unknown':
-            return
         time_str = get_time_as_str(raid['raid_end'], self.__timezone)
         start_time_str = get_time_as_str(raid['raid_begin'], self.__timezone)
         raid.update({
@@ -405,8 +395,8 @@ class Manager(object):
                 'description', 'unknown'),
             "gym_url": self.__gym_info.get(gym_id, {}).get(
                 'url', (
-                    'https://gitlab.com/alphapokes/PokeBot/raw/master/' +
-                    'icons/gym_0.png'
+                    'https://raw.githubusercontent.com/kvangent/PokeAlarm/' +
+                    'master/icons/gym_0.png'
                 )
             ),
             'time_left': time_str[0],
@@ -418,7 +408,17 @@ class Manager(object):
             'quick_move': self.__move_name.get(quick_id, 'unknown'),
             'charge_move': self.__move_name.get(charge_id, 'unknown')
         })
-        if self.__api_req['REVERSE_LOCATION']:
+        for bot in dicts.bots:
+            bot['in_queue'].put(raid)
+        
+        if (self.__raid_settings['enabled'] is False or
+             pkmn_id not in self.__raid_settings['filters']):
+            return
+        filters = self.__raid_settings['filters'][pkmn_id]
+        passed = self.check_pokemon_filter(filters, raid_pkmn)
+        if not passed:
+            return
+        if self.__api_req:
             raid.update(**self.reverse_location(lat, lng))
         log.info("Raid ({}) notification has been triggered!".format(gym_id))
         self.__alarm.raid_alert(raid)

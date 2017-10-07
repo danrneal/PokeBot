@@ -1,6 +1,11 @@
 *.pyc
 config/*
 !config/config.ini.example
+Alarms/*
+!Alarms/alarms.json.example
+Filters/*
+!Filters/filters.json.example
+user_dicts/*
+!user_dicts/user_alarms.json.example
 __pycache__
-dicts/users.json
 null

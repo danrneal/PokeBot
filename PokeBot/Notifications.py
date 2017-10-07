@@ -4,9 +4,9 @@
 import logging
 import discord
 from .DiscordAlarm import Alarm
-from .utils import Dicts, get_args, reject_leftover_parameters, get_color
+from .utils import get_args, Dicts, reject_leftover_parameters, get_color
 
-log = logging.getLogger('DM')
+log = logging.getLogger('Notification')
 args = get_args()
 dicts = Dicts()
 
@@ -96,7 +96,7 @@ class Notification(Alarm):
             ))
             dicts.bots[bot_number]['count'] += 1
 
-    def pokemon_alert(self, bot_number, client, pokemon_info, user_ids):
+    def pokemon_alert(self, client, bot_number, pokemon_info, user_ids):
         self.send_alert(
             self.__pokemon, client, bot_number, pokemon_info, user_ids)
 

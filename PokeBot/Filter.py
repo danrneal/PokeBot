@@ -3,9 +3,9 @@
 
 import logging
 import sys
-from .utils import reject_leftover_parameters, get_pkmn_id, parse_boolean
+from .utils import parse_boolean, reject_leftover_parameters, get_pkmn_id
 
-log = logging.getLogger('Filters')
+log = logging.getLogger('Filter')
 
 
 def create_multi_filter(location, FilterType, settings, default):

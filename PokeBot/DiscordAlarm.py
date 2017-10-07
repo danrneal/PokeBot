@@ -5,10 +5,10 @@ import logging
 import time
 import requests
 from random import randint
-from .utils import (get_args, require_and_remove_key, get_static_map_url,
-                    reject_leftover_parameters, get_color)
+from .utils import (get_args, reject_leftover_parameters,
+                    require_and_remove_key, get_color, get_static_map_url)
 
-log = logging.getLogger('Discord')
+log = logging.getLogger('DiscordAlarm')
 args = get_args()
 
 
