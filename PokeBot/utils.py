@@ -280,7 +280,7 @@ def update_dicts():
         master[user_id]['raids']['enabled'] = raid_settings['enabled']
         for pkmn_id in raid_settings['filters']:
             master[user_id]['raids'][dicts.bots[bot_number]['pokemon_name'][
-                pkmn_id]]] = True
+                pkmn_id]] = True
     with open(get_path('../user_dicts/user_filters.json')) as f:
         filters = json.load(f)
     with open(get_path('../user_dicts/user_filters_backup.json'), 'w') as f:

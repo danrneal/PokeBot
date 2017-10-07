@@ -89,7 +89,7 @@ def bot_init():
         with open(os.path.join(locale_path, 'pokemon.json'), 'r') as f:
             names = json.loads(f.read())
             for pkmn_id, value in names.items():
-                dicts.bots[bot_number]['pokemon_name'][int(pkmn_id)] = value  
+                dicts.bots[bot_number]['pokemon_name'][int(pkmn_id)] = value
         try:
             with open(get_path('../user_dicts/user_alarms.json'), 'r') as f:
                 alarm = json.load(f)
@@ -142,7 +142,7 @@ def bot_init():
                         name = match_name.group(0)
                         geofences.append(name)
             dicts.bots[bot_number]['geofences'] = geofences
-            log.info("{} geofences added.".format(len(geofences))     
+            log.info("{} geofences added.".format(len(geofences)))
     try:
         with open(get_path('../user_dicts/user_filters.json')) as f:
             filters = json.load(f)
