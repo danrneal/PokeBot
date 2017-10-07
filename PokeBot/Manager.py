@@ -411,7 +411,7 @@ class Manager(object):
         for bot in dicts.bots:
             bot['in_queue'].put(raid)
         if (self.__raid_settings['enabled'] is False or
-            pkmn_id not in self.__raid_settings['filters']):
+                pkmn_id not in self.__raid_settings['filters']):
             return
         filters = self.__raid_settings['filters'][pkmn_id]
         passed = self.check_pokemon_filter(filters, raid_pkmn)
