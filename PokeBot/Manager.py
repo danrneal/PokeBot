@@ -40,7 +40,7 @@ class Manager(object):
         self.__geofences = []
         if str(geofence_file).lower() != 'none':
             self.load_geofence_file(get_path(geofence_file))
-        self.load_alarms_file(get_path(alarm_file), int(max_attempts))
+        self.load_alarms_file(get_path(alarm_file), args.max_attempts)
         self.__queue = asyncio.Queue()
         log.info("Manager '{}' successfully created.".format(self.__name))
 
@@ -410,9 +410,8 @@ class Manager(object):
         })
         for bot in dicts.bots:
             bot['in_queue'].put(raid)
-        
         if (self.__raid_settings['enabled'] is False or
-             pkmn_id not in self.__raid_settings['filters']):
+            pkmn_id not in self.__raid_settings['filters']):
             return
         filters = self.__raid_settings['filters'][pkmn_id]
         passed = self.check_pokemon_filter(filters, raid_pkmn)

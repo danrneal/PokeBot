@@ -396,7 +396,7 @@ async def _set(client, message, bot_number):
                     "min_cp": min_cp,
                     "gender": gender
                 }
-                set_count += 1
+            set_count += 1
     if set_count > 0:
         dicts.bots[bot_number]['filters'][str(message.author.id)][
             'pokemon_settings'] = load_pokemon_section(
