@@ -267,116 +267,146 @@ async def _set(client, message, bot_number):
         '!set\n', '').replace('%', '').replace('nidoran♀', 'nidoranf').replace(
         'nidoran♂', 'nidoranm').replace('mr. mime', 'mr.mime').replace(
         ',\n', ',').replace('\n', ',').replace(', ', ',').split(',')
+    set_count = 0
     for command in msg:
-        error, chars, pokemon, genders = parse_command(command)
-        if error is True:
-            dicts.q[bot_number].put((1, dicts.count[bot_number], {
-                'destination': message.channel,
-                'msg': '`{}`, this pokemon does not have that gender.'.format(
-                    message.author.display_name)
-            }))
-            dicts.count[bot_number] += 1
-            continue
-        iv = 0
-        level = 1
-        cp = 10
+        chars = command.split()
+        if len(set(chars).intersection(set(dicts.pokemon))) == 0:
+            pokemon = dicts.pokemon
+            gender = None
+        else:
+            pokemon = [list(set(chars).intersection(set(dicts.pokemon)))[0]]
+            chars.remove(pokemon[0])
+            if (len(set(chars).intersection(set(['female', 'f']))) > 0 and
+                pokemon[0] not in dicts.male_only and
+                    pokemon[0] not in dicts.genderless):
+                gender = ['female']
+                chars.remove(list(set(chars).intersection(set(
+                    ['female', 'f'])))[0])
+            elif (len(set(chars).intersection(set(['male', 'm']))) > 0 and
+                  pokemon[0] not in dicts.female_only and
+                  pokemon[0] not in dicts.genderless):
+                gender = ['male']
+                chars.remove(list(set(chars).intersection(set(
+                    ['male', 'm'])))[0])
+            elif (len(set(chars).intersection(set(
+                  ['female', 'f', 'male', 'm']))) == 0):
+                gender = None
+            else:
+                await dicts.bots[bot_number]['out_queue'].put((
+                    1, dicts.bots[bot_number]['count'], {
+                        'destination': message.channel,
+                        'msg': (
+                            '`{}`, `{}` does not have that gender.'
+                        ).format(message.author.display_name, pokemon[0])
+                    }
+                ))
+                dicts.bots[bot_number]['count'] += 1
+                continue
+        error = False
+        min_iv = 0
+        min_level = 0
+        min_cp = 0
         for char in chars:
             if is_number(char):
                 if int(char) >= 0 and int(char) <= 100:
-                    iv = int(char)
+                    min_iv = int(char)
                 else:
                     error = True
-                    dicts.q[bot_number].put((1, dicts.count[bot_number], {
-                        'destination': message.channel,
-                        'msg': ('`{}`, pokemon IV must be between 0 and ' +
-                                '100.').format(message.author.display_name)
-                    }))
-                    dicts.count[bot_number] += 1
+                    await dicts.bots[bot_number]['out_queue'].put((
+                        1, dicts.bots[bot_number]['count'], {
+                            'destination': message.channel,
+                            'msg': (
+                                '`{}`, pokemon IV must be between 0 and 100.'
+                            ).format(message.author.display_name)
+                        }
+                    ))
+                    dicts.bots[bot_number]['count'] += 1
                     break
             elif char.startswith('l') and is_number(char[1:]):
                 if int(char[1:]) >= 1:
-                    level = int(char[1:])
+                    min_level = int(char[1:])
                 else:
                     error = True
-                    dicts.q[bot_number].put((1, dicts.count[bot_number], {
-                        'destination': message.channel,
-                        'msg': ('`{}`, pokemon level must not be less than ' +
-                                '1.').format(message.author.display_name)
-                    }))
-                    dicts.count[bot_number] += 1
+                    await dicts.bots[bot_number]['out_queue'].put((
+                        1, dicts.bots[bot_number]['count'], {
+                            'destination': message.channel,
+                            'msg': (
+                                '`{}`, pokemon level must not be less than 1.'
+                            ).format(message.author.display_name)
+                        }
+                    ))
+                    dicts.bots[bot_number]['count'] += 1
                     break
-            elif ((char.endswith('cp') or
-                   char.startswith('cp')) and
+            elif ((char.startswith('cp') or
+                   char.endswith('cp')) and
                   is_number(char.replace('cp', ''))):
                 if int(char.replace('cp', '')) >= 10:
-                    cp = int(char.replace('cp', ''))
+                    min_cp = int(char.replace('cp', ''))
                 else:
                     error = True
-                    dicts.q[bot_number].put((1, dicts.count[bot_number], {
-                        'destination': message.channel,
-                        'msg': ('`{}`, pokemon CP must not be less than ' +
-                                '10.').format(message.author.display_name)
-                    }))
-                    dicts.count[bot_number] += 1
+                    await dicts.bots[bot_number]['out_queue'].put((
+                        1, dicts.bots[bot_number]['count'], {
+                            'destination': message.channel,
+                            'msg': (
+                                '`{}`, pokemon CP must not be less than 10.'
+                            ).format(message.author.display_name)
+                        }
+                    ))
+                    dicts.bots[bot_number]['count'] += 1
                     break
             else:
                 error = True
-                dicts.q[bot_number].put((1, dicts.count[bot_number], {
-                    'destination': message.channel,
-                    'msg': ('`{}`, your command has an unrecognized ' +
-                            'argument.').format(message.author.display_name)
-                }))
-                dicts.count[bot_number] += 1
+                await dicts.bots[bot_number]['out_queue'].put((
+                    1, dicts.bots[bot_number]['count'], {
+                        'destination': message.channel,
+                        'msg': (
+                            '`{}`, your command has an unrecognized argumnet '+
+                            '(`{}`).'
+                        ).format(message.author.display_name, char)
+                    }
+                ))
+                dicts.bots[bot_number]['count'] += 1
                 break
-        if error is False:
-            if message.author.id not in dicts.users[bot_number]:
-                dicts.users[bot_number][message.author.id] = {
-                    'pokemon': {},
-                    'paused': False
-                }
-                if args.all_areas is True:
-                    dicts.users[bot_number][message.author.id][
-                        'areas'] = args.areas
-                else:
-                    dicts.users[bot_number][message.author.id]['areas'] = []
-            for poke in pokemon:
-                if poke not in dicts.users[bot_number][message.author.id][
-                        'pokemon']:
-                    dicts.users[bot_number][message.author.id]['pokemon'][
-                        poke] = {}
-                if len(pokemon) > 1:
-                    genders = get_default_genders(poke)
-                for gender in genders:
-                    dicts.users[bot_number][message.author.id]['pokemon'][
-                        poke][gender] = {
-                            'iv': iv,
-                            'level': level,
-                            'cp': cp
-                        }
-            if len(pokemon) > 1:
-                pokemon = 'pokemon'
-                gender = ''
+        if error is True:
+            continue
+        if str(message.author.id) not in dicts.bots[bot_number]['filters']:
+            dicts.bots[bot_number]['filters'][str(message.author.id)] = {
+                'pokemon_settings': {
+                    'enabled': True,
+                    'filers': {}
+                },
+                'paused': False
+            }
+            if args.all_areas is True:
+                dicts.bots[bot_number]['filters'][str(message.author.id)][
+                    'areas'] = dicts.bots[bot_number]['geofences']
             else:
-                pokemon = pokemon[0].replace('nidoranf', 'nidoran♀').replace(
-                    'nidoranm', 'nidoran♂').replace(
-                        'mr.mime', 'mr. mime').title()
-                if (len(genders) == 1 and
-                    pokemon not in dicts.male_only and
-                    pokemon not in dicts.female_only and
-                        pokemon not in dicts.genderless):
-                    gender = ' `{}`'.format(genders[0].replace(
-                        'female', '♀').replace('male', '♂'))
-                else:
-                    gender = ''
-            update_dicts(len(args.tokens))
-            dicts.q[bot_number].put((1, dicts.count[bot_number], {
-                'destination': message.channel,
-                'msg': ('`{}`, I will alert you if a `{}%+`, level `{}+`, ' +
-                        'and CP`{}+` `{}`{} spawns.').format(
-                            message.author.display_name, str(iv), str(level),
-                            str(cp), pokemon, gender)
-            }))
-            dicts.count[bot_number] += 1
+                dicts.bots[bot_number]['filters'][str(message.author.id)][
+                    'areas'] = []
+            for pkmn in pokemon:
+                dicts.bots[bot_number]['filters'][str(message.author.id)][
+                    'pokemon_settings']['filters'][pokemon] = {
+                        "min_iv": min_iv,
+                        "min_level": min_level,
+                        "min_cp": min_cp
+                    }
+            dicts.bots[bot_number]['filters'][str(message.author.id)][
+                'pokemon_settings'] = load_pokemon_section(
+                    require_and_remove_key(
+                        'pokemon_settings', dicts.bots[bot_number]['filters'][
+                            str(message.author.id)], "User command."))
+            set_count += 1
+    if set_count > 0:
+        update_dicts()
+    await dicts.bots[bot_number]['out_queue'].put((
+        1, dicts.bots[bot_number]['count'], {
+            'destination': message.channel,
+            'msg': (
+                '`{}`, I have set `{}` pokemon spawn filters.'
+            ).format(message.author.display_name, str(set_count))
+        }
+    ))
+    dicts.bots[bot_number]['count'] += 1
 
 
 async def delete(bot_number, message):
@@ -761,7 +791,7 @@ async def alerts(bot_number, message):
                 if (filter_.min_iv == 0 and
                     filter_.min_cp == 0 and
                     filter_.min_level == 0 and
-                    (filter_.genders == [None] or
+                    (filter_.genders == None or
                      filter_.genders == ['neutral'])):
                     alerts += ' All'
                 else:
@@ -771,13 +801,13 @@ async def alerts(bot_number, message):
                         alerts += ' {}CP+,'
                     elif filter_.min_level > 0:
                         alerts += ' L{}+,'
-                    elif filter_.genders != [None]:
-                        if len(filter_.genders) == 2:
-                            alerts += ' (♀, ♂),'
-                        elif filter_.genders == ['female']:
+                    elif filter_.genders != None:
+                        if filter_.genders == ['female']:
                             alerts += ' (♀),'
                         elif filter_.genders == ['male']:
                             alerts += ' (♂),'
+                        else:
+                            alerts += ' (♀, ♂),'
                 alerts[:-1] += ' |'
             alerts[:-2] += '\n'
         alerts = [alerts[:-1]]

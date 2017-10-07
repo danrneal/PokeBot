@@ -295,6 +295,30 @@ class Dicts(object):
     )
 
 
+def update_dicts():
+    dicts = Dicts()
+    master = {}
+    for bot in dicts.bots:
+        master.update(bot['filters'])
+    for user_id in master:
+        master[user_id]['pokemon'] = {}
+        pokemon_settings = master[user_id].pop('pokemon_settings')
+        master[user_id]['pokemon']['enabled'] = pokemon_settings['enabled']
+        for pkmn_id in pokemon_settings['filters']:
+            master[user_id]['pokemon'][dicts.pokemon[int(pkmn_id) - 1]] = []
+            for filter_ in pokemon_settings['filters'][pkmn_id]:
+                master[user_id]['pokemon'][dicts.pokemon[
+                    int(pkmn_id) + 1]].append(filter_.to_dict())
+        master[user_id]['eggs'] = master[user_id].pop('egg_settings')
+        master[user_id]['raids'] = {}
+        raid_settings = master[user_id].pop('raid_settings')
+        master[user_id]['raids']['enabled'] = raid_settings['enabled']
+        for pkmn_id in raid_settings['filters']:
+            master[user_id]['raids'][dicts.pokemon[int(pkmn_id) - 1]] = True
+    with open(get_path('../dicts/user_filters.json'), 'w') as f:
+        json.dump(master, f, indent=4)
+
+
 def contains_arg(line, args):
     for word in args:
         if ('<{}>'.format(word)) in line:
@@ -329,6 +353,20 @@ def require_and_remove_key(key, _dict, location):
             "The parameter '{}' is required for {}. Please check " +
             "documentation for correct formatting.".format(key, location))
         sys.exit(1)
+
+
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+
+
+def truncate(msg):
+    msg_split1 = msg[:len(msg[:1999].rsplit('\n', 1)[0])]
+    msg_split2 = msg[len(msg[:1999].rsplit('\n', 1)[0]):]
+    return [msg_split1, msg_split2]
 
 
 def get_pkmn_id(pokemon_name):
@@ -471,99 +509,3 @@ def get_time_as_str(t, timezone=None):
                disappear_time.strftime("%p").lower())
     time_24 = disappear_time.strftime("%H:%M:%S")
     return time_left, time_12, time_24
-
-
-def update_dicts():
-    dicts = Dicts()
-    master = {}
-    for bot in dicts.bots:
-        master.update(bot['filters'])
-    for user_id in master:
-        master[user_id]['pokemon'] = {}
-        pokemon_settings = master[user_id].pop('pokemon_settings')
-        master[user_id]['pokemon']['enabled'] = pokemon_settings['enabled']
-        for pkmn_id in pokemon_settings['filters']:
-            master[user_id]['pokemon'][dicts.pokemon[int(pkmn_id) - 1]] = []
-            for filter_ in pokemon_settings['filters'][pkmn_id]:
-                master[user_id]['pokemon'][dicts.pokemon[
-                    int(pkmn_id) + 1]].append(filter_.to_dict())
-        master[user_id]['eggs'] = master[user_id].pop('egg_settings')
-        master[user_id]['raids'] = {}
-        raid_settings = master[user_id].pop('raid_settings')
-        master[user_id]['raids']['enabled'] = raid_settings['enabled']
-        for pkmn_id in raid_settings['filters']:
-            master[user_id]['raids'][dicts.pokemon[int(pkmn_id) - 1]] = True
-    with open(get_path('../dicts/user_filters.json'), 'w') as f:
-        json.dump(master, f, indent=4)
-
-
-def parse_command(command):
-    dicts = Dicts()
-    chars = command.split()
-    error = False
-    if len(set(chars).intersection(set(dicts.pokemon))) > 0:
-        pokemon = [list(set(chars).intersection(set(dicts.pokemon)))[0]]
-        chars.remove(pokemon[0])
-        if (pokemon[0] in dicts.male_only and
-            len(set(chars).intersection(set(['female', 'f']))) == 0 or
-            (pokemon[0] not in dicts.male_only and
-             pokemon[0] not in dicts.female_only and
-             pokemon[0] not in dicts.genderless and
-             len(set(chars).intersection(set(['male', 'm']))) > 0)):
-            genders = ['male']
-            if len(set(chars).intersection(set(['male', 'm']))) > 0:
-                chars.remove(list(set(chars).intersection(set(['male', 'm'])))[
-                    0])
-        elif (pokemon[0] in dicts.female_only and
-              len(set(chars).intersection(set(['male', 'm']))) == 0 or
-              (pokemon[0] not in dicts.male_only and
-               pokemon[0] not in dicts.female_only and
-               pokemon[0] not in dicts.genderless and
-               len(set(chars).intersection(set(['female', 'f']))) > 0)):
-            genders = ['female']
-            if len(set(chars).intersection(set(['female', 'f']))) > 0:
-                chars.remove(list(set(chars).intersection(set(
-                    ['female', 'f'])))[0])
-        elif (pokemon[0] in dicts.genderless and
-              len(set(chars).intersection(set(['female', 'f']))) == 0 and
-              len(set(chars).intersection(set(['male', 'm']))) == 0):
-            genders = ['genderless']
-        elif (pokemon[0] not in dicts.male_only and
-              pokemon[0] not in dicts.female_only and
-              pokemon[0] not in dicts.genderless):
-            genders = ['female', 'male']
-        else:
-            error = True
-            genders = []
-    else:
-        pokemon = dicts.pokemon
-        genders = []
-
-    return error, chars, pokemon, genders
-
-
-def is_number(s):
-    try:
-        float(s)
-        return True
-    except ValueError:
-        return False
-
-
-def truncate(msg):
-    msg_split1 = msg[:len(msg[:1999].rsplit('\n', 1)[0])]
-    msg_split2 = msg[len(msg[:1999].rsplit('\n', 1)[0]):]
-    return [msg_split1, msg_split2]
-
-
-def get_default_genders(pokemon):
-    dicts = Dicts()
-    if pokemon in dicts.male_only:
-        genders = ['male']
-    elif pokemon in dicts.female_only:
-        genders = ['female']
-    elif pokemon in dicts.genderless:
-        genders = ['genderless']
-    else:
-        genders = ['female', 'male']
-    return genders
