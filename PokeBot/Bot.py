@@ -104,7 +104,7 @@ class Bot(discord.Client):
                     }
                 ))
                 dicts.bots[bot_number]['count'] += 1
-                log.info('Paused {} on mute.'.fotmat(after.display_name)
+                log.info('Paused {} on mute.'.fotmat(after.display_name))
 
     async def on_member_remove(self, member):
         bot_number = args.bot_client_ids.index(self.user.id)
@@ -112,7 +112,7 @@ class Bot(discord.Client):
                 str(member.id) in dicts.bots[bot_number]['filters']):
             dicts.bots[bot_number]['filters'].pop(str(member.id))
             update_dicts()
-            log.info('Removed {} from dicts.'.format(member.display_name)
+            log.info('Removed {} from dicts.'.format(member.display_name))
 
     async def on_message(self, message):
         bot_number = args.bot_client_ids.index(self.user.id)
