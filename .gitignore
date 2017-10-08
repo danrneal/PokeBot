@@ -5,6 +5,8 @@ Alarms/*
 !Alarms/alarms.json.example
 Filters/*
 !Filters/filters.json.example
+genfences/*
+!geofences/filters.json.example
 user_dicts/*
 !user_dicts/user_alarms.json.example
 __pycache__
