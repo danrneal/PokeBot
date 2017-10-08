@@ -145,7 +145,8 @@ def bot_init():
             dicts.bots[bot_number]['geofences'] = geofences
             log.info("{} geofences added.".format(len(geofences)))
     try:
-        with open(get_path('../user_dicts/user_filters.json')) as f:
+        with open(get_path(
+                '../user_dicts/user_filters.json'), encoding="utf-8") as f:
             filters = json.load(f)
             for user_id in filters:
                 if type(filters[user_id]) is not dict:

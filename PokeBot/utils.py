@@ -45,21 +45,21 @@ def get_args():
         '-a', '--alarms',
         type=str,
         action='append',
-        default=['../Alarms/alarms.json'],
+        default=[],
         help='Alarms configuration file. default: alarms.json'
     )
     parser.add_argument(
         '-f', '--filters',
         type=str,
         action='append',
-        default=['../Filters/filters.json'],
+        default=[],
         help='Filters configuration file. default: filters.json'
     )
     parser.add_argument(
         '-gf', '--geofences',
         type=str,
         action='append',
-        default=[None],
+        default=[],
         help='Geofence configuration file. default: None'
     )
     parser.add_argument(
@@ -154,15 +154,15 @@ def get_args():
 
     args = parser.parse_args()
 
-    files = glob(get_path('../alarms/*.json'))
+    files = glob('./Alarms/*.json')
     for file_ in files:
         args.alarms.append(file_)
 
-    files = glob(get_path('../filters/*.json'))
+    files = glob(get_path('../Filters/*.json'))
     for file_ in files:
         args.filters.append(file_)
 
-    files = glob(get_path('../geofences/*.json'))
+    files = glob(get_path('../geofences/*.txt'))
     for file_ in files:
         args.geofences.append(file_)
 
@@ -171,24 +171,21 @@ def get_args():
         sys.exit(1)
 
     for list_ in [args.filters, args.alarms, args.geofences, args.timezone]:
-        if len(list_) > 1:
-            list_.pop(0)
-            size = len(list_)
-            if size != 1 and size != args.manager_count:
-                log.critical(
-                    "Number of arguments must be either 1 for all managers " +
-                    "or {} equal to Manager Count. Please provided the " +
-                    "correct number of arguments.".format(args.manager_count)
-                )
-                log.critical(list_)
-                sys.exit(1)
+        if len(list_) != 1 and len(list_) != args.manager_count:
+            log.critical(
+                "Number of arguments must be either 1 for all managers " +
+                "or {} equal to Manager Count. Please provided the " +
+                "correct number of arguments.".format(args.manager_count)
+            )
+            log.critical(list_)
+            sys.exit(1)
 
     for i in range(len(args.alarms)):
         if args.alarms[i].split('/')[-1].replace(
-            '_alarms.json', '') == args.filters[i].split('/')[-1].replace(
-                '_filters.json', ''):
-            args.manager_name.append(args.alarms[i].split('/')[-1].strip(
-                '_alarms.json'))
+            'alarms_', '').replace('.json', '') == args.filters[i].split('/')[
+                -1].replace('filters_', '').replace('.json', ''):
+            args.manager_name.append(args.alarms[i].split('/')[-1].replace(
+                'alarms_', '').replace('.json', ''))
         else:
             break
 

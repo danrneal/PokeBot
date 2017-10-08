@@ -93,6 +93,7 @@ class Manager(object):
         try:
             with open(file_path, 'r', encoding="utf-8") as f:
                 filters = json.load(f)
+            log.info(filters)
             if type(filters) is not dict:
                 log.critical(
                     "Filters file's must be a JSON object: { " +
