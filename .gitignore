@@ -1,10 +1,10 @@
 *.pyc
 config/*
 !config/config.ini.example
-Alarms/*
-!Alarms/alarms.json.example
-Filters/*
-!Filters/filters.json.example
+alarms/*
+!alarms/alarms.json.example
+filters/*
+!filters/filters.json.example
 genfences/*
 !geofences/filters.json.example
 user_dicts/*
