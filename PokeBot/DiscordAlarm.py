@@ -45,6 +45,7 @@ class DiscordAlarm(Alarm):
 
     _defaults = {
         'pokemon': {
+            'webhook_url': "",
             'username': "<pkmn>",
             'content': "",
             'icon_url': (
@@ -61,6 +62,7 @@ class DiscordAlarm(Alarm):
             'color': "<iv>"
         },
         'egg': {
+            'webhook_url': "",
             'username': "Egg",
             'content': "",
             'icon_url': (
@@ -80,6 +82,7 @@ class DiscordAlarm(Alarm):
             'color': "<raid_level>"
         },
         'raid': {
+            'webhook_url': "",
             'username': "Raid",
             'content': "",
             'icon_url': (
@@ -98,8 +101,6 @@ class DiscordAlarm(Alarm):
     }
 
     def __init__(self, settings, max_attempts):
-        self.__webhook_url = require_and_remove_key(
-            'webhook_url', settings, "'Discord' type alarms.")
         self.__max_attempts = max_attempts
         self.__avatar_url = settings.pop('avatar_url', "")
         self.__map = settings.pop('map', {})
@@ -114,7 +115,7 @@ class DiscordAlarm(Alarm):
 
     def create_alert_settings(self, settings, default):
         alert = {
-            'webhook_url': settings.pop('webhook_url', self.__webhook_url),
+            'webhook_url': settings.pop('webhook_url', default['webhook_url']),
             'username': settings.pop('username', default['username']),
             'avatar_url': settings.pop('avatar_url', default['avatar_url']),
             'content': settings.pop('content', default['content']),

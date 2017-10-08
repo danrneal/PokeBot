@@ -63,6 +63,7 @@ class Manager(object):
                 'country'
             }
             self.__api_req = self.__api_req or contains_arg(str(alarm), args)
+            log.info('here')
             self.__alarm = DiscordAlarm(alarm, max_attempts)
             log.info("Active Discord alarm found.")
             return

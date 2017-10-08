@@ -70,7 +70,6 @@ def get_managers():
 
 
 def bot_init():
-    args = get_args()
     for bot_number in range(len(args.tokens)):
         dicts.bots.append({
             'api_req': False,

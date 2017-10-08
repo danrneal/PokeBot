@@ -170,6 +170,10 @@ def get_args():
         log.critical("Token - Client ID mismatch")
         sys.exit(1)
 
+    args.alarms = sorted(args.alarms)
+    args.filters = sorted(args.filters)
+    args.geofences = sorted(args.geofences)
+
     for list_ in [args.filters, args.alarms, args.geofences, args.timezone]:
         if len(list_) != 1 and len(list_) != args.manager_count:
             log.critical(
