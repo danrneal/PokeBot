@@ -5,7 +5,7 @@ alarms/*
 !alarms/alarms.json.example
 filters/*
 !filters/filters.json.example
-genfences/*
+geofences/*
 !geofences/geofence.txt.example
 user_dicts/*
 !user_dicts/user_alarms.json.example
