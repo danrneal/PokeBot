@@ -96,13 +96,13 @@ def bot_init():
             if type(alarm) is not dict:
                 log.critical("User Alarms file must be a dictionary")
                 sys.exit(1)
-            args = {
+            geo_args = {
                 'street', 'street_num', 'address', 'postal',
                 'neighborhood', 'sublocality', 'city', 'county', 'state',
                 'country'
             }
             dicts.bots[bot_number]['api_req'] = dicts.bots[bot_number][
-                'api_req'] or contains_arg(str(alarm), args)
+                'api_req'] or contains_arg(str(alarm), geo_args)
             dicts.bots[bot_number]['alarm'] = Notification(alarm)
             log.info('Active DM alarm found.')
         except ValueError as e:
