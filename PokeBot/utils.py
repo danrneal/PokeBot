@@ -154,11 +154,11 @@ def get_args():
 
     args = parser.parse_args()
 
-    files = glob('./Alarms/*.json')
+    files = glob(get_path('../alarms/*.json'))
     for file_ in files:
         args.alarms.append(file_)
 
-    files = glob(get_path('../Filters/*.json'))
+    files = glob(get_path('../filters/*.json'))
     for file_ in files:
         args.filters.append(file_)
 
