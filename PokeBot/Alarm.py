@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+import logging
 import time
 
 log = logging.getLogger('Alarm')
-args = get_args()
 
 
 class Alarm(object):

@@ -88,7 +88,7 @@ def bot_init():
         with open(os.path.join(locale_path, 'pokemon.json'), 'r') as f:
             names = json.loads(f.read())
             for pkmn_id, value in names.items():
-                dicts.bots[bot_number]['pokemon_name'][int(pkmn_id)] = value
+                Dicts.bots[bot_number]['pokemon_name'][int(pkmn_id)] = value
         try:
             with open(get_path('../user_dicts/user_alarms.json'), 'r') as f:
                 alarm = json.load(f)
@@ -100,9 +100,9 @@ def bot_init():
                 'neighborhood', 'sublocality', 'city', 'county', 'state',
                 'country'
             }
-            dicts.bots[bot_number]['api_req'] = dicts.bots[bot_number][
+            Dicts.bots[bot_number]['api_req'] = Dicts.bots[bot_number][
                 'api_req'] or contains_arg(str(alarm), geo_args)
-            dicts.bots[bot_number]['alarm'] = Notification(alarm)
+            Dicts.bots[bot_number]['alarm'] = Notification(alarm)
             log.info('Active DM alarm found.')
         except ValueError as e:
             log.critical((
@@ -140,7 +140,7 @@ def bot_init():
                     if match_name:
                         name = match_name.group(0)
                         geofences.append(name)
-            dicts.bots[bot_number]['geofences'] = geofences
+            Dicts.bots[bot_number]['geofences'] = geofences
             log.info("{} geofences added.".format(len(geofences)))
     try:
         with open(get_path(
@@ -153,27 +153,27 @@ def bot_init():
                         "\"pokemon\":{...},... }, it may be corrupted"
                     )
                     sys.exit(1)
-                dicts.bots[int(user_id) % len(args.tokens)]['filters'][
+                Dicts.bots[int(user_id) % len(args.tokens)]['filters'][
                     user_id]['pokemon_settings'] = {}
-                dicts.bots[int(user_id) % len(args.tokens)]['filters'][
+                Dicts.bots[int(user_id) % len(args.tokens)]['filters'][
                     user_id]['egg_settings'] = {}
-                dicts.bots[int(user_id) % len(args.tokens)]['filters'][
+                Dicts.bots[int(user_id) % len(args.tokens)]['filters'][
                     user_id]['raid_settings'] = {}
-                dicts.bots[int(user_id) % len(args.tokens)]['filters'][
+                Dicts.bots[int(user_id) % len(args.tokens)]['filters'][
                     user_id]['paused'] = parse_boolean(require_and_remove_key(
                         'paused', filters[user_id], "User Filters file."))
-                dicts.bots[int(user_id) % len(args.tokens)]['filters'][
+                Dicts.bots[int(user_id) % len(args.tokens)]['filters'][
                     user_id]['areas'] = require_and_remove_key(
                         'areas', filters[user_id], "User Filters file.")
-                dicts.bots[int(user_id) % len(args.tokens)]['filters'][
+                Dicts.bots[int(user_id) % len(args.tokens)]['filters'][
                     user_id]['pokemon_settings'] = load_pokemon_section(
                         require_and_remove_key(
                             'pokemon', filters[user_id], "User Filters file."))
-                dicts.bots[int(user_id) % len(args.tokens)]['filters'][
+                Dicts.bots[int(user_id) % len(args.tokens)]['filters'][
                     user_id]['egg_settings'] = load_egg_section(
                         require_and_remove_key(
                             'eggs', filters[user_id], "User Filters file."))
-                dicts.bots[int(user_id) % len(args.tokens)]['filters'][
+                Dicts.bots[int(user_id) % len(args.tokens)]['filters'][
                     user_id]['raid_settings'] = load_pokemon_section(
                         require_and_remove_key(
                             'raids', filters[user_id], "User Filters file."))

@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import logging
-import time
 import requests
 from random import randint
+from .Alarm import Alarm
 from .utils import (get_args, reject_leftover_parameters, get_color,
                     get_static_map_url)
 

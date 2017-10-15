@@ -28,7 +28,8 @@ class Locale(object):
             self.__form_names[int(pkmn_id)] = {}
             pkmn_forms = all_forms.get(pkmn_id, {})
             for form_id, form_name in forms.iteritems():
-                self.__form_names[int(pkmn_id)][int(form_id)] = pkmn_forms.get(form_id, form_name)
+                self.__form_names[int(pkmn_id)][int(form_id)] = pkmn_forms.get(
+                    form_id, form_name)
 
     def get_pokemon_name(self, pokemon_id):
         return self.__pokemon_names.get(pokemon_id, 'unknown')

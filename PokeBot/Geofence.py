@@ -64,6 +64,7 @@ class Geofence(object):
             self.__max_x = max(p[0], self.__max_x)
             self.__min_y = min(p[1], self.__min_y)
             self.__max_y = max(p[1], self.__max_y)
+
     def contains(self, x, y):
         if (self.__max_x < x or
             x < self.__min_x or
