@@ -344,10 +344,11 @@ def get_pkmn_id(pokemon_name):
     name = pokemon_name.lower()
     if not hasattr(get_pkmn_id, 'ids'):
         get_pkmn_id.ids = {}
-        files = glob(get_path('../locales/*/pokemon.json'))
+        files = glob(get_path('../locales/*.json'))
         for file_ in files:
             with open(file_, 'r', encoding="utf-8") as f:
                 j = json.loads(f.read())
+                j = j['pokemon']
                 for id_ in j:
                     nm = j[id_].lower()
                     get_pkmn_id.ids[nm] = int(id_)
@@ -357,7 +358,7 @@ def get_pkmn_id(pokemon_name):
 def get_base_height(pokemon_id):
     if not hasattr(get_base_height, 'info'):
         get_base_height.info = {}
-        file_ = get_path('../locales/base_stats.json')
+        file_ = get_path('../data/base_stats.json')
         with open(file_, 'r') as f:
             j = json.loads(f.read())
         for id_ in j:
@@ -368,7 +369,7 @@ def get_base_height(pokemon_id):
 def get_base_weight(pokemon_id):
     if not hasattr(get_base_weight, 'info'):
         get_base_weight.info = {}
-        file_ = get_path('../locales/base_stats.json')
+        file_ = get_path('../data/base_stats.json')
         with open(file_, 'r') as f:
             j = json.loads(f.read())
         for id_ in j:

@@ -12,35 +12,6 @@ log = logging.getLogger('DiscordAlarm')
 args = get_args()
 
 
-class Alarm(object):
-
-    _defaults = {"pokemon": {}}
-
-    @staticmethod
-    def replace(string, pkinfo):
-        if string is None:
-            return None
-        for key in pkinfo:
-            string = string.replace("<{}>".format(key), str(pkinfo[key]))
-        return string
-
-    @staticmethod
-    def try_sending(log, name, send_alert, args, max_attempts=3):
-        for i in range(max_attempts):
-            try:
-                send_alert(**args)
-                return
-            except Exception as e:
-                log.error((
-                    "Encountered error while sending notification ({}: {})"
-                ).format(type(e).__name__, e))
-                log.error((
-                    "{} is having connection issues. {} attempt of {}."
-                ).format(name, i+1, max_attempts))
-                time.sleep(3)
-        log.error("Could not send notification... Giving up.")
-
-
 class DiscordAlarm(Alarm):
 
     _defaults = {
@@ -49,11 +20,11 @@ class DiscordAlarm(Alarm):
             'username': "<pkmn>",
             'content': "",
             'icon_url': (
-                "https://raw.githubusercontent.com/kvangent/PokeAlarm/" +
+                "https://raw.githubusercontent.com/RocketMap/PokeAlarm/" +
                 "master/icons/<pkmn_id>.png"
             ),
             'avatar_url': (
-                "https://raw.githubusercontent.com/kvangent/PokeAlarm/" +
+                "https://raw.githubusercontent.com/RocketMap/PokeAlarm/" +
                 "master/icons/<pkmn_id>.png"
             ),
             'title': "A wild <pkmn> has appeared!",
@@ -66,11 +37,11 @@ class DiscordAlarm(Alarm):
             'username': "Egg",
             'content': "",
             'icon_url': (
-                "https://raw.githubusercontent.com/kvangent/PokeAlarm/" +
+                "https://raw.githubusercontent.com/RocketMap/PokeAlarm/" +
                 "master/icons/egg_<raid_level>.png"
             ),
             'avatar_url': (
-                "https://raw.githubusercontent.com/kvangent/PokeAlarm/" +
+                "https://raw.githubusercontent.com/RocketMap/PokeAlarm/" +
                 "master/icons/egg_<raid_level>.png"
             ),
             'title': "Raid is incoming!",
@@ -86,11 +57,11 @@ class DiscordAlarm(Alarm):
             'username': "Raid",
             'content': "",
             'icon_url': (
-                "https://raw.githubusercontent.com/kvangent/PokeAlarm/" +
+                "https://raw.githubusercontent.com/RocketMap/PokeAlarm/" +
                 "master/icons/<pkmn_id>.png"
             ),
             'avatar_url': (
-                "https://raw.githubusercontent.com/kvangent/PokeAlarm/" +
+                "https://raw.githubusercontent.com/RocketMap/PokeAlarm/" +
                 "master/icons/egg_<raid_level>.png"
             ),
             'title': "Level <raid_level> Raid is available against <pkmn>!",
@@ -168,7 +139,7 @@ class DiscordAlarm(Alarm):
         self.send_alert(self.__raid, raid_info)
 
     def send_webhook(self, url, payload):
-        resp = requests.post(url, json=payload, timeout=(None, 5))
+        resp = requests.post(url, json=payload, timeout=5)
         if resp.ok is True:
             log.info("Notification successful (returned {})".format(
                 resp.status_code))

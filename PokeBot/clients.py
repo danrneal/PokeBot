@@ -24,7 +24,6 @@ logging.basicConfig(
 log = logging.getLogger('clients')
 
 args = get_args()
-dicts = Dicts()
 data_queue = asyncio.Queue()
 entries = []
 
@@ -58,8 +57,8 @@ def get_managers():
                 else args.timezone[0]
             )
         )
-        if m.get_name() not in dicts.managers:
-            dicts.managers[m.get_name()] = m
+        if m.get_name() not in Dicts.managers:
+            Dicts.managers[m.get_name()] = m
         else:
             log.critical(
                 "Names of Manager processes must be unique (regardless of " +
@@ -71,7 +70,7 @@ def get_managers():
 
 def bot_init():
     for bot_number in range(len(args.tokens)):
-        dicts.bots.append({
+        Dicts.bots.append({
             'api_req': False,
             'pokemon_name': {},
             'filters': {},
@@ -213,7 +212,7 @@ async def manage_webhook_data(queue):
         data = await queue.get()
         obj = Webhook.make_object(data)
         if obj is not None:
-            for name, mgr in dicts.managers.items():
+            for name, mgr in Dicts.managers.items():
                 await mgr.update(obj)
 
 
@@ -249,7 +248,7 @@ def start_clients():
     for bot in range(len(args.tokens)):
         entries.append(Entry(client=Bot(), event=asyncio.Event()))
     loop.run_until_complete(login())
-    for name, mgr in dicts.managers.items():
+    for name, mgr in Dicts.managers.items():
         entries.append(Entry(client=mgr, event=asyncio.Event()))
     for entry in entries:
         loop.create_task(wrapped_connect(entry))

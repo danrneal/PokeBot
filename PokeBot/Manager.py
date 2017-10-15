@@ -24,11 +24,15 @@ class Manager(object):
 
     def __init__(self, name, alarm_file, filter_file, geofence_file, timezone):
         self.__name = str(name).lower()
-        self.__api_req = False
-        self.__locale = args.locale
-        self.__pokemon_name = {}
-        self.__move_name = {}
-        self.update_locales()
+        self.__loc_service = None
+        if len(args.gmaps_keys) > 0:
+            self.__loc_service = LocationService()
+        else:
+            log.warning(
+                "NO GOOGLE API KEY SET - Reverse Location and Distance " +
+                "Matrix DTS will NOT be detected."
+            )
+        self.__locale = Locale(args.locale)
         self.__timezone = timezone
         self.__pokemon_settings = {}
         self.__raid_settings = {}
@@ -39,7 +43,7 @@ class Manager(object):
         self.load_filter_file(get_path(filter_file))
         self.__geofences = []
         if str(geofence_file).lower() != 'none':
-            self.load_geofence_file(get_path(geofence_file))
+            self.__geofences = load_geofence_file(get_path(geofence_file))
         self.load_alarms_file(get_path(alarm_file), args.max_attempts)
         self.__queue = asyncio.Queue()
         log.info("Manager '{}' successfully created.".format(self.__name))
@@ -49,46 +53,6 @@ class Manager(object):
 
     def get_name(self):
         return self.__name
-
-    def load_alarms_file(self, file_path, max_attempts):
-        try:
-            with open(file_path, 'r') as f:
-                alarm = json.load(f)
-            if type(alarm) is not dict:
-                log.critical("Alarms file must be a dictionary")
-                sys.exit(1)
-            args = {
-                'street', 'street_num', 'address', 'postal',
-                'neighborhood', 'sublocality', 'city', 'county', 'state',
-                'country'
-            }
-            self.__api_req = self.__api_req or contains_arg(str(alarm), args)
-            log.info('here')
-            self.__alarm = DiscordAlarm(alarm, max_attempts)
-            log.info("Active Discord alarm found.")
-            return
-        except ValueError as e:
-            log.critical((
-                "Encountered error while loading Alarms file: {}: {}"
-            ).format(type(e).__name__, e))
-            log.critical(
-                "Encountered a 'ValueError' while loading the Alarms file. " +
-                "This typically means your file isn't in the correct json " +
-                "format. Try loading your file contents into a json validator."
-            )
-        except IOError as e:
-            log.critical((
-                "Encountered error while loading Alarms: {}: {}"
-            ).format(type(e).__name__, e))
-            log.critical((
-                "Unable to find a filters file at {}. Please check that " +
-                "this file exists and has the correct permissions."
-            ).format(file_path))
-        except Exception as e:
-            log.critical((
-                "Encountered error while loading Alarms: {}: {}"
-            ).format(type(e).__name__, e))
-        sys.exit(1)
 
     def load_filter_file(self, file_path):
         try:
@@ -131,48 +95,58 @@ class Manager(object):
             ).format(type(e).__name__, e))
         sys.exit(1)
 
-    def load_geofence_file(self, file_path):
+    def load_alarms_file(self, file_path, max_attempts):
         try:
-            geofences = []
-            name_pattern = re.compile("(?<=\[)([^]]+)(?=\])")
-            coor_patter = re.compile("[-+]?[0-9]*\.?[0-9]*" + "[ \t]*,[ \t]*" +
-                                     "[-+]?[0-9]*\.?[0-9]*")
             with open(file_path, 'r') as f:
-                lines = f.read().splitlines()
-            name = "geofence"
-            points = []
-            for line in lines:
-                line = line.strip()
-                match_name = name_pattern.search(line)
-                if match_name:
-                    if len(points) > 0:
-                        geofences.append(Geofence(name, points))
-                        points = []
-                    name = match_name.group(0)
-                elif coor_patter.match(line):
-                    lat, lng = map(float, line.split(","))
-                    points.append([lat, lng])
-                else:
-                    log.critical((
-                        "Geofence was unable to parse this line: {}"
-                    ).format(line))
-                    log.critical(
-                        "All lines should be either '[name]' or 'lat,lng'."
-                    )
-                    sys.exit(1)
-            geofences.append(Geofence(name, points))
-            log.info("{} geofences added.".format(len(geofences)))
-            self.__geofences = geofences
+                alarm = json.load(f)
+            if type(alarm) is not dict:
+                log.critical("Alarms file must be a dictionary")
+                sys.exit(1)
+            self.set_optional_args(str(alarm))
+            log.info('here')
+            self.__alarm = DiscordAlarm(alarm, max_attempts)
+            log.info("Active Discord alarm found.")
             return
+        except ValueError as e:
+            log.critical((
+                "Encountered error while loading Alarms file: {}: {}"
+            ).format(type(e).__name__, e))
+            log.critical(
+                "Encountered a 'ValueError' while loading the Alarms file. " +
+                "This typically means your file isn't in the correct json " +
+                "format. Try loading your file contents into a json validator."
+            )
         except IOError as e:
             log.critical((
-                "IOError: Please make sure a file with read/write " +
-                "permissions exsist at {}").format(file_path))
+                "Encountered error while loading Alarms: {}: {}"
+            ).format(type(e).__name__, e))
+            log.critical((
+                "Unable to find a filters file at {}. Please check that " +
+                "this file exists and has the correct permissions."
+            ).format(file_path))
         except Exception as e:
             log.critical((
-                "Encountered error while loading Geofence: {}: {}"
+                "Encountered error while loading Alarms: {}: {}"
             ).format(type(e).__name__, e))
         sys.exit(1)
+
+    def set_optional_args(self, line):
+        args = {
+            'street', 'street_num', 'address', 'postal', 'neighborhood',
+            'sublocality', 'city', 'county', 'state', 'country'
+        }
+        if contains_arg(line, args):
+            if self.__loc_service is None:
+                log.critical(
+                    "Reverse location DTS were detected but no API key was " +
+                    "provided!"
+                )
+                log.critical(
+                    "Please either remove the DTS, add an API key, or " +
+                    "disable the alarm and try again."
+                )
+                sys.exit(1)
+            self.__loc_service.enable_reverse_location()
 
     async def connect(self):
         last_clean = datetime.utcnow()
@@ -199,12 +173,13 @@ class Manager(object):
                     type(e).__name__, e))
 
     def clean_hist(self):
-        old = []
-        for id_ in self.__pokemon_hist:
-            if self.__pokemon_hist[id_] < datetime.utcnow():
-                old.append(id_)
-        for id_ in old:
-            del self.__pokemon_hist[id_]
+        for dict_ in self.__pokemon_hist:
+            old = []
+            for id_ in dict_:
+                if dict_[id_] < datetime.utcnow():
+                    old.append(id_)
+            for id_ in old:
+                del dict_[id_]
         old = []
         for id_ in self.__raid_hist:
             if self.__raid_hist[id_]['raid_end'] < datetime.utcnow():
@@ -269,16 +244,16 @@ class Manager(object):
             return
         self.__pokemon_hist[id_] = pkmn['disappear_time']
         pkmn_id = pkmn['pkmn_id']
-        name = self.__pokemon_name[pkmn_id]
+        name = self.__locale.get_pokemon_name(pkmn_id)
         lat, lng = pkmn['lat'], pkmn['lng']
         pkmn['geofence'] = self.check_geofences(name, lat, lng)
         if len(self.__geofences) > 0 and pkmn['geofence'] == 'unknown':
             return
         pkmn['pkmn'] = name
-        time_str = get_time_as_str(pkmn['disappear_time'], self.__timezone)
-        iv = pkmn['iv']
         quick_id = pkmn['quick_id']
         charge_id = pkmn['charge_id']
+        time_str = get_time_as_str(pkmn['disappear_time'], self.__timezone)
+        iv = pkmn['iv']
         pkmn.update({
             'pkmn': name,
             'time_left': time_str[0],
@@ -287,8 +262,9 @@ class Manager(object):
             'iv_0': "{:.0f}".format(iv) if iv != '?' else '?',
             'iv': "{:.1f}".format(iv) if iv != '?' else '?',
             'iv_2': "{:.2f}".format(iv) if iv != '?' else '?',
-            'quick_move': self.__move_name.get(quick_id, 'unknown'),
-            'charge_move': self.__move_name.get(charge_id, 'unknown')
+            'quick_move': self.__locale.get_move_name(quick_id),
+            'charge_move': self.__locale.get_move_name(charge_id),
+            'form': self.__locale.get_form_name(pkmn_id, pkmn['form_id'])
         })
         for bot in dicts.bots:
             bot['in_queue'].put(pkmn)
@@ -299,8 +275,9 @@ class Manager(object):
         passed = self.check_pokemon_filter(filters, pkmn)
         if not passed:
             return
-        if self.__api_req:
-            pkmn.update(**self.reverse_location(lat, lng))
+        if self.__loc_service:
+            self.__loc_service.add_optional_arguments(
+                self.__location, [lat, lng], pkmn)
         log.info("{} notification has been triggered!".format(name))
         self.__alarm.pokemon_alert(pkmn)
 
@@ -312,6 +289,7 @@ class Manager(object):
                 "description": gym['description'],
                 "url": gym['url']
             }
+        return
 
     def process_egg(self, egg):
         gym_id = egg['id']
@@ -327,13 +305,13 @@ class Manager(object):
             return
         time_str = get_time_as_str(egg['raid_end'], self.__timezone)
         start_time_str = get_time_as_str(egg['raid_begin'], self.__timezone)
+        gym_info = self.__gym_info.get(gym_id, {})
         egg.update({
-            "gym_name": self.__gym_info.get(gym_id, {}).get('name', 'unknown'),
-            "gym_description": self.__gym_info.get(gym_id, {}).get(
-                'description', 'unknown'),
-            "gym_url": self.__gym_info.get(gym_id, {}).get(
+            "gym_name": gym_info.get('name', 'unknown'),
+            "gym_description": gym_info.get('description', 'unknown'),
+            "gym_url": gym_info.get(
                 'url', (
-                    'https://raw.githubusercontent.com/kvangent/PokeAlarm/' +
+                    'https://raw.githubusercontent.com/RocketMap/PokeAlarm/' +
                     'master/icons/gym_0.png'
                 )
             ),
@@ -342,7 +320,7 @@ class Manager(object):
             '24h_time': time_str[2],
             'begin_time_left': start_time_str[0],
             'begin_12h_time': start_time_str[1],
-            'begin_24h_time': start_time_str[2],
+            'begin_24h_time': start_time_str[2]
         })
         for bot in dicts.bots:
             bot['in_queue'].put(egg)
@@ -351,8 +329,9 @@ class Manager(object):
         passed = self.check_egg_filter(self.__egg_settings, egg)
         if not passed:
             return
-        if self.__api_req:
-            egg.update(**self.reverse_location(lat, lng))
+        if self.__loc_service:
+            self.__loc_service.add_optional_arguments(
+                self.__location, [lat, lng], egg)
         log.info("Egg ({}) notification has been triggered!".format(gym_id))
         self.__alarm.raid_egg_alert(egg)
 
@@ -372,7 +351,7 @@ class Manager(object):
             return
         quick_id = raid['quick_id']
         charge_id = raid['charge_id']
-        name = self.__pokemon_name[pkmn_id]
+        name = self.__locale.get_pokemon_name(pkmn_id)
         raid_pkmn = {
             'pkmn': name,
             'cp': raid['cp'],
@@ -389,14 +368,14 @@ class Manager(object):
         }
         time_str = get_time_as_str(raid['raid_end'], self.__timezone)
         start_time_str = get_time_as_str(raid['raid_begin'], self.__timezone)
+        gym_info = self.__gym_info.get(gym_id, {})
         raid.update({
             'pkmn': name,
-            "gym_name": self.__gym_info.get(gym_id, {}).get('name', 'unknown'),
-            "gym_description": self.__gym_info.get(gym_id, {}).get(
-                'description', 'unknown'),
-            "gym_url": self.__gym_info.get(gym_id, {}).get(
+            "gym_name": gym_info.get('name', 'unknown'),
+            "gym_description": gym_info.get('description', 'unknown'),
+            "gym_url": gym_info.get(
                 'url', (
-                    'https://raw.githubusercontent.com/kvangent/PokeAlarm/' +
+                    'https://raw.githubusercontent.com/RocketMap/PokeAlarm/' +
                     'master/icons/gym_0.png'
                 )
             ),
@@ -406,8 +385,9 @@ class Manager(object):
             'begin_time_left': start_time_str[0],
             'begin_12h_time': start_time_str[1],
             'begin_24h_time': start_time_str[2],
-            'quick_move': self.__move_name.get(quick_id, 'unknown'),
-            'charge_move': self.__move_name.get(charge_id, 'unknown')
+            'quick_move': self.__locale.get_move_name(quick_id),
+            'charge_move': self.__locale.get_move_name(charge_id),
+            'form': self.__locale.get_form_name(pkmn_id, raid_pkmn['form_id'])
         })
         for bot in dicts.bots:
             bot['in_queue'].put(raid)
@@ -418,69 +398,14 @@ class Manager(object):
         passed = self.check_pokemon_filter(filters, raid_pkmn)
         if not passed:
             return
-        if self.__api_req:
-            raid.update(**self.reverse_location(lat, lng))
+        if self.__loc_service:
+            self.__loc_service.add_optional_arguments(
+                self.__location, [lat, lng], raid)
         log.info("Raid ({}) notification has been triggered!".format(gym_id))
         self.__alarm.raid_alert(raid)
 
     def check_geofences(self, name, lat, lng):
         for gf in self.__geofences:
             if gf.contains(lat, lng):
-                return gf.name
+                return gf.get_name()
         return 'unknown'
-
-    def update_locales(self):
-        locale_path = os.path.join(get_path('../locales'), '{}'.format(
-            self.__locale))
-        with open(os.path.join(locale_path, 'pokemon.json'), 'r') as f:
-            names = json.loads(f.read())
-            for pkmn_id, value in names.items():
-                self.__pokemon_name[int(pkmn_id)] = value
-        with open(os.path.join(locale_path, 'moves.json'), 'r') as f:
-            moves = json.loads(f.read())
-            for move_id, value in moves.items():
-                self.__move_name[int(move_id)] = value
-
-    def reverse_location(self, lat, lng):
-        details = {
-            'street_num': 'unkn',
-            'street': 'unknown',
-            'address': 'unknown',
-            'postal': 'unknown',
-            'neighborhood': 'unknown',
-            'sublocality': 'unknown',
-            'city': 'unknown',
-            'county': 'unknown',
-            'state': 'unknown',
-            'country': 'country'
-        }
-        if len(args.gmaps_api_key) == 0:
-            log.error(
-                "No Google Maps API key provided - unable to reverse geocode."
-            )
-            return details
-        try:
-            coords = '{},{}'.format(lat, lng)
-            map_key = args.gmaps_api_key[randint(0, len(
-                args.gmaps_api_key) - 1)]
-            loc = geocoder.google(coords, method='reverse', key=map_key)
-            details['street_num'] = loc.get('street_number', 'unkn')
-            details['street'] = loc.get('route', 'unkn')
-            details['address'] = "{} {}".format(details['street_num'], details[
-                'street'])
-            details['postal'] = loc.get('postal_code', 'unkn')
-            details['neighborhood'] = loc.get('neighborhood', "unknown")
-            details['sublocality'] = loc.get('sublocality', "unknown")
-            details['city'] = loc.get('locality', loc.get(
-                'postal_town', 'unknown'))
-            details['county'] = loc.get(
-                'administrative_area_level_2', 'unknown')
-            details['state'] = loc.get(
-                'administrative_area_level_1', 'unknown')
-            details['country'] = loc.get('country', 'unknown')
-        except Exception as e:
-            log.error((
-                "Encountered error while getting reverse location data ({}: " +
-                "{})"
-            ).format(type(e).__name__, e))
-        return details
