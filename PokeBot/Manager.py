@@ -10,7 +10,7 @@ from .LocationServices import LocationService
 from .Locale import Locale
 from .DiscordAlarm import DiscordAlarm
 from .Geofence import load_geofence_file
-from .Filter import load_pokemon_section, Geofence, load_egg_section
+from .Filter import load_pokemon_section, load_egg_section
 from .utils import (require_and_remove_key, get_path, get_args, contains_arg,
                     get_time_as_str, Dicts)
 
