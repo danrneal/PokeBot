@@ -36,14 +36,14 @@ class Bot(discord.Client):
                 users.append(str(member.id))
         user_count = 0
         area_count = 0
-        for user_id in dicts.bots[bot_number]['filters']:
+        for user_id in Dicts.bots[bot_number]['filters']:
             if user_id not in users:
-                dicts.bots[bot_number]['filters'].pop(user_id)
+                Dicts.bots[bot_number]['filters'].pop(user_id)
                 user_count += 1
                 continue
-            for area in dicts.bots[bot_number]['filters'][user_id]['areas']:
-                if area not in dicts.bots[bot_number]['geofences']:
-                    dicts.bots[bot_number]['filters'][user_id]['areas'].remove(
+            for area in Dicts.bots[bot_number]['filters'][user_id]['areas']:
+                if area not in Dicts.bots[bot_number]['geofences']:
+                    Dicts.bots[bot_number]['filters'][user_id]['areas'].remove(
                         area)
                     area_count += 1
         await asyncio.sleep(bot_number)
@@ -62,10 +62,10 @@ class Bot(discord.Client):
     async def on_member_update(self, before, after):
         bot_number = args.bot_client_ids.index(self.user.id)
         if (after.id % len(args.tokens) == bot_number and
-            str(after.id) in dicts.bots[bot_number]['filters'] and
+            str(after.id) in Dicts.bots[bot_number]['filters'] and
                 before.roles != after.roles):
             alert_role = False
-            for role in dicts.bots[bot_number]['roles'][args.alert_role]:
+            for role in Dicts.bots[bot_number]['roles'][args.alert_role]:
                 try:
                     if after.top_role > role:
                         alert_role = True
@@ -73,19 +73,19 @@ class Bot(discord.Client):
                 except:
                     pass
             if alert_role is False:
-                dicts.bots[bot_number]['filters'].pop(str(after.id))
+                Dicts.bots[bot_number]['filters'].pop(str(after.id))
                 update_dicts()
                 log.info('Removed {} from dicts'.format(after.display_name))
             elif (args.muted_role is not None and
-                  len(set(dicts.bots[bot_number]['roles'][
+                  len(set(Dicts.bots[bot_number]['roles'][
                       args.muted_role]).intersection(set(after.roles))) > 0 and
-                  dicts.bots[bot_number][str(after.id)]['filters'][
+                  Dicts.bots[bot_number][str(after.id)]['filters'][
                       'paused'] is False):
-                dicts.bots[bot_number][str(after.id)]['filters'][
+                Dicts.bots[bot_number][str(after.id)]['filters'][
                     'paused'] = True
                 update_dicts()
-                await dicts.bots[bot_number]['out_queue'].put((
-                    1, dicts.bots[bot_number]['count'], {
+                await Dicts.bots[bot_number]['out_queue'].put((
+                    1, Dicts.bots[bot_number]['count'], {
                         'destination': discord.utils.get(
                             after.guild.members,
                             id=after.id
@@ -94,16 +94,16 @@ class Bot(discord.Client):
                             after.display_name)
                     }
                 ))
-                dicts.bots[bot_number]['count'] += 1
+                Dicts.bots[bot_number]['count'] += 1
                 log.info('Paused {} on mute.'.fotmat(after.display_name))
 
     async def on_member_remove(self, member):
         bot_number = args.bot_client_ids.index(self.user.id)
         if (member.id % len(args.tokens) == bot_number and
-                str(member.id) in dicts.bots[bot_number]['filters']):
-            dicts.bots[bot_number]['filters'].pop(str(member.id))
+                str(member.id) in Dicts.bots[bot_number]['filters']):
+            Dicts.bots[bot_number]['filters'].pop(str(member.id))
             update_dicts()
-            log.info('Removed {} from dicts.'.format(member.display_name))
+            log.info('Removed {} from Dicts.'.format(member.display_name))
 
     async def on_message(self, message):
         bot_number = args.bot_client_ids.index(self.user.id)

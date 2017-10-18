@@ -2,9 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
-import os
 import sys
-import re
 import json
 import asyncio
 from collections import namedtuple
@@ -12,11 +10,10 @@ from aiohttp import web
 from .Manager import Manager
 from .Bot import Bot
 from .ManageWebhook import ManageWebhook
-from .Locale import Locale
 from .LocationServices import LocationService
 from .Filter import load_pokemon_section, load_egg_section
 from .Notification import Notification
-from .utils import (get_path, get_args, Dicts, contains_arg, parse_boolean,
+from .utils import (get_path, get_args, Dicts, contains_arg,
                     require_and_remove_key)
 
 logging.basicConfig(
@@ -89,7 +86,7 @@ def bot_init():
             )
         if str(args.geofences[0]).lower() != 'none':
             Dicts.bots[bot_number]['geofences'] = list(
-                args.master_geofences.items())   
+                args.master_geofences.items())
         try:
             with open(get_path('../user_dicts/user_alarms.json'), 'r') as f:
                 alarm = json.load(f)
@@ -176,9 +173,10 @@ def bot_init():
             "Encountered error while loading Filters: {}: {}"
         ).format(type(e).__name__, e))
         log.critical(
-            "Unable to find a filters file at {}. Please check that " +
-            "this file exists and has the correct permissions."
-        ).format(file_path)
+            "Unable to find a filters file at user_dicts/user_filters.json. " +
+            "Please check that this file exists and has the correct " +
+            "permissions."
+        )
     except Exception as e:
         log.critical((
             "Encountered error while loading Filters: {}: {}"
