@@ -70,7 +70,11 @@ def bot_init():
         Dicts.bots.append({
             'loc_service': None,
             'filters': {},
+            'pokemon_settings': {},
+            'raid_settings': {},
+            'egg_settings': {},
             'geofences': [],
+            'roles': {},
             'in_queue': asyncio.Queue(),
             'out_queue': asyncio.PriorityQueue(),
             'timestamps': [],
@@ -85,7 +89,7 @@ def bot_init():
             )
         if str(args.geofences[0]).lower() != 'none':
             Dicts.bots[bot_number]['geofences'] = list(
-                args.master_geofences.items())
+                args.master_geofences.items())   
         try:
             with open(get_path('../user_dicts/user_alarms.json'), 'r') as f:
                 alarm = json.load(f)
@@ -134,48 +138,53 @@ def bot_init():
                 "Encountered error while loading Alarms: {}: {}"
             ).format(type(e).__name__, e))
             sys.exit(1)
-##    try:
-##        with open(get_path(
-##                '../user_dicts/user_filters.json'), encoding="utf-8") as f:
-##            filters = json.load(f)
-##            for user_id in filters:
-##                if type(filters[user_id]) is not dict:
-##                    log.critical(
-##                        "User pokemon filter file must be a JSON object: { " +
-##                        "\"pokemon\":{...},... }, it may be corrupted"
-##                    )
-##                    sys.exit(1)
-##                Dicts.bots[int(user_id) % len(args.tokens)]['filters'][
-##                    user_id]['pokemon_settings'] = {}
-##                Dicts.bots[int(user_id) % len(args.tokens)]['filters'][
-##                    user_id]['egg_settings'] = {}
-##                Dicts.bots[int(user_id) % len(args.tokens)]['filters'][
-##                    user_id]['raid_settings'] = {}
-##                Dicts.bots[int(user_id) % len(args.tokens)]['filters'][
-##                    user_id]['paused'] = parse_boolean(require_and_remove_key(
-##                        'paused', filters[user_id], "User Filters file."))
-##                Dicts.bots[int(user_id) % len(args.tokens)]['filters'][
-##                    user_id]['areas'] = require_and_remove_key(
-##                        'areas', filters[user_id], "User Filters file.")
-##                Dicts.bots[int(user_id) % len(args.tokens)]['filters'][
-##                    user_id]['pokemon_settings'] = load_pokemon_section(
-##                        require_and_remove_key(
-##                            'pokemon', filters[user_id], "User Filters file."))
-##                Dicts.bots[int(user_id) % len(args.tokens)]['filters'][
-##                    user_id]['egg_settings'] = load_egg_section(
-##                        require_and_remove_key(
-##                            'eggs', filters[user_id], "User Filters file."))
-##                Dicts.bots[int(user_id) % len(args.tokens)]['filters'][
-##                    user_id]['raid_settings'] = load_pokemon_section(
-##                        require_and_remove_key(
-##                            'raids', filters[user_id], "User Filters file."))
-##        log.info('Loaded DM filters.')
-##    except IOError:
-##        with open(get_path('../user_dicts/user_filters.json'), 'w') as f:
-##            json.dump({}, f, indent=4)
-##
-##    log.info('DM bot successfully created.')
-##    return
+    try:
+        with open(get_path(
+                '../user_dicts/user_filters.json'), encoding="utf-8") as f:
+            filters = json.load(f)
+            for user_id in filters:
+                if type(filters[user_id]) is not dict:
+                    log.critical(
+                        "User pokemon filter file must be a JSON object: { " +
+                        "\"pokemon\":{...},... }, it may be corrupted"
+                    )
+                    sys.exit(1)
+                Dicts.bots[int(user_id) % len(args.tokens)]['filters'][
+                    user_id] = filters[user_id]
+                Dicts.bots[int(user_id) % len(args.tokens)][
+                    'pokemon_settings'][user_id] = load_pokemon_section(
+                        require_and_remove_key(
+                            'pokemon', filters[user_id], "User Filters File."))
+                Dicts.bots[int(user_id) % len(args.tokens)]['egg_settings'][
+                    user_id] = load_egg_section(require_and_remove_key(
+                        'eggs', filters[user_id], "User Filters File."))
+                Dicts.bots[int(user_id) % len(args.tokens)]['raid_settings'][
+                    user_id] = load_pokemon_section(require_and_remove_key(
+                        'raids', filters[user_id], "User Filters File."))
+        log.info('Loaded DM filters.')
+    except ValueError as e:
+        log.critical((
+            "Encountered error while loading Filters: {}: {}"
+        ).format(type(e).__name__, e))
+        log.critical(
+            "Encountered a 'ValueError' while loading the Filters file. " +
+            "This typically means your file isn't in the correct json " +
+            "format. Try loading your file contents into a json validator."
+        )
+    except IOError as e:
+        log.critical((
+            "Encountered error while loading Filters: {}: {}"
+        ).format(type(e).__name__, e))
+        log.critical(
+            "Unable to find a filters file at {}. Please check that " +
+            "this file exists and has the correct permissions."
+        ).format(file_path)
+    except Exception as e:
+        log.critical((
+            "Encountered error while loading Filters: {}: {}"
+        ).format(type(e).__name__, e))
+    log.info('DM bot successfully created.')
+    return
 
 
 async def index(request):

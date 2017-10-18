@@ -258,9 +258,8 @@ class Dicts(object):
 
 
 def update_dicts():
-    dicts = Dicts()
     master = {}
-    for bot in dicts.bots:
+    for bot in Dicts.bots:
         master.update(bot['filters'])
     for user_id in master:
         master[user_id]['pokemon'] = {}

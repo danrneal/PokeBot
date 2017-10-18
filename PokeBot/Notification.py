@@ -117,4 +117,4 @@ class Notification(Alarm):
         self.send_alert(self.__egg, client, bot_number, raid_info, user_ids)
 
     def raid_alert(self, client, bot_number, raid_info, user_ids):
-        self.send_alert(self.__raid, clietn, bot_number, raid_info, user_ids)
+        self.send_alert(self.__raid, client, bot_number, raid_info, user_ids)

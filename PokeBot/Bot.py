@@ -12,8 +12,6 @@ from .commands import (status, commands, dex, donate, _set, delete, pause,
 log = logging.getLogger('Bot')
 
 args = get_args()
-dicts = Dicts()
-users = []
 
 
 class Bot(discord.Client):
@@ -26,22 +24,15 @@ class Bot(discord.Client):
         if bot_number != 0:
             await self.change_presence(status=discord.Status.invisible)
         for guild in self.guilds:
+            Dicts.bots[bot_number]['roles'][guild.id] = {}
             for role in guild.roles:
-                if role.name.lower() in dicts.bots[bot_number]['roles']:
-                    dicts.bots[bot_number]['roles'][role.name.lower()].append(
-                        role)
-                else:
-                    dicts.bots[bot_number]['roles'][role.name.lower()] = [role]
+                Dicts.bots[bot_number]['roles'][guild.id][
+                    role.name.lower()] = role
+        users = []
         for member in self.get_all_members():
-            alert_role = False
-            for role in dicts.bots[bot_number]['roles'][args.alert_role]:
-                try:
-                    if member.top_role > role:
-                        alert_role = True
-                        break
-                except:
-                    pass
-            if alert_role is True and str(member.id) not in users:
+            if (member.top_role > Dicts.bots[bot_number]['roles'][
+                member.guild.id][args.alert_role] and
+                    str(member.id) not in users):
                 users.append(str(member.id))
         user_count = 0
         area_count = 0
@@ -52,7 +43,7 @@ class Bot(discord.Client):
                 continue
             for area in dicts.bots[bot_number]['filters'][user_id]['areas']:
                 if area not in dicts.bots[bot_number]['geofences']:
-                    dicts.bots[bot_number]['filters'][user_id]['areas'].pop(
+                    dicts.bots[bot_number]['filters'][user_id]['areas'].remove(
                         area)
                     area_count += 1
         await asyncio.sleep(bot_number)
