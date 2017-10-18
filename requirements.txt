@@ -1,6 +1,6 @@
 asyncio
 discord.py
-geocoder
+googlemaps
 configargparse
 aiohttp
 bs4

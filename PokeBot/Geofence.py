@@ -36,7 +36,6 @@ def load_geofence_file(file_path):
                 )
                 sys.exit(1)
         geofences.append(Geofence(name, points))
-        log.info("{} geofences added.".format(len(geofences)))
         return geofences
     except IOError as e:
         log.critical((

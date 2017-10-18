@@ -25,10 +25,6 @@ def start_bots():
         log.info("Multiple locales loaded")
     else:
         log.info("{} locale loaded".format(args.locale[0]))
-    if len(args.timezone) > 1:
-        log.info("Multiple timezones loaded")
-    else:
-        log.info("{} timezone loaded".format(str(args.timezone[0])))
     log.info("{} bot(s) to be started".format(len(args.tokens)))
     log.info("{} command channels set".format(len(args.command_channels)))
     log.info("Alert role set {}".format(args.alert_role))

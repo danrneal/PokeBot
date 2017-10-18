@@ -9,6 +9,7 @@ import pytz
 import json
 from glob import glob
 from datetime import datetime, timedelta
+from .Geofence import load_geofence_file
 
 log = logging.getLogger('utils')
 
@@ -61,13 +62,6 @@ def get_args():
         action='append',
         default=[],
         help='Geofence configuration file. default: None'
-    )
-    parser.add_argument(
-        '-tz', '--timezone',
-        type=str,
-        action='append',
-        default=[None],
-        help='Timezone used for notifications.  Ex: "America/Los_Angeles"'
     )
     parser.add_argument(
         '-L', '--locale',
@@ -174,7 +168,7 @@ def get_args():
     args.filters = sorted(args.filters)
     args.geofences = sorted(args.geofences)
 
-    for list_ in [args.filters, args.alarms, args.geofences, args.timezone]:
+    for list_ in [args.filters, args.alarms, args.geofences]:
         if len(list_) != 1 and len(list_) != args.manager_count:
             log.critical(
                 "Number of arguments must be either 1 for all managers " +
@@ -193,18 +187,15 @@ def get_args():
         else:
             break
 
-    for i in range(len(args.timezone)):
-        if str(args.timezone[i]).lower() == "none":
-            args.timezone[i] = None
-            continue
-        try:
-            args.timezone[i] = pytz.timezone(args.timezone[i])
-        except pytz.exceptions.UnknownTimeZoneError:
-            log.critical(
-                "Invalid timezone. For a list of valid timezones, see " +
-                "https://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
-            )
-            sys.exit(1)
+    args.master_geofences = []
+    args.geofence_names = []
+    for geofence_file in args.geofences:
+        geofences = load_geofence_file(geofence_file)
+        names = []
+        for geofence in geofences:
+            args.master_geofences.append(geofence)
+            names.append(geofence.get_name())
+        args.geofence_names.append(names)
 
     return args
 
@@ -468,6 +459,11 @@ def get_static_map_url(settings, api_key=None):
 
 
 def get_time_as_str(t, timezone=None):
+    try:
+        timezone = pytz.timezone(timezone)
+    except pytz.exceptions.UnknownTimeZoneError:
+        log.error("Invalid timezone")
+        timezone = None
     s = (t - datetime.utcnow()).total_seconds()
     (m, s) = divmod(s, 60)
     (h, m) = divmod(m, 60)

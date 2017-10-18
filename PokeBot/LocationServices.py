@@ -12,18 +12,17 @@ class LocationService(object):
 
     def __init__(self):
         self.__locale = args.locale
-        self.__units = args.units
         self.__reverse_location = False
         self.__reverse_location_history = {}
 
-    def add_optional_arguments(self, origin, dest, dict):
+    def add_optional_arguments(self, dest, dict):
         if self.__reverse_location:
             dict.update(**self.__get_reverse_location(dest))
 
     def get_location_from_name(self, location_name):
         try:
-            api_key = args.gmaps_api_key[randint(0, len(
-                args.gmaps_api_key) - 1)]
+            api_key = args.gmaps_keys[randint(0, len(
+                args.gmaps_keys) - 1)]
             result = googlemaps.Client(
                 key=api_key, timeout=3, retry_timeout=5
             ).geocode(location_name, language=self.__locale)
@@ -59,8 +58,8 @@ class LocationService(object):
             'country': 'country'
         }
         try:
-            api_key = args.gmaps_api_key[randint(0, len(
-                args.gmaps_api_key) - 1)]
+            api_key = args.gmaps_keys[randint(0, len(
+                args.gmaps_keys) - 1)]
             result = googlemaps.Client(
                 key=api_key, timeout=3, retry_timeout=5
             ).reverse_geocode(location, language=self.__locale)[0]
