@@ -7,8 +7,7 @@ from datetime import datetime, timedelta
 from timezonefinder import TimezoneFinder
 from .WebhookStructs import Webhook
 from .Locale import Locale
-from .Geofence import load_geofence_file
-from .utils import Dicts, get_path, get_args, get_time_as_str
+from .utils import Dicts, get_args, get_time_as_str
 
 logging.basicConfig(
     format='[%(name)10.10s][%(levelname)8.8s] %(message)s',
@@ -50,20 +49,21 @@ class ManageWebhook(object):
                 if datetime.utcnow() - last_clean > timedelta(minutes=3):
                     self.clean_hist()
                     last_clean = datetime.utcnow()
-#                try:
-                if obj['type'] == "pokemon":
-                    self.process_pokemon(obj)
-                elif obj['type'] == "gym":
-                    self.process_gym(obj)
-                elif obj['type'] == 'egg':
-                    self.process_egg(obj)
-                elif obj['type'] == "raid":
-                    self.process_raid(obj)
-                else:
-                    pass
-#                except Exception as e:
-#                    log.error("Encountered error during processing: {}: {}".format(
-#                        type(e).__name__, e))
+                try:
+                    if obj['type'] == "pokemon":
+                        self.process_pokemon(obj)
+                    elif obj['type'] == "gym":
+                        self.process_gym(obj)
+                    elif obj['type'] == 'egg':
+                        self.process_egg(obj)
+                    elif obj['type'] == "raid":
+                        self.process_raid(obj)
+                    else:
+                        pass
+                except Exception as e:
+                    log.error((
+                        "Encountered error during processing: {}: {}"
+                    ).format(type(e).__name__, e))
 
     def clean_hist(self):
         old = []

@@ -10,7 +10,7 @@ from .LocationServices import LocationService
 from .DiscordAlarm import DiscordAlarm
 from .Filter import load_pokemon_section, load_egg_section
 from .utils import (require_and_remove_key, get_path, get_args, contains_arg,
-                    get_time_as_str, Dicts)
+                    Dicts)
 
 log = logging.getLogger('Manager')
 args = get_args()
@@ -154,7 +154,6 @@ class Manager(object):
             except Exception as e:
                 log.error("Encountered error during processing: {}: {}".format(
                     type(e).__name__, e))
-
 
     def check_pokemon_filter(self, filters, pkmn):
         passed = False
