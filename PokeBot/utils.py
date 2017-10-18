@@ -159,6 +159,8 @@ def get_args():
     files = glob(get_path('../geofences/*.txt'))
     for file_ in files:
         args.geofences.append(file_)
+    if len(args.geofences) == 0:
+        args.geofences = [None]
 
     if len(args.tokens) != len(args.bot_client_ids):
         log.critical("Token - Client ID mismatch")
@@ -187,15 +189,19 @@ def get_args():
         else:
             break
 
-    args.master_geofences = []
+    args.master_geofences = {}
     args.geofence_names = []
     for geofence_file in args.geofences:
         geofences = load_geofence_file(geofence_file)
         names = []
         for geofence in geofences:
-            args.master_geofences.append(geofence)
-            names.append(geofence.get_name())
+            name = geofence.get_name()
+            names.append(name)
+            if name not in args.master_geofences:
+                args.master_geofences[name] = geofence
         args.geofence_names.append(names)
+    if len(args.geofence_names) == 0:
+        args.geofence_names = [None]
 
     return args
 

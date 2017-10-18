@@ -24,10 +24,9 @@ class ManageWebhook(object):
         self.__locale = Locale(args.locale)
         self.__pokemon_hist = {}
         self.__raid_hist = {}
-        self.__gym_info = {}
         self.__geofences = []
         if str(args.geofences[0]).lower() != 'none':
-            self.__geofences = args.master_geofences
+            self.__geofences = list(args.master_geofences.values())
         self.__queue = asyncio.Queue()
 
     async def update(self, obj):
@@ -52,8 +51,6 @@ class ManageWebhook(object):
                 try:
                     if obj['type'] == "pokemon":
                         self.process_pokemon(obj)
-                    elif obj['type'] == "gym":
-                        self.process_gym(obj)
                     elif obj['type'] == 'egg':
                         self.process_egg(obj)
                     elif obj['type'] == "raid":
@@ -113,16 +110,6 @@ class ManageWebhook(object):
         for bot in Dicts.bots:
             bot['in_queue'].put(pkmn)
 
-    def process_gym(self, gym):
-        gym_id = gym['id']
-        if gym_id not in self.__gym_info or gym['name'] != 'unknown':
-            self.__gym_info[gym_id] = {
-                "name": gym['name'],
-                "description": gym['description'],
-                "url": gym['url']
-            }
-        return
-
     def process_egg(self, egg):
         gym_id = egg['id']
         raid_end = egg['raid_end']
@@ -139,16 +126,7 @@ class ManageWebhook(object):
             egg['raid_end'], tf.timezone_at(lng=lng, lat=lat))
         start_time_str = get_time_as_str(
             egg['raid_begin'], tf.timezone_at(lng=lng, lat=lat))
-        gym_info = self.__gym_info.get(gym_id, {})
         egg.update({
-            "gym_name": gym_info.get('name', 'unknown'),
-            "gym_description": gym_info.get('description', 'unknown'),
-            "gym_url": gym_info.get(
-                'url', (
-                    'https://raw.githubusercontent.com/RocketMap/PokeAlarm/' +
-                    'master/icons/gym_0.png'
-                )
-            ),
             'time_left': time_str[0],
             '12h_time': time_str[1],
             '24h_time': time_str[2],
@@ -196,17 +174,8 @@ class ManageWebhook(object):
             raid['raid_end'], tf.timezone_at(lng=lng, lat=lat))
         start_time_str = get_time_as_str(
             raid['raid_begin'], tf.timezone_at(lng=lng, lat=lat))
-        gym_info = self.__gym_info.get(gym_id, {})
         raid.update({
             'pkmn': name,
-            "gym_name": gym_info.get('name', 'unknown'),
-            "gym_description": gym_info.get('description', 'unknown'),
-            "gym_url": gym_info.get(
-                'url', (
-                    'https://raw.githubusercontent.com/RocketMap/PokeAlarm/' +
-                    'master/icons/gym_0.png'
-                )
-            ),
             'time_left': time_str[0],
             '12h_time': time_str[1],
             '24h_time': time_str[2],

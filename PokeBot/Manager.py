@@ -34,7 +34,9 @@ class Manager(object):
         self.__egg_settings = {}
         self.load_filter_file(get_path(filter_file))
         self.load_alarms_file(get_path(alarm_file), args.max_attempts)
-        self.__geofences = geofence_names
+        self.__geofences = []
+        if str(args.geofence_names[0]).lower() != 'none':
+            self.__geofences = geofence_names
         self.__queue = Queue()
         log.info("Manager '{}' successfully created.".format(self.__name))
 
@@ -60,7 +62,8 @@ class Manager(object):
                 require_and_remove_key("eggs", filters, "Filters file."))
             self.__raid_settings = load_pokemon_section(
                 require_and_remove_key('raids', filters, "Filters file."))
-            log.info("Loaded Filters from file at {}".format(file_path))
+            log.info("Loaded Filters from file at {}".format(
+                file_path.split('/')[-1]))
             return
         except ValueError as e:
             log.critical((
@@ -217,7 +220,8 @@ class Manager(object):
         passed = self.check_pokemon_filter(filters, pkmn)
         if not passed:
             return
-        if pkmn['geofence'] not in self.__geofences:
+        if (len(self.__geofences) > 0 and
+                pkmn['geofence'] not in self.__geofences):
             return
         if self.__loc_service:
             self.__loc_service.add_optional_arguments([lat, lng], pkmn)
@@ -232,7 +236,8 @@ class Manager(object):
         passed = self.check_egg_filter(self.__egg_settings, egg)
         if not passed:
             return
-        if egg['geofence'] not in self.__geofences:
+        if (len(self.__geofences) > 0 and
+                egg['geofence'] not in self.__geofences):
             return
         if self.__loc_service:
             self.__loc_service.add_optional_arguments([lat, lng], egg)
@@ -246,7 +251,8 @@ class Manager(object):
         if (self.__raid_settings['enabled'] is False or
                 pkmn_id not in self.__raid_settings['filters']):
             return
-        if raid['geofence'] not in self.__geofences:
+        if (len(self.__geofences) > 0 and
+                raid['geofence'] not in self.__geofences):
             return
         if self.__loc_service:
             self.__loc_service.add_optional_arguments([lat, lng], raid)

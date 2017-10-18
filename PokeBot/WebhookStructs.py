@@ -121,7 +121,10 @@ class Webhook:
             'raid_end': raid_end,
             'raid_begin': raid_begin,
             'lat': float(data['latitude']),
-            'lng': float(data['longitude'])
+            'lng': float(data['longitude']),
+            'gym_name': data.get('gym_name'),
+            'gym_url': data.get('gym_url'),
+            'team_id': check_for_none(int, data.get('team'), 0)
         }
         egg['gmaps'] = get_gmaps_link(egg['lat'], egg['lng'])
         egg['applemaps'] = get_applemaps_link(egg['lat'], egg['lng'])
@@ -152,7 +155,10 @@ class Webhook:
             'raid_end': raid_end,
             'raid_begin': raid_begin,
             'lat': float(data['latitude']),
-            'lng': float(data['longitude'])
+            'lng': float(data['longitude']),
+            'gym_name': data.get('gym_name'),
+            'gym_url': data.get('gym_url'),
+            'team_id': check_for_none(int, data.get('team'), 0)
         }
         raid['gmaps'] = get_gmaps_link(raid['lat'], raid['lng'])
         raid['applemaps'] = get_applemaps_link(raid['lat'], raid['lng'])

@@ -83,7 +83,57 @@ def bot_init():
                 "NO GOOGLE API KEY SET - Reverse Location DTS will NOT be " +
                 "detected."
             )
-
+        if str(args.geofences[0]).lower() != 'none':
+            Dicts.bots[bot_number]['geofences'] = list(
+                args.master_geofences.items())
+        try:
+            with open(get_path('../user_dicts/user_alarms.json'), 'r') as f:
+                alarm = json.load(f)
+            if type(alarm) is not dict:
+                log.critical("User Alarms file must be a dictionary")
+                sys.exit(1)
+            geo_args = {
+                'street', 'street_num', 'address', 'postal', 'neighborhood',
+                'sublocality', 'city', 'county', 'state', 'country'
+            }
+            if contains_arg(str(alarm), geo_args):
+                if Dicts.bots[bot_number]['loc_service'] is None:
+                    log.critical(
+                        "Reverse location DTS were detected but no API key " +
+                        "was provided!"
+                    )
+                    log.critical(
+                        "Please either remove the DTS, add an API key, or " +
+                        "disable the alarm and try again."
+                    )
+                    sys.exit(1)
+                Dicts.bots[bot_number]['loc_service'].enable_reverse_location()
+            Dicts.bots[bot_number]['alarm'] = Notification(alarm)
+            log.info('Active DM alarm found.')
+        except ValueError as e:
+            log.critical((
+                "Encountered error while loading Alarms file: {}: {}"
+            ).format(type(e).__name__, e))
+            log.critical(
+                "Encountered a 'ValueError' while loading the Alarms file. " +
+                "This typically means your file isn't in the correct json " +
+                "format. Try loading your file contents into a json validator."
+            )
+            sys.exit(1)
+        except IOError as e:
+            log.critical((
+                "Encountered error while loading Alarms: {}: {}"
+            ).format(type(e).__name__, e))
+            log.critical((
+                "Unable to find a filters file at {}. Please check that " +
+                "this file exists and has the correct permissions."
+            ).format(get_path('../user_dicts/user_alarms.json')))
+            sys.exit(1)
+        except Exception as e:
+            log.critical((
+                "Encountered error while loading Alarms: {}: {}"
+            ).format(type(e).__name__, e))
+            sys.exit(1)
 ##    try:
 ##        with open(get_path(
 ##                '../user_dicts/user_filters.json'), encoding="utf-8") as f:
@@ -123,78 +173,6 @@ def bot_init():
 ##    except IOError:
 ##        with open(get_path('../user_dicts/user_filters.json'), 'w') as f:
 ##            json.dump({}, f, indent=4)
-
-##
-##
-##
-##        if str(args.geofences[0]).lower() != 'none':
-##            try:
-##                geofences = []
-##                name_pattern = re.compile("(?<=\[)([^]]+)(?=\])")
-##                for geofence_file in args.geofences:
-##                    with open(get_path(geofence_file), 'r') as f:
-##                        lines = f.read().splitlines()
-##                    for line in lines:
-##                        line = line.strip()
-##                        match_name = name_pattern.search(line)
-##                        if match_name:
-##                            name = match_name.group(0)
-##                            geofences.append(name)
-##                Dicts.bots[bot_number]['geofences'] = geofences
-##                log.info("{} geofences added.".format(len(geofences)))
-##            except IOError as e:
-##                log.critical((
-##                    "IOError: Please make sure a file with read/write " +
-##                    "permissions exsist at {}"
-##                ).format(file_path))
-##                sys.exit(1)
-##            except Exception as e:
-##                log.critical((
-##                    "Encountered error while loading Geofence: {}: {}"
-##                ).format(type(e).__name__, e))
-##                sys.exit(1)
-##
-##            
-##            
-##        try:
-##            with open(get_path('../user_dicts/user_alarms.json'), 'r') as f:
-##                alarm = json.load(f)
-##            if type(alarm) is not dict:
-##                log.critical("User Alarms file must be a dictionary")
-##                sys.exit(1)
-##            geo_args = {
-##                'street', 'street_num', 'address', 'postal',
-##                'neighborhood', 'sublocality', 'city', 'county', 'state',
-##                'country'
-##            }
-##            Dicts.bots[bot_number]['api_req'] = Dicts.bots[bot_number][
-##                'api_req'] or contains_arg(str(alarm), geo_args)
-##            Dicts.bots[bot_number]['alarm'] = Notification(alarm)
-##            log.info('Active DM alarm found.')
-##        except ValueError as e:
-##            log.critical((
-##                "Encountered error while loading Alarms file: {}: {}"
-##            ).format(type(e).__name__, e))
-##            log.critical(
-##                "Encountered a 'ValueError' while loading the Alarms file. " +
-##                "This typically means your file isn't in the correct json " +
-##                "format. Try loading your file contents into a json validator."
-##            )
-##            sys.exit(1)
-##        except IOError as e:
-##            log.critical((
-##                "Encountered error while loading Alarms: {}: {}"
-##            ).format(type(e).__name__, e))
-##            log.critical((
-##                "Unable to find a filters file at {}. Please check that " +
-##                "this file exists and has the correct permissions."
-##            ).format(get_path('../user_dicts/user_alarms.json')))
-##            sys.exit(1)
-##        except Exception as e:
-##            log.critical((
-##                "Encountered error while loading Alarms: {}: {}"
-##            ).format(type(e).__name__, e))
-##            sys.exit(1)
 ##
 ##    log.info('DM bot successfully created.')
 ##    return
