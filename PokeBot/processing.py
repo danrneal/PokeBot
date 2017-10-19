@@ -17,15 +17,15 @@ async def in_q(client, bot_number):
                 log.warning((
                     "Bot queue length is at {}... this may be causing a " +
                     "delay in notifications, consider adding more bots."
-                ).format(dicts.bots[bot_number]['in_queue'].qsize()))
+                ).format(Dicts.bots[bot_number]['in_queue'].qsize()))
             obj = Dicts.bots[bot_number]['in_queue'].get()
             try:
                 if obj['type'] == "pokemon":
                     process_pokemon(client, bot_number, obj)
                 elif obj['type'] == 'egg':
-                    self.process_egg(client, bot_number, obj)
+                    process_egg(client, bot_number, obj)
                 elif obj['type'] == "raid":
-                    self.process_raid(client, bot_number, obj)
+                    process_raid(client, bot_number, obj)
                 else:
                     pass
             except Exception as e:
@@ -159,7 +159,7 @@ def process_raid(client, bot_number, raid):
                 'filters']):
             continue
         if (len(Dicts.bots[bot_number]['filters'][user_id]['areas']) > 0 and
-            pkmn['geofence'] not in Dicts.bots[bot_number]['filters'][user_id][
+            egg['geofence'] not in Dicts.bots[bot_number]['filters'][user_id][
                 'areas']):
             continue
         user_ids.append(user_id)
