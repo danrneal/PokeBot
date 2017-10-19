@@ -11,9 +11,7 @@ from .utils import (get_args, Dicts, update_dicts, require_and_remove_key,
                     is_number, truncate, get_pkmn_id)
 
 log = logging.getLogger('commands')
-
 args = get_args()
-dicts = Dicts()
 
 
 async def status(client, bot_number, message):
@@ -21,9 +19,11 @@ async def status(client, bot_number, message):
     delete_msg = await message.channel.send((
         'PokeBot {} (of {}) standing by.'
     ).format(bot_number + 1, len(args.tokens)))
+    Dicts.bots[bot_number]['timestamps'].append(datetime.utcnow())
     if bot_number == 1:
         await asyncio.sleep(0.1 * int(len(args.tokens)))
         delete_vid = await message.channel.send('https://youtu.be/kxH6YErAIgA')
+        Dicts.bots[bot_number]['timestamps'].append(datetime.utcnow())
         await asyncio.sleep(60 - (0.1 * (int(len(args.tokens)) + 1)))
         await delete_vid.delete()
         await delete_msg.delete()
@@ -34,21 +34,20 @@ async def status(client, bot_number, message):
 
 
 async def commands(bot_number, message):
-    await dicts.bots[bot_number]['out_queue'].put((
-        1, dicts.bots[bot_number]['count'], {
+    await Dicts.bots[bot_number]['out_queue'].put((
+        1, Dicts.bots[bot_number]['count'], {
             'destination': message.channel,
-            'msg': dicts.info_msg
+            'msg': Dicts.info_msg
         }
     ))
-    dicts.bots[bot_number]['count'] += 1
+    Dicts.bots[bot_number]['count'] += 1
     await message.delete()
 
 
 async def dex(bot_number, message):
     pokemon = message.content.lower().split()[1]
-    if pokemon in dicts.pokemon:
-        dex_number = dicts.pokemon.index(pokemon) + 1
-
+    dex_number = get_pkmn_id(pokemon)
+    if dex_number is not None:
         site = "https://pokemongo.gamepress.gg/pokemon/{}".format(dex_number)
         page = requests.get(site)
         soup = BeautifulSoup(page.content, 'html.parser')
@@ -216,22 +215,22 @@ async def dex(bot_number, message):
                 descript += "\n```"
 
         em = discord.Embed(title=title, url=site, description=descript,
-                           color=dicts.type_col[
+                           color=Dicts.type_col[
                                types[0].get_text().split()[0].lower()])
         em.set_thumbnail(
             url=('https://raw.githubusercontent.com/kvangent/PokeAlarm/' +
                  'master/icons/{}.png').format(dex_number))
 
-        await dicts.bots[bot_number]['out_queue'].put((
-            1, dicts.bots[bot_number]['count'], {
+        await Dicts.bots[bot_number]['out_queue'].put((
+            1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'embed': em
             }
         ))
-        dicts.bots[bot_number]['count'] += 1
+        Dicts.bots[bot_number]['count'] += 1
     else:
-        await dicts.bots[bot_number]['out_queue'].put((
-            1, dicts.bots[bot_number]['count'], {
+        await Dicts.bots[bot_number]['out_queue'].put((
+            1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
                     "`{}` is not any pokemon I know of, check your spelling " +
@@ -239,7 +238,7 @@ async def dex(bot_number, message):
                 ).format(pokemon.title(), message.author.display_name)
             }
         ))
-        dicts.bots[bot_number]['count'] += 1
+        Dicts.bots[bot_number]['count'] += 1
 
 
 async def donate(bot_number, message):
@@ -253,13 +252,13 @@ async def donate(bot_number, message):
         ),
         color=int('0x85bb65', 16)
     )
-    await dicts.bots[bot_number]['out_queue'].put((
-        1, dicts.bots[bot_number]['count'], {
+    await Dicts.bots[bot_number]['out_queue'].put((
+        1, Dicts.bots[bot_number]['count'], {
             'destination': message.channel,
             'embed': em
         }
     ))
-    dicts.bots[bot_number]['count'] += 1
+    Dicts.bots[bot_number]['count'] += 1
     await message.delete()
 
 
@@ -513,9 +512,10 @@ async def delete(bot_number, message):
 
 
 async def pause(bot_number, message):
-    if str(message.author.id) not in dicts.bots[bot_number]['filters']:
-        await dicts.bots[bot_number]['out_queue'].put((
-            1, dicts.bots[bot_number]['count'], {
+    user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
+    if user_dict is None:
+        await Dicts.bots[bot_number]['out_queue'].put((
+            1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
                     "There is nothing to pause, `{}`, I'm not alerting you " +
@@ -523,35 +523,34 @@ async def pause(bot_number, message):
                 ).format(message.author.display_name)
             }
         ))
-        dicts.bots[bot_number]['count'] += 1
-    elif dicts.users[bot_number]['filters'][str(message.author.id)][
-            'paused'] is True:
-        await dicts.bots[bot_number]['out_queue'].put((
-            1, dicts.bots[bot_number]['count'], {
+        Dicts.bots[bot_number]['count'] += 1
+    elif user_dict['paused'] is True:
+        await Dicts.bots[bot_number]['out_queue'].put((
+            1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': 'Your alerts are already paused, `{}`.'.format(
                     message.author.display_name)
             }
         ))
-        dicts.bots[bot_number]['count'] += 1
+        Dicts.bots[bot_number]['count'] += 1
     else:
-        dicts.users[bot_number]['filters'][str(message.author.id)][
-            'paused'] = True
+        user_dict['paused'] = True
         update_dicts()
-        await dicts.bots[bot_number]['out_queue'].put((
-            1, dicts.bots[bot_number]['count'], {
+        await Dicts.bots[bot_number]['out_queue'].put((
+            1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': 'Your alerts have been paused, `{}`.'.format(
                     message.author.display_name)
             }
         ))
-        dicts.bots[bot_number]['count'] += 1
+        Dicts.bots[bot_number]['count'] += 1
 
 
 async def resume(bot_number, message):
-    if str(message.author.id) not in dicts.bots[bot_number]['filters']:
-        await dicts.bots[bot_number]['out_queue'].put((
-            1, dicts.bots[bot_number]['count'], {
+    user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
+    if user_dict is None:
+        await Dicts.bots[bot_number]['out_queue'].put((
+            1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
                     "There is nothing to resume, `{}`, I'm not alerting you " +
@@ -559,29 +558,27 @@ async def resume(bot_number, message):
                 ).format(message.author.display_name)
             }
         ))
-        dicts.bots[bot_number]['count'] += 1
-    elif dicts.users[bot_number]['filters'][str(message.author.id)][
-            'paused'] is False:
-        await dicts.bots[bot_number]['out_queue'].put((
-            1, dicts.bots[bot_number]['count'], {
+        Dicts.bots[bot_number]['count'] += 1
+    elif user_dict['paused'] is False:
+        await Dicts.bots[bot_number]['out_queue'].put((
+            1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': 'Your alerts were not previously paused, `{}`.'.format(
                     message.author.display_name)
             }
         ))
-        dicts.bots[bot_number]['count'] += 1
+        Dicts.bots[bot_number]['count'] += 1
     else:
-        dicts.users[bot_number]['filters'][str(message.author.id)][
-            'paused'] = False
+        user_dict['paused'] = False
         update_dicts()
-        await dicts.bots[bot_number]['out_queue'].put((
-            1, dicts.bots[bot_number]['count'], {
+        await Dicts.bots[bot_number]['out_queue'].put((
+            1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': 'You alerts have been resumed, `{}`.'.format(
                     message.author.display_name)
             }
         ))
-        dicts.bots[bot_number]['count'] += 1
+        Dicts.bots[bot_number]['count'] += 1
 
 
 async def activate(bot_number, message):
@@ -601,7 +598,7 @@ async def activate(bot_number, message):
                         1, dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'msg': (
-                                "`{}`, all areas are off by default."
+                                "`{}`, all areas are on by default."
                             ).format(message.author.display_name)
                         }
                     ))
@@ -748,46 +745,46 @@ async def deactivate(bot_number, message):
 
 
 async def alerts(bot_number, message):
-    if str(message.author.id) not in dicts.bots[bot_number]['filters']:
-        await dicts.bots[bot_number]['out_queue'].put((
-            1, dicts.bots[bot_number]['count'], {
+    user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
+    if user_dict is None:
+        await Dicts.bots[bot_number]['out_queue'].put((
+            1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': "`{}`, you don't have any alerts set.".format(
                     message.author.display_name)
             }
         ))
-        dicts.bots[bot_number]['count'] += 1
+        Dicts.bots[bot_number]['count'] += 1
     else:
         alerts = "`{}`'s Alert Settings:\nBOT NUMBER: {}\nPAUSED: ".format(
             message.author.display_name, str(bot_number + 1))
-        if dicts.users[bot_number]['filters'][str(message.author.id)][
-                'paused'] is True:
+        if user_dict['paused'] is True:
             alerts += "TRUE\n\n"
         else:
             alerts += "FALSE\n\n"
         if args.all_areas is True:
             alerts += '__PAUSED AREAS__\n\n'
-            if len(dicts.users[bot_number]['filters'][str(message.author.id)][
-                    'areas']) == len(dicts.bots[bot_number]['geofences']):
-                alerts += 'None\n'
+            if len(user_dict['areas']) == len(
+                    Dicts.bots[bot_number]['geofences']):
+                alerts += 'None  \n'
             else:
-                for area in list(set(dicts.bots[bot_number][
-                    'geofences']) - set(dicts.users[bot_number]['filters'][
-                        str(message.author.id)]['areas'])):
+                for area in list(set(Dicts.bots[bot_number][
+                        'geofences']) - set(user_dict['areas'])):
                     alerts += '{}, '.format(area.title())
         else:
             alerts += '__ALERT AREAS__\n\n'
-            areas = False
-            for area in dicts.users[bot_number]['filters'][
-                    str(message.author.id)]['areas']:
-                areas = True
-                alerts += '{}, '.format(area.title())
-            if areas is False:
-                alerts += 'None \n'
-            alerts = alerts[:-2] + '\n\n'
-        if len(dicts.bots[bot_number]['filters'][str(message.author.id)][
-                'pokemon_settings']['filters']) == 0:
-            alerts += '__POKEMON__\n\n'
+            if len(user_dict['areas']) == 0:
+                alerts += 'None  \n'
+            else:
+                for area in user_dict['areas']:
+                    alerts += '{}, '.format(area.title())
+        alerts = alerts[:-2] + '\n\n'
+        defaults = user_dict['pokemon']['default']
+        alerts += '__POKEMON__\n\nDefaults: {}%+, {}CP+, L{}+\n\n'.format(
+            defaults['min_iv'], defaults['min_cp'], defaults['min_level'])
+
+#        for pokemon in user_dict['pokemon']:
+            
         for pkmn_id in dicts.bots[bot_number]['filters'][
                 str(message.author.id)]['pokemon_settings']['filters']:
             alerts += '{}:'.format(dicts.bots[bot_number]['pokemon_name'][
@@ -832,10 +829,10 @@ async def alerts(bot_number, message):
 
 
 async def areas(bot_number, message):
+    user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
     areas = '__AVAILABLE AREAS__ (Your active areas are in **bold**.)\n\n'
-    for area in dicts.bots[bot_number]['geofences']:
-        if (str(message.author.id) in dicts.bots[bot_number]['filters'] and
-                area in dicts.bots[bot_number]['areas']):
+    for area in Dicts.bots[bot_number]['geofences']:
+        if (user_dict is not None and area in user_dict['areas']):
             areas += '**{}**, '.format(area.title())
         else:
             areas += '{}, '.format(area.title())
@@ -848,10 +845,10 @@ async def areas(bot_number, message):
         for areas_split in truncate(areas.pop()):
             areas.append(areas_split)
     for dm in areas:
-        await dicts.bots[bot_number]['out_queue'].put((
-            1, dicts.bots[bot_number]['count'], {
+        await Dicts.bots[bot_number]['out_queue'].put((
+            1, Dicts.bots[bot_number]['count'], {
                 'destination': message.author,
                 'msg': dm
             }
         ))
-        dicts.bots[bot_number]['count'] += 1
+        Dicts.bots[bot_number]['count'] += 1

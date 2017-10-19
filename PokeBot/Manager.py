@@ -221,7 +221,7 @@ class Manager(object):
         if (len(self.__geofences) > 0 and
                 pkmn['geofence'] not in self.__geofences):
             return
-        if self.__loc_service:
+        if self.__loc_service and 'street_num' not in pkmn:
             self.__loc_service.add_optional_arguments([lat, lng], pkmn)
         log.info("{} notification has been triggered!".format(name))
         self.__alarm.pokemon_alert(pkmn)
@@ -237,7 +237,7 @@ class Manager(object):
         if (len(self.__geofences) > 0 and
                 egg['geofence'] not in self.__geofences):
             return
-        if self.__loc_service:
+        if self.__loc_service and 'street_num' not in egg:
             self.__loc_service.add_optional_arguments([lat, lng], egg)
         log.info("Egg ({}) notification has been triggered!".format(gym_id))
         self.__alarm.raid_egg_alert(egg)
@@ -252,7 +252,7 @@ class Manager(object):
         if (len(self.__geofences) > 0 and
                 raid['geofence'] not in self.__geofences):
             return
-        if self.__loc_service:
+        if self.__loc_service and 'street_num' not in raid:
             self.__loc_service.add_optional_arguments([lat, lng], raid)
         log.info("Raid ({}) notification has been triggered!".format(gym_id))
         self.__alarm.raid_alert(raid)

@@ -94,24 +94,22 @@ def process_pokemon(client, bot_number, pkmn):
     lat, lng = pkmn['lat'], pkmn['lng']
     name = pkmn['pkmn']
     for user_id in Dicts.bots[bot_number]['filters']:
-        if (Dicts.bots[bot_number]['filters'][user_id]['paused'] is True or
-            Dicts.bots[bot_number]['pokemon_setttings'][user_id][
-                'enabled'] is False or
-            pkmn_id not in Dicts.bots[bot_number]['pokemon_setttings'][
-                user_id]['filters']):
+        user_dict = Dicts.bots[bot_number]['filters'][user_id]
+        user_filter_dict = Dicts.bots[bot_number]['pokemon_setttings'][user_id]
+        if (user_dict['paused'] is True or
+            user_filter_dict['enabled'] is False or
+                pkmn_id not in user_filter_dict['filters']):
             continue
-        filters = Dicts.bots[bot_number]['pokemon_setttings']['filters'][
-            pkmn_id]
+        filters = user_filter_dict[pkmn_id]
         passed = check_pokemon_filter(filters, pkmn)
         if not passed:
             continue
-        if (len(Dicts.bots[bot_number]['filters'][user_id]['areas']) > 0 and
-            pkmn['geofence'] not in Dicts.bots[bot_number]['filters'][user_id][
-                'areas']):
+        if (len(user_dict['areas']) > 0 and
+                pkmn['geofence'] not in user_dict['areas']):
             continue
         user_ids.append(user_id)
     if len(user_ids) > 0:
-        if Dicts.bots[bot_number]['loc_service']:
+        if Dicts.bots[bot_number]['loc_service'] and 'street_num' not in pkmn:
             Dicts.bots[bot_number]['loc_service'].add_optional_arguments(
                 [lat, lng], pkmn)
         log.info("{} DM notification has been triggered!".format(name))
@@ -124,21 +122,20 @@ def process_egg(client, bot_number, egg):
     lat, lng = egg['lat'], egg['lng']
     gym_id = egg['id']
     for user_id in Dicts.bots[bot_number]['filters']:
-        if (Dicts.bots[bot_number]['filters'][user_id]['paused'] is True or
-            Dicts.bots[bot_number]['egg_settings'][user_id][
-                'enabled'] is False):
+        user_dict = Dicts.bots[bot_number]['filters'][user_id]
+        user_filter_dict = Dicts.bots[bot_number]['egg_setttings'][user_id]
+        if (user_dict['paused'] is True or
+            user_filter_dict['enabled'] is False):
             continue
-        passed = check_egg_filter(
-            Dicts.bots[bot_number]['egg_settings'][user_id], egg)
+        passed = check_egg_filter(user_filter_dict, egg)
         if not passed:
             continue
-        if (len(Dicts.bots[bot_number]['filters'][user_id]['areas']) > 0 and
-            egg['geofence'] not in Dicts.bots[bot_number]['filters'][user_id][
-                'areas']):
+        if (len(user_dict['areas']) > 0 and
+            egg['geofence'] not in user_dict['areas']):
             continue
         user_ids.append(user_id)
     if len(user_ids) > 0:
-        if Dicts.bots[bot_number]['loc_service']:
+        if Dicts.bots[bot_number]['loc_service'] and 'street_num' not in egg:
             Dicts.bots[bot_number]['loc_service'].add_optional_arguments(
                 [lat, lng], egg)
         log.info("Egg ({}) notification has been triggered!".format(gym_id))
@@ -152,19 +149,18 @@ def process_raid(client, bot_number, raid):
     lat, lng = raid['lat'], raid['lng']
     gym_id = raid['id']
     for user_id in Dicts.bots[bot_number]['filters']:
-        if (Dicts.bots[bot_number]['filters'][user_id]['paused'] is True or
-            Dicts.bots[bot_number]['raid_setttings'][user_id][
-                'enabled'] is False or
-            pkmn_id not in Dicts.bots[bot_number]['raid_setttings'][user_id][
-                'filters']):
+        user_dict = Dicts.bots[bot_number]['filters'][user_id]
+        user_filter_dict = Dicts.bots[bot_number]['raid_setttings'][user_id]
+        if (user_dict['paused'] is True or
+            user_filter_dict['enabled'] is False or
+                pkmn_id not in user_filter_dict['filters']):
             continue
-        if (len(Dicts.bots[bot_number]['filters'][user_id]['areas']) > 0 and
-            raid['geofence'] not in Dicts.bots[bot_number]['filters'][user_id][
-                'areas']):
+        if (len(user_dict['areas']) > 0 and
+                raid['geofence'] not in user_dict['areas']):
             continue
         user_ids.append(user_id)
     if len(user_ids) > 0:
-        if Dicts.bots[bot_number]['loc_service']:
+        if Dicts.bots[bot_number]['loc_service'] and 'street_num' not in raid:
             Dicts.bots[bot_number]['loc_service'].add_optional_arguments(
                 [lat, lng], raid)
         log.info("Raid ({}) notification has been triggered!".format(gym_id))

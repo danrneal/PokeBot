@@ -38,4 +38,4 @@ class Locale(object):
         return self.__move_names.get(move_id, 'unknown')
 
     def get_form_name(self, pokemon_id, form_id):
-        return self.__form_names.get(pokemon_id, {}).get(form_id, 'unknown')
+        return self.__form_names.get(pokemon_id, {}).get(form_id, '?')
