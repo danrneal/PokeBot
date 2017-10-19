@@ -9,12 +9,10 @@ from queue import Queue
 from .LocationServices import LocationService
 from .DiscordAlarm import DiscordAlarm
 from .Filter import load_pokemon_section, load_egg_section
-from .utils import (require_and_remove_key, get_path, get_args, contains_arg,
-                    Dicts)
+from .utils import require_and_remove_key, get_path, get_args, contains_arg
 
 log = logging.getLogger('Manager')
 args = get_args()
-dicts = Dicts()
 
 
 class Manager(object):

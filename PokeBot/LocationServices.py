@@ -4,7 +4,6 @@ from random import randint
 from .utils import get_args
 
 log = logging.getLogger('LocService')
-
 args = get_args()
 
 

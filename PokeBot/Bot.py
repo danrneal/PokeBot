@@ -10,7 +10,6 @@ from .commands import (status, commands, dex, donate, _set, delete, pause,
                        resume, activate, deactivate, alerts, areas)
 
 log = logging.getLogger('Bot')
-
 args = get_args()
 
 
@@ -42,7 +41,7 @@ class Bot(discord.Client):
                 for settings in [
                         'pokemon_settings', 'egg_settings', 'raid_settings']:
                     if user_id in Dicts.bots[bot_number][settings]:
-                        Dicts.bots[bot_number][settings].pop(user_id)                    
+                        Dicts.bots[bot_number][settings].pop(user_id)
                 user_count += 1
                 continue
             for area in Dicts.bots[bot_number]['filters'][user_id]['areas']:

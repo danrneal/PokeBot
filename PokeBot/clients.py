@@ -5,6 +5,7 @@ import logging
 import sys
 import json
 import asyncio
+from queue import Queue
 from collections import namedtuple
 from aiohttp import web
 from .Manager import Manager
@@ -21,7 +22,6 @@ logging.basicConfig(
     level=logging.INFO
 )
 log = logging.getLogger('clients')
-
 args = get_args()
 entries = []
 wh_mgr = ManageWebhook()
@@ -72,7 +72,7 @@ def bot_init():
             'egg_settings': {},
             'geofences': [],
             'roles': {},
-            'in_queue': asyncio.Queue(),
+            'in_queue': Queue(),
             'out_queue': asyncio.PriorityQueue(),
             'timestamps': [],
             'count': 0

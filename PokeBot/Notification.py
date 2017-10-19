@@ -10,7 +10,6 @@ from .utils import (get_args, Dicts, reject_leftover_parameters, get_color,
 
 log = logging.getLogger('Notification')
 args = get_args()
-dicts = Dicts()
 
 
 class Notification(Alarm):
@@ -97,8 +96,8 @@ class Notification(Alarm):
                 })
             )
         for user_id in user_ids:
-            dicts.bots[bot_number]['out_queue'].put((
-                2, dicts.bots[bot_number]['count'], {
+            Dicts.bots[bot_number]['out_queue'].put((
+                2, Dicts.bots[bot_number]['count'], {
                     'destination': discord.utils.get(
                         client.get_all_members(),
                         id=int(user_id)
@@ -107,7 +106,7 @@ class Notification(Alarm):
                     'embed': em
                 }
             ))
-            dicts.bots[bot_number]['count'] += 1
+            Dicts.bots[bot_number]['count'] += 1
 
     def pokemon_alert(self, client, bot_number, pokemon_info, user_ids):
         self.send_alert(

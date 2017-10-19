@@ -7,25 +7,27 @@ from datetime import datetime, timedelta
 from .utils import get_args, Dicts
 
 log = logging.getLogger('processing')
-
 args = get_args()
-dicts = Dicts()
 
 
-def clean_hist(bot_number):
-    old = []
-    for id_ in dicts.bots[bot_number]['pokemon_hist']:
-        if dicts.bots[bot_number]['pokemon_hist'][id_] < datetime.utcnow():
-            old.append(id_)
-    for id_ in old:
-        del dicts.bots[bot_number]['pokemon_hist'][id_]
-    old = []
-    for id_ in dicts.bots[bot_number]['raid_hist']:
-        if dicts.bots[bot_number]['raid_hist'][id_][
-                'raid_end'] < datetime.utcnow():
-            old.append(id_)
-    for id_ in old:
-        del dicts.bots[bot_number]['raid_hist'][id_]
+async def in_q(client, bot_number):
+    while True:
+        if not dicts.bots[bot_number]['in_queue'].empty():
+            obj = dicts.bots[bot_number]['in_queue'].get()
+            try:
+                if obj['type'] == "pokemon":
+                    process_pokemon(client, bot_number, obj)
+                elif obj['type'] == 'egg':
+                    self.process_egg(client, bot_number, obj)
+                elif obj['type'] == "raid":
+                    self.process_raid(client, bot_number, obj)
+                else:
+                    pass
+            except Exception as e:
+                log.error((
+                    "Encountered error during DM processing: {}: {}"
+                ).format(type(e).__name__, e))
+        await out_q(bot_number)
 
 
 def check_pokemon_filter(filters, pkmn):
@@ -130,26 +132,4 @@ async def out_q(bot_number):
     await asyncio.sleep(0.5)
 
 
-async def in_q(client, bot_number):
-    last_clean = datetime.utcnow()
-    while True:
-        if dicts.bots[bot_number]['in_queue'].qsize() > 300:
-            log.warning((
-                "In queue length is at {}... this may be causing a delay " +
-                "in notifications, consider adding more bots."
-            ).format(dicts.bots[bot_number]['in_queue'].qsize()))
-        if not dicts.bots[bot_number]['in_queue'].empty():
-            obj = await dicts.bots[bot_number]['in_queue'].get()
-            if datetime.utcnow() - last_clean > timedelta(minutes=3):
-                clean_hist()
-                last_clean = datetime.utcnow()
-            try:
-                if obj['type'] == "pokemon":
-                    process_pokemon(client, bot_number, obj)
-                else:
-                    pass
-            except Exception as e:
-                log.error((
-                    "Encountered error during DM processing: {}: {}"
-                ).format(type(e).__name__, e))
-        await out_q(bot_number)
+
