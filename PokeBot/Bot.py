@@ -39,6 +39,10 @@ class Bot(discord.Client):
         for user_id in Dicts.bots[bot_number]['filters']:
             if user_id not in users:
                 Dicts.bots[bot_number]['filters'].pop(user_id)
+                for settings in [
+                        'pokemon_settings', 'egg_settings', 'raid_settings']:
+                    if user_id in Dicts.bots[bot_number][settings]:
+                        Dicts.bots[bot_number][settings].pop(user_id)                    
                 user_count += 1
                 continue
             for area in Dicts.bots[bot_number]['filters'][user_id]['areas']:
@@ -64,21 +68,18 @@ class Bot(discord.Client):
         if (after.id % len(args.tokens) == bot_number and
             str(after.id) in Dicts.bots[bot_number]['filters'] and
                 before.roles != after.roles):
-            alert_role = False
-            for role in Dicts.bots[bot_number]['roles'][args.alert_role]:
-                try:
-                    if after.top_role > role:
-                        alert_role = True
-                        break
-                except:
-                    pass
-            if alert_role is False:
+            if after.top_role > Dicts.bots[bot_number]['roles'][
+                    after.guild.id][args.alert_role]:
                 Dicts.bots[bot_number]['filters'].pop(str(after.id))
                 update_dicts()
+                for settings in [
+                        'pokemon_settings', 'egg_settings', 'raid_settings']:
+                    if str(after.id) in Dicts.bots[bot_number][settings]:
+                        Dicts.bots[bot_number][settings].pop(str(after.id))
                 log.info('Removed {} from dicts'.format(after.display_name))
             elif (args.muted_role is not None and
-                  len(set(Dicts.bots[bot_number]['roles'][
-                      args.muted_role]).intersection(set(after.roles))) > 0 and
+                  Dicts.bots[bot_number]['roles'][after.guild.id][
+                      args.muted_role] in after.roles and
                   Dicts.bots[bot_number][str(after.id)]['filters'][
                       'paused'] is False):
                 Dicts.bots[bot_number][str(after.id)]['filters'][

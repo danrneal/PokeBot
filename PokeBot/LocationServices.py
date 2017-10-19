@@ -19,23 +19,6 @@ class LocationService(object):
         if self.__reverse_location:
             dict.update(**self.__get_reverse_location(dest))
 
-    def get_location_from_name(self, location_name):
-        try:
-            api_key = args.gmaps_keys[randint(0, len(
-                args.gmaps_keys) - 1)]
-            result = googlemaps.Client(
-                key=api_key, timeout=3, retry_timeout=5
-            ).geocode(location_name, language=self.__locale)
-            loc = result[0]['geometry']['location']
-            latitude, longitude = loc.get("lat"), loc.get("lng")
-            return [latitude, longitude]
-        except Exception as e:
-            log.error((
-                "Encountered error attempting to receive location from " +
-                "name{}: {})"
-            ).format(type(e).__name__, e))
-        return None
-
     def enable_reverse_location(self):
         if not self.__reverse_location:
             self.__reverse_location = True
