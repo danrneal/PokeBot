@@ -101,9 +101,14 @@ class Bot(discord.Client):
     async def on_member_remove(self, member):
         bot_number = args.bot_client_ids.index(self.user.id)
         if (member.id % len(args.tokens) == bot_number and
-                str(member.id) in Dicts.bots[bot_number]['filters']):
+            str(member.id) in Dicts.bots[bot_number]['filters'] and
+                member not in self.get_all_members()):
             Dicts.bots[bot_number]['filters'].pop(str(member.id))
             update_dicts()
+            for settings in [
+                    'pokemon_settings', 'egg_settings', 'raid_settings']:
+                if str(member.id) in Dicts.bots[bot_number][settings]:
+                    Dicts.bots[bot_number][settings].pop(str(member.id))
             log.info('Removed {} from Dicts.'.format(member.display_name))
 
     async def on_message(self, message):
