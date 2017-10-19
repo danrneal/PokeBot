@@ -159,7 +159,7 @@ def process_raid(client, bot_number, raid):
                 'filters']):
             continue
         if (len(Dicts.bots[bot_number]['filters'][user_id]['areas']) > 0 and
-            egg['geofence'] not in Dicts.bots[bot_number]['filters'][user_id][
+            raid['geofence'] not in Dicts.bots[bot_number]['filters'][user_id][
                 'areas']):
             continue
         user_ids.append(user_id)
