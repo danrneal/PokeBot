@@ -580,7 +580,7 @@ async def resume(bot_number, message):
 async def activate(bot_number, message):
     if (message.content.lower() == '!activate all' and
             str(message.author.id) in args.admins):
-        msg = dicts.bots[bot_number]['geofences']
+        msg = Dicts.bots[bot_number]['geofences']
     else:
         msg = message.content.lower().replace('!activate ', '').replace(
             '!activate\n', '').replace(',\n', ',').replace('\n', ',').replace(
@@ -588,7 +588,7 @@ async def activate(bot_number, message):
     activate_count = 0
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
     for cmd in msg:
-        if cmd in dicts.bots[bot_number]['geofences']:
+        if cmd in Dicts.bots[bot_number]['geofences']:
             if user_dict is None:
                 if args.all_areas is True:
                     await Dicts.bots[bot_number]['out_queue'].put((
@@ -615,7 +615,7 @@ async def activate(bot_number, message):
                     user_dict['areas'].append(cmd)
                     activate_count += 1
             elif (str(message.author.id) not in args.admins and
-                  len(user_dict['areas']) > 50):        
+                  len(user_dict['areas']) > 50):
                 await Dicts.bots[bot_number]['out_queue'].put((
                     1, Dicts.bots[bot_number]['count'], {
                         'destination': message.channel,
@@ -630,7 +630,7 @@ async def activate(bot_number, message):
                 break
             elif cmd not in user_dict['areas']:
                 user_dict['areas'].append(cmd)
-                activate_count += 1           
+                activate_count += 1
         else:
             await Dicts.bots[bot_number]['out_queue'].put((
                 1, Dicts.bots[bot_number]['count'], {
