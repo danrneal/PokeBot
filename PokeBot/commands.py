@@ -469,7 +469,7 @@ async def delete(bot_number, message):
             else:
                 if len(user_dict['pokemon']) > 1:
                     user_dict['pokemon'] = {'enabled': True}
-                    del_count += len(user_dict['pokemon']) -1
+                    del_count += len(user_dict['pokemon']) - 1
                 else:
                     await Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
@@ -586,37 +586,38 @@ async def activate(bot_number, message):
             '!activate\n', '').replace(',\n', ',').replace('\n', ',').replace(
                 ', ', ',').split(',')
     activate_count = 0
+    user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
     for cmd in msg:
         if cmd in dicts.bots[bot_number]['geofences']:
-            if str(message.author.id) not in dicts.bots[bot_number]['filters']:
+            if user_dict is None:
                 if args.all_areas is True:
-                    await dicts.bots[bot_number]['out_queue'].put((
-                        1, dicts.bots[bot_number]['count'], {
+                    await Dicts.bots[bot_number]['out_queue'].put((
+                        1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'msg': (
                                 "`{}`, all areas are on by default."
                             ).format(message.author.display_name)
                         }
                     ))
-                    dicts.bots[bot_number]['count'] += 1
+                    Dicts.bots[bot_number]['count'] += 1
                     break
                 else:
-                    dicts.bots[bot_number][str(message.author.id)] = {
-                        'pokemon_settings': {
-                            'enabled': True,
-                            'filers': {}
-                        },
+                    Dicts.bots[bot_number]['filters'][
+                            str(message.author.id)] = {
+                        'pokemon': {'enabled': True},
+                        'eggs': {'enabled': True},
+                        'raids': {'enabled': True},
                         'paused': False,
                         'areas': []
                     }
-                    dicts.bots[bot_number]['filters'][str(message.author.id)][
-                        'areas'].append(cmd)
+                    user_dict = Dicts.bots[bot_number]['filters'][
+                        str(message.author.id)]
+                    user_dict['areas'].append(cmd)
                     activate_count += 1
             elif (str(message.author.id) not in args.admins and
-                  len(dicts.bots[bot_number][str(message.author.id)][
-                      'areas']) > 50):
-                await dicts.bots[bot_number]['out_queue'].put((
-                    1, dicts.bots[bot_number]['count'], {
+                  len(user_dict['areas']) > 50):        
+                await Dicts.bots[bot_number]['out_queue'].put((
+                    1, Dicts.bots[bot_number]['count'], {
                         'destination': message.channel,
                         'msg': (
                             'You have reached the maximum number of areas ' +
@@ -625,16 +626,14 @@ async def activate(bot_number, message):
                         ).format(message.author.display_name)
                     }
                 ))
-                dicts.bots[bot_number]['count'] += 1
+                Dicts.bots[bot_number]['count'] += 1
                 break
-            elif cmd not in dicts.bots[bot_number]['filters'][
-                    str(message.author.id)]['areas']:
-                dicts.bots[bot_number]['filters'][str(message.author.id)][
-                    'areas'].append(cmd)
-                activate_count += 1
+            elif cmd not in user_dict['areas']:
+                user_dict['areas'].append(cmd)
+                activate_count += 1           
         else:
-            await dicts.bots[bot_number]['out_queue'].put((
-                1, dicts.bots[bot_number]['count'], {
+            await Dicts.bots[bot_number]['out_queue'].put((
+                1, Dicts.bots[bot_number]['count'], {
                     'destination': message.channel,
                     'msg': (
                         "The `{}` area is not any area I know of in this " +
@@ -642,28 +641,25 @@ async def activate(bot_number, message):
                     ).format(cmd, message.author.display_name)
                 }
             ))
-            dicts.bots[bot_number]['count'] += 1
-    if (len(dicts.bots[bot_number]['filters'][str(message.author.id)][
-        'pokemon_settings']['filters']) == 0 and
-        len(dicts.bots[bot_number]['filters'][str(message.author.id)][
-            'raid_settings']['filters']) == 0 and
-        ((dicts.bots[bot_number]['filters'][str(message.author.id)][
-            'areas'] == [] and
-          args.all_areas is False) or
-         (dicts.bots[bot_number]['filters'][str(message.author.id)][
-             'areas'] == dicts.bots[bot_number]['geofences']))):
-        dicts.bots[bot_number]['filters'].pop(str(message.author.id))
+            Dicts.bots[bot_number]['count'] += 1
+    if (len(user_dict['pokemon']) <= 1 and
+        len(user_dict['eggs']) <= 1 and
+        len(user_dict['raids']) <= 1 and
+        (len(user_dict['areas']) == len(Dicts.bots[bot_number][
+            'geofences']) and
+         args.all_areas is True)):
+        Dicts.bots[bot_number]['filters'].pop(str(message.author.id))
     if activate_count > 0:
         update_dicts()
-    await dicts.bots[bot_number]['out_queue'].put((
-        1, dicts.bots[bot_number]['count'], {
+    await Dicts.bots[bot_number]['out_queue'].put((
+        1, Dicts.bots[bot_number]['count'], {
             'destination': message.channel,
             'msg': (
                 'Your alerts have been activated for `{}` areas, `{}`.'
             ).format(activate_count, message.author.display_name)
         }
     ))
-    dicts.bots[bot_number]['count'] += 1
+    Dicts.bots[bot_number]['count'] += 1
 
 
 async def deactivate(bot_number, message):
