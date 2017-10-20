@@ -5,6 +5,7 @@ import logging
 import asyncio
 import discord
 import requests
+from datetime import datetime
 from bs4 import BeautifulSoup
 from .Filter import load_pokemon_section
 from .utils import (get_args, Dicts, update_dicts, require_and_remove_key,
@@ -280,7 +281,7 @@ async def _set(client, message, bot_number):
             input_ = []
             filters = []
             for filter_ in command:
-                input_.append(multifilter.split())
+                input_.append(filter_.split())
                 filters.append({})
         for inp, filt in input_, filters:
             if pokemon != 'default':
@@ -291,8 +292,8 @@ async def _set(client, message, bot_number):
                     inp.remove(list(set(inp).intersection(set(
                         ['female', 'f'])))[0])
                 elif (len(set(inp).intersection(set(['male', 'm']))) > 0 and
-                      pokemon not in dicts.female_only and
-                      pokemon not in dicts.genderless):
+                      pokemon not in Dicts.female_only and
+                      pokemon not in Dicts.genderless):
                     filt['gender'] = ['male']
                     inp.remove(list(set(inp).intersection(set(
                         ['male', 'm'])))[0])
@@ -382,6 +383,8 @@ async def _set(client, message, bot_number):
         if user_dict is None:
             Dicts.bots[bot_number]['filters'][str(message.author.id)] = {
                 'pokemon': {'enabled': True},
+                'eggs': {'enabled': True},
+                'raids': {'enabled': True},
                 'paused': False
             }
             user_dict = Dicts.bots[bot_number]['filters'][
@@ -464,18 +467,9 @@ async def delete(bot_number, message):
                     ))
                     Dicts.bots[bot_number]['count'] += 1
             else:
-
-
-                
-                if len(dicts.bots[bot_number]['filters'][
-                    str(message.author.id)]['pokemon_settings'][
-                        'filters']) > 0:
-                    dicts.bots[bot_number]['filters'][
-                        str(message.author.id)]['pokemon_settings'][
-                            'filters'] = {}
-                    del_count += len(dicts.bots[bot_number]['filters'][
-                        str(message.author.id)]['pokemon_settings'][
-                            'filters'])
+                if len(user_dict['pokemon']) > 1:
+                    user_dict['pokemon'] = {'enabled': True}
+                    del_count += len(user_dict['pokemon']) -1
                 else:
                     await Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
@@ -487,30 +481,30 @@ async def delete(bot_number, message):
                         }
                     ))
                     Dicts.bots[bot_number]['count'] += 1
-
-
-                    
-        if (len(dicts.bots[bot_number]['filters'][str(message.author.id)][
-                'pokemon_settings']['filters']) == 0 and
-            len(dicts.bots[bot_number]['filters'][str(message.author.id)][
-                'raid_settings']['filters']) == 0 and
-            ((dicts.bots[bot_number]['filters'][str(message.author.id)][
-                'areas'] == [] and
+        if (len(user_dict['pokemon']) <= 1 and
+            len(user_dict['eggs']) <= 1 and
+            len(user_dict['raids']) <= 1 and
+            ((len(user_dict['areas']) == 0 and
               args.all_areas is False) or
-             (dicts.bots[bot_number]['filters'][str(message.author.id)][
-                 'areas'] == dicts.bots[bot_number]['geofences']))):
-            dicts.bots[bot_number]['filters'].pop(str(message.author.id))
+             (len(user_dict['areas']) == len(Dicts.bots[bot_number][
+                 'geofences']) and
+              args.all_areas is True))):
+            Dicts.bots[bot_number]['filters'].pop(str(message.author.id))
         if del_count > 0:
+            Dicts.bots[bot_number]['pokemon_settings'][
+                str(message.author.id)] = load_pokemon_section(
+                    require_and_remove_key(
+                        'pokemon', user_dict, 'User command.'))
             update_dicts()
-        await dicts.bots[bot_number]['out_queue'].put((
-            1, dicts.bots[bot_number]['count'], {
+        await Dicts.bots[bot_number]['out_queue'].put((
+            1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
                     '`{}`, I have removed `{}` pokemon spawn filters.'
                 ).format(message.author.display_name, str(del_count))
             }
         ))
-        dicts.bots[bot_number]['count'] += 1
+        Dicts.bots[bot_number]['count'] += 1
 
 
 async def pause(bot_number, message):
