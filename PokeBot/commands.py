@@ -263,7 +263,7 @@ async def donate(bot_number, message):
     await message.delete()
 
 
-async def _set(client, message, bot_number):
+async def set_(client, message, bot_number):
     msg = message.content.lower().replace('!set ', '').replace(
         '!set\n', '').replace('%', '').replace('nidoran♀', 'nidoranf').replace(
         'nidoran♂', 'nidoranm').replace('mr. mime', 'mr.mime').replace(
@@ -274,7 +274,12 @@ async def _set(client, message, bot_number):
         if get_pkmn_id(command.split()[0]) is None:
             pokemon = 'default'
             input_ = [command.split()]
-            filters = [{}]
+            filters = [{
+                'min_iv': 0,
+                'min_cp': 0,
+                'min_level': 0,
+                'gender': None
+            }]
         else:
             pokemon = get_pkmn_id(command.split()[0])
             command = command.strip(pokemon).strip().split('|')
@@ -282,7 +287,12 @@ async def _set(client, message, bot_number):
             filters = []
             for filter_ in command:
                 input_.append(filter_.split())
-                filters.append({})
+                filters.append({
+                    'min_iv': 0,
+                    'min_cp': 0,
+                    'min_level': 0,
+                    'gender': None
+                })
         for inp, filt in input_, filters:
             if pokemon != 'default':
                 if (len(set(inp).intersection(set(['female', 'f']))) > 0 and
@@ -766,53 +776,64 @@ async def alerts(bot_number, message):
                 for area in user_dict['areas']:
                     alerts += '{}, '.format(area.title())
         alerts = alerts[:-2] + '\n\n'
-        defaults = user_dict['pokemon']['default']
-        alerts += '__POKEMON__\n\nDefaults: {}%+, {}CP+, L{}+\n\n'.format(
-            defaults['min_iv'], defaults['min_cp'], defaults['min_level'])
-
-
-            
-        for pkmn_id in dicts.bots[bot_number]['filters'][
-                str(message.author.id)]['pokemon_settings']['filters']:
-            alerts += '{}:'.format(dicts.bots[bot_number]['pokemon_name'][
-                pkmn_id])
-            for filter_ in dicts.bots[bot_number]['filters'][
-                str(message.author.id)]['pokemon_settings']['filters'][
-                    pkmn_id]:
-                if (filter_.min_iv == 0 and
-                    filter_.min_cp == 0 and
-                    filter_.min_level == 0 and
-                    (filter_.genders is None or
-                     filter_.genders == ['neutral'])):
-                    alerts += ' All'
+        alerts += '__POKEMON__\n\n'
+        if 'default' in user_dict['pokemon']:
+            alerts += 'Default: '
+            if user_dict['pokemon']['default']['min_iv'] > 0:
+                alerts += '{}%+, '.format(
+                    user_dict['pokemon']['default']['min_iv'])
+            if user_dict['pokemon']['default']['min_cp'] > 0:
+                alerts += '{}CP+, '.format(
+                    user_dict['pokemon']['default']['min_cp'])
+            if user_dict['pokemon']['default']['min_level'] > 0:
+                alerts += 'L{}+, '.format(
+                    user_dict['pokemon']['default']['min_level'])
+            alerts = alerts[:-2] + '\n\n'
+        else:
+            alerts += 'Default: None\n\n'
+        for pkmn_id in range(721):
+            pkmn = Dicts.bots['loc_service'].get_pokemon_name(pkmn_id + 1)
+            if user_dict['pokemon'].get(pkmn) is True:
+                continue                
+            elif user_dict['pokemon'].get(pkmn) is None:
+                if 'default' in user_dict['pokemon']:
+                    alerts += '{}: None\n'.format(pkmn.title())
                 else:
-                    if filter_.min_iv > 0:
-                        alerts += ' {}%+,'
-                    elif filter_.min_cp > 0:
-                        alerts += ' {}CP+,'
-                    elif filter_.min_level > 0:
-                        alerts += ' L{}+,'
-                    elif filter_.genders is not None:
-                        if filter_.genders == ['female']:
-                            alerts += ' (♀),'
-                        elif filter_.genders == ['male']:
-                            alerts += ' (♂),'
-                        else:
-                            alerts += ' (♀, ♂),'
-                alerts[:-1] += ' |'
-            alerts[:-2] += '\n'
-        alerts = [alerts[:-1]]
+                    continue
+            else:
+                alerts += '{}: '.format(pkmn)
+                for filter_ in user_dict['pokemon'][pkmn]:
+                    if (filter_['min_iv'] == 0 and
+                        filter_['min_cp'] == 0 and
+                        filter_['min_level'] == 0 and
+                        filter_['gender'] is None):
+                        alerts += 'All  '
+                    else:
+                        if filter_['min_iv'] > 0:
+                            alerts += '{}%+, '.format(filter_['min_iv'])
+                        if filter_['min_cp'] > 0:
+                            alerts += '{}CP+, '.format(filter_['min_cp'])
+                        if filter_['min_level'] > 0:
+                            alerts += 'L{}+, '.format(filter_['min_level'])
+                        if filter_['gender'] is not None:
+                            if filter_['gender'] == ['female']:
+                                alerts += '(♀), '
+                            else:
+                                alerts += '(♂), '
+                    alerts = alerts[:-2] + ' | '
+                alerts = alerts[:-3] + '\n'
+        alerts = [alerts[:-1]]  
         while len(alerts[-1]) > 2000:
             for alerts_split in truncate(alerts.pop()):
                 alerts.append(alerts_split)
         for dm in alerts:
-            await dicts.bots[bot_number]['out_queue'].put((
-                1, dicts.bots[bot_number]['count'], {
+            await Dicts.bots[bot_number]['out_queue'].put((
+                1, Dicts.bots[bot_number]['count'], {
                     'destination': message.author,
                     'msg': dm
                 }
             ))
-            dicts.bots[bot_number]['count'] += 1
+            Dicts.bots[bot_number]['count'] += 1
 
 
 async def areas(bot_number, message):

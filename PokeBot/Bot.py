@@ -124,7 +124,7 @@ class Bot(discord.Client):
                     await donate(bot_number, message)
                 elif message.channel.id in args.command_channels:
                     if message.content.lower().startswith('!set '):
-                        await _set(self, message, bot_number)
+                        await set_(self, message, bot_number)
                     elif message.content.lower().startswith(
                             ('!delete ', '!remove ')):
                         await delete(bot_number, message)
