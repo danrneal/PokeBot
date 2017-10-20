@@ -794,7 +794,7 @@ async def alerts(bot_number, message):
         for pkmn_id in range(721):
             pkmn = Dicts.bots['loc_service'].get_pokemon_name(pkmn_id + 1)
             if user_dict['pokemon'].get(pkmn) is True:
-                continue                
+                continue
             elif user_dict['pokemon'].get(pkmn) is None:
                 if 'default' in user_dict['pokemon']:
                     alerts += '{}: None\n'.format(pkmn.title())
@@ -806,7 +806,7 @@ async def alerts(bot_number, message):
                     if (filter_['min_iv'] == 0 and
                         filter_['min_cp'] == 0 and
                         filter_['min_level'] == 0 and
-                        filter_['gender'] is None):
+                            filter_['gender'] is None):
                         alerts += 'All  '
                     else:
                         if filter_['min_iv'] > 0:
@@ -822,7 +822,7 @@ async def alerts(bot_number, message):
                                 alerts += '(♂), '
                     alerts = alerts[:-2] + ' | '
                 alerts = alerts[:-3] + '\n'
-        alerts = [alerts[:-1]]  
+        alerts = [alerts[:-1]]
         while len(alerts[-1]) > 2000:
             for alerts_split in truncate(alerts.pop()):
                 alerts.append(alerts_split)
