@@ -144,6 +144,8 @@ class DiscordAlarm(Alarm):
             log.info("Notification successful (returned {})".format(
                 resp.status_code))
         else:
+            log.info(url)
+            log.info(payload)
             log.info("Discord response was {}".format(resp.content))
             raise requests.exceptions.RequestException(
                 "Response received {}, webhook not accepted.".format(

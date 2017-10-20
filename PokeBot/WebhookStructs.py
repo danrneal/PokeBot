@@ -122,8 +122,11 @@ class Webhook:
             'raid_begin': raid_begin,
             'lat': float(data['latitude']),
             'lng': float(data['longitude']),
-            'gym_name': data.get('gym_name'),
-            'gym_url': data.get('gym_url'),
+            'gym_name': check_for_none(str, data.get('gym_name'), 'unknown'),
+            'gym_url': check_for_none(
+                str, data.get('gym_url'),
+                "https://raw.githubusercontent.com/RocketMap/PokeAlarm/" +
+                "master/icons/egg_<raid_level>.png"),
             'team_id': check_for_none(int, data.get('team'), 0)
         }
         egg['gmaps'] = get_gmaps_link(egg['lat'], egg['lng'])
@@ -156,8 +159,11 @@ class Webhook:
             'raid_begin': raid_begin,
             'lat': float(data['latitude']),
             'lng': float(data['longitude']),
-            'gym_name': data.get('gym_name'),
-            'gym_url': data.get('gym_url'),
+            'gym_name': check_for_none(str, data.get('gym_name'), 'unknown'),
+            'gym_url': check_for_none(
+                str, data.get('gym_url'),
+                "https://raw.githubusercontent.com/RocketMap/PokeAlarm/" +
+                "master/icons/<pkmn_id>.png"),
             'team_id': check_for_none(int, data.get('team'), 0)
         }
         raid['gmaps'] = get_gmaps_link(raid['lat'], raid['lng'])
