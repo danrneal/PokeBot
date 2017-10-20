@@ -697,7 +697,7 @@ async def deactivate(bot_number, message):
                     user_dict = Dicts.bots[bot_number]['filters'][
                         str(message.author.id)]
                     user_dict['areas'].remove(cmd)
-                    deactivate_count += 1                    
+                    deactivate_count += 1
             elif cmd in user_dict['areas']:
                 user_dict.remove(cmd)
                 deactivate_count += 1
@@ -717,7 +717,7 @@ async def deactivate(bot_number, message):
             len(user_dict['raids']) <= 1 and
             (len(user_dict['areas']) == 0 and
              args.all_areas is False)):
-        Dicts.bots[bot_number]['filters'].pop(str(message.author.id))            
+            Dicts.bots[bot_number]['filters'].pop(str(message.author.id))
     if deactivate_count > 0:
         update_dicts()
     await Dicts.bots[bot_number]['out_queue'].put((
