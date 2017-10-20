@@ -281,9 +281,9 @@ async def _set(client, message, bot_number):
             filters = []
             for filter_ in command:
                 input_.append(multifilter.split())
-                filters.append({})    
+                filters.append({})
         for inp, filt in input_, filters:
-            if pokemon != 'default:
+            if pokemon != 'default':
                 if (len(set(inp).intersection(set(['female', 'f']))) > 0 and
                     pokemon not in Dicts.male_only and
                         pokemon not in Dicts.genderless):
@@ -400,7 +400,7 @@ async def _set(client, message, bot_number):
     if set_count > 0:
         Dicts.bots[bot_number]['pokemon_settings'][
             str(message.author.id)] = load_pokemon_section(
-                require_and_remove_key('pokemon', user_dict, 'User command.')
+                require_and_remove_key('pokemon', user_dict, 'User command.'))
         update_dicts()
     await Dicts.bots[bot_number]['out_queue'].put((
         1, Dicts.bots[bot_number]['count'], {
@@ -420,9 +420,10 @@ async def delete(bot_number, message):
         'nidoran♀', 'nidoranf').replace('nidoran♂', 'nidoranm').replace(
         'mr. mime', 'mr.mime').replace(',\n', ',').replace('\n', ',').replace(
         ', ', ',').split(',')
-    if str(message.author.id) not in dicts.bots[bot_number]['filters']:
-        await dicts.bots[bot_number]['out_queue'].put((
-            1, dicts.bots[bot_number]['count'], {
+    user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
+    if user_dict is None:
+        await Dicts.bots[bot_number]['out_queue'].put((
+            1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
                     "There is nothing to delete, `{}`, you don't have any " +
@@ -430,13 +431,13 @@ async def delete(bot_number, message):
                 ).format(message.author.display_name)
             }
         ))
-        dicts.bots[bot_number]['count'] += 1
+        Dicts.bots[bot_number]['count'] += 1
     else:
         del_count = 0
         for command in msg:
             if command != 'all' and get_pkmn_id(command) is None:
-                await dicts.bots[bot_number]['out_queue'].put((
-                    1, dicts.bots[bot_number]['count'], {
+                await Dicts.bots[bot_number]['out_queue'].put((
+                    1, Dicts.bots[bot_number]['count'], {
                         'destination': message.channel,
                         'msg': (
                             "{} is not any pokemon I know of, check your " +
@@ -444,18 +445,14 @@ async def delete(bot_number, message):
                         ).format(command.title(), message.author.display_name)
                     }
                 ))
-                dicts.bots[bot_number]['count'] += 1
+                Dicts.bots[bot_number]['count'] += 1
             elif get_pkmn_id(command) is not None:
-                pkmn_id = get_pkmn_id(command)
-                if pkmn_id in dicts.bots[bot_number]['filters'][
-                        str(message.author.id)]['pokemon_settings']['filters']:
-                    dicts.bots[bot_number]['filters'][
-                        str(message.author.id)]['pokemon_settings'][
-                            'filters'].pop(pkmn_id)
+                if command in user_dict['pokemon']:
+                    user_dict.pop(command)
                     del_count += 1
                 else:
-                    await dicts.bots[bot_number]['out_queue'].put((
-                        1, dicts.bots[bot_number]['count'], {
+                    await Dicts.bots[bot_number]['out_queue'].put((
+                        1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'msg': (
                                 '`{}`, I was not previously alerting you if ' +
@@ -465,8 +462,11 @@ async def delete(bot_number, message):
                             )
                         }
                     ))
-                    dicts.bots[bot_number]['count'] += 1
+                    Dicts.bots[bot_number]['count'] += 1
             else:
+
+
+                
                 if len(dicts.bots[bot_number]['filters'][
                     str(message.author.id)]['pokemon_settings'][
                         'filters']) > 0:
@@ -477,8 +477,8 @@ async def delete(bot_number, message):
                         str(message.author.id)]['pokemon_settings'][
                             'filters'])
                 else:
-                    await dicts.bots[bot_number]['out_queue'].put((
-                        1, dicts.bots[bot_number]['count'], {
+                    await Dicts.bots[bot_number]['out_queue'].put((
+                        1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'msg': (
                                 '`{}`, I was not previously alerting you of ' +
@@ -486,7 +486,10 @@ async def delete(bot_number, message):
                             ).format(message.author.display_name)
                         }
                     ))
-                    dicts.bots[bot_number]['count'] += 1
+                    Dicts.bots[bot_number]['count'] += 1
+
+
+                    
         if (len(dicts.bots[bot_number]['filters'][str(message.author.id)][
                 'pokemon_settings']['filters']) == 0 and
             len(dicts.bots[bot_number]['filters'][str(message.author.id)][

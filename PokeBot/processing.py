@@ -125,13 +125,13 @@ def process_egg(client, bot_number, egg):
         user_dict = Dicts.bots[bot_number]['filters'][user_id]
         user_filter_dict = Dicts.bots[bot_number]['egg_setttings'][user_id]
         if (user_dict['paused'] is True or
-            user_filter_dict['enabled'] is False):
+                user_filter_dict['enabled'] is False):
             continue
         passed = check_egg_filter(user_filter_dict, egg)
         if not passed:
             continue
         if (len(user_dict['areas']) > 0 and
-            egg['geofence'] not in user_dict['areas']):
+                egg['geofence'] not in user_dict['areas']):
             continue
         user_ids.append(user_id)
     if len(user_ids) > 0:
