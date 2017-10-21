@@ -314,14 +314,14 @@ def set_(client, message, bot_number):
                     get_pkmn_id(pokemon) not in Dicts.male_only and
                         get_pkmn_id(pokemon) not in Dicts.genderless):
                     filt['gender'] = ['female']
-                    filt['ignore_messing'] = True
+                    filt['ignore_missing'] = True
                     inp.remove(list(set(inp).intersection(set(
                         ['female', 'f'])))[0])
                 elif (len(set(inp).intersection(set(['male', 'm']))) > 0 and
                       get_pkmn_id(pokemon) not in Dicts.female_only and
                       get_pkmn_id(pokemon) not in Dicts.genderless):
                     filt['gender'] = ['male']
-                    filt['ignore_messing'] = True
+                    filt['ignore_missing'] = True
                     inp.remove(list(set(inp).intersection(set(
                         ['male', 'm'])))[0])
                 elif (len(set(inp).intersection(set(
@@ -341,7 +341,7 @@ def set_(client, message, bot_number):
                 if is_number(char):
                     if int(char) >= 0 and int(char) <= 100:
                         filt['min_iv'] = int(char)
-                        filt['ignore_messing'] = True
+                        filt['ignore_missing'] = True
                     else:
                         error = True
                         Dicts.bots[bot_number]['out_queue'].put((
@@ -358,7 +358,7 @@ def set_(client, message, bot_number):
                 elif char.startswith('l') and is_number(char[1:]):
                     if int(char[1:]) >= 1:
                         filt['min_level'] = int(char[1:])
-                        filt['ignore_messing'] = True
+                        filt['ignore_missing'] = True
                     else:
                         error = True
                         Dicts.bots[bot_number]['out_queue'].put((
@@ -377,7 +377,7 @@ def set_(client, message, bot_number):
                       is_number(char.replace('cp', ''))):
                     if int(char.replace('cp', '')) >= 10:
                         filt['min_cp'] = int(char.replace('cp', ''))
-                        filt['ignore_messing'] = True
+                        filt['ignore_missing'] = True
                     else:
                         error = True
                         Dicts.bots[bot_number]['out_queue'].put((
@@ -507,8 +507,9 @@ def delete(bot_number, message):
             else:
                 if len(user_dict['pokemon']) > 1:
                     for filter_ in user_dict['pokemon']:
-                        bool = parse_boolean(filter_)
+                        bool = parse_boolean(user_dict['pokemon'][filter_])
                         if bool is not True:
+                            log.info(filter_)
                             del_count += 1
                     user_dict['pokemon'] = {'enabled': True}
                 else:
