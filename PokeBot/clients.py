@@ -72,7 +72,7 @@ def bot_init():
         )
     if str(args.geofences[0]).lower() != 'none':
         for key in sorted(args.master_geofences.keys()):
-            if key not in Dicts.geofencs:
+            if key not in Dicts.geofences:
                 Dicts.geofences.append(key.lower())
             else:
                 log.critical("Multiple Geofences with the same name!")

@@ -400,7 +400,7 @@ async def set_(client, message, bot_number):
             user_dict = Dicts.bots[bot_number]['filters'][
                 str(message.author.id)]
             if args.all_areas is True:
-                user_dict['areas'] = Dicts.geofences'
+                user_dict['areas'] = Dicts.geofences
             else:
                 user_dict['areas'] = []
         user_dict['pokemon'][pokemon] = filters
