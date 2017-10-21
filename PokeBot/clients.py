@@ -5,11 +5,13 @@ import logging
 import sys
 import json
 import asyncio
-from queue import Queue
+import copy
+from queue import Queue, PriorityQueue
 from collections import namedtuple
 from aiohttp import web
 from .Manager import Manager
 from .Bot import Bot
+from .Locale import Locale
 from .ManageWebhook import ManageWebhook
 from .LocationServices import LocationService
 from .Filter import load_pokemon_section, load_egg_section
@@ -77,6 +79,7 @@ def bot_init():
             else:
                 log.critical("Multiple Geofences with the same name!")
                 sys.exit(1)
+    Dicts.locale = Locale(args.locale)
     for bot_number in range(len(args.tokens)):
         Dicts.bots.append({
             'filters': {},
@@ -84,7 +87,7 @@ def bot_init():
             'raid_settings': {},
             'egg_settings': {},
             'in_queue': Queue(),
-            'out_queue': asyncio.PriorityQueue(),
+            'out_queue': PriorityQueue(),
             'timestamps': [],
             'count': 0
         })
@@ -148,7 +151,7 @@ def bot_init():
                     )
                     sys.exit(1)
                 Dicts.bots[int(user_id) % len(args.tokens)]['filters'][
-                    user_id] = filters[user_id]
+                    user_id] = copy.deepcopy(filters[user_id])
                 Dicts.bots[int(user_id) % len(args.tokens)][
                     'pokemon_settings'][user_id] = load_pokemon_section(
                         require_and_remove_key(

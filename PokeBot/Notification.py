@@ -79,7 +79,7 @@ class Notification(Alarm):
         reject_leftover_parameters(settings, "'Alert level in DM alarm.")
         return alert
 
-    def send_alert(self, bot_number, client, alert, info, user_ids):
+    def send_alert(self, client, bot_number, alert, info, user_ids):
         msg = self.replace(alert['content'], info)
         em = discord.Embed(
             title=self.replace(alert['title'], info),
@@ -110,10 +110,10 @@ class Notification(Alarm):
 
     def pokemon_alert(self, client, bot_number, pokemon_info, user_ids):
         self.send_alert(
-            self.__pokemon, client, bot_number, pokemon_info, user_ids)
+            client, bot_number, self.__pokemon, pokemon_info, user_ids)
 
     def raid_egg_alert(self, client, bot_number, raid_info, user_ids):
-        self.send_alert(self.__egg, client, bot_number, raid_info, user_ids)
+        self.send_alert(client, bot_number, self.__egg, raid_info, user_ids)
 
     def raid_alert(self, client, bot_number, raid_info, user_ids):
-        self.send_alert(self.__raid, client, bot_number, raid_info, user_ids)
+        self.send_alert(client, bot_number, self.__raid, raid_info, user_ids)

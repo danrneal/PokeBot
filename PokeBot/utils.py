@@ -210,6 +210,7 @@ class Dicts(object):
     managers = {}
     bots = []
     loc_service = None
+    locale = None
     geofences = []
     roles = {}
     female_only = [29, 30, 31, 113, 115, 124, 238, 241, 242]

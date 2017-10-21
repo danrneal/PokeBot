@@ -5,11 +5,12 @@ import logging
 import asyncio
 import discord
 import requests
+import copy
 from datetime import datetime
 from bs4 import BeautifulSoup
-from .Filter import load_pokemon_section
-from .utils import (get_args, Dicts, update_dicts, require_and_remove_key,
-                    is_number, truncate, get_pkmn_id)
+from .Filter import load_pokemon_section, load_egg_section
+from .utils import (get_args, Dicts, update_dicts, is_number, truncate,
+                    get_pkmn_id, require_and_remove_key, parse_boolean)
 
 log = logging.getLogger('commands')
 args = get_args()
@@ -35,7 +36,7 @@ async def status(client, bot_number, message):
 
 
 async def commands(bot_number, message):
-    await Dicts.bots[bot_number]['out_queue'].put((
+    Dicts.bots[bot_number]['out_queue'].put((
         1, Dicts.bots[bot_number]['count'], {
             'destination': message.channel,
             'msg': Dicts.info_msg
@@ -45,7 +46,7 @@ async def commands(bot_number, message):
     await message.delete()
 
 
-async def dex(bot_number, message):
+def dex(bot_number, message):
     pokemon = message.content.lower().split()[1]
     dex_number = get_pkmn_id(pokemon)
     if dex_number is not None:
@@ -222,7 +223,7 @@ async def dex(bot_number, message):
             url=('https://raw.githubusercontent.com/kvangent/PokeAlarm/' +
                  'master/icons/{}.png').format(dex_number))
 
-        await Dicts.bots[bot_number]['out_queue'].put((
+        Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'embed': em
@@ -230,7 +231,7 @@ async def dex(bot_number, message):
         ))
         Dicts.bots[bot_number]['count'] += 1
     else:
-        await Dicts.bots[bot_number]['out_queue'].put((
+        Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
@@ -253,7 +254,7 @@ async def donate(bot_number, message):
         ),
         color=int('0x85bb65', 16)
     )
-    await Dicts.bots[bot_number]['out_queue'].put((
+    Dicts.bots[bot_number]['out_queue'].put((
         1, Dicts.bots[bot_number]['count'], {
             'destination': message.channel,
             'embed': em
@@ -263,7 +264,7 @@ async def donate(bot_number, message):
     await message.delete()
 
 
-async def set_(client, message, bot_number):
+def set_(client, message, bot_number):
     msg = message.content.lower().replace('!set ', '').replace(
         '!set\n', '').replace('%', '').replace('nidoran♀', 'nidoranf').replace(
         'nidoran♂', 'nidoranm').replace('mr. mime', 'mr.mime').replace(
@@ -271,18 +272,32 @@ async def set_(client, message, bot_number):
     set_count = 0
     for command in msg:
         error = False
-        if get_pkmn_id(command.split()[0]) is None:
+        if (get_pkmn_id(command.split()[0]) is None or
+                command.split()[0] == 'default'):
             pokemon = 'default'
+            command = command.strip(pokemon.lower()).strip()
             input_ = [command.split()]
             filters = [{
                 'min_iv': 0,
                 'min_cp': 0,
                 'min_level': 0,
-                'gender': None
+                'gender': None,
             }]
         else:
             pokemon = command.split()[0].title()
             command = command.strip(pokemon.lower()).strip().split('|')
+            if len(command) > 3:
+                Dicts.bots[bot_number]['out_queue'].put((
+                    1, Dicts.bots[bot_number]['count'], {
+                        'destination': message.channel,
+                        'msg': (
+                            '`{}`, you can set a maximum of 3 filters for a ' +
+                            'given pokemon.'
+                        ).format(message.author.display_name)
+                    }
+                ))
+                Dicts.bots[bot_number]['count'] += 1
+                continue
             input_ = []
             filters = []
             for filter_ in command:
@@ -293,24 +308,26 @@ async def set_(client, message, bot_number):
                     'min_level': 0,
                     'gender': None
                 })
-        for inp, filt in input_, filters:
+        for inp, filt in zip(input_, filters):
             if pokemon != 'default':
                 if (len(set(inp).intersection(set(['female', 'f']))) > 0 and
                     get_pkmn_id(pokemon) not in Dicts.male_only and
                         get_pkmn_id(pokemon) not in Dicts.genderless):
                     filt['gender'] = ['female']
+                    filt['ignore_messing'] = True
                     inp.remove(list(set(inp).intersection(set(
                         ['female', 'f'])))[0])
                 elif (len(set(inp).intersection(set(['male', 'm']))) > 0 and
                       get_pkmn_id(pokemon) not in Dicts.female_only and
                       get_pkmn_id(pokemon) not in Dicts.genderless):
                     filt['gender'] = ['male']
+                    filt['ignore_messing'] = True
                     inp.remove(list(set(inp).intersection(set(
                         ['male', 'm'])))[0])
                 elif (len(set(inp).intersection(set(
                       ['female', 'f', 'male', 'm']))) > 0):
                     error = True
-                    await Dicts.bots[bot_number]['out_queue'].put((
+                    Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'msg': (
@@ -324,9 +341,10 @@ async def set_(client, message, bot_number):
                 if is_number(char):
                     if int(char) >= 0 and int(char) <= 100:
                         filt['min_iv'] = int(char)
+                        filt['ignore_messing'] = True
                     else:
                         error = True
-                        await Dicts.bots[bot_number]['out_queue'].put((
+                        Dicts.bots[bot_number]['out_queue'].put((
                             1, Dicts.bots[bot_number]['count'], {
                                 'destination': message.channel,
                                 'msg': (
@@ -340,9 +358,10 @@ async def set_(client, message, bot_number):
                 elif char.startswith('l') and is_number(char[1:]):
                     if int(char[1:]) >= 1:
                         filt['min_level'] = int(char[1:])
+                        filt['ignore_messing'] = True
                     else:
                         error = True
-                        await Dicts.bots[bot_number]['out_queue'].put((
+                        Dicts.bots[bot_number]['out_queue'].put((
                             1, Dicts.bots[bot_number]['count'], {
                                 'destination': message.channel,
                                 'msg': (
@@ -358,9 +377,10 @@ async def set_(client, message, bot_number):
                       is_number(char.replace('cp', ''))):
                     if int(char.replace('cp', '')) >= 10:
                         filt['min_cp'] = int(char.replace('cp', ''))
+                        filt['ignore_messing'] = True
                     else:
                         error = True
-                        await Dicts.bots[bot_number]['out_queue'].put((
+                        Dicts.bots[bot_number]['out_queue'].put((
                             1, Dicts.bots[bot_number]['count'], {
                                 'destination': message.channel,
                                 'msg': (
@@ -373,7 +393,7 @@ async def set_(client, message, bot_number):
                         break
                 else:
                     error = True
-                    await Dicts.bots[bot_number]['out_queue'].put((
+                    Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'msg': (
@@ -393,8 +413,8 @@ async def set_(client, message, bot_number):
         if user_dict is None:
             Dicts.bots[bot_number]['filters'][str(message.author.id)] = {
                 'pokemon': {'enabled': True},
-                'eggs': {'enabled': True},
-                'raids': {'enabled': True},
+                'eggs': {'enabled': False},
+                'raids': {'enabled': False},
                 'paused': False
             }
             user_dict = Dicts.bots[bot_number]['filters'][
@@ -403,19 +423,27 @@ async def set_(client, message, bot_number):
                 user_dict['areas'] = Dicts.geofences
             else:
                 user_dict['areas'] = []
-        user_dict['pokemon'][pokemon] = filters
         if pokemon == 'default':
+            user_dict['pokemon'][pokemon] = filters[0]
             for pkmn_id in range(721):
                 user_dict['pokemon'][
-                    Dicts.loc_service.get_pokemon_name(
-                        pkmn_id + 1)] = True
+                    Dicts.locale.get_pokemon_name(pkmn_id + 1)] = True
+        else:
+            user_dict['pokemon'][pokemon] = filters
         set_count += 1
     if set_count > 0:
+        usr_dict = copy.deepcopy(user_dict)
         Dicts.bots[bot_number]['pokemon_settings'][
             str(message.author.id)] = load_pokemon_section(
-                require_and_remove_key('pokemon', user_dict, 'User command.'))
+                require_and_remove_key('pokemon', usr_dict, 'User command.'))
+        Dicts.bots[bot_number]['egg_settings'][
+            str(message.author.id)] = load_egg_section(
+                require_and_remove_key('eggs', usr_dict, 'User command.'))
+        Dicts.bots[bot_number]['raid_settings'][
+            str(message.author.id)] = load_pokemon_section(
+                require_and_remove_key('raids', usr_dict, 'User command.'))
         update_dicts()
-        await Dicts.bots[bot_number]['out_queue'].put((
+        Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
@@ -426,7 +454,7 @@ async def set_(client, message, bot_number):
         Dicts.bots[bot_number]['count'] += 1
 
 
-async def delete(bot_number, message):
+def delete(bot_number, message):
     msg = message.content.lower().replace('!delete ', '').replace(
         '!delete\n', '').replace('!remove ', '').replace(
         '!remove\n', '').replace('%', '').replace(
@@ -435,7 +463,7 @@ async def delete(bot_number, message):
         ', ', ',').split(',')
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
     if user_dict is None:
-        await Dicts.bots[bot_number]['out_queue'].put((
+        Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
@@ -449,7 +477,7 @@ async def delete(bot_number, message):
         del_count = 0
         for command in msg:
             if command != 'all' and get_pkmn_id(command) is None:
-                await Dicts.bots[bot_number]['out_queue'].put((
+                Dicts.bots[bot_number]['out_queue'].put((
                     1, Dicts.bots[bot_number]['count'], {
                         'destination': message.channel,
                         'msg': (
@@ -461,10 +489,10 @@ async def delete(bot_number, message):
                 Dicts.bots[bot_number]['count'] += 1
             elif get_pkmn_id(command) is not None:
                 if command.title() in user_dict['pokemon']:
-                    user_dict.pop(command)
+                    user_dict['pokemon'].pop(command.title())
                     del_count += 1
                 else:
-                    await Dicts.bots[bot_number]['out_queue'].put((
+                    Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'msg': (
@@ -478,10 +506,13 @@ async def delete(bot_number, message):
                     Dicts.bots[bot_number]['count'] += 1
             else:
                 if len(user_dict['pokemon']) > 1:
+                    for filter_ in user_dict['pokemon']:
+                        bool = parse_boolean(filter_)
+                        if bool is not True:
+                            del_count += 1
                     user_dict['pokemon'] = {'enabled': True}
-                    del_count += len(user_dict['pokemon']) - 1
                 else:
-                    await Dicts.bots[bot_number]['out_queue'].put((
+                    Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'msg': (
@@ -499,13 +530,27 @@ async def delete(bot_number, message):
              (len(user_dict['areas']) == len(Dicts.geofences) and
               args.all_areas is True))):
             Dicts.bots[bot_number]['filters'].pop(str(message.author.id))
+            Dicts.bots[bot_number]['pokemon_settings'].pop(
+                str(message.author.id))
+            Dicts.bots[bot_number]['egg_settings'].pop(str(message.author.id))
+            Dicts.bots[bot_number]['raid_settings'].pop(str(message.author.id))
         if del_count > 0:
-            Dicts.bots[bot_number]['pokemon_settings'][
-                str(message.author.id)] = load_pokemon_section(
-                    require_and_remove_key(
-                        'pokemon', user_dict, 'User command.'))
+            if str(message.author.id) in Dicts.bots[bot_number]['filters']:
+                usr_dict = copy.deepcopy(user_dict)
+                Dicts.bots[bot_number]['pokemon_settings'][
+                    str(message.author.id)] = load_pokemon_section(
+                        require_and_remove_key(
+                            'pokemon', usr_dict, 'User Command.'))
+                Dicts.bots[bot_number]['egg_settings'][
+                    str(message.author.id)] = load_egg_section(
+                        require_and_remove_key(
+                            'eggs', usr_dict, 'User Command.'))
+                Dicts.bots[bot_number]['raid_settings'][
+                    str(message.author.id)] = load_pokemon_section(
+                        require_and_remove_key(
+                            'raids', usr_dict, 'User Command.'))
             update_dicts()
-            await Dicts.bots[bot_number]['out_queue'].put((
+            Dicts.bots[bot_number]['out_queue'].put((
                 1, Dicts.bots[bot_number]['count'], {
                     'destination': message.channel,
                     'msg': (
@@ -516,10 +561,10 @@ async def delete(bot_number, message):
             Dicts.bots[bot_number]['count'] += 1
 
 
-async def pause(bot_number, message):
+def pause(bot_number, message):
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
     if user_dict is None:
-        await Dicts.bots[bot_number]['out_queue'].put((
+        Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
@@ -530,7 +575,7 @@ async def pause(bot_number, message):
         ))
         Dicts.bots[bot_number]['count'] += 1
     elif user_dict['paused'] is True:
-        await Dicts.bots[bot_number]['out_queue'].put((
+        Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': 'Your alerts are already paused, `{}`.'.format(
@@ -541,7 +586,7 @@ async def pause(bot_number, message):
     else:
         user_dict['paused'] = True
         update_dicts()
-        await Dicts.bots[bot_number]['out_queue'].put((
+        Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': 'Your alerts have been paused, `{}`.'.format(
@@ -551,10 +596,10 @@ async def pause(bot_number, message):
         Dicts.bots[bot_number]['count'] += 1
 
 
-async def resume(bot_number, message):
+def resume(bot_number, message):
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
     if user_dict is None:
-        await Dicts.bots[bot_number]['out_queue'].put((
+        Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
@@ -565,7 +610,7 @@ async def resume(bot_number, message):
         ))
         Dicts.bots[bot_number]['count'] += 1
     elif user_dict['paused'] is False:
-        await Dicts.bots[bot_number]['out_queue'].put((
+        Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': 'Your alerts were not previously paused, `{}`.'.format(
@@ -576,7 +621,7 @@ async def resume(bot_number, message):
     else:
         user_dict['paused'] = False
         update_dicts()
-        await Dicts.bots[bot_number]['out_queue'].put((
+        Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': 'You alerts have been resumed, `{}`.'.format(
@@ -586,7 +631,7 @@ async def resume(bot_number, message):
         Dicts.bots[bot_number]['count'] += 1
 
 
-async def activate(bot_number, message):
+def activate(bot_number, message):
     if (message.content.lower() == '!activate all' and
             str(message.author.id) in args.admins):
         msg = Dicts.geofences
@@ -597,12 +642,10 @@ async def activate(bot_number, message):
     activate_count = 0
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
     for cmd in msg:
-        log.info(cmd)
-        log.info(Dicts.geofences)
         if cmd in Dicts.geofences:
             if user_dict is None:
                 if args.all_areas is True:
-                    await Dicts.bots[bot_number]['out_queue'].put((
+                    Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'msg': (
@@ -616,18 +659,31 @@ async def activate(bot_number, message):
                     Dicts.bots[bot_number]['filters'][
                             str(message.author.id)] = {
                         'pokemon': {'enabled': True},
-                        'eggs': {'enabled': True},
-                        'raids': {'enabled': True},
+                        'eggs': {'enabled': False},
+                        'raids': {'enabled': False},
                         'paused': False,
                         'areas': []
                     }
                     user_dict = Dicts.bots[bot_number]['filters'][
                         str(message.author.id)]
+                    usr_dict = copy.deepcopy(user_dict)
+                    Dicts.bots[bot_number]['pokemon_settings'][
+                        str(message.author.id)] = load_pokemon_section(
+                            require_and_remove_key(
+                                'pokemon', usr_dict, 'User Command.'))
+                    Dicts.bots[bot_number]['egg_settings'][
+                        str(message.author.id)] = load_egg_section(
+                            require_and_remove_key(
+                                'eggs', usr_dict, 'User Command.'))
+                    Dicts.bots[bot_number]['raid_settings'][
+                        str(message.author.id)] = load_pokemon_section(
+                            require_and_remove_key(
+                                'raids', usr_dict, 'User Command.'))
                     user_dict['areas'].append(cmd)
                     activate_count += 1
             elif (str(message.author.id) not in args.admins and
                   len(user_dict['areas']) > 50):
-                await Dicts.bots[bot_number]['out_queue'].put((
+                Dicts.bots[bot_number]['out_queue'].put((
                     1, Dicts.bots[bot_number]['count'], {
                         'destination': message.channel,
                         'msg': (
@@ -643,7 +699,7 @@ async def activate(bot_number, message):
                 user_dict['areas'].append(cmd)
                 activate_count += 1
         else:
-            await Dicts.bots[bot_number]['out_queue'].put((
+            Dicts.bots[bot_number]['out_queue'].put((
                 1, Dicts.bots[bot_number]['count'], {
                     'destination': message.channel,
                     'msg': (
@@ -660,9 +716,12 @@ async def activate(bot_number, message):
         (len(user_dict['areas']) == len(Dicts.geofences) and
          args.all_areas is True)):
         Dicts.bots[bot_number]['filters'].pop(str(message.author.id))
+        Dicts.bots[bot_number]['pokemon_settings'].pop(str(message.author.id))
+        Dicts.bots[bot_number]['egg_settings'].pop(str(message.author.id))
+        Dicts.bots[bot_number]['raid_settings'].pop(str(message.author.id))
     if activate_count > 0:
         update_dicts()
-        await Dicts.bots[bot_number]['out_queue'].put((
+        Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
@@ -673,7 +732,7 @@ async def activate(bot_number, message):
         Dicts.bots[bot_number]['count'] += 1
 
 
-async def deactivate(bot_number, message):
+def deactivate(bot_number, message):
     if message.content.lower() == '!deactivate all':
         msg = Dicts.geofences
     else:
@@ -686,7 +745,7 @@ async def deactivate(bot_number, message):
         if cmd in Dicts.geofences:
             if user_dict is None:
                 if args.all_areas is False:
-                    await Dicts.bots[bot_number]['out_queue'].put((
+                    Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'msg': (
@@ -700,20 +759,33 @@ async def deactivate(bot_number, message):
                     Dicts.bots[bot_number]['filters'][
                             str(message.author.id)] = {
                         'pokemon': {'enabled': True},
-                        'eggs': {'enabled': True},
-                        'raids': {'enabled': True},
+                        'eggs': {'enabled': False},
+                        'raids': {'enabled': False},
                         'paused': False,
                         'areas': []
                     }
                     user_dict = Dicts.bots[bot_number]['filters'][
                         str(message.author.id)]
+                    usr_dict = copy.deepcopy(user_dict)
+                    Dicts.bots[bot_number]['pokemon_settings'][
+                        str(message.author.id)] = load_pokemon_section(
+                            require_and_remove_key(
+                                'pokemon', usr_dict, 'User command.'))
+                    Dicts.bots[bot_number]['egg_settings'][
+                        str(message.author.id)] = load_egg_section(
+                            require_and_remove_key(
+                                'eggs', usr_dict, 'User command.'))
+                    Dicts.bots[bot_number]['raid_settings'][
+                        str(message.author.id)] = load_pokemon_section(
+                            require_and_remove_key(
+                                'raids', usr_dict, 'User command.'))
                     user_dict['areas'].remove(cmd)
                     deactivate_count += 1
             elif cmd in user_dict['areas']:
-                user_dict.remove(cmd)
+                user_dict['areas'].remove(cmd)
                 deactivate_count += 1
         else:
-            await Dicts.bots[bot_number]['out_queue'].put((
+            Dicts.bots[bot_number]['out_queue'].put((
                 1, Dicts.bots[bot_number]['count'], {
                     'destination': message.channel,
                     'msg': (
@@ -723,15 +795,18 @@ async def deactivate(bot_number, message):
                 }
             ))
             Dicts.bots[bot_number]['count'] += 1
-        if (len(user_dict['pokemon']) <= 1 and
-            len(user_dict['eggs']) <= 1 and
-            len(user_dict['raids']) <= 1 and
-            (len(user_dict['areas']) == 0 and
-             args.all_areas is False)):
-            Dicts.bots[bot_number]['filters'].pop(str(message.author.id))
+    if (len(user_dict['pokemon']) <= 1 and
+        len(user_dict['eggs']) <= 1 and
+        len(user_dict['raids']) <= 1 and
+        (len(user_dict['areas']) == 0 and
+         args.all_areas is False)):
+        Dicts.bots[bot_number]['filters'].pop(str(message.author.id))
+        Dicts.bots[bot_number]['pokemon_settings'].pop(str(message.author.id))
+        Dicts.bots[bot_number]['egg_settings'].pop(str(message.author.id))
+        Dicts.bots[bot_number]['raid_settings'].pop(str(message.author.id))
     if deactivate_count > 0:
         update_dicts()
-        await Dicts.bots[bot_number]['out_queue'].put((
+        Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
@@ -742,10 +817,10 @@ async def deactivate(bot_number, message):
         Dicts.bots[bot_number]['count'] += 1
 
 
-async def alerts(bot_number, message):
+def alerts(bot_number, message):
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
     if user_dict is None:
-        await Dicts.bots[bot_number]['out_queue'].put((
+        Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': "`{}`, you don't have any alerts set.".format(
@@ -779,7 +854,7 @@ async def alerts(bot_number, message):
         alerts = alerts[:-2] + '\n\n'
         alerts += '__POKEMON__\n\n'
         if 'default' in user_dict['pokemon']:
-            alerts += 'Default: '
+            alerts += 'Default (all unlisted): '
             if user_dict['pokemon']['default']['min_iv'] > 0:
                 alerts += '{}%+, '.format(
                     user_dict['pokemon']['default']['min_iv'])
@@ -793,7 +868,7 @@ async def alerts(bot_number, message):
         else:
             alerts += 'Default: None\n\n'
         for pkmn_id in range(721):
-            pkmn = Dicts.loc_service.get_pokemon_name(pkmn_id + 1)
+            pkmn = Dicts.locale.get_pokemon_name(pkmn_id + 1)
             if user_dict['pokemon'].get(pkmn) is True:
                 continue
             elif user_dict['pokemon'].get(pkmn) is None:
@@ -818,9 +893,9 @@ async def alerts(bot_number, message):
                             alerts += 'L{}+, '.format(filter_['min_level'])
                         if filter_['gender'] is not None:
                             if filter_['gender'] == ['female']:
-                                alerts += '(♀), '
+                                alerts += '♀, '
                             else:
-                                alerts += '(♂), '
+                                alerts += '♂, '
                     alerts = alerts[:-2] + ' | '
                 alerts = alerts[:-3] + '\n'
         alerts = [alerts[:-1]]
@@ -828,7 +903,7 @@ async def alerts(bot_number, message):
             for alerts_split in truncate(alerts.pop()):
                 alerts.append(alerts_split)
         for dm in alerts:
-            await Dicts.bots[bot_number]['out_queue'].put((
+            Dicts.bots[bot_number]['out_queue'].put((
                 1, Dicts.bots[bot_number]['count'], {
                     'destination': message.author,
                     'msg': dm
@@ -837,7 +912,7 @@ async def alerts(bot_number, message):
             Dicts.bots[bot_number]['count'] += 1
 
 
-async def areas(bot_number, message):
+def areas(bot_number, message):
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
     areas = '__AVAILABLE AREAS__ (Your active areas are in **bold**.)\n\n'
     for area in Dicts.geofences:
@@ -854,7 +929,7 @@ async def areas(bot_number, message):
         for areas_split in truncate(areas.pop()):
             areas.append(areas_split)
     for dm in areas:
-        await Dicts.bots[bot_number]['out_queue'].put((
+        Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.author,
                 'msg': dm

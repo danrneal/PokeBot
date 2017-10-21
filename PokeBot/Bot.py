@@ -118,24 +118,24 @@ class Bot(discord.Client):
                 if message.content.lower() in ['!commands', '!help']:
                     await commands(bot_number, message)
                 elif message.content.lower().startswith('!dex '):
-                    await dex(bot_number, message)
+                    dex(bot_number, message)
                 elif message.content.lower() == '!donate':
                     await donate(bot_number, message)
                 elif message.channel.id in args.command_channels:
                     if message.content.lower().startswith('!set '):
-                        await set_(self, message, bot_number)
+                        set_(self, message, bot_number)
                     elif message.content.lower().startswith(
                             ('!delete ', '!remove ')):
-                        await delete(bot_number, message)
+                        delete(bot_number, message)
                     elif message.content.lower() in ['!pause', '!p']:
-                        await pause(bot_number, message)
+                        pause(bot_number, message)
                     elif message.content.lower() in ['!resume', '!r']:
-                        await resume(bot_number, message)
+                        resume(bot_number, message)
                     elif message.content.lower().startswith('!activate '):
-                        await activate(bot_number, message)
+                        activate(bot_number, message)
                     elif message.content.lower().startswith('!deactivate '):
-                        await deactivate(bot_number, message)
+                        deactivate(bot_number, message)
                     elif message.content.lower() == '!alerts':
-                        await alerts(bot_number, message)
+                        alerts(bot_number, message)
                     elif message.content.lower() == '!areas':
-                        await areas(bot_number, message)
+                        areas(bot_number, message)

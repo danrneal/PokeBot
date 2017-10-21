@@ -14,19 +14,19 @@ async def in_q(client, bot_number):
     while True:
         if not Dicts.bots[bot_number]['in_queue'].empty():
             obj = Dicts.bots[bot_number]['in_queue'].get()
-            try:
-                if obj['type'] == "pokemon":
-                    process_pokemon(client, bot_number, obj)
-                elif obj['type'] == 'egg':
-                    process_egg(client, bot_number, obj)
-                elif obj['type'] == "raid":
-                    process_raid(client, bot_number, obj)
-                else:
-                    pass
-            except Exception as e:
-                log.error((
-                    "Encountered error during DM processing: {}: {}"
-                ).format(type(e).__name__, e))
+#            try:
+            if obj['type'] == "pokemon":
+                process_pokemon(client, bot_number, obj)
+            elif obj['type'] == 'egg':
+                process_egg(client, bot_number, obj)
+            elif obj['type'] == "raid":
+                process_raid(client, bot_number, obj)
+            else:
+                pass
+#            except Exception as e:
+#                log.error((
+#                    "Encountered error during DM processing: {}: {}"
+#                ).format(type(e).__name__, e))
         await out_q(bot_number)
 
 
@@ -90,17 +90,17 @@ def process_pokemon(client, bot_number, pkmn):
     name = pkmn['pkmn']
     for user_id in Dicts.bots[bot_number]['filters']:
         user_dict = Dicts.bots[bot_number]['filters'][user_id]
-        user_filter_dict = Dicts.bots[bot_number]['pokemon_setttings'][user_id]
+        user_filter_dict = Dicts.bots[bot_number]['pokemon_settings'][user_id]
         if (user_dict['paused'] is True or
             user_filter_dict['enabled'] is False or
                 pkmn_id not in user_filter_dict['filters']):
             continue
-        filters = user_filter_dict[pkmn_id]
+        filters = user_filter_dict['filters'][pkmn_id]
         passed = check_pokemon_filter(filters, pkmn)
         if not passed:
             continue
         if (len(user_dict['areas']) > 0 and
-                pkmn['geofence'] not in user_dict['areas']):
+                pkmn['geofence'].lower() not in user_dict['areas']):
             continue
         user_ids.append(user_id)
     if len(user_ids) > 0:
@@ -117,7 +117,7 @@ def process_egg(client, bot_number, egg):
     gym_id = egg['id']
     for user_id in Dicts.bots[bot_number]['filters']:
         user_dict = Dicts.bots[bot_number]['filters'][user_id]
-        user_filter_dict = Dicts.bots[bot_number]['egg_setttings'][user_id]
+        user_filter_dict = Dicts.bots[bot_number]['egg_settings'][user_id]
         if (user_dict['paused'] is True or
                 user_filter_dict['enabled'] is False):
             continue
@@ -125,7 +125,7 @@ def process_egg(client, bot_number, egg):
         if not passed:
             continue
         if (len(user_dict['areas']) > 0 and
-                egg['geofence'] not in user_dict['areas']):
+                egg['geofence'].lower() not in user_dict['areas']):
             continue
         user_ids.append(user_id)
     if len(user_ids) > 0:
@@ -143,13 +143,13 @@ def process_raid(client, bot_number, raid):
     gym_id = raid['id']
     for user_id in Dicts.bots[bot_number]['filters']:
         user_dict = Dicts.bots[bot_number]['filters'][user_id]
-        user_filter_dict = Dicts.bots[bot_number]['raid_setttings'][user_id]
+        user_filter_dict = Dicts.bots[bot_number]['raid_settings'][user_id]
         if (user_dict['paused'] is True or
             user_filter_dict['enabled'] is False or
                 pkmn_id not in user_filter_dict['filters']):
             continue
         if (len(user_dict['areas']) > 0 and
-                raid['geofence'] not in user_dict['areas']):
+                raid['geofence'].lower() not in user_dict['areas']):
             continue
         user_ids.append(user_id)
     if len(user_ids) > 0:
@@ -173,7 +173,7 @@ async def out_q(bot_number):
                 Dicts.bots[bot_number]['timestamps'].pop(0)
             else:
                 await asyncio.sleep(0.5)
-        msg_params = await Dicts.bots[bot_number]['out_queue'].get()
+        msg_params = Dicts.bots[bot_number]['out_queue'].get()
         await msg_params[2]['destination'].send(
             msg_params[2].get('msg'),
             embed=msg_params[2].get('embed')
