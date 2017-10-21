@@ -63,30 +63,31 @@ def get_managers():
 
 
 def bot_init():
+    if len(args.gmaps_keys) > 0:
+        Dicts.loc_service = LocationService()
+    else:
+        log.warning(
+            "NO GOOGLE API KEY SET - Reverse Location DTS will NOT be " +
+            "detected."
+        )
+    if str(args.geofences[0]).lower() != 'none':
+        for key in sorted(args.master_geofences.keys()):
+            if key not in Dicts.geofencs:
+                Dicts.geofences.append(key.lower())
+            else:
+                log.critical("Multiple Geofences with the same name!")
+                sys.exit(1)
     for bot_number in range(len(args.tokens)):
         Dicts.bots.append({
-            'loc_service': None,
             'filters': {},
             'pokemon_settings': {},
             'raid_settings': {},
             'egg_settings': {},
-            'geofences': [],
-            'roles': {},
             'in_queue': Queue(),
             'out_queue': asyncio.PriorityQueue(),
             'timestamps': [],
             'count': 0
         })
-        if len(args.gmaps_keys) > 0:
-            Dicts.bots[bot_number]['loc_service'] = LocationService()
-        else:
-            log.warning(
-                "NO GOOGLE API KEY SET - Reverse Location DTS will NOT be " +
-                "detected."
-            )
-        if str(args.geofences[0]).lower() != 'none':
-            Dicts.bots[bot_number]['geofences'] = list(
-                args.master_geofences.items())
         try:
             with open(get_path('../user_dicts/user_alarms.json'), 'r') as f:
                 alarm = json.load(f)
@@ -98,7 +99,7 @@ def bot_init():
                 'sublocality', 'city', 'county', 'state', 'country'
             }
             if contains_arg(str(alarm), geo_args):
-                if Dicts.bots[bot_number]['loc_service'] is None:
+                if Dicts.loc_service is None:
                     log.critical(
                         "Reverse location DTS were detected but no API key " +
                         "was provided!"
@@ -108,7 +109,7 @@ def bot_init():
                         "disable the alarm and try again."
                     )
                     sys.exit(1)
-                Dicts.bots[bot_number]['loc_service'].enable_reverse_location()
+                Dicts.loc_service.enable_reverse_location()
             Dicts.bots[bot_number]['alarm'] = Notification(alarm)
             log.info('Active DM alarm found.')
         except ValueError as e:

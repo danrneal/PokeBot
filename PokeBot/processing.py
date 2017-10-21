@@ -13,11 +13,6 @@ args = get_args()
 async def in_q(client, bot_number):
     while True:
         if not Dicts.bots[bot_number]['in_queue'].empty():
-            if Dicts.bots[bot_number]['in_queue'].qsize() > 300:
-                log.warning((
-                    "Bot queue length is at {}... this may be causing a " +
-                    "delay in notifications, consider adding more bots."
-                ).format(Dicts.bots[bot_number]['in_queue'].qsize()))
             obj = Dicts.bots[bot_number]['in_queue'].get()
             try:
                 if obj['type'] == "pokemon":
@@ -109,9 +104,8 @@ def process_pokemon(client, bot_number, pkmn):
             continue
         user_ids.append(user_id)
     if len(user_ids) > 0:
-        if Dicts.bots[bot_number]['loc_service'] and 'street_num' not in pkmn:
-            Dicts.bots[bot_number]['loc_service'].add_optional_arguments(
-                [lat, lng], pkmn)
+        if Dicts.loc_service and 'street_num' not in pkmn:
+            Dicts.loc_service.add_optional_arguments([lat, lng], pkmn)
         log.info("{} DM notification has been triggered!".format(name))
         Dicts.bots[bot_number]['alarm'].pokemon_alert(
             client, bot_number, pkmn, user_ids)
@@ -135,9 +129,8 @@ def process_egg(client, bot_number, egg):
             continue
         user_ids.append(user_id)
     if len(user_ids) > 0:
-        if Dicts.bots[bot_number]['loc_service'] and 'street_num' not in egg:
-            Dicts.bots[bot_number]['loc_service'].add_optional_arguments(
-                [lat, lng], egg)
+        if Dicts.loc_service and 'street_num' not in egg:
+            Dicts.loc_service.add_optional_arguments([lat, lng], egg)
         log.info("Egg ({}) notification has been triggered!".format(gym_id))
         Dicts.bots[bot_number]['alarm'].raid_egg_alert(
             client, bot_number, egg, user_ids)
@@ -160,9 +153,8 @@ def process_raid(client, bot_number, raid):
             continue
         user_ids.append(user_id)
     if len(user_ids) > 0:
-        if Dicts.bots[bot_number]['loc_service'] and 'street_num' not in raid:
-            Dicts.bots[bot_number]['loc_service'].add_optional_arguments(
-                [lat, lng], raid)
+        if Dicts.loc_service and 'street_num' not in raid:
+            Dicts.loc_service.add_optional_arguments([lat, lng], raid)
         log.info("Raid ({}) notification has been triggered!".format(gym_id))
         Dicts.bots[bot_number]['alarm'].raid_alert(
             client, bot_number, raid, user_ids)
@@ -170,6 +162,11 @@ def process_raid(client, bot_number, raid):
 
 async def out_q(bot_number):
     while not Dicts.bots[bot_number]['out_queue'].empty():
+        if Dicts.bots[bot_number]['out_queue'].qsize() > 300:
+            log.warning((
+                "Bot queue length is at {}... this may be causing a " +
+                "delay in notifications, consider adding more bots."
+            ).format(Dicts.bots[bot_number]['out_queue'].qsize()))
         while len(Dicts.bots[bot_number]['timestamps']) >= 120:
             if (datetime.utcnow() - Dicts.bots[bot_number]['timestamps'][
                     0]).total_seconds() > 60:

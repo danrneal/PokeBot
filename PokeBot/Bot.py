@@ -23,14 +23,14 @@ class Bot(discord.Client):
         if bot_number != 0:
             await self.change_presence(status=discord.Status.invisible)
         for guild in self.guilds:
-            Dicts.bots[bot_number]['roles'][guild.id] = {}
+            if guild.id not in Dicts.roles:
+                Dicts.roles[guild.id] = {}
             for role in guild.roles:
-                Dicts.bots[bot_number]['roles'][guild.id][
-                    role.name.lower()] = role
+                Dicts.roles[guild.id][role.name.lower()] = role
         users = []
         for member in self.get_all_members():
-            if (member.top_role > Dicts.bots[bot_number]['roles'][
-                member.guild.id][args.alert_role] and
+            if (member.top_role > Dicts.roles[member.guild.id][
+                args.alert_role] and
                     str(member.id) not in users):
                 users.append(str(member.id))
         user_count = 0
@@ -45,7 +45,7 @@ class Bot(discord.Client):
                 user_count += 1
                 continue
             for area in Dicts.bots[bot_number]['filters'][user_id]['areas']:
-                if area not in Dicts.bots[bot_number]['geofences']:
+                if area not in Dicts.geofences:
                     Dicts.bots[bot_number]['filters'][user_id]['areas'].remove(
                         area)
                     area_count += 1
@@ -67,8 +67,7 @@ class Bot(discord.Client):
         if (after.id % len(args.tokens) == bot_number and
             str(after.id) in Dicts.bots[bot_number]['filters'] and
                 before.roles != after.roles):
-            if after.top_role > Dicts.bots[bot_number]['roles'][
-                    after.guild.id][args.alert_role]:
+            if after.top_role < Dicts.roles[after.guild.id][args.alert_role]:
                 Dicts.bots[bot_number]['filters'].pop(str(after.id))
                 update_dicts()
                 for settings in [
@@ -77,11 +76,11 @@ class Bot(discord.Client):
                         Dicts.bots[bot_number][settings].pop(str(after.id))
                 log.info('Removed {} from dicts'.format(after.display_name))
             elif (args.muted_role is not None and
-                  Dicts.bots[bot_number]['roles'][after.guild.id][
+                  Dicts.roles[after.guild.id][
                       args.muted_role] in after.roles and
-                  Dicts.bots[bot_number][str(after.id)]['filters'][
+                  Dicts.bots[bot_number]['filters'][str(after.id)][
                       'paused'] is False):
-                Dicts.bots[bot_number][str(after.id)]['filters'][
+                Dicts.bots[bot_number]['filters'][str(after.id)][
                     'paused'] = True
                 update_dicts()
                 await Dicts.bots[bot_number]['out_queue'].put((

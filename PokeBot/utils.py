@@ -209,6 +209,9 @@ def get_args():
 class Dicts(object):
     managers = {}
     bots = []
+    loc_service: None
+    geofences = []
+    roles = {}
     female_only = [29, 30, 31, 113, 115, 124, 238, 241, 242]
     male_only = [32, 33, 34, 106, 107, 128, 236, 237]
     genderless = [81, 82, 100, 101, 120, 121, 137, 201, 233]
