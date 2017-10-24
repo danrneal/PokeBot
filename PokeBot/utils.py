@@ -213,6 +213,7 @@ class Dicts(object):
     locale = None
     geofences = []
     roles = {}
+    last_backup = 0
     female_only = [29, 30, 31, 113, 115, 124, 238, 241, 242]
     male_only = [32, 33, 34, 106, 107, 128, 236, 237]
     genderless = [81, 82, 100, 101, 120, 121, 137, 201, 233]
@@ -237,13 +238,11 @@ class Dicts(object):
         'water': 0x6890F0
     }
     info_msg = (
-        "Hello there! I am Professor AlphaPokes.\n\n" +
-        "`!set [pokemon] [IV] [gender] CP[CP] L[level]` to add an alert for " +
+        "Hello there!\n\n" +
+        "`!set [pokemon] [IV] CP[CP] L[level] [gender]` to add an alert for " +
         "a given pokemon based on it's characteristics, any of the " +
         "characteristics can be left blank,\n\n" +
-        "`!delete [pokemon/all] [gender]` to remove an " +
-        "alert for a given pokemon based on it's characteristics, gender " +
-        "can be left blank,\n\n" +
+        "`!delete [pokemon/all]` to remove an alert for a given pokemon\n\n" +
         "`!pause` or `!p` to pause all notifcations,\n\n" +
         "`!resume` or `!r` to resume all alerts,\n\n" +
         "`!activate [area]` to resume a given area,\n\n" +
@@ -265,10 +264,14 @@ def update_dicts():
     master = {}
     for bot in Dicts.bots:
         master.update(bot['filters'])
-    with open(get_path('../user_dicts/user_filters.json')) as f:
-        filters = json.load(f)
-    with open(get_path('../user_dicts/user_filters_backup.json'), 'w') as f:
-        json.dump(filters, f, indent=4)
+    if Dicts.last_backup == 0:
+        Dicts.last_backup = datetime.utcnow()
+    elif datetime.utcnow() - Dicts.last_backup > timedelta(minutes=60): 
+        with open(get_path('../user_dicts/user_filters.json')) as f:
+            filters = json.load(f)
+        with open(get_path('../user_dicts/user_filters_backup.json'), 'w') as f:
+            json.dump(filters, f, indent=4)
+        Dicts.last_backup = datetime.utcnow()
     with open(get_path('../user_dicts/user_filters.json'), 'w') as f:
         json.dump(master, f, indent=4)
 

@@ -271,6 +271,8 @@ def set_(client, message, bot_number):
         ',\n', ',').replace('\n', ',').replace(', ', ',').split(',')
     set_count = 0
     for command in msg:
+        if len(command) == 0:
+            continue
         error = False
         if (get_pkmn_id(command.split()[0]) is None or
                 command.split()[0] == 'default'):
@@ -278,9 +280,9 @@ def set_(client, message, bot_number):
             command = command.strip(pokemon.lower()).strip()
             input_ = [command.split()]
             filters = [{
-                'min_iv': 0,
-                'min_cp': 0,
-                'min_level': 0,
+                'min_iv': '0',
+                'min_cp': '0',
+                'min_level': '0',
                 'gender': None,
             }]
         else:
@@ -303,9 +305,9 @@ def set_(client, message, bot_number):
             for filter_ in command:
                 input_.append(filter_.split())
                 filters.append({
-                    'min_iv': 0,
-                    'min_cp': 0,
-                    'min_level': 0,
+                    'min_iv': '0',
+                    'min_cp': '0',
+                    'min_level': '0',
                     'gender': None
                 })
         for inp, filt in zip(input_, filters):
@@ -340,7 +342,7 @@ def set_(client, message, bot_number):
             for char in inp:
                 if is_number(char):
                     if int(char) >= 0 and int(char) <= 100:
-                        filt['min_iv'] = int(char)
+                        filt['min_iv'] = str(char)
                         filt['ignore_missing'] = True
                     else:
                         error = True
@@ -357,7 +359,7 @@ def set_(client, message, bot_number):
                         break
                 elif char.startswith('l') and is_number(char[1:]):
                     if int(char[1:]) >= 1:
-                        filt['min_level'] = int(char[1:])
+                        filt['min_level'] = str(char[1:])
                         filt['ignore_missing'] = True
                     else:
                         error = True
@@ -376,7 +378,7 @@ def set_(client, message, bot_number):
                        char.endswith('cp')) and
                       is_number(char.replace('cp', ''))):
                     if int(char.replace('cp', '')) >= 10:
-                        filt['min_cp'] = int(char.replace('cp', ''))
+                        filt['min_cp'] = str(char.replace('cp', ''))
                         filt['ignore_missing'] = True
                     else:
                         error = True
@@ -476,6 +478,8 @@ def delete(bot_number, message):
     else:
         del_count = 0
         for command in msg:
+            if len(command) == 0:
+                continue
             if command != 'all' and get_pkmn_id(command) is None:
                 Dicts.bots[bot_number]['out_queue'].put((
                     1, Dicts.bots[bot_number]['count'], {
@@ -509,7 +513,6 @@ def delete(bot_number, message):
                     for filter_ in user_dict['pokemon']:
                         bool = parse_boolean(user_dict['pokemon'][filter_])
                         if bool is not True:
-                            log.info(filter_)
                             del_count += 1
                     user_dict['pokemon'] = {'enabled': True}
                 else:
@@ -643,6 +646,8 @@ def activate(bot_number, message):
     activate_count = 0
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
     for cmd in msg:
+        if len(cmd) == 0:
+            continue
         if cmd in Dicts.geofences:
             if user_dict is None:
                 if args.all_areas is True:
@@ -743,6 +748,8 @@ def deactivate(bot_number, message):
     deactivate_count = 0
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
     for cmd in msg:
+        if len(cmd) == 0:
+            continue
         if cmd in Dicts.geofences:
             if user_dict is None:
                 if args.all_areas is False:
@@ -856,13 +863,13 @@ def alerts(bot_number, message):
         alerts += '__POKEMON__\n\n'
         if 'default' in user_dict['pokemon']:
             alerts += 'Default (all unlisted): '
-            if user_dict['pokemon']['default']['min_iv'] > 0:
+            if int(user_dict['pokemon']['default']['min_iv']) > 0:
                 alerts += '{}%+, '.format(
                     user_dict['pokemon']['default']['min_iv'])
-            if user_dict['pokemon']['default']['min_cp'] > 0:
+            if int(user_dict['pokemon']['default']['min_cp']) > 0:
                 alerts += '{}CP+, '.format(
                     user_dict['pokemon']['default']['min_cp'])
-            if user_dict['pokemon']['default']['min_level'] > 0:
+            if int(user_dict['pokemon']['default']['min_level']) > 0:
                 alerts += 'L{}+, '.format(
                     user_dict['pokemon']['default']['min_level'])
             alerts = alerts[:-2] + '\n\n'
@@ -880,17 +887,17 @@ def alerts(bot_number, message):
             else:
                 alerts += '{}: '.format(pkmn)
                 for filter_ in user_dict['pokemon'][pkmn]:
-                    if (filter_['min_iv'] == 0 and
-                        filter_['min_cp'] == 0 and
-                        filter_['min_level'] == 0 and
+                    if (int(filter_['min_iv']) == 0 and
+                        int(filter_['min_cp']) == 0 and
+                        int(filter_['min_level']) == 0 and
                             filter_['gender'] is None):
                         alerts += 'All  '
                     else:
-                        if filter_['min_iv'] > 0:
+                        if int(filter_['min_iv']) > 0:
                             alerts += '{}%+, '.format(filter_['min_iv'])
-                        if filter_['min_cp'] > 0:
+                        if int(filter_['min_cp']) > 0:
                             alerts += '{}CP+, '.format(filter_['min_cp'])
-                        if filter_['min_level'] > 0:
+                        if int(filter_['min_level']) > 0:
                             alerts += 'L{}+, '.format(filter_['min_level'])
                         if filter_['gender'] is not None:
                             if filter_['gender'] == ['female']:

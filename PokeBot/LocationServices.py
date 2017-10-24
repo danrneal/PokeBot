@@ -54,7 +54,7 @@ class LocationService(object):
             details['address'] = "{} {}".format(
                 details['street_num'], details['street'])
             details['postal'] = loc.get('postal_code', 'unknown')
-            details['neighborhood'] = loc.get('neighborhood', "unknown")
+            details['neighborhood'] = loc.get('neighborhood', details['street'])
             details['sublocality'] = loc.get('sublocality', "unknown")
             details['city'] = loc.get('locality', loc.get(
                 'postal_town', 'unknown'))

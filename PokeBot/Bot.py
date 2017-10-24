@@ -29,13 +29,13 @@ class Bot(discord.Client):
                 Dicts.roles[guild.id][role.name.lower()] = role
         users = []
         for member in self.get_all_members():
-            if (member.top_role > Dicts.roles[member.guild.id][
+            if (member.top_role >= Dicts.roles[member.guild.id][
                 args.alert_role] and
                     str(member.id) not in users):
                 users.append(str(member.id))
         user_count = 0
         area_count = 0
-        for user_id in Dicts.bots[bot_number]['filters']:
+        for user_id in list(Dicts.bots[bot_number]['filters']):
             if user_id not in users:
                 Dicts.bots[bot_number]['filters'].pop(user_id)
                 for settings in [
@@ -44,7 +44,8 @@ class Bot(discord.Client):
                         Dicts.bots[bot_number][settings].pop(user_id)
                 user_count += 1
                 continue
-            for area in Dicts.bots[bot_number]['filters'][user_id]['areas']:
+            for area in list(Dicts.bots[bot_number]['filters'][user_id][
+                    'areas']):
                 if area not in Dicts.geofences:
                     Dicts.bots[bot_number]['filters'][user_id]['areas'].remove(
                         area)
