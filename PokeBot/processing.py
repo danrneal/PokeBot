@@ -28,10 +28,10 @@ async def in_q(client, bot_number):
                     process_raid(client, bot_number, obj)
                 else:
                     pass
-        except Exception as e:
-             log.error((
-                 "Encountered error during DM processing: {}: {}"
-             ).format(type(e).__name__, e))
+            except Exception as e:
+                log.error((
+                    "Encountered error during DM processing: {}: {}"
+                ).format(type(e).__name__, e))
         await out_q(bot_number)
 
 
