@@ -12,28 +12,26 @@ args = get_args()
 
 async def in_q(client, bot_number):
     while True:
-        while (Dicts.bots[bot_number]['in_queue'].empty() and
-               Dicts.bots[bot_number]['out_queue'].empty()):
-            await asyncio.sleep(0.5)
-        if Dicts.bots[bot_number]['in_queue'].qsize() > 300:
-            log.warning((
-                "Bot queue length is at {}... this may be causing a " +
-                "delay in notifications, consider adding more bots."
-            ).format(Dicts.bots[bot_number]['in_queue'].qsize()))
-        obj = Dicts.bots[bot_number]['in_queue'].get()
-#        try:
-        if obj['type'] == "pokemon":
-            process_pokemon(client, bot_number, obj)
-        elif obj['type'] == 'egg':
-            process_egg(client, bot_number, obj)
-        elif obj['type'] == "raid":
-            process_raid(client, bot_number, obj)
-        else:
-            pass
-#        except Exception as e:
-#             log.error((
-#                 "Encountered error during DM processing: {}: {}"
-#             ).format(type(e).__name__, e))
+        if not Dicts.bots[bot_number]['in_queue'].empty():
+            if Dicts.bots[bot_number]['in_queue'].qsize() > 300:
+                log.warning((
+                    "Bot queue length is at {}... this may be causing a " +
+                    "delay in notifications, consider adding more bots."
+                ).format(Dicts.bots[bot_number]['in_queue'].qsize()))
+            obj = Dicts.bots[bot_number]['in_queue'].get()
+            try:
+                if obj['type'] == "pokemon":
+                    process_pokemon(client, bot_number, obj)
+                elif obj['type'] == 'egg':
+                    process_egg(client, bot_number, obj)
+                elif obj['type'] == "raid":
+                    process_raid(client, bot_number, obj)
+                else:
+                    pass
+        except Exception as e:
+             log.error((
+                 "Encountered error during DM processing: {}: {}"
+             ).format(type(e).__name__, e))
         await out_q(bot_number)
 
 
