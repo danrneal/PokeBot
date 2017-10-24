@@ -418,7 +418,7 @@ def get_color(color_id):
             return 0xa335ee
         elif float(color_id) == 100:
             return 0xff8000
-    except:
+    except ValueError:
         return 0x4F545C
 
 

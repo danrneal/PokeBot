@@ -215,10 +215,7 @@ async def wrapped_connect(entry):
     try:
         await entry.client.connect()
     except Exception as e:
-        try:
-            await entry.client.close()
-        except:
-            pass
+        await entry.client.close()
         log.error('We got an exception: ', e.__class__.__name__, e)
         entry.event.set()
 

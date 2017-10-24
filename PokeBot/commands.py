@@ -94,15 +94,15 @@ def dex(bot_number, message):
                             legacy_moves.append(' (Legacy)')
                         else:
                             legacy_moves.append('')
-                    except:
+                    except AttributeError:
                         legacy_moves.append('')
-            except:
+            except AttributeError:
                 try:
                     if legacy_charge.get_text() == '* ':
                         legacy_moves.append(' (Legacy)')
                     else:
                         legacy_moves.append('')
-                except:
+                except AttributeError:
                     legacy_moves.append('')
 
         offensive_grade = soup.find_all(class_=(
@@ -127,10 +127,10 @@ def dex(bot_number, message):
                                     "field--type-string field--label-hidden"))
 
         title = "%03d" % dex_number + ' | ' + pokemon.upper()
-        try:
-            descript = "Rating: " + rating[0].get_text().strip() + ' / 10'
-        except:
-            descript = "Rating: - / 10"
+#        try:
+        descript = "Rating: " + rating[0].get_text().strip() + ' / 10'
+#        except:
+#            descript = "Rating: - / 10"
         if len(types[0].get_text().split()) == 1:
             descript += "\nType: " + types[0].get_text().split()[0]
         else:
@@ -146,7 +146,7 @@ def dex(bot_number, message):
         try:
             descript += ("Female: " + female[0].get_text().strip() +
                          " | Male: " + male[0].get_text().strip() + '\n')
-        except:
+        except IndexError:
             pass
 
         if len(offensive_moves) > 0:
