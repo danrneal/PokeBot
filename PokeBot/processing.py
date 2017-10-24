@@ -29,7 +29,7 @@ async def in_q(client, bot_number):
         elif obj['type'] == "raid":
             process_raid(client, bot_number, obj)
         else:
-             pass
+            pass
 #        except Exception as e:
 #             log.error((
 #                 "Encountered error during DM processing: {}: {}"

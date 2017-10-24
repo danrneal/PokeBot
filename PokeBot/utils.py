@@ -266,10 +266,11 @@ def update_dicts():
         master.update(bot['filters'])
     if Dicts.last_backup == 0:
         Dicts.last_backup = datetime.utcnow()
-    elif datetime.utcnow() - Dicts.last_backup > timedelta(minutes=60): 
+    elif datetime.utcnow() - Dicts.last_backup > timedelta(minutes=60):
         with open(get_path('../user_dicts/user_filters.json')) as f:
             filters = json.load(f)
-        with open(get_path('../user_dicts/user_filters_backup.json'), 'w') as f:
+        with open(get_path(
+                '../user_dicts/user_filters_backup.json'), 'w') as f:
             json.dump(filters, f, indent=4)
         Dicts.last_backup = datetime.utcnow()
     with open(get_path('../user_dicts/user_filters.json'), 'w') as f:
