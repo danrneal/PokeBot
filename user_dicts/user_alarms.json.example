@@ -1,0 +1,9 @@
+{
+    "pokemon": {
+		"content": "",
+		"icon_url": "https://raw.githubusercontent.com/RocketMap/PokeAlarm/master/icons/<pkmn_id>.png",
+        "title": "A wild <pkmn> has appeared!",
+        "url": "<gmaps>",
+        "body": "Available until <24h_time> (<time_left>)."
+    }
+}
