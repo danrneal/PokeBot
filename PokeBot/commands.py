@@ -235,8 +235,8 @@ def dex(bot_number, message):
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
-                    "`{}` is not any pokemon I know of, check your spelling " +
-                    "`{}`"
+                    "**{}** is not any pokemon I know of, check your spelling " +
+                    "**{}**"
                 ).format(pokemon.title(), message.author.display_name)
             }
         ))
@@ -293,7 +293,7 @@ def set_(client, message, bot_number):
                     1, Dicts.bots[bot_number]['count'], {
                         'destination': message.channel,
                         'msg': (
-                            '`{}`, you can set a maximum of 3 filters for a ' +
+                            '**{}**, you can set a maximum of 3 filters for a ' +
                             'given pokemon.'
                         ).format(message.author.display_name)
                     }
@@ -333,7 +333,7 @@ def set_(client, message, bot_number):
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'msg': (
-                                '`{}`, `{}` does not have that gender.'
+                                '**{}**, **{}** does not have that gender.'
                             ).format(message.author.display_name, pokemon)
                         }
                     ))
@@ -350,7 +350,7 @@ def set_(client, message, bot_number):
                             1, Dicts.bots[bot_number]['count'], {
                                 'destination': message.channel,
                                 'msg': (
-                                    '`{}`, pokemon IV must be between 0 and ' +
+                                    '**{}**, pokemon IV must be between 0 and ' +
                                     '100.'
                                 ).format(message.author.display_name)
                             }
@@ -367,7 +367,7 @@ def set_(client, message, bot_number):
                             1, Dicts.bots[bot_number]['count'], {
                                 'destination': message.channel,
                                 'msg': (
-                                    '`{}`, pokemon level must not be less ' +
+                                    '**{}**, pokemon level must not be less ' +
                                     'than 1.'
                                 ).format(message.author.display_name)
                             }
@@ -386,7 +386,7 @@ def set_(client, message, bot_number):
                             1, Dicts.bots[bot_number]['count'], {
                                 'destination': message.channel,
                                 'msg': (
-                                    '`{}`, pokemon CP must not be less than ' +
+                                    '**{}**, pokemon CP must not be less than ' +
                                     '10.'
                                 ).format(message.author.display_name)
                             }
@@ -399,8 +399,8 @@ def set_(client, message, bot_number):
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'msg': (
-                                '`{}`, your command has an unrecognized ' +
-                                'argumnet (`{}`).'
+                                '**{}**, your command has an unrecognized ' +
+                                'argumnet (**{}**).'
                             ).format(message.author.display_name, char)
                         }
                     ))
@@ -449,7 +449,7 @@ def set_(client, message, bot_number):
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
-                    '`{}`, I have set `{}` pokemon spawn filters.'
+                    '**{}**, I have set **{}** pokemon spawn filters.'
                 ).format(message.author.display_name, str(set_count))
             }
         ))
@@ -469,7 +469,7 @@ def delete(bot_number, message):
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
-                    "There is nothing to delete, `{}`, you don't have any " +
+                    "There is nothing to delete, **{}**, you don't have any " +
                     "alerts set."
                 ).format(message.author.display_name)
             }
@@ -486,7 +486,7 @@ def delete(bot_number, message):
                         'destination': message.channel,
                         'msg': (
                             "{} is not any pokemon I know of, check your " +
-                            "spelling `{}`"
+                            "spelling **{}**"
                         ).format(command.title(), message.author.display_name)
                     }
                 ))
@@ -500,8 +500,8 @@ def delete(bot_number, message):
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'msg': (
-                                '`{}`, I was not previously alerting you if ' +
-                                'a(n) `{}` spawns.'
+                                '**{}**, I was not previously alerting you if ' +
+                                'a(n) **{}** spawns.'
                             ).format(
                                 message.author.display_name, command.title()
                             )
@@ -520,7 +520,7 @@ def delete(bot_number, message):
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'msg': (
-                                '`{}`, I was not previously alerting you of ' +
+                                '**{}**, I was not previously alerting you of ' +
                                 'any pokemon spawns.'
                             ).format(message.author.display_name)
                         }
@@ -558,7 +558,7 @@ def delete(bot_number, message):
                 1, Dicts.bots[bot_number]['count'], {
                     'destination': message.channel,
                     'msg': (
-                        '`{}`, I have removed `{}` pokemon spawn filters.'
+                        '**{}**, I have removed **{}** pokemon spawn filters.'
                     ).format(message.author.display_name, str(del_count))
                 }
             ))
@@ -572,7 +572,7 @@ def pause(bot_number, message):
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
-                    "There is nothing to pause, `{}`, I'm not alerting you " +
+                    "There is nothing to pause, **{}**, I'm not alerting you " +
                     "to any pokemon."
                 ).format(message.author.display_name)
             }
@@ -582,7 +582,7 @@ def pause(bot_number, message):
         Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
-                'msg': 'Your alerts are already paused, `{}`.'.format(
+                'msg': 'Your alerts are already paused, **{}**.'.format(
                     message.author.display_name)
             }
         ))
@@ -593,7 +593,7 @@ def pause(bot_number, message):
         Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
-                'msg': 'Your alerts have been paused, `{}`.'.format(
+                'msg': 'Your alerts have been paused, **{}**.'.format(
                     message.author.display_name)
             }
         ))
@@ -607,7 +607,7 @@ def resume(bot_number, message):
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
-                    "There is nothing to resume, `{}`, I'm not alerting you " +
+                    "There is nothing to resume, **{}**, I'm not alerting you " +
                     "to any pokemon."
                 ).format(message.author.display_name)
             }
@@ -617,7 +617,7 @@ def resume(bot_number, message):
         Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
-                'msg': 'Your alerts were not previously paused, `{}`.'.format(
+                'msg': 'Your alerts were not previously paused, **{}**.'.format(
                     message.author.display_name)
             }
         ))
@@ -628,7 +628,7 @@ def resume(bot_number, message):
         Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
-                'msg': 'You alerts have been resumed, `{}`.'.format(
+                'msg': 'You alerts have been resumed, **{}**.'.format(
                     message.author.display_name)
             }
         ))
@@ -655,7 +655,7 @@ def activate(bot_number, message):
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'msg': (
-                                "`{}`, all areas are on by default."
+                                "**{}**, all areas are on by default."
                             ).format(message.author.display_name)
                         }
                     ))
@@ -694,7 +694,7 @@ def activate(bot_number, message):
                         'destination': message.channel,
                         'msg': (
                             'You have reached the maximum number of areas ' +
-                            '`{}`, (50) you need to pause some in order to ' +
+                            '**{}**, (50) you need to pause some in order to ' +
                             'resume others.'
                         ).format(message.author.display_name)
                     }
@@ -709,8 +709,8 @@ def activate(bot_number, message):
                 1, Dicts.bots[bot_number]['count'], {
                     'destination': message.channel,
                     'msg': (
-                        "The `{}` area is not any area I know of in this " +
-                        "region, `{}`"
+                        "The **{}** area is not any area I know of in this " +
+                        "region, **{}**"
                     ).format(cmd.title(), message.author.display_name)
                 }
             ))
@@ -731,7 +731,7 @@ def activate(bot_number, message):
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
-                    'Your alerts have been activated for `{}` areas, `{}`.'
+                    'Your alerts have been activated for **{}** areas, **{}**.'
                 ).format(activate_count, message.author.display_name)
             }
         ))
@@ -757,7 +757,7 @@ def deactivate(bot_number, message):
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'msg': (
-                                "`{}`, all areas are off by default."
+                                "**{}**, all areas are off by default."
                             ).format(message.author.display_name)
                         }
                     ))
@@ -797,8 +797,8 @@ def deactivate(bot_number, message):
                 1, Dicts.bots[bot_number]['count'], {
                     'destination': message.channel,
                     'msg': (
-                        "The `{}` area is not any area I know of in this " +
-                        "region, `{}`"
+                        "The **{}** area is not any area I know of in this " +
+                        "region, **{}**"
                     ).format(cmd.title(), message.author.display_name)
                 }
             ))
@@ -818,7 +818,7 @@ def deactivate(bot_number, message):
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
-                    'Your alerts have been deactivated for `{}` areas, `{}`.'
+                    'Your alerts have been deactivated for **{}** areas, **{}**.'
                 ).format(deactivate_count, message.author.display_name)
             }
         ))
@@ -831,13 +831,13 @@ def alerts(bot_number, message):
         Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
-                'msg': "`{}`, you don't have any alerts set.".format(
+                'msg': "**{}**, you don't have any alerts set.".format(
                     message.author.display_name)
             }
         ))
         Dicts.bots[bot_number]['count'] += 1
     else:
-        alerts = "`{}`'s Alert Settings:\nBOT NUMBER: {}\nPAUSED: ".format(
+        alerts = "**{}**'s Alert Settings:\nBOT NUMBER: {}\nPAUSED: ".format(
             message.author.display_name, str(bot_number + 1))
         if user_dict['paused'] is True:
             alerts += "TRUE\n\n"
