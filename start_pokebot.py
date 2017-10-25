@@ -6,11 +6,13 @@ from PokeBot.utils import get_args
 from PokeBot.clients import start_clients
 
 logging.basicConfig(
+    filename='debug.log',
     format='[%(name)10.10s][%(levelname)8.8s] %(message)s',
     level=logging.INFO
 )
 log = logging.getLogger('server')
 logging.getLogger("discord").setLevel(logging.ERROR)
+logging.getLogger('discord.http').setLevel(logging.ERROR)
 logging.getLogger("websockets").setLevel(logging.ERROR)
 logging.getLogger("requests").setLevel(logging.ERROR)
 logging.getLogger("geocoder").setLevel(logging.ERROR)

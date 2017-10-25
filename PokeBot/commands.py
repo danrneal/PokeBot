@@ -127,10 +127,10 @@ def dex(bot_number, message):
                                     "field--type-string field--label-hidden"))
 
         title = "%03d" % dex_number + ' | ' + pokemon.upper()
-#        try:
-        descript = "Rating: " + rating[0].get_text().strip() + ' / 10'
-#        except:
-#            descript = "Rating: - / 10"
+        try:
+            descript = "Rating: " + rating[0].get_text().strip() + ' / 10'
+        except IndexError:
+            descript = "Rating: - / 10"
         if len(types[0].get_text().split()) == 1:
             descript += "\nType: " + types[0].get_text().split()[0]
         else:
