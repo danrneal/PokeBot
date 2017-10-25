@@ -204,28 +204,6 @@ async def handler(request):
     return web.Response()
 
 
-class PubSubServer(web.Application):
-
-    def __init__(self):
-        super().__init__()
-        self.reader = None
-        self.writer = None
-        if not self.loop:
-            loop = asyncio.get_event_loop()
-            loop.create_task(self.keep_alive())
-        else:
-            self.loop.create_task(self.keep_alive)
-
-    async def keep_alive(self):
-        self.reader, self.writer = await asyncio.open_connection(port=args.port)
-        while True:
-            data = await self.reader.read(n=2048)
-            if not data:
-                continue
-            else:
-                log.info(data)
-
-
 async def login():
     bot_num = 0
     for entry in entries:
@@ -260,8 +238,6 @@ def start_clients():
     entries.append(Entry(client=wh_mgr, event=asyncio.Event()))
     for entry in entries:
         loop.create_task(wrapped_connect(entry))
-#    app = PubSubServer()
-#    loop.run_until_complete(web.run_app(app, port=args.port))
     app = web.Application()
     app.router.add_get('/', index)
     app.router.add_post('/', handler)

@@ -6,7 +6,6 @@ from PokeBot.utils import get_args
 from PokeBot.clients import start_clients
 
 logging.basicConfig(
-    filename='debug.log',
     format='[%(name)10.10s][%(levelname)8.8s] %(message)s',
     level=logging.INFO
 )
