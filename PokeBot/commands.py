@@ -235,8 +235,8 @@ def dex(bot_number, message):
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
-                    "**{}** is not any pokemon I know of, check your spelling " +
-                    "**{}**"
+                    "**{}** is not any pokemon I know of, check your " +
+                    "spelling **{}**"
                 ).format(pokemon.title(), message.author.display_name)
             }
         ))
@@ -293,8 +293,8 @@ def set_(client, message, bot_number):
                     1, Dicts.bots[bot_number]['count'], {
                         'destination': message.channel,
                         'msg': (
-                            '**{}**, you can set a maximum of 3 filters for a ' +
-                            'given pokemon.'
+                            '**{}**, you can set a maximum of 3 filters for ' +
+                            'a given pokemon.'
                         ).format(message.author.display_name)
                     }
                 ))
@@ -350,8 +350,8 @@ def set_(client, message, bot_number):
                             1, Dicts.bots[bot_number]['count'], {
                                 'destination': message.channel,
                                 'msg': (
-                                    '**{}**, pokemon IV must be between 0 and ' +
-                                    '100.'
+                                    '**{}**, pokemon IV must be between 0 ' +
+                                    'and 100.'
                                 ).format(message.author.display_name)
                             }
                         ))
@@ -386,8 +386,8 @@ def set_(client, message, bot_number):
                             1, Dicts.bots[bot_number]['count'], {
                                 'destination': message.channel,
                                 'msg': (
-                                    '**{}**, pokemon CP must not be less than ' +
-                                    '10.'
+                                    '**{}**, pokemon CP must not be less ' +
+                                    'than 10.'
                                 ).format(message.author.display_name)
                             }
                         ))
@@ -500,8 +500,8 @@ def delete(bot_number, message):
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'msg': (
-                                '**{}**, I was not previously alerting you if ' +
-                                'a(n) **{}** spawns.'
+                                '**{}**, I was not previously alerting you ' +
+                                'if a(n) **{}** spawns.'
                             ).format(
                                 message.author.display_name, command.title()
                             )
@@ -520,8 +520,8 @@ def delete(bot_number, message):
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'msg': (
-                                '**{}**, I was not previously alerting you of ' +
-                                'any pokemon spawns.'
+                                '**{}**, I was not previously alerting you ' +
+                                'of any pokemon spawns.'
                             ).format(message.author.display_name)
                         }
                     ))
@@ -572,8 +572,8 @@ def pause(bot_number, message):
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
-                    "There is nothing to pause, **{}**, I'm not alerting you " +
-                    "to any pokemon."
+                    "There is nothing to pause, **{}**, I'm not alerting " +
+                    "you to any pokemon."
                 ).format(message.author.display_name)
             }
         ))
@@ -607,8 +607,8 @@ def resume(bot_number, message):
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
-                    "There is nothing to resume, **{}**, I'm not alerting you " +
-                    "to any pokemon."
+                    "There is nothing to resume, **{}**, I'm not alerting " +
+                    "you to any pokemon."
                 ).format(message.author.display_name)
             }
         ))
@@ -617,8 +617,9 @@ def resume(bot_number, message):
         Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
-                'msg': 'Your alerts were not previously paused, **{}**.'.format(
-                    message.author.display_name)
+                'msg': (
+                    'Your alerts were not previously paused, **{}**.'
+                ).format(message.author.display_name)
             }
         ))
         Dicts.bots[bot_number]['count'] += 1
@@ -694,8 +695,8 @@ def activate(bot_number, message):
                         'destination': message.channel,
                         'msg': (
                             'You have reached the maximum number of areas ' +
-                            '**{}**, (50) you need to pause some in order to ' +
-                            'resume others.'
+                            '**{}**, (50) you need to pause some in order ' +
+                            'to resume others.'
                         ).format(message.author.display_name)
                     }
                 ))
@@ -818,7 +819,8 @@ def deactivate(bot_number, message):
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': (
-                    'Your alerts have been deactivated for **{}** areas, **{}**.'
+                    'Your alerts have been deactivated for **{}** areas, ' +
+                    '**{}**.'
                 ).format(deactivate_count, message.author.display_name)
             }
         ))
