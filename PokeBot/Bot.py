@@ -21,8 +21,8 @@ class Bot(discord.Client):
         await asyncio.sleep(bot_number)
         log.info("Bot number {} connected".format(bot_number + 1))
         await asyncio.sleep(len(args.tokens))
-#        if bot_number != 0:
-        await self.change_presence(status=discord.Status.invisible)
+        if bot_number != 0:
+            await self.change_presence(status=discord.Status.invisible)
         for guild in self.guilds:
             if guild.id not in Dicts.roles:
                 Dicts.roles[guild.id] = {}
