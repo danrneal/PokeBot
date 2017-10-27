@@ -948,8 +948,8 @@ def areas(bot_number, message):
             areas += '{}, '.format(area.title())
     areas = [areas[:-2]]
     areas[0] += (
-        '\n\nYou can change your settings by using `!activate [area/all]` or ' +
-        '`!deactivate [area/all]` in #custom_filters'
+        '\n\nYou can change your settings by using `!activate [area/all]` ' +
+        'or `!deactivate [area/all]` in #custom_filters'
     )
     while len(areas[-1]) > 2000:
         for areas_split in truncate(areas.pop()):

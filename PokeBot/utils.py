@@ -253,7 +253,7 @@ class Dicts(object):
         "pokemon,\n\n" +
         "`!status` to see which bots are currently online,\n\n" +
         "`!help` or `!commands` to see this message,\n\n" +
-        "`!donate` to see donation information for this project.\n\n" +
+#        "`!donate` to see donation information for this project.\n\n" +
         "It is possible to add or delete multiple pokemon or areas by " +
         "putting pokemon on seperate lines or separating them with commas.\n" +
         "Commands should be in the #custom_filters channel.\n\n"
