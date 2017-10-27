@@ -3,7 +3,7 @@
 
 import logging
 import asyncio
-from datetime import datetime
+from datetime import datetime, timedelta
 from .utils import get_args, Dicts
 
 log = logging.getLogger('processing')
@@ -13,11 +13,6 @@ args = get_args()
 async def in_q(client, bot_number):
     while True:
         if not Dicts.bots[bot_number]['in_queue'].empty():
-            if Dicts.bots[bot_number]['in_queue'].qsize() > 300:
-                log.warning((
-                    "Bot queue length is at {}... this may be causing a " +
-                    "delay in notifications, consider adding more bots."
-                ).format(Dicts.bots[bot_number]['in_queue'].qsize()))
             obj = Dicts.bots[bot_number]['in_queue'].get()
             try:
                 if obj['type'] == "pokemon":
@@ -104,7 +99,7 @@ def process_pokemon(client, bot_number, pkmn):
         passed = check_pokemon_filter(filters, pkmn)
         if not passed:
             continue
-        if (len(user_dict['areas']) > 0 and
+        if (len(Dicts.geofences) > 0 and
                 pkmn['geofence'].lower() not in user_dict['areas']):
             continue
         user_ids.append(user_id)
@@ -129,7 +124,7 @@ def process_egg(client, bot_number, egg):
         passed = check_egg_filter(user_filter_dict, egg)
         if not passed:
             continue
-        if (len(user_dict['areas']) > 0 and
+        if (len(Dicts.geofences) > 0 and
                 egg['geofence'].lower() not in user_dict['areas']):
             continue
         user_ids.append(user_id)
@@ -153,7 +148,7 @@ def process_raid(client, bot_number, raid):
             user_filter_dict['enabled'] is False or
                 pkmn_id not in user_filter_dict['filters']):
             continue
-        if (len(user_dict['areas']) > 0 and
+        if (len(Dicts.geofences) > 0 and
                 raid['geofence'].lower() not in user_dict['areas']):
             continue
         user_ids.append(user_id)
@@ -168,12 +163,18 @@ def process_raid(client, bot_number, raid):
 async def out_q(bot_number):
     while not Dicts.bots[bot_number]['out_queue'].empty():
         while len(Dicts.bots[bot_number]['timestamps']) >= 120:
-            if (datetime.utcnow() - Dicts.bots[bot_number]['timestamps'][
-                    0]).total_seconds() > 60:
+            if datetime.utcnow() - Dicts.bots[bot_number]['timestamps'][
+                    0] > timedelta(minutes=1):
                 Dicts.bots[bot_number]['timestamps'].pop(0)
             else:
                 await asyncio.sleep(0.5)
         msg_params = Dicts.bots[bot_number]['out_queue'].get()
+        if datetime.utcnow() - msg_params[2]['timestamp'] > timedelta(
+                minutes=1):
+            log.warning((
+                "Bot queue is {} seconds behind..., consider adding more bots."
+            ).format((datetime.utcnow() - msg_params[2][
+                'timestamp']).total_seconds()))
         await msg_params[2]['destination'].send(
             msg_params[2].get('msg'),
             embed=msg_params[2].get('embed')

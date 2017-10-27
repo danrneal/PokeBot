@@ -70,4 +70,5 @@ class LocationService(object):
                 "Encountered error while getting reverse location data ({}: " +
                 "{})"
             ).format(type(e).__name__, e))
+            log.error("Error with key: {}".format(api_key))
         return details

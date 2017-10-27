@@ -141,7 +141,7 @@ class Manager(object):
     async def connect(self):
         while True:
             while self.__queue.empty():
-                await asyncio.sleep(1)
+                await asyncio.sleep(0)
             obj = self.__queue.get()
             try:
                 if obj['type'] == "pokemon":
