@@ -659,8 +659,7 @@ def resume(bot_number, message):
 
 
 def activate(bot_number, message):
-    if (message.content.lower() == '!activate all' and
-            str(message.author.id) in args.admins):
+    if message.content.lower() == '!activate all':
         msg = Dicts.geofences
     else:
         msg = message.content.lower().replace('!activate ', '').replace(
@@ -711,21 +710,6 @@ def activate(bot_number, message):
                                 'raids', usr_dict, 'User Command.'))
                     user_dict['areas'].append(cmd)
                     activate_count += 1
-            elif (str(message.author.id) not in args.admins and
-                  len(user_dict['areas']) > 50):
-                Dicts.bots[bot_number]['out_queue'].put((
-                    1, Dicts.bots[bot_number]['count'], {
-                        'destination': message.channel,
-                        'msg': (
-                            'You have reached the maximum number of areas ' +
-                            '**{}**, (50) you need to pause some in order ' +
-                            'to resume others.'
-                        ).format(message.author.display_name),
-                        'timestamp': datetime.utcnow()
-                    }
-                ))
-                Dicts.bots[bot_number]['count'] += 1
-                break
             elif cmd not in user_dict['areas']:
                 user_dict['areas'].append(cmd)
                 activate_count += 1
@@ -832,7 +816,8 @@ def deactivate(bot_number, message):
                 }
             ))
             Dicts.bots[bot_number]['count'] += 1
-    if (len(user_dict['pokemon']) <= 1 and
+    if (user_dict is not None and
+        len(user_dict['pokemon']) <= 1 and
         len(user_dict['eggs']) <= 1 and
         len(user_dict['raids']) <= 1 and
         (len(user_dict['areas']) == 0 and
