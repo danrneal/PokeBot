@@ -245,8 +245,8 @@ class Dicts(object):
         "`!delete [pokemon/all]` to remove an alert for a given pokemon\n\n" +
         "`!pause` or `!p` to pause all notifcations,\n\n" +
         "`!resume` or `!r` to resume all alerts,\n\n" +
-        "`!activate [area]` to resume a given area,\n\n" +
-        "`!deactivate [area]` to pause a given area,\n\n" +
+        "`!activate [area/all]` to resume a given area,\n\n" +
+        "`!deactivate [area/all]` to pause a given area,\n\n" +
         "`!areas` to see what areas area available to pause or resume,\n\n" +
         "`!alerts` to see your alert settings,\n\n"
         "`!dex [pokemon]` to get pokedex information for a given " +
