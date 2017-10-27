@@ -5,6 +5,5 @@
 #command_channels:								# Channel id that users input subscription commands [channel1, channel2, ...]
 #alert_role:									# Role name of users who can use the bot (default = '@everyone')
 #muted_role:									# Role name for muted users
-#admins:										# List of ids for admins
 #gmaps_keys:									# Gmaps api keys with geocoding and static map enabled [optional but required for map inlay and neighborhood data] [key1, key2, ...]
 #all_areas:										# Set to True to subscribe to all areas by default (default = False)

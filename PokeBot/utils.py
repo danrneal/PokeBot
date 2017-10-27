@@ -123,13 +123,6 @@ def get_args():
         help='Role for muted users'
     )
     parser.add_argument(
-        '-admin', '--admins',
-        type=str,
-        action='append',
-        default=[],
-        help='ids for admins'
-    )
-    parser.add_argument(
         '-gmaps', '--gmaps_keys',
         type=str,
         action='append',
