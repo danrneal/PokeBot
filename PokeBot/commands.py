@@ -8,6 +8,7 @@ import requests
 import copy
 from datetime import datetime
 from bs4 import BeautifulSoup
+from .Locale import Locale
 from .Filter import load_pokemon_section, load_egg_section
 from .utils import (get_args, Dicts, update_dicts, is_number, truncate,
                     get_pkmn_id, require_and_remove_key, parse_boolean)
@@ -270,18 +271,19 @@ async def donate(bot_number, message):
 
 def set_(client, message, bot_number):
     msg = message.content.lower().replace('!set ', '').replace(
-        '!set\n', '').replace('%', '').replace('nidoran♀', 'nidoranf').replace(
-        'nidoran♂', 'nidoranm').replace('mr. mime', 'mr.mime').replace(
+        '!set\n', '').replace('%', '').replace('nidoranf', 'nidoran♀').replace(
+        'nidoranm', 'nidoran♂').replace('mr. mime', 'mr.mime').replace(
         ',\n', ',').replace('\n', ',').replace(', ', ',').split(',')
     set_count = 0
     for command in msg:
         if len(command) == 0:
             continue
         error = False
-        if (get_pkmn_id(command.split()[0]) is None or
+        if (get_pkmn_id(command.split()[0].replace(
+            'mr.mime', 'mr. mime')) is None or
                 command.split()[0] == 'default'):
             pokemon = 'default'
-            command = command.strip(pokemon.lower()).strip()
+            command = command.replace(pokemon.lower(), '').strip()
             input_ = [command.split()]
             filters = [{
                 'min_iv': '0',
@@ -290,8 +292,12 @@ def set_(client, message, bot_number):
                 'gender': None,
             }]
         else:
-            pokemon = command.split()[0].title()
-            command = command.strip(pokemon.lower()).strip().split('|')
+            log.info(command)
+            pokemon = Dicts.locale.get_pokemon_name(get_pkmn_id(
+                command.split()[0].replace('mr.mime', 'mr. mime')))
+            command = command.replace(
+                pokemon.lower().replace(' ', ''), '').strip().split('|')
+            log.info(command)
             if len(command) > 3:
                 Dicts.bots[bot_number]['out_queue'].put((
                     1, Dicts.bots[bot_number]['count'], {
@@ -471,7 +477,7 @@ def delete(bot_number, message):
     msg = message.content.lower().replace('!delete ', '').replace(
         '!delete\n', '').replace('!remove ', '').replace(
         '!remove\n', '').replace('%', '').replace(
-        'nidoran♀', 'nidoranf').replace('nidoran♂', 'nidoranm').replace(
+        'nidoranf', 'nidoran♀').replace('nidoranm', 'nidoran♂').replace(
         'mr. mime', 'mr.mime').replace(',\n', ',').replace('\n', ',').replace(
         ', ', ',').split(',')
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
@@ -505,8 +511,10 @@ def delete(bot_number, message):
                 ))
                 Dicts.bots[bot_number]['count'] += 1
             elif get_pkmn_id(command) is not None:
-                if command.title() in user_dict['pokemon']:
-                    user_dict['pokemon'].pop(command.title())
+                if Dicts.locale.get_pokemon_name(get_pkmn_id(command.replace(
+                        'mr.mime', 'mr. mime'))) in user_dict['pokemon']:
+                    user_dict['pokemon'].pop(Dicts.locale.get_pokemon_name(
+                        get_pkmn_id(command.replace('mr.mime', 'mr. mime'))))
                     del_count += 1
                 else:
                     Dicts.bots[bot_number]['out_queue'].put((
@@ -872,7 +880,10 @@ def alerts(bot_number, message):
         else:
             alerts += '__ALERT AREAS__\n\n'
             if len(user_dict['areas']) == 0:
-                alerts += 'None  \n'
+                alerts += (
+                    "You don't any areas set type `!activate " "[area/all]` " +
+                    "in #custom_filters to set one! \n"
+                )
             else:
                 for area in user_dict['areas']:
                     alerts += '{}, '.format(area.title())
