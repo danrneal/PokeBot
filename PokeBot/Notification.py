@@ -3,6 +3,7 @@
 
 import logging
 import discord
+from datetime import datetime
 from random import randint
 from .DiscordAlarm import Alarm
 from .utils import (get_args, Dicts, reject_leftover_parameters, get_color,
@@ -103,7 +104,8 @@ class Notification(Alarm):
                         id=int(user_id)
                     ),
                     'msg': msg,
-                    'embed': em
+                    'embed': em,
+                    'timestamp': datetime.utcnow()
                 }
             ))
             Dicts.bots[bot_number]['count'] += 1

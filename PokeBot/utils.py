@@ -123,13 +123,6 @@ def get_args():
         help='Role for muted users'
     )
     parser.add_argument(
-        '-admin', '--admins',
-        type=str,
-        action='append',
-        default=[],
-        help='ids for admins'
-    )
-    parser.add_argument(
         '-gmaps', '--gmaps_keys',
         type=str,
         action='append',
@@ -213,7 +206,8 @@ class Dicts(object):
     locale = None
     geofences = []
     roles = {}
-    last_backup = 0
+    hr_backup = 0
+    day_backup = 0
     female_only = [29, 30, 31, 113, 115, 124, 238, 241, 242]
     male_only = [32, 33, 34, 106, 107, 128, 236, 237]
     genderless = [81, 82, 100, 101, 120, 121, 137, 201, 233]
@@ -245,8 +239,8 @@ class Dicts(object):
         "`!delete [pokemon/all]` to remove an alert for a given pokemon\n\n" +
         "`!pause` or `!p` to pause all notifcations,\n\n" +
         "`!resume` or `!r` to resume all alerts,\n\n" +
-        "`!activate [area]` to resume a given area,\n\n" +
-        "`!deactivate [area]` to pause a given area,\n\n" +
+        "`!activate [area/all]` to resume a given area,\n\n" +
+        "`!deactivate [area/all]` to pause a given area,\n\n" +
         "`!areas` to see what areas area available to pause or resume,\n\n" +
         "`!alerts` to see your alert settings,\n\n"
         "`!dex [pokemon]` to get pokedex information for a given " +
@@ -264,15 +258,24 @@ def update_dicts():
     master = {}
     for bot in Dicts.bots:
         master.update(bot['filters'])
-    if Dicts.last_backup == 0:
-        Dicts.last_backup = datetime.utcnow()
-    elif datetime.utcnow() - Dicts.last_backup > timedelta(minutes=60):
+    if Dicts.hr_backup == 0:
+        Dicts.hr_backup = datetime.utcnow()
+    elif datetime.utcnow() - Dicts.hr_backup > timedelta(minutes=60):
         with open(get_path('../user_dicts/user_filters.json')) as f:
             filters = json.load(f)
         with open(get_path(
-                '../user_dicts/user_filters_backup.json'), 'w') as f:
+                '../user_dicts/user_filters_hr_backup.json'), 'w') as f:
             json.dump(filters, f, indent=4)
-        Dicts.last_backup = datetime.utcnow()
+        Dicts.hr_backup = datetime.utcnow()
+    if Dicts.day_backup == 0:
+        Dicts.day_backup = datetime.utcnow()
+    elif datetime.utcnow() - Dicts.day_backup > timedelta(hours=24):
+        with open(get_path('../user_dicts/user_filters.json')) as f:
+            filters = json.load(f)
+        with open(get_path(
+                '../user_dicts/user_filters_day_backup.json'), 'w') as f:
+            json.dump(filters, f, indent=4)
+        Dicts.day_backup = datetime.utcnow()
     with open(get_path('../user_dicts/user_filters.json'), 'w') as f:
         json.dump(master, f, indent=4)
 

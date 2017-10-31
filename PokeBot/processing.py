@@ -3,7 +3,7 @@
 
 import logging
 import asyncio
-from datetime import datetime
+from datetime import datetime, timedelta
 from .utils import get_args, Dicts
 
 log = logging.getLogger('processing')
@@ -13,11 +13,6 @@ args = get_args()
 async def in_q(client, bot_number):
     while True:
         if not Dicts.bots[bot_number]['in_queue'].empty():
-            if Dicts.bots[bot_number]['in_queue'].qsize() > 300:
-                log.warning((
-                    "Bot queue length is at {}... this may be causing a " +
-                    "delay in notifications, consider adding more bots."
-                ).format(Dicts.bots[bot_number]['in_queue'].qsize()))
             obj = Dicts.bots[bot_number]['in_queue'].get()
             try:
                 if obj['type'] == "pokemon":
@@ -168,12 +163,18 @@ def process_raid(client, bot_number, raid):
 async def out_q(bot_number):
     while not Dicts.bots[bot_number]['out_queue'].empty():
         while len(Dicts.bots[bot_number]['timestamps']) >= 120:
-            if (datetime.utcnow() - Dicts.bots[bot_number]['timestamps'][
-                    0]).total_seconds() > 60:
+            if datetime.utcnow() - Dicts.bots[bot_number]['timestamps'][
+                    0] > timedelta(minutes=1):
                 Dicts.bots[bot_number]['timestamps'].pop(0)
             else:
                 await asyncio.sleep(0)
         msg_params = Dicts.bots[bot_number]['out_queue'].get()
+        if datetime.utcnow() - msg_params[2]['timestamp'] > timedelta(
+                minutes=1):
+            log.warning((
+                "Bot queue is {} seconds behind..., consider adding more bots."
+            ).format((datetime.utcnow() - msg_params[2][
+                'timestamp']).total_seconds()))
         await msg_params[2]['destination'].send(
             msg_params[2].get('msg'),
             embed=msg_params[2].get('embed')

@@ -41,7 +41,7 @@ class ManageWebhook(object):
                     "in notifications."
                 ).format(self.__queue.qsize()))
             while self.__queue.empty():
-                await asyncio.sleep(1)
+                await asyncio.sleep(0)
             data = await self.__queue.get()
             obj = Webhook.make_object(data)
             if obj is not None:

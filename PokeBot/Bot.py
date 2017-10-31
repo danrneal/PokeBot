@@ -4,6 +4,7 @@
 import logging
 import discord
 import asyncio
+from datetime import datetime
 from .processing import in_q
 from .utils import get_args, Dicts, update_dicts
 from .commands import (status, commands, dex, donate, set_, delete, pause,
@@ -84,14 +85,15 @@ class Bot(discord.Client):
                 Dicts.bots[bot_number]['filters'][str(after.id)][
                     'paused'] = True
                 update_dicts()
-                await Dicts.bots[bot_number]['out_queue'].put((
+                Dicts.bots[bot_number]['out_queue'].put((
                     1, Dicts.bots[bot_number]['count'], {
                         'destination': discord.utils.get(
                             after.guild.members,
                             id=after.id
                         ),
                         'msg': 'Alerts have been paused for `{}`.'.format(
-                            after.display_name)
+                            after.display_name),
+                        'timestamp': datetime.utcnow()
                     }
                 ))
                 Dicts.bots[bot_number]['count'] += 1
@@ -112,7 +114,7 @@ class Bot(discord.Client):
 
     async def on_message(self, message):
         bot_number = args.bot_client_ids.index(self.user.id)
-        if isinstance(message.channel, discord.abc.GuildChannel) is True:
+        if message.channel.id in args.command_channels:
             if message.content.lower() == '!status':
                 await status(self, bot_number, message)
             elif message.author.id % len(args.tokens) == bot_number:
@@ -122,21 +124,32 @@ class Bot(discord.Client):
                     dex(bot_number, message)
                 elif message.content.lower() == '!donate':
                     await donate(bot_number, message)
-                elif message.channel.id in args.command_channels:
-                    if message.content.lower().startswith('!set '):
-                        set_(self, message, bot_number)
-                    elif message.content.lower().startswith(
-                            ('!delete ', '!remove ')):
-                        delete(bot_number, message)
-                    elif message.content.lower() in ['!pause', '!p']:
-                        pause(bot_number, message)
-                    elif message.content.lower() in ['!resume', '!r']:
-                        resume(bot_number, message)
-                    elif message.content.lower().startswith('!activate '):
-                        activate(bot_number, message)
-                    elif message.content.lower().startswith('!deactivate '):
-                        deactivate(bot_number, message)
-                    elif message.content.lower() == '!alerts':
-                        alerts(bot_number, message)
-                    elif message.content.lower() == '!areas':
-                        areas(bot_number, message)
+                elif message.content.lower().startswith('!set '):
+                    set_(self, message, bot_number)
+                elif message.content.lower().startswith(
+                        ('!delete ', '!remove ')):
+                    delete(bot_number, message)
+                elif message.content.lower() in ['!pause', '!p']:
+                    pause(bot_number, message)
+                elif message.content.lower() in ['!resume', '!r']:
+                    resume(bot_number, message)
+                elif message.content.lower().startswith('!activate '):
+                    activate(bot_number, message)
+                elif message.content.lower().startswith('!deactivate '):
+                    deactivate(bot_number, message)
+                elif message.content.lower() == '!alerts':
+                    alerts(bot_number, message)
+                elif message.content.lower() == '!areas':
+                    areas(bot_number, message)
+                elif message.content.lower().startswith('!'):
+                    Dicts.bots[bot_number]['out_queue'].put((
+                        1, Dicts.bots[bot_number]['count'], {
+                            'destination': message.channel,
+                            'msg': (
+                                'Unrecognized command, **{}**, type ' +
+                                '`!help` for assistance.'
+                            ).format(message.author.display_name),
+                            'timestamp': datetime.utcnow()
+                        }
+                    ))
+                    Dicts.bots[bot_number]['count'] += 1
