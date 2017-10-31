@@ -104,7 +104,7 @@ def process_pokemon(client, bot_number, pkmn):
         passed = check_pokemon_filter(filters, pkmn)
         if not passed:
             continue
-        if (len(user_dict['areas']) > 0 and
+        if (len(Dicts.geofences) > 0 and
                 pkmn['geofence'].lower() not in user_dict['areas']):
             continue
         user_ids.append(user_id)
@@ -129,7 +129,7 @@ def process_egg(client, bot_number, egg):
         passed = check_egg_filter(user_filter_dict, egg)
         if not passed:
             continue
-        if (len(user_dict['areas']) > 0 and
+        if (len(Dicts.geofences) > 0 and
                 egg['geofence'].lower() not in user_dict['areas']):
             continue
         user_ids.append(user_id)
@@ -153,7 +153,7 @@ def process_raid(client, bot_number, raid):
             user_filter_dict['enabled'] is False or
                 pkmn_id not in user_filter_dict['filters']):
             continue
-        if (len(user_dict['areas']) > 0 and
+        if (len(Dicts.geofences) > 0 and
                 raid['geofence'].lower() not in user_dict['areas']):
             continue
         user_ids.append(user_id)
@@ -172,7 +172,7 @@ async def out_q(bot_number):
                     0]).total_seconds() > 60:
                 Dicts.bots[bot_number]['timestamps'].pop(0)
             else:
-                await asyncio.sleep(0.5)
+                await asyncio.sleep(0)
         msg_params = Dicts.bots[bot_number]['out_queue'].get()
         await msg_params[2]['destination'].send(
             msg_params[2].get('msg'),
@@ -181,4 +181,4 @@ async def out_q(bot_number):
         log.info('Sent msg to {}'.format(msg_params[2]['destination'].name))
         Dicts.bots[bot_number]['timestamps'].append(datetime.utcnow())
     Dicts.bots[bot_number]['count'] = 0
-    await asyncio.sleep(.001)
+    await asyncio.sleep(0)
