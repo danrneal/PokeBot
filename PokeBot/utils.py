@@ -233,9 +233,9 @@ class Dicts(object):
     }
     info_msg = (
         "Hello there!\n\n" +
-        "`!set [pokemon] [IV] CP[CP] L[level] [gender]` to add an alert for " +
-        "a given pokemon based on it's characteristics, any of the " +
-        "characteristics can be left blank,\n\n" +
+        "`!set [pokemon/default] [IV] CP[CP] L[level] [gender]` to add an " +
+        "alert for a given pokemon based on it's characteristics, any of " +
+        "the characteristics can be left blank,\n\n" +
         "`!delete [pokemon/all]` to remove an alert for a given pokemon\n\n" +
         "`!pause` or `!p` to pause all notifcations,\n\n" +
         "`!resume` or `!r` to resume all alerts,\n\n" +

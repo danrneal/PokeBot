@@ -446,8 +446,10 @@ def set_(client, message, bot_number):
                 user_dict['areas'] = []
         if pokemon == 'default':
             user_dict['pokemon'][pokemon] = filters[0]
-            if command.split[0] == 'all':
-                for pkmn_id in range(721):
+            for pkmn_id in range(721):
+                if (command.split[0] == 'all' or
+                    Dicts.locale.get_pokemon_name(
+                        pkmn_id + 1) not in user_dict['pokemon']):
                     user_dict['pokemon'][
                         Dicts.locale.get_pokemon_name(pkmn_id + 1)] = True
         else:
@@ -504,7 +506,8 @@ def delete(bot_number, message):
                 continue
             else:
                 command = command.strip()
-            if command != 'all' and get_pkmn_id(command) is None:
+            if (command not in ['all', 'default'] and
+                    get_pkmn_id(command) is None):
                 Dicts.bots[bot_number]['out_queue'].put((
                     1, Dicts.bots[bot_number]['count'], {
                         'destination': message.channel,
@@ -532,6 +535,27 @@ def delete(bot_number, message):
                             ).format(
                                 message.author.display_name, command.title()
                             ),
+                            'timestamp': datetime.utcnow()
+                        }
+                    ))
+                    Dicts.bots[bot_number]['count'] += 1
+            elif command == 'default':
+                if 'default' in user_dict['pokemon']:
+                    user_dict['pokemon'].pop('default')
+                    for pkmn_id in range(721):
+                        pkmn = Dicts.locale.get_pokemon_name(pkmn_id + 1)
+                        if parse_boolean(user_dict['pokemon'].get(
+                                pkmn)) is True:
+                            user_dict['pokemon'].pop(pkmn)
+                    del_count += 1
+                else:
+                    Dicts.bots[bot_number]['out_queue'].put((
+                        1, Dicts.bots[bot_number]['count'], {
+                            'destination': message.channel,
+                            'msg': (
+                                '**{}**, you did not previously have a ' +
+                                'default set.'
+                            ).format(message.author.display_name),
                             'timestamp': datetime.utcnow()
                         }
                     ))
