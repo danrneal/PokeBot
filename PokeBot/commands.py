@@ -8,7 +8,6 @@ import requests
 import copy
 from datetime import datetime
 from bs4 import BeautifulSoup
-from .Locale import Locale
 from .Filter import load_pokemon_section, load_egg_section
 from .utils import (get_args, Dicts, update_dicts, is_number, truncate,
                     get_pkmn_id, require_and_remove_key, parse_boolean)
@@ -278,10 +277,13 @@ def set_(client, message, bot_number):
     for command in msg:
         if len(command) == 0:
             continue
+        else:
+            command = command.strip()
         error = False
         if (get_pkmn_id(command.split()[0].replace(
             'mr.mime', 'mr. mime')) is None or
-                command.split()[0] == 'default'):
+            command.split()[0] == 'default' or
+                command.split[0] == 'all')):
             pokemon = 'default'
             command = command.replace(pokemon.lower(), '').strip()
             input_ = [command.split()]
@@ -292,12 +294,10 @@ def set_(client, message, bot_number):
                 'gender': None,
             }]
         else:
-            log.info(command)
             pokemon = Dicts.locale.get_pokemon_name(get_pkmn_id(
                 command.split()[0].replace('mr.mime', 'mr. mime')))
             command = command.replace(
                 pokemon.lower().replace(' ', ''), '').strip().split('|')
-            log.info(command)
             if len(command) > 3:
                 Dicts.bots[bot_number]['out_queue'].put((
                     1, Dicts.bots[bot_number]['count'], {
@@ -355,7 +355,8 @@ def set_(client, message, bot_number):
                 if is_number(char):
                     if int(char) >= 0 and int(char) <= 100:
                         filt['min_iv'] = str(char)
-                        filt['ignore_missing'] = True
+                        if int(char) > 0:
+                            filt['ignore_missing'] = True
                     else:
                         error = True
                         Dicts.bots[bot_number]['out_queue'].put((
@@ -373,7 +374,8 @@ def set_(client, message, bot_number):
                 elif char.startswith('l') and is_number(char[1:]):
                     if int(char[1:]) >= 1:
                         filt['min_level'] = str(char[1:])
-                        filt['ignore_missing'] = True
+                        if int(char[1:]) > 1:
+                            filt['ignore_missing'] = True
                     else:
                         error = True
                         Dicts.bots[bot_number]['out_queue'].put((
@@ -393,7 +395,8 @@ def set_(client, message, bot_number):
                       is_number(char.replace('cp', ''))):
                     if int(char.replace('cp', '')) >= 10:
                         filt['min_cp'] = str(char.replace('cp', ''))
-                        filt['ignore_missing'] = True
+                        if int(char.replace('cp', '')) > 10:
+                            filt['ignore_missing'] = True
                     else:
                         error = True
                         Dicts.bots[bot_number]['out_queue'].put((
@@ -443,9 +446,10 @@ def set_(client, message, bot_number):
                 user_dict['areas'] = []
         if pokemon == 'default':
             user_dict['pokemon'][pokemon] = filters[0]
-            for pkmn_id in range(721):
-                user_dict['pokemon'][
-                    Dicts.locale.get_pokemon_name(pkmn_id + 1)] = True
+            if command.split[0] == 'all':
+                for pkmn_id in range(721):
+                    user_dict['pokemon'][
+                        Dicts.locale.get_pokemon_name(pkmn_id + 1)] = True
         else:
             user_dict['pokemon'][pokemon] = filters
         set_count += 1
@@ -498,6 +502,8 @@ def delete(bot_number, message):
         for command in msg:
             if len(command) == 0:
                 continue
+            else:
+                command = command.strip()
             if command != 'all' and get_pkmn_id(command) is None:
                 Dicts.bots[bot_number]['out_queue'].put((
                     1, Dicts.bots[bot_number]['count'], {
@@ -567,15 +573,15 @@ def delete(bot_number, message):
                 Dicts.bots[bot_number]['pokemon_settings'][
                     str(message.author.id)] = load_pokemon_section(
                         require_and_remove_key(
-                            'pokemon', usr_dict, 'User Command.'))
+                            'pokemon', usr_dict, 'User command.'))
                 Dicts.bots[bot_number]['egg_settings'][
                     str(message.author.id)] = load_egg_section(
                         require_and_remove_key(
-                            'eggs', usr_dict, 'User Command.'))
+                            'eggs', usr_dict, 'User command.'))
                 Dicts.bots[bot_number]['raid_settings'][
                     str(message.author.id)] = load_pokemon_section(
                         require_and_remove_key(
-                            'raids', usr_dict, 'User Command.'))
+                            'raids', usr_dict, 'User command.'))
             update_dicts()
             Dicts.bots[bot_number]['out_queue'].put((
                 1, Dicts.bots[bot_number]['count'], {
@@ -675,10 +681,12 @@ def activate(bot_number, message):
                 ', ', ',').split(',')
     activate_count = 0
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
-    for cmd in msg:
-        if len(cmd) == 0:
+    for command in msg:
+        if len(command) == 0:
             continue
-        if cmd in Dicts.geofences:
+        else:
+            command = command.strip()
+        if command in Dicts.geofences:
             if user_dict is None:
                 if args.all_areas is True:
                     Dicts.bots[bot_number]['out_queue'].put((
@@ -707,20 +715,31 @@ def activate(bot_number, message):
                     Dicts.bots[bot_number]['pokemon_settings'][
                         str(message.author.id)] = load_pokemon_section(
                             require_and_remove_key(
-                                'pokemon', usr_dict, 'User Command.'))
+                                'pokemon', usr_dict, 'User command.'))
                     Dicts.bots[bot_number]['egg_settings'][
                         str(message.author.id)] = load_egg_section(
                             require_and_remove_key(
-                                'eggs', usr_dict, 'User Command.'))
+                                'eggs', usr_dict, 'User command.'))
                     Dicts.bots[bot_number]['raid_settings'][
                         str(message.author.id)] = load_pokemon_section(
                             require_and_remove_key(
-                                'raids', usr_dict, 'User Command.'))
-                    user_dict['areas'].append(cmd)
+                                'raids', usr_dict, 'User command.'))
+                    user_dict['areas'].append(command)
                     activate_count += 1
-            elif cmd not in user_dict['areas']:
-                user_dict['areas'].append(cmd)
+            elif command not in user_dict['areas']:
+                user_dict['areas'].append(command)
                 activate_count += 1
+            elif message.content.lower() != '!activate all':
+                Dicts.bots[bot_number]['out_queue'].put((
+                    1, Dicts.bots[bot_number]['count'], {
+                        'destination': message.channel,
+                        'msg': (
+                            "The **{}** is already active for you, **{}**"
+                        ).format(command.title(), message.author.display_name),
+                        'timestamp': datetime.utcnow()
+                    }
+                ))
+                Dicts.bots[bot_number]['count'] += 1
         else:
             Dicts.bots[bot_number]['out_queue'].put((
                 1, Dicts.bots[bot_number]['count'], {
@@ -728,7 +747,7 @@ def activate(bot_number, message):
                     'msg': (
                         "The **{}** area is not any area I know of in this " +
                         "region, **{}**"
-                    ).format(cmd.title(), message.author.display_name),
+                    ).format(command.title(), message.author.display_name),
                     'timestamp': datetime.utcnow()
                 }
             ))
@@ -766,10 +785,12 @@ def deactivate(bot_number, message):
                 '\n', ',').replace(', ', ',').split(',')
     deactivate_count = 0
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
-    for cmd in msg:
-        if len(cmd) == 0:
+    for command in msg:
+        if len(command) == 0:
             continue
-        if cmd in Dicts.geofences:
+        else:
+            command = command.strip()
+        if command in Dicts.geofences:
             if user_dict is None:
                 if args.all_areas is False:
                     Dicts.bots[bot_number]['out_queue'].put((
@@ -807,11 +828,23 @@ def deactivate(bot_number, message):
                         str(message.author.id)] = load_pokemon_section(
                             require_and_remove_key(
                                 'raids', usr_dict, 'User command.'))
-                    user_dict['areas'].remove(cmd)
+                    user_dict['areas'].remove(command)
                     deactivate_count += 1
-            elif cmd in user_dict['areas']:
-                user_dict['areas'].remove(cmd)
+            elif command in user_dict['areas']:
+                user_dict['areas'].remove(command)
                 deactivate_count += 1
+            elif message.content.lower() != '!deactivate all':
+                Dicts.bots[bot_number]['out_queue'].put((
+                    1, Dicts.bots[bot_number]['count'], {
+                        'destination': message.channel,
+                        'msg': (
+                            "The **{}** was not previously active for you, " +
+                            "**{}**"
+                        ).format(command.title(), message.author.display_name),
+                        'timestamp': datetime.utcnow()
+                    }
+                ))
+                Dicts.bots[bot_number]['count'] += 1
         else:
             Dicts.bots[bot_number]['out_queue'].put((
                 1, Dicts.bots[bot_number]['count'], {
@@ -819,7 +852,7 @@ def deactivate(bot_number, message):
                     'msg': (
                         "The **{}** area is not any area I know of in this " +
                         "region, **{}**"
-                    ).format(cmd.title(), message.author.display_name),
+                    ).format(command.title(), message.author.display_name),
                     'timestamp': datetime.utcnow()
                 }
             ))
@@ -881,7 +914,7 @@ def alerts(bot_number, message):
             alerts += '__ALERT AREAS__\n\n'
             if len(user_dict['areas']) == 0:
                 alerts += (
-                    "You don't any areas set type `!activate " "[area/all]` " +
+                    "You don't any areas set.  Type `!activate [area/all]` " +
                     "in #custom_filters to set one! \n"
                 )
             else:
