@@ -283,7 +283,7 @@ def set_(client, message, bot_number):
         if (get_pkmn_id(command.split()[0].replace(
             'mr.mime', 'mr. mime')) is None or
             command.split()[0] == 'default' or
-                command.split[0] == 'all')):
+                command.split[0] == 'all'):
             pokemon = 'default'
             command = command.replace(pokemon.lower(), '').strip()
             input_ = [command.split()]
