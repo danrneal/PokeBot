@@ -18,7 +18,7 @@ How to install (for Windows):
 2. `cd ./CounterSniper`
 3. `python3 -m pip install -r requirements.txt`
 
-![](https://i.imgur.com/jonMjG7.png)
+![](https://i.imgur.com/1i3FSqe.png)
 
 How to set up (always use Notepad++ and never notepad!):
 
