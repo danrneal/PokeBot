@@ -744,8 +744,8 @@ def reset(bot_number, message):
                     'timestamp': datetime.utcnow()
                 }
             ))
-            Dicts.bots[bot_number]['count'] += 1            
-        
+            Dicts.bots[bot_number]['count'] += 1
+
 
 def pause(bot_number, message):
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))

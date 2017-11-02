@@ -7,8 +7,8 @@ import asyncio
 from datetime import datetime
 from .processing import in_q
 from .utils import get_args, Dicts, update_dicts
-from .commands import (status, commands, dex, donate, set_, delete, pause,
-                       resume, activate, deactivate, alerts, areas)
+from .commands import (status, commands, dex, donate, set_, delete, reset,
+                       pause, resume, activate, deactivate, alerts, areas)
 
 log = logging.getLogger('Bot')
 args = get_args()
