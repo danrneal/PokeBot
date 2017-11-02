@@ -12,4 +12,4 @@ before_script:
 job:
   script:
     - flake8 --statistics --show-source --disable-noqa
-    - py.test --cov=PokeBot tests/
+    - py.test --cov=PokeBot tests
