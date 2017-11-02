@@ -2,7 +2,6 @@ image: python:latest
 
 # install steps MUST succeed or will immediately halt the build
 before_script:
-  - pip install pytest-cov
   - pip install flake8
   - pip install -r requirements.txt
 
@@ -12,4 +11,3 @@ before_script:
 job:
   script:
     - flake8 --statistics --show-source --disable-noqa
-    - py.test --cov=PokeBot tests
