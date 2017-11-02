@@ -37,3 +37,4 @@ How to run:
 **Credit:**
 
 Thanks to Deadly for [PokeAlarm](https://github.com/PokeAlarm/PokeAlarm) which provided a framework for a lot of the code.
+Thanks to BigFun for stylistic guidence and extensive testing.
