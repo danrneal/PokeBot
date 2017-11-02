@@ -283,7 +283,7 @@ def set_(bot_number, message):
         if (get_pkmn_id(command.split()[0].replace(
             'mr.mime', 'mr. mime')) is None or
             command.split()[0] == 'default' or
-                command.split[0] == 'all'):
+                command.split()[0] == 'all'):
             pokemon = 'default'
             command = command.replace(pokemon.lower(), '').strip()
             input_ = [command.split()]
@@ -448,7 +448,7 @@ def set_(bot_number, message):
             user_dict['pokemon'][pokemon] = filters[0]
             for pkmn_id in range(721):
                 pkmn = Dicts.locale.get_pokemon_name(pkmn_id + 1)
-                if (command.split[0] == 'all' or
+                if (command.split()[0] == 'all' or
                         pkmn not in user_dict['pokemon']):
                     user_dict['pokemon'][pkmn] = True
         else:
