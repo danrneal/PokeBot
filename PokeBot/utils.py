@@ -238,6 +238,8 @@ class Dicts(object):
         "the characteristics can be left blank,\n\n" +
         "`!delete [pokemon/default/all]` to remove an alert for a given " +
         "pokemon\n\n" +
+        "`!reset [pokemon/all]` to reset an alert for a given pokemon to " +
+        "your default alert characteristics\n\n" +
         "`!pause` or `!p` to pause all notifcations,\n\n" +
         "`!resume` or `!r` to resume all alerts,\n\n" +
         "`!activate [area/all]` to resume a given area,\n\n" +

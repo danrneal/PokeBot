@@ -125,10 +125,12 @@ class Bot(discord.Client):
                 elif message.content.lower() == '!donate':
                     await donate(bot_number, message)
                 elif message.content.lower().startswith('!set '):
-                    set_(self, message, bot_number)
+                    set_(bot_number, message)
                 elif message.content.lower().startswith(
                         ('!delete ', '!remove ')):
                     delete(bot_number, message)
+                elif message.content.lower().startswith('!reset '):
+                    reset(bot_number, message)
                 elif message.content.lower() in ['!pause', '!p']:
                     pause(bot_number, message)
                 elif message.content.lower() in ['!resume', '!r']:

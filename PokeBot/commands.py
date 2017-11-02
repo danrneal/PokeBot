@@ -268,7 +268,7 @@ async def donate(bot_number, message):
     await message.delete()
 
 
-def set_(client, message, bot_number):
+def set_(bot_number, message):
     msg = message.content.lower().replace('!set ', '').replace(
         '!set\n', '').replace('%', '').replace('nidoranf', 'nidoran♀').replace(
         'nidoranm', 'nidoran♂').replace('mr. mime', 'mr.mime').replace(
@@ -447,11 +447,10 @@ def set_(client, message, bot_number):
         if pokemon == 'default':
             user_dict['pokemon'][pokemon] = filters[0]
             for pkmn_id in range(721):
+                pkmn = Dicts.locale.get_pokemon_name(pkmn_id + 1)
                 if (command.split[0] == 'all' or
-                    Dicts.locale.get_pokemon_name(
-                        pkmn_id + 1) not in user_dict['pokemon']):
-                    user_dict['pokemon'][
-                        Dicts.locale.get_pokemon_name(pkmn_id + 1)] = True
+                        pkmn not in user_dict['pokemon']):
+                    user_dict['pokemon'][pkmn] = True
         else:
             user_dict['pokemon'][pokemon] = filters
         set_count += 1
@@ -512,18 +511,18 @@ def delete(bot_number, message):
                     1, Dicts.bots[bot_number]['count'], {
                         'destination': message.channel,
                         'msg': (
-                            "{} is not any pokemon I know of, check your " +
-                            "spelling **{}**"
+                            "**{}** is not any pokemon I know of, check " +
+                            "your spelling **{}**."
                         ).format(command.title(), message.author.display_name),
                         'timestamp': datetime.utcnow()
                     }
                 ))
                 Dicts.bots[bot_number]['count'] += 1
             elif get_pkmn_id(command) is not None:
-                if Dicts.locale.get_pokemon_name(get_pkmn_id(command.replace(
-                        'mr.mime', 'mr. mime'))) in user_dict['pokemon']:
-                    user_dict['pokemon'].pop(Dicts.locale.get_pokemon_name(
-                        get_pkmn_id(command.replace('mr.mime', 'mr. mime'))))
+                pkmn = Dicts.locale.get_pokemon_name(get_pkmn_id(
+                    command.replace('mr.mime', 'mr. mime')))
+                if pkmn in user_dict['pokemon']:
+                    user_dict['pokemon'].pop(pkmn)
                     del_count += 1
                 else:
                     Dicts.bots[bot_number]['out_queue'].put((
@@ -544,8 +543,8 @@ def delete(bot_number, message):
                     user_dict['pokemon'].pop('default')
                     for pkmn_id in range(721):
                         pkmn = Dicts.locale.get_pokemon_name(pkmn_id + 1)
-                        if parse_boolean(user_dict['pokemon'].get(
-                                pkmn)) is True:
+                        bool = parse_boolean(user_dict['pokemon'].get(pkmn))
+                        if bool is True:
                             user_dict['pokemon'].pop(pkmn)
                     del_count += 1
                 else:
@@ -618,6 +617,135 @@ def delete(bot_number, message):
             ))
             Dicts.bots[bot_number]['count'] += 1
 
+
+def reset(bot_number, message):
+    msg = message.content.lower().replace('!reset ', '').replace(
+        '!reset\n', '').replace('%', '').replace(
+        'nidoranf', 'nidoran♀').replace('nidoranm', 'nidoran♂').replace(
+        'mr. mime', 'mr.mime').replace(',\n', ',').replace('\n', ',').replace(
+        ', ', ',').split(',')
+    user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
+    if user_dict is None:
+        Dicts.bots[bot_number]['out_queue'].put((
+            1, Dicts.bots[bot_number]['count'], {
+                'destination': message.channel,
+                'msg': (
+                    "There is nothing to reset, **{}**, you don't have any " +
+                    "alerts set."
+                ).format(message.author.display_name),
+                'timestamp': datetime.utcnow()
+            }
+        ))
+        Dicts.bots[bot_number]['count'] += 1
+    else:
+        reset_count = 0
+        for command in msg:
+            if len(command) == 0:
+                continue
+            else:
+                command = command.strip()
+            if command != 'all' and get_pkmn_id(command) is None:
+                Dicts.bots[bot_number]['out_queue'].put((
+                    1, Dicts.bots[bot_number]['count'], {
+                        'destination': message.channel,
+                        'msg': (
+                            "**{}** is not any pokemon I know of, check " +
+                            "your spelling **{}**."
+                        ).format(command.title(), message.author.display_name),
+                        'timestamp': datetime.utcnow()
+                    }
+                ))
+                Dicts.bots[bot_number]['count'] += 1
+            elif get_pkmn_id(command) is not None:
+                pkmn = Dicts.locale.get_pokemon_name(get_pkmn_id(
+                    command.replace('mr.mime', 'mr. mime')))
+                bool = parse_boolean(user_dict['pokemon'].get(pkmn))
+                if bool is not True and 'default' in user_dict['pokemon']:
+                    user_dict['pokemon'][pkmn] = True
+                    reset_count += 1
+                elif (pkmn in user_dict['pokemon'] and
+                      'default' not in user_dict['pokemon']):
+                    user_dict['pokemon'].pop(pkmn)
+                    reset_count += 1
+                else:
+                    Dicts.bots[bot_number]['out_queue'].put((
+                        1, Dicts.bots[bot_number]['count'], {
+                            'destination': message.channel,
+                            'msg': (
+                                '**{}**, **{}** was already set at your ' +
+                                'default.'
+                            ).format(
+                                message.author.display_name, command.title()
+                            ),
+                            'timestamp': datetime.utcnow()
+                        }
+                    ))
+                    Dicts.bots[bot_number]['count'] += 1
+            else:
+                if len(user_dict['pokemon']) > 1:
+                    for pkmn_id in range(721):
+                        pkmn = Dicts.locale.get_pokemon_name(pkmn_id + 1)
+                        bool = parse_boolean(user_dict['pokemon'].get(pkmn))
+                        if (bool is not True and
+                                'default' in user_dict['pokemon']):
+                            user_dict['pokemon'][pkmn] = True
+                            reset_count += 1
+                        elif (pkmn in user_dict['pokemon'] and
+                              'default' not in user_dict['pokemon']):
+                            user_dict['pokemon'].pop(pkmn)
+                            reset_count += 1
+                else:
+                    Dicts.bots[bot_number]['out_queue'].put((
+                        1, Dicts.bots[bot_number]['count'], {
+                            'destination': message.channel,
+                            'msg': (
+                                '**{}**, I was not previously alerting you ' +
+                                'of any pokemon spawns.'
+                            ).format(message.author.display_name),
+                            'timestamp': datetime.utcnow()
+                        }
+                    ))
+                    Dicts.bots[bot_number]['count'] += 1
+        if (len(user_dict['pokemon']) <= 1 and
+            len(user_dict['eggs']) <= 1 and
+            len(user_dict['raids']) <= 1 and
+            ((len(user_dict['areas']) == 0 and
+              args.all_areas is False) or
+             (len(user_dict['areas']) == len(Dicts.geofences) and
+              args.all_areas is True))):
+            Dicts.bots[bot_number]['filters'].pop(str(message.author.id))
+            Dicts.bots[bot_number]['pokemon_settings'].pop(
+                str(message.author.id))
+            Dicts.bots[bot_number]['egg_settings'].pop(str(message.author.id))
+            Dicts.bots[bot_number]['raid_settings'].pop(str(message.author.id))
+        if reset_count > 0:
+            if str(message.author.id) in Dicts.bots[bot_number]['filters']:
+                usr_dict = copy.deepcopy(user_dict)
+                Dicts.bots[bot_number]['pokemon_settings'][
+                    str(message.author.id)] = load_pokemon_section(
+                        require_and_remove_key(
+                            'pokemon', usr_dict, 'User command.'))
+                Dicts.bots[bot_number]['egg_settings'][
+                    str(message.author.id)] = load_egg_section(
+                        require_and_remove_key(
+                            'eggs', usr_dict, 'User command.'))
+                Dicts.bots[bot_number]['raid_settings'][
+                    str(message.author.id)] = load_pokemon_section(
+                        require_and_remove_key(
+                            'raids', usr_dict, 'User command.'))
+            update_dicts()
+            Dicts.bots[bot_number]['out_queue'].put((
+                1, Dicts.bots[bot_number]['count'], {
+                    'destination': message.channel,
+                    'msg': (
+                        '**{}**, I have reset **{}** pokemon spawn filters ' +
+                        'to your default filter.'
+                    ).format(message.author.display_name, str(reset_count)),
+                    'timestamp': datetime.utcnow()
+                }
+            ))
+            Dicts.bots[bot_number]['count'] += 1            
+        
 
 def pause(bot_number, message):
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
