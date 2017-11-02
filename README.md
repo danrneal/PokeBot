@@ -33,3 +33,7 @@ How to run:
 
 1. `python3 start_pokebot.py`
 2. Type `!commands` in your commands channel if you need a list of commands.
+
+**Credit:**
+
+Thanks to Deadly for [PokeAlarm](https://github.com/PokeAlarm/PokeAlarm) which provided a framework for a lot of the code.
