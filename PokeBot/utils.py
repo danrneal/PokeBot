@@ -170,7 +170,10 @@ def get_args():
                 "or {} equal to Manager Count. Please provided the " +
                 "correct number of arguments.".format(args.manager_count)
             )
-            log.critical(list_)
+            log.critical('Manager Count: {}'.format(args.manager_count))
+            log.critical('Filters Count: {}'.format(len(args.filters)))
+            log.critical('Alarms Count: {}'.format(len(args.alarms)))
+            log.critical('Geofence Count: {}'.format(len(args.geofences)))
             sys.exit(1)
 
     for i in range(len(args.alarms)):
