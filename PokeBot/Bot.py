@@ -85,14 +85,18 @@ class Bot(discord.Client):
                 Dicts.bots[bot_number]['filters'][str(after.id)][
                     'paused'] = True
                 update_dicts()
+                em = discord.Embed(
+                    description="{} Your alerts have been paused.".format(
+                        message.author.mention),
+                    color=int('0xee281f', 16)
+                )
                 Dicts.bots[bot_number]['out_queue'].put((
                     1, Dicts.bots[bot_number]['count'], {
                         'destination': discord.utils.get(
                             after.guild.members,
                             id=after.id
                         ),
-                        'msg': 'Alerts have been paused for `{}`.'.format(
-                            after.display_name),
+                        'embed': em,
                         'timestamp': datetime.utcnow()
                     }
                 ))
@@ -114,7 +118,9 @@ class Bot(discord.Client):
 
     async def on_message(self, message):
         bot_number = args.bot_client_ids.index(self.user.id)
-        if message.channel.id in args.command_channels:
+        if (message.channel.id in args.command_channels and
+            message.author.top_role >= Dicts.roles[message.author.guild.id][
+                args.alert_role]):
             if message.content.lower() == '!status':
                 await status(self, bot_number, message)
             elif message.author.id % len(args.tokens) == bot_number:
@@ -144,14 +150,33 @@ class Bot(discord.Client):
                 elif message.content.lower() == '!areas':
                     areas(bot_number, message)
                 elif message.content.lower().startswith('!'):
+                    em = discord.Embed(
+                        description=(
+                            "{} Unrecognized command, type `!help` for " +
+                            "assistance."
+                        ).format(message.author.mention),
+                        color=int('0xee281f', 16)
+                    )
                     Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
-                            'msg': (
-                                'Unrecognized command, **{}**, type ' +
-                                '`!help` for assistance.'
-                            ).format(message.author.display_name),
+                            'embed': em,
                             'timestamp': datetime.utcnow()
                         }
                     ))
                     Dicts.bots[bot_number]['count'] += 1
+        elif message.channel.id in args.command_channels:
+            em = discord.Embed(
+                description=(
+                    "{} You don't have the proper role to create an alert."
+                ).format(message.author.mention),
+                color=int('0xee281f', 16)
+            )
+            Dicts.bots[bot_number]['out_queue'].put((
+                1, Dicts.bots[bot_number]['count'], {
+                    'destination': message.channel,
+                    'embed': em,
+                    'timestamp': datetime.utcnow()
+                }
+            ))
+            Dicts.bots[bot_number]['count'] += 1 
