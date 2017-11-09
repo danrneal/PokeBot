@@ -18,33 +18,44 @@ args = get_args()
 
 async def status(client, bot_number, message):
     await asyncio.sleep(bot_number * 0.1)
-    delete_msg = await message.channel.send((
-        'PokeBot {} (of {}) standing by.'
-    ).format(bot_number + 1, len(args.tokens)))
-    Dicts.bots[bot_number]['timestamps'].append(datetime.utcnow())
-    if bot_number == 0:
-        await asyncio.sleep(0.1 * int(len(args.tokens)))
-        delete_vid = await message.channel.send('https://youtu.be/kxH6YErAIgA')
-        Dicts.bots[bot_number]['timestamps'].append(datetime.utcnow())
-        await asyncio.sleep(60 - (0.1 * (int(len(args.tokens)) + 1)))
-        await delete_vid.delete()
-        await delete_msg.delete()
-        await message.delete()
-    else:
-        await asyncio.sleep(60 - (0.1 * bot_number))
-        await delete_msg.delete()
-
-
-async def commands(bot_number, message):
+    em = discord.Embed(
+        description='PokeBot **{}** (of **{}**) standing by.'.format(
+            bot_number + 1, len(args.tokens)),
+        color=int('0x71cd40', 16)
+    )
     Dicts.bots[bot_number]['out_queue'].put((
         1, Dicts.bots[bot_number]['count'], {
             'destination': message.channel,
-            'msg': Dicts.info_msg,
+            'embed': em,
             'timestamp': datetime.utcnow()
         }
     ))
     Dicts.bots[bot_number]['count'] += 1
-    await message.delete()
+    if bot_number == 0:
+        await asyncio.sleep(0.1 * int(len(args.tokens)))
+        Dicts.bots[bot_number]['out_queue'].put((
+            1, Dicts.bots[bot_number]['count'], {
+                'destination': message.channel,
+                'msg': 'https://youtu.be/kxH6YErAIgA',
+                'timestamp': datetime.utcnow()
+            }
+        ))
+        Dicts.bots[bot_number]['count'] += 1
+
+
+async def commands(bot_number, message):
+    em = discord.Embed(
+        description=Dicts.info_msg,
+        color=int('0x71cd40', 16)
+    )
+    Dicts.bots[bot_number]['out_queue'].put((
+        1, Dicts.bots[bot_number]['count'], {
+            'destination': message.channel,
+            'embed': em,
+            'timestamp': datetime.utcnow()
+        }
+    ))
+    Dicts.bots[bot_number]['count'] += 1
 
 
 def dex(bot_number, message):
@@ -255,7 +266,7 @@ async def donate(bot_number, message):
             "Please note: this donation goes directly into the \n" +
             "pocket of the bot dev, not this Discord server."
         ),
-        color=int('0x85bb65', 16)
+        color=int('0x71cd40', 16)
     )
     Dicts.bots[bot_number]['out_queue'].put((
         1, Dicts.bots[bot_number]['count'], {
@@ -265,7 +276,6 @@ async def donate(bot_number, message):
         }
     ))
     Dicts.bots[bot_number]['count'] += 1
-    await message.delete()
 
 
 def set_(bot_number, message):
@@ -299,13 +309,17 @@ def set_(bot_number, message):
             command = command.replace(
                 pokemon.lower().replace(' ', ''), '').strip().split('|')
             if len(command) > 3:
+                em = discord.Embed(
+                    description=(
+                        '{} You can only set a maximum of 3 filters for a ' +
+                        'given pokemon.'
+                    ).format(message.author.mention),
+                    color=int('0xee281f', 16)
+                )
                 Dicts.bots[bot_number]['out_queue'].put((
                     1, Dicts.bots[bot_number]['count'], {
                         'destination': message.channel,
-                        'msg': (
-                            '**{}**, you can set a maximum of 3 filters for ' +
-                            'a given pokemon.'
-                        ).format(message.author.display_name),
+                        'embed': em,
                         'timestamp': datetime.utcnow()
                     }
                 ))
@@ -340,12 +354,16 @@ def set_(bot_number, message):
                 elif (len(set(inp).intersection(set(
                       ['female', 'f', 'male', 'm']))) > 0):
                     error = True
+                    em = discord.Embed(
+                        description=(
+                            '{} **{}** does not have that gender.'
+                        ).format(message.author.mention, pokemon),
+                        color=int('0xee281f', 16)
+                    )
                     Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
-                            'msg': (
-                                '**{}**, **{}** does not have that gender.'
-                            ).format(message.author.display_name, pokemon),
+                            'embed': em,
                             'timestamp': datetime.utcnow()
                         }
                     ))
@@ -359,13 +377,16 @@ def set_(bot_number, message):
                             filt['ignore_missing'] = True
                     else:
                         error = True
+                        em = discord.Embed(
+                            description=(
+                                '{} Pokemon IV must be between 0 and 100.'
+                            ).format(message.author.mention),
+                            color=int('0xee281f', 16)
+                        )
                         Dicts.bots[bot_number]['out_queue'].put((
                             1, Dicts.bots[bot_number]['count'], {
                                 'destination': message.channel,
-                                'msg': (
-                                    '**{}**, pokemon IV must be between 0 ' +
-                                    'and 100.'
-                                ).format(message.author.display_name),
+                                'embed': em,
                                 'timestamp': datetime.utcnow()
                             }
                         ))
@@ -378,13 +399,16 @@ def set_(bot_number, message):
                             filt['ignore_missing'] = True
                     else:
                         error = True
+                        em = discord.Embed(
+                            description=(
+                                '{} Pokemon level must not be less than 1.'
+                            ).format(message.author.mention),
+                            color=int('0xee281f', 16)
+                        )
                         Dicts.bots[bot_number]['out_queue'].put((
                             1, Dicts.bots[bot_number]['count'], {
                                 'destination': message.channel,
-                                'msg': (
-                                    '**{}**, pokemon level must not be less ' +
-                                    'than 1.'
-                                ).format(message.author.display_name),
+                                'embed': em,
                                 'timestamp': datetime.utcnow()
                             }
                         ))
@@ -399,13 +423,16 @@ def set_(bot_number, message):
                             filt['ignore_missing'] = True
                     else:
                         error = True
+                        em = discord.Embed(
+                            description=(
+                                '{} Pokemon CP must not be less than 10.'
+                            ).format(message.author.mention),
+                            color=int('0xee281f', 16)
+                        )
                         Dicts.bots[bot_number]['out_queue'].put((
                             1, Dicts.bots[bot_number]['count'], {
                                 'destination': message.channel,
-                                'msg': (
-                                    '**{}**, pokemon CP must not be less ' +
-                                    'than 10.'
-                                ).format(message.author.display_name),
+                                'embed': em,
                                 'timestamp': datetime.utcnow()
                             }
                         ))
@@ -413,13 +440,17 @@ def set_(bot_number, message):
                         break
                 else:
                     error = True
+                    em = discord.Embed(
+                        description=(
+                            '{} Your command has an unrecognized argumnet ' +
+                            '(**{}**).'
+                        ).format(message.author.mention, char),
+                        color=int('0xee281f', 16)
+                    )
                     Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
-                            'msg': (
-                                '**{}**, your command has an unrecognized ' +
-                                'argumnet (**{}**).'
-                            ).format(message.author.display_name, char),
+                            'embed': em,
                             'timestamp': datetime.utcnow()
                         }
                     ))
@@ -466,12 +497,16 @@ def set_(bot_number, message):
             str(message.author.id)] = load_pokemon_section(
                 require_and_remove_key('raids', usr_dict, 'User command.'))
         update_dicts()
+        em = discord.Embed(
+            description=(
+                '{} You have set **{}** pokemon spawn filters.'
+            ).format(message.author.mention, str(set_count)),
+            color=int('0x71cd40', 16)
+        )
         Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
-                'msg': (
-                    '**{}**, I have set **{}** pokemon spawn filters.'
-                ).format(message.author.display_name, str(set_count)),
+                'embed': em,
                 'timestamp': datetime.utcnow()
             }
         ))
@@ -487,13 +522,16 @@ def delete(bot_number, message):
         ', ', ',').split(',')
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
     if user_dict is None:
+        em = discord.Embed(
+            description=(
+                "{} There is nothing to delete, you don't have any alerts set."
+            ).format(message.author.mention),
+            color=int('0xee281f', 16)
+        )
         Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
-                'msg': (
-                    "There is nothing to delete, **{}**, you don't have any " +
-                    "alerts set."
-                ).format(message.author.display_name),
+                'embed': em,
                 'timestamp': datetime.utcnow()
             }
         ))
@@ -507,13 +545,17 @@ def delete(bot_number, message):
                 command = command.strip()
             if (command not in ['all', 'default'] and
                     get_pkmn_id(command) is None):
+                em = discord.Embed(
+                    description=(
+                        "{} **{}** is not a recognized pokemon, check your " +
+                        "spelling."
+                    ).format(message.author.mention, command.title()),
+                    color=int('0xee281f', 16)
+                )
                 Dicts.bots[bot_number]['out_queue'].put((
                     1, Dicts.bots[bot_number]['count'], {
                         'destination': message.channel,
-                        'msg': (
-                            "**{}** is not any pokemon I know of, check " +
-                            "your spelling **{}**."
-                        ).format(command.title(), message.author.display_name),
+                        'embed': em,
                         'timestamp': datetime.utcnow()
                     }
                 ))
@@ -525,15 +567,17 @@ def delete(bot_number, message):
                     user_dict['pokemon'].pop(pkmn)
                     del_count += 1
                 else:
+                    em = discord.Embed(
+                        description=(
+                            "{} You did not previously have any alerts set " +
+                            "for **{}**."
+                        ).format(message.author.mention, pkmn),
+                        color=int('0xee281f', 16)
+                    )
                     Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
-                            'msg': (
-                                '**{}**, I was not previously alerting you ' +
-                                'if a(n) **{}** spawns.'
-                            ).format(
-                                message.author.display_name, command.title()
-                            ),
+                            'embed': em,
                             'timestamp': datetime.utcnow()
                         }
                     ))
@@ -548,13 +592,16 @@ def delete(bot_number, message):
                             user_dict['pokemon'].pop(pkmn)
                     del_count += 1
                 else:
+                    em = discord.Embed(
+                        description=(
+                            "{} You did not previously have a default set."
+                        ).format(message.author.mention),
+                        color=int('0xee281f', 16)
+                    )
                     Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
-                            'msg': (
-                                '**{}**, you did not previously have a ' +
-                                'default set.'
-                            ).format(message.author.display_name),
+                            'embed': em,
                             'timestamp': datetime.utcnow()
                         }
                     ))
@@ -567,13 +614,16 @@ def delete(bot_number, message):
                             del_count += 1
                     user_dict['pokemon'] = {'enabled': True}
                 else:
+                    em = discord.Embed(
+                        description=(
+                            "{} You did not previously have any alerts set."
+                        ).format(message.author.mention),
+                        color=int('0xee281f', 16)
+                    )
                     Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
-                            'msg': (
-                                '**{}**, I was not previously alerting you ' +
-                                'of any pokemon spawns.'
-                            ).format(message.author.display_name),
+                            'embed': em,
                             'timestamp': datetime.utcnow()
                         }
                     ))
@@ -606,12 +656,16 @@ def delete(bot_number, message):
                         require_and_remove_key(
                             'raids', usr_dict, 'User command.'))
             update_dicts()
+            em = discord.Embed(
+                description=(
+                    "{} You have removed **{}** pokemon spawn filters."
+                ).format(message.author.mention, str(del_count)),
+                color=int('0x71cd40', 16)
+            )
             Dicts.bots[bot_number]['out_queue'].put((
                 1, Dicts.bots[bot_number]['count'], {
                     'destination': message.channel,
-                    'msg': (
-                        '**{}**, I have removed **{}** pokemon spawn filters.'
-                    ).format(message.author.display_name, str(del_count)),
+                    'embed': em,
                     'timestamp': datetime.utcnow()
                 }
             ))
@@ -626,13 +680,16 @@ def reset(bot_number, message):
         ', ', ',').split(',')
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
     if user_dict is None:
+        em = discord.Embed(
+            description=(
+                "{} There is nothing to reset, you don't have any alerts set."
+            ).format(message.author.mention),
+            color=int('0xee281f', 16)
+        )
         Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
-                'msg': (
-                    "There is nothing to reset, **{}**, you don't have any " +
-                    "alerts set."
-                ).format(message.author.display_name),
+                'embed': em,
                 'timestamp': datetime.utcnow()
             }
         ))
@@ -645,13 +702,17 @@ def reset(bot_number, message):
             else:
                 command = command.strip()
             if command != 'all' and get_pkmn_id(command) is None:
+                em = discord.Embed(
+                    description=(
+                        "{} **{}** is not a recognized pokemon, check your " +
+                        "spelling."
+                    ).format(message.author.mention, command.title()),
+                    color=int('0xee281f', 16)
+                )
                 Dicts.bots[bot_number]['out_queue'].put((
                     1, Dicts.bots[bot_number]['count'], {
                         'destination': message.channel,
-                        'msg': (
-                            "**{}** is not any pokemon I know of, check " +
-                            "your spelling **{}**."
-                        ).format(command.title(), message.author.display_name),
+                        'embed': em,
                         'timestamp': datetime.utcnow()
                     }
                 ))
@@ -668,15 +729,16 @@ def reset(bot_number, message):
                     user_dict['pokemon'].pop(pkmn)
                     reset_count += 1
                 else:
+                    em = discord.Embed(
+                        description=(
+                            '{}, **{}** was already set at your default.'
+                        ).format(message.author.mention, pkmn),
+                        color=int('0xee281f', 16)
+                    )
                     Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
-                            'msg': (
-                                '**{}**, **{}** was already set at your ' +
-                                'default.'
-                            ).format(
-                                message.author.display_name, command.title()
-                            ),
+                            'embed': em,
                             'timestamp': datetime.utcnow()
                         }
                     ))
@@ -695,13 +757,16 @@ def reset(bot_number, message):
                             user_dict['pokemon'].pop(pkmn)
                             reset_count += 1
                 else:
+                    em = discord.Embed(
+                        description=(
+                            "{} You did not previously have any alerts set."
+                        ).format(message.author.mention),
+                        color=int('0xee281f', 16)
+                    )
                     Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
-                            'msg': (
-                                '**{}**, I was not previously alerting you ' +
-                                'of any pokemon spawns.'
-                            ).format(message.author.display_name),
+                            'embed': em,
                             'timestamp': datetime.utcnow()
                         }
                     ))
@@ -734,13 +799,17 @@ def reset(bot_number, message):
                         require_and_remove_key(
                             'raids', usr_dict, 'User command.'))
             update_dicts()
+            em = discord.Embed(
+                description=(
+                    "{} You have reset **{}** pokemon spawn filters to your " +
+                    "default filter."
+                ).format(message.author.mention, str(reset_count)),
+                color=int('0x71cd40', 16)
+            )
             Dicts.bots[bot_number]['out_queue'].put((
                 1, Dicts.bots[bot_number]['count'], {
                     'destination': message.channel,
-                    'msg': (
-                        '**{}**, I have reset **{}** pokemon spawn filters ' +
-                        'to your default filter.'
-                    ).format(message.author.display_name, str(reset_count)),
+                    'embed': em,
                     'timestamp': datetime.utcnow()
                 }
             ))
@@ -750,23 +819,30 @@ def reset(bot_number, message):
 def pause(bot_number, message):
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
     if user_dict is None:
+        em = discord.Embed(
+            description=(
+                "{} There is nothing to pause, you don't have any alerts set."
+            ).format(message.author.mention),
+            color=int('0xee281f', 16)
+        )
         Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
-                'msg': (
-                    "There is nothing to pause, **{}**, I'm not alerting " +
-                    "you to any pokemon."
-                ).format(message.author.display_name),
+                'embed': em,
                 'timestamp': datetime.utcnow()
             }
         ))
         Dicts.bots[bot_number]['count'] += 1
     elif user_dict['paused'] is True:
+        em = discord.Embed(
+            description=("{} Your alerts are already paused.").format(
+                message.author.mention),
+            color=int('0xee281f', 16)
+        )
         Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
-                'msg': 'Your alerts are already paused, **{}**.'.format(
-                    message.author.display_name),
+                'embed': em,
                 'timestamp': datetime.utcnow()
             }
         ))
@@ -774,11 +850,15 @@ def pause(bot_number, message):
     else:
         user_dict['paused'] = True
         update_dicts()
+        em = discord.Embed(
+            description=("{} Your alerts have been paused.").format(
+                message.author.mention),
+            color=int('0x71cd40', 16)
+        )
         Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
-                'msg': 'Your alerts have been paused, **{}**.'.format(
-                    message.author.display_name),
+                'embed': em,
                 'timestamp': datetime.utcnow()
             }
         ))
@@ -788,24 +868,30 @@ def pause(bot_number, message):
 def resume(bot_number, message):
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
     if user_dict is None:
+        em = discord.Embed(
+            description=(
+                "{} There is nothing to resume, you don't have any alerts set."
+            ).format(message.author.mention),
+            color=int('0xee281f', 16)
+        )
         Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
-                'msg': (
-                    "There is nothing to resume, **{}**, I'm not alerting " +
-                    "you to any pokemon."
-                ).format(message.author.display_name),
+                'embed': em,
                 'timestamp': datetime.utcnow()
             }
         ))
         Dicts.bots[bot_number]['count'] += 1
     elif user_dict['paused'] is False:
+        em = discord.Embed(
+            description="{} Your alerts were not previously paused.".format(
+                message.author.mention),
+            color=int('0xee281f', 16)
+        )
         Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
-                'msg': (
-                    'Your alerts were not previously paused, **{}**.'
-                ).format(message.author.display_name),
+                'embed': em,
                 'timestamp': datetime.utcnow()
             }
         ))
@@ -813,11 +899,15 @@ def resume(bot_number, message):
     else:
         user_dict['paused'] = False
         update_dicts()
+        em = discord.Embed(
+            description="{} Your alerts have been resumed.".format(
+                message.author.mention),
+            color=int('0x71cd40', 16)
+        )
         Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
-                'msg': 'You alerts have been resumed, **{}**.'.format(
-                    message.author.display_name),
+                'embed': em,
                 'timestamp': datetime.utcnow()
             }
         ))
@@ -841,12 +931,15 @@ def activate(bot_number, message):
         if command in Dicts.geofences:
             if user_dict is None:
                 if args.all_areas is True:
+                    em = discord.Embed(
+                        description="{} All areas are on by default.".format(
+                            message.author.mention),
+                        color=int('0xee281f', 16)
+                    )
                     Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
-                            'msg': (
-                                "**{}**, all areas are on by default."
-                            ).format(message.author.display_name),
+                            'embed': em,
                             'timestamp': datetime.utcnow()
                         }
                     ))
@@ -882,24 +975,32 @@ def activate(bot_number, message):
                 user_dict['areas'].append(command)
                 activate_count += 1
             elif message.content.lower() != '!activate all':
+                em = discord.Embed(
+                    description=(
+                        "{} The **{}** area is already active for you."
+                    ).format(message.author.mention, command.title()),
+                    color=int('0xee281f', 16)
+                )
                 Dicts.bots[bot_number]['out_queue'].put((
                     1, Dicts.bots[bot_number]['count'], {
                         'destination': message.channel,
-                        'msg': (
-                            "The **{}** is already active for you, **{}**"
-                        ).format(command.title(), message.author.display_name),
+                        'embed': em,
                         'timestamp': datetime.utcnow()
                     }
                 ))
                 Dicts.bots[bot_number]['count'] += 1
         else:
+            em = discord.Embed(
+                description=(
+                    "{} The **{}** area is an unrecognized area for this " +
+                    "region."
+                ).format(message.author.mention, command.title()),
+                color=int('0xee281f', 16)
+            )
             Dicts.bots[bot_number]['out_queue'].put((
                 1, Dicts.bots[bot_number]['count'], {
                     'destination': message.channel,
-                    'msg': (
-                        "The **{}** area is not any area I know of in this " +
-                        "region, **{}**"
-                    ).format(command.title(), message.author.display_name),
+                    'embed': em,
                     'timestamp': datetime.utcnow()
                 }
             ))
@@ -916,12 +1017,16 @@ def activate(bot_number, message):
         Dicts.bots[bot_number]['raid_settings'].pop(str(message.author.id))
     if activate_count > 0:
         update_dicts()
+        em = discord.Embed(
+            description=(
+                "{} Your alerts have been activated for **{}** areas."
+            ).format(message.author.mention, str(activate_count)),
+            color=int('0x71cd40', 16)
+        )
         Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
-                'msg': (
-                    'Your alerts have been activated for **{}** areas, **{}**.'
-                ).format(activate_count, message.author.display_name),
+                'embed': em,
                 'timestamp': datetime.utcnow()
             }
         ))
@@ -945,12 +1050,15 @@ def deactivate(bot_number, message):
         if command in Dicts.geofences:
             if user_dict is None:
                 if args.all_areas is False:
+                    em = discord.Embed(
+                        description="{} All areas are off by default.".format(
+                            message.author.mention),
+                        color=int('0xee281f', 16)
+                    )
                     Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
-                            'msg': (
-                                "**{}**, all areas are off by default."
-                            ).format(message.author.display_name),
+                            'embed': em,
                             'timestamp': datetime.utcnow()
                         }
                     ))
@@ -986,25 +1094,32 @@ def deactivate(bot_number, message):
                 user_dict['areas'].remove(command)
                 deactivate_count += 1
             elif message.content.lower() != '!deactivate all':
+                em = discord.Embed(
+                    description=(
+                        "{} The **{}** area was not previously active for you."
+                    ).format(message.author.mention, command.title()),
+                    color=int('0xee281f', 16)
+                )
                 Dicts.bots[bot_number]['out_queue'].put((
                     1, Dicts.bots[bot_number]['count'], {
                         'destination': message.channel,
-                        'msg': (
-                            "The **{}** was not previously active for you, " +
-                            "**{}**"
-                        ).format(command.title(), message.author.display_name),
+                        'embed': em,
                         'timestamp': datetime.utcnow()
                     }
                 ))
                 Dicts.bots[bot_number]['count'] += 1
         else:
+            em = discord.Embed(
+                description=(
+                    "{} The **{}** area is an unrecognized area for this " +
+                    "region."
+                ).format(message.author.mention, command.title()),
+                color=int('0xee281f', 16)
+            )
             Dicts.bots[bot_number]['out_queue'].put((
                 1, Dicts.bots[bot_number]['count'], {
                     'destination': message.channel,
-                    'msg': (
-                        "The **{}** area is not any area I know of in this " +
-                        "region, **{}**"
-                    ).format(command.title(), message.author.display_name),
+                    'embed': em,
                     'timestamp': datetime.utcnow()
                 }
             ))
@@ -1021,13 +1136,16 @@ def deactivate(bot_number, message):
         Dicts.bots[bot_number]['raid_settings'].pop(str(message.author.id))
     if deactivate_count > 0:
         update_dicts()
+        em = discord.Embed(
+            description=(
+                "{} Your alerts have been deactivated for **{}** areas."
+            ).format(message.author.mention, str(deactivate_count)),
+            color=int('0x71cd40', 16)
+        )
         Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
-                'msg': (
-                    'Your alerts have been deactivated for **{}** areas, ' +
-                    '**{}**.'
-                ).format(deactivate_count, message.author.display_name),
+                'embed': em,
                 'timestamp': datetime.utcnow()
             }
         ))

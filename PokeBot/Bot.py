@@ -87,7 +87,7 @@ class Bot(discord.Client):
                 update_dicts()
                 em = discord.Embed(
                     description="{} Your alerts have been paused.".format(
-                        message.author.mention),
+                        after.mention),
                     color=int('0xee281f', 16)
                 )
                 Dicts.bots[bot_number]['out_queue'].put((
@@ -179,4 +179,4 @@ class Bot(discord.Client):
                     'timestamp': datetime.utcnow()
                 }
             ))
-            Dicts.bots[bot_number]['count'] += 1 
+            Dicts.bots[bot_number]['count'] += 1
