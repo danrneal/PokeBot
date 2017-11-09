@@ -244,13 +244,16 @@ def dex(bot_number, message):
         ))
         Dicts.bots[bot_number]['count'] += 1
     else:
+        em = discord.Embed(
+            description=(
+                "{} **{}** is not a recognized pokemon, check your spelling."
+            ).format(message.author.mention, pokemon.title()),
+            color=int('0xee281f', 16)
+        )
         Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
-                'msg': (
-                    "**{}** is not any pokemon I know of, check your " +
-                    "spelling **{}**"
-                ).format(pokemon.title(), message.author.display_name),
+                'embed': em,
                 'timestamp': datetime.utcnow()
             }
         ))
@@ -1155,33 +1158,38 @@ def deactivate(bot_number, message):
 def alerts(bot_number, message):
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
     if user_dict is None:
+        em = discord.Embed(
+            description=(
+                "{} You don't have any alerts set."
+            ).format(message.author.mention),
+            color=int('0xee281f', 16)
+        )
         Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
-                'msg': "**{}**, you don't have any alerts set.".format(
-                    message.author.display_name),
+                'embed': em,
                 'timestamp': datetime.utcnow()
             }
         ))
         Dicts.bots[bot_number]['count'] += 1
     else:
         alerts = "**{}**'s Alert Settings:\nBOT NUMBER: {}\nPAUSED: ".format(
-            message.author.display_name, str(bot_number + 1))
+            message.author.mention, str(bot_number + 1))
         if user_dict['paused'] is True:
-            alerts += "TRUE\n\n"
+            alerts += "**TRUE**\n\n"
         else:
-            alerts += "FALSE\n\n"
+            alerts += "**FALSE**\n\n"
         if args.all_areas is True:
-            alerts += '__PAUSED AREAS__\n\n'
+            alerts += '__PAUSED AREAS__\n\n```\n'
             if len(user_dict['areas']) == len(
                     Dicts.geofences):
-                alerts += 'None  \n'
+                alerts += 'None\n'
             else:
                 for area in list(
                         set(Dicts.geofences) - set(user_dict['areas'])):
                     alerts += '{}, '.format(area.title())
         else:
-            alerts += '__ALERT AREAS__\n\n'
+            alerts += '__ALERT AREAS__\n\n```\n'
             if len(user_dict['areas']) == 0:
                 alerts += (
                     "You don't any areas set.  Type `!activate [area/all]` " +
@@ -1190,8 +1198,8 @@ def alerts(bot_number, message):
             else:
                 for area in user_dict['areas']:
                     alerts += '{}, '.format(area.title())
-        alerts = alerts[:-2] + '\n\n'
-        alerts += '__POKEMON__\n\n'
+        alerts = alerts[:-2] + '\n```\n'
+        alerts += '__POKEMON__\n\n```\n'
         if 'default' in user_dict['pokemon']:
             alerts += 'Default (all unlisted): '
             if int(user_dict['pokemon']['default']['min_iv']) > 0:
@@ -1237,15 +1245,20 @@ def alerts(bot_number, message):
                                 alerts += '♂, '
                     alerts = alerts[:-2] + ' | '
                 alerts = alerts[:-3] + '\n'
-        alerts = [alerts[:-1]]
+        alerts += '```'
+        alerts = [alerts]
         while len(alerts[-1]) > 2000:
             for alerts_split in truncate(alerts.pop()):
                 alerts.append(alerts_split)
         for dm in alerts:
+            em = discord.Embed(
+                description=dm,
+                color=int('0x71cd40', 16)
+            )
             Dicts.bots[bot_number]['out_queue'].put((
                 1, Dicts.bots[bot_number]['count'], {
                     'destination': message.author,
-                    'msg': dm,
+                    'embed': em,
                     'timestamp': datetime.utcnow()
                 }
             ))
@@ -1269,10 +1282,14 @@ def areas(bot_number, message):
         for areas_split in truncate(areas.pop()):
             areas.append(areas_split)
     for dm in areas:
+        em = discord.Embed(
+            description=dm,
+            color=int('0x71cd40', 16)
+        )
         Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.author,
-                'msg': dm,
+                'embed': em,
                 'timestamp': datetime.utcnow()
             }
         ))

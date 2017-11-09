@@ -330,6 +330,9 @@ def is_number(s):
 def truncate(msg):
     msg_split1 = msg[:len(msg[:1999].rsplit('\n', 1)[0])]
     msg_split2 = msg[len(msg[:1999].rsplit('\n', 1)[0]):]
+    if msg_split1.count('```') % 2 != 0:
+        msg_split1 += '\n```'
+        msg_split2 = '\n```' + msg_split2
     return [msg_split1, msg_split2]
 
 
