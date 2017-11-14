@@ -9,5 +9,6 @@ geofences/*
 !geofences/geofence.txt.example
 user_dicts/*
 !user_dicts/user_alarms.json.example
+cache/*.cache
 __pycache__
 null

@@ -10,7 +10,8 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 from .Filter import load_pokemon_section, load_egg_section
 from .utils import (get_args, Dicts, update_dicts, is_number, truncate,
-                    get_pkmn_id, require_and_remove_key, parse_boolean)
+                    get_pkmn_id, require_and_remove_key, parse_boolean,
+                    get_image_url)
 
 log = logging.getLogger('commands')
 args = get_args()
@@ -232,8 +233,7 @@ def dex(bot_number, message):
                            color=Dicts.type_col[
                                types[0].get_text().split()[0].lower()])
         em.set_thumbnail(
-            url=('https://raw.githubusercontent.com/kvangent/PokeAlarm/' +
-                 'master/icons/{}.png').format(dex_number))
+            url=(get_image_url("monsters/{:03}_.png")).format(dex_number))
 
         Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {

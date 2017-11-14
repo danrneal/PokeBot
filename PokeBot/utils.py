@@ -74,6 +74,13 @@ def get_args():
         )
     )
     parser.add_argument(
+        '-ct', '--cache_type',
+        type=str,
+        action='append',
+        default="mem",
+        choices=["mem", "file"]
+    )
+    parser.add_argument(
         '-ma', '--max_attempts',
         type=int,
         default=3,
@@ -376,6 +383,42 @@ def get_base_weight(pokemon_id):
     return get_base_weight.info.get(pokemon_id)
 
 
+def get_base_stats(pokemon_id):
+    if not hasattr(get_base_stats, 'info'):
+        get_base_stats.info = {}
+        file_ = get_path('../data/base_stats.json')
+        with open(file_, 'r') as f:
+            j = json.loads(f.read())
+        for id_ in j:
+            get_base_stats.info[int(id_)] = {
+                "attack": float(j[id_].get('attack')),
+                "defense": float(j[id_].get('defense')),
+                "stamina": float(j[id_].get('stamina'))
+            }
+    return get_base_stats.info.get(pokemon_id)
+
+
+def get_pokemon_cp_range(pokemon_id, level):
+    stats = get_base_stats(pokemon_id)
+    if not hasattr(get_pokemon_cp_range, 'info'):
+        get_pokemon_cp_range.info = {}
+        file_ = get_path('../data/cp_multipliers.json')
+        with open(file_, 'r') as f:
+            j = json.loads(f.read())
+        for lvl_ in j:
+            get_pokemon_cp_range.info[lvl_] = j[lvl_]
+    cp_multi = get_pokemon_cp_range.info["{}".format(level)]
+    min_cp = int(
+        ((stats['attack'] + 10.0) * pow((stats['defense'] + 10.0), 0.5) *
+         pow((stats['stamina'] + 10.0), 0.5) * pow(cp_multi, 2)) / 10.0
+    )
+    max_cp = int(
+        ((stats['attack'] + 15.0) * pow((stats['defense'] + 15.0), 0.5) *
+         pow((stats['stamina'] + 15.0), 0.5) * pow(cp_multi, 2)) / 10.0
+    )
+    return min_cp, max_cp
+
+
 def size_ratio(pokemon_id, height, weight):
     height_ratio = height / get_base_height(pokemon_id)
     weight_ratio = weight / get_base_weight(pokemon_id)
@@ -485,3 +528,9 @@ def get_time_as_str(t, timezone=None):
                disappear_time.strftime("%p").lower())
     time_24 = disappear_time.strftime("%H:%M:%S")
     return time_left, time_12, time_24
+
+
+def get_image_url(image):
+    return (
+        "https://raw.githubusercontent.com/not4profit/images/master/{}"
+    ).format(image)

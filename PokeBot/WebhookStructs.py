@@ -4,7 +4,7 @@
 import logging
 from datetime import datetime
 from .utils import (get_pokemon_size, get_pokemon_gender, get_gmaps_link,
-                    get_applemaps_link)
+                    get_applemaps_link, get_image_url)
 
 log = logging.getLogger('WebhookStructs')
 
@@ -79,6 +79,8 @@ class Webhook:
             pkmn['tiny_rat'] = 'tiny'
         if pkmn['pkmn_id'] == 129 and pkmn['size'] == 'big':
             pkmn['big_karp'] = 'big'
+        if pkmn['form_id'] == 0:
+            pkmn['form_id'] = '?'
         return pkmn
 
     @staticmethod
@@ -88,9 +90,9 @@ class Webhook:
             'id': data.get('gym_id',  data.get('id')),
             'lat': float(data['latitude']),
             'lng': float(data['longitude']),
-            'name': check_for_none(str, data.get('name'), 'unknown'),
+            'name': check_for_none(str, data.get('name'), 'unknown').strip(),
             'description': check_for_none(
-                str, data.get('description'), 'unknown'),
+                str, data.get('description'), 'unknown').strip(),
             'url': check_for_none(str, data.get('url'), 'unknown')
         }
         return gym
@@ -125,8 +127,7 @@ class Webhook:
             'gym_name': check_for_none(str, data.get('gym_name'), 'unknown'),
             'gym_url': check_for_none(
                 str, data.get('gym_url'),
-                "https://raw.githubusercontent.com/RocketMap/PokeAlarm/" +
-                "master/icons/egg_<raid_level>.png"),
+                get_image_url("eggs/<raid_level>.png")),
             'team_id': check_for_none(int, data.get('team'), 0)
         }
         egg['gmaps'] = get_gmaps_link(egg['lat'], egg['lng'])
@@ -162,8 +163,7 @@ class Webhook:
             'gym_name': check_for_none(str, data.get('gym_name'), 'unknown'),
             'gym_url': check_for_none(
                 str, data.get('gym_url'),
-                "https://raw.githubusercontent.com/RocketMap/PokeAlarm/" +
-                "master/icons/<pkmn_id>.png"),
+                get_image_url("monsters/<pkmn_id_3>_<form_id_or_empty>.png")),
             'team_id': check_for_none(int, data.get('team'), 0)
         }
         raid['gmaps'] = get_gmaps_link(raid['lat'], raid['lng'])
