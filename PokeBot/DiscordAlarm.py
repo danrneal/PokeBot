@@ -6,7 +6,7 @@ import requests
 from random import randint
 from .Alarm import Alarm
 from .utils import (get_args, reject_leftover_parameters, get_color,
-                    get_static_map_url)
+                    get_static_map_url, get_image_url)
 
 log = logging.getLogger('DiscordAlarm')
 args = get_args()
@@ -19,14 +19,10 @@ class DiscordAlarm(Alarm):
             'webhook_url': "",
             'username': "<pkmn>",
             'content': "",
-            'icon_url': (
-                "https://raw.githubusercontent.com/RocketMap/PokeAlarm/" +
-                "master/icons/<pkmn_id>.png"
-            ),
-            'avatar_url': (
-                "https://raw.githubusercontent.com/RocketMap/PokeAlarm/" +
-                "master/icons/<pkmn_id>.png"
-            ),
+            'icon_url': get_image_url(
+                "monsters/<pkmn_id_3>_<form_id_or_empty>.png"),
+            'avatar_url': get_image_url(
+                "monsters/<pkmn_id_3>_<form_id_or_empty>.png"),
             'title': "A wild <pkmn> has appeared!",
             'url': "<gmaps>",
             'body': "Available until <24h_time> (<time_left>).",
@@ -36,14 +32,8 @@ class DiscordAlarm(Alarm):
             'webhook_url': "",
             'username': "Egg",
             'content': "",
-            'icon_url': (
-                "https://raw.githubusercontent.com/RocketMap/PokeAlarm/" +
-                "master/icons/egg_<raid_level>.png"
-            ),
-            'avatar_url': (
-                "https://raw.githubusercontent.com/RocketMap/PokeAlarm/" +
-                "master/icons/egg_<raid_level>.png"
-            ),
+            'icon_url': get_image_url("eggs/<raid_level>.png"),
+            'avatar_url': get_image_url("eggs/<raid_level>.png"),
             'title': "Raid is incoming!",
             'url': "<gmaps>",
             'body': (
@@ -56,14 +46,9 @@ class DiscordAlarm(Alarm):
             'webhook_url': "",
             'username': "Raid",
             'content': "",
-            'icon_url': (
-                "https://raw.githubusercontent.com/RocketMap/PokeAlarm/" +
-                "master/icons/<pkmn_id>.png"
-            ),
-            'avatar_url': (
-                "https://raw.githubusercontent.com/RocketMap/PokeAlarm/" +
-                "master/icons/egg_<raid_level>.png"
-            ),
+            'icon_url': get_image_url(
+                "monsters/<pkmn_id_3>_<form_id_or_empty>.png"),
+            'avatar_url': get_image_url("eggs/<raid_level>.png"),
             'title': "Level <raid_level> Raid is available against <pkmn>!",
             'url': "<gmaps>",
             'body': "The raid is available until <24h_time> (<time_left>).",

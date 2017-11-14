@@ -22,6 +22,10 @@ class Locale(object):
         moves = info.get("moves", {})
         for id_, val in default["moves"].items():
             self.__move_names[int(id_)] = moves.get(id_, val)
+        self.__team_names = {}
+        teams = info.get("teams", {})
+        for id_, val in default["teams"].items():
+            self.__team_names[int(id_)] = teams.get(id_, val)
         self.__form_names = {}
         all_forms = info.get("forms", {})
         for pkmn_id, forms in default["forms"].items():
@@ -37,5 +41,8 @@ class Locale(object):
     def get_move_name(self, move_id):
         return self.__move_names.get(move_id, 'unknown')
 
+    def get_team_name(self, team_id):
+        return self.__team_names.get(team_id, 'unknown')
+
     def get_form_name(self, pokemon_id, form_id):
-        return self.__form_names.get(pokemon_id, {}).get(form_id, '')
+        return self.__form_names.get(pokemon_id, {}).get(form_id, 'unknown')

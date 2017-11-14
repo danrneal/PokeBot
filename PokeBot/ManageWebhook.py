@@ -7,7 +7,8 @@ from datetime import datetime, timedelta
 from timezonefinder import TimezoneFinder
 from .WebhookStructs import Webhook
 from .Locale import Locale
-from .utils import Dicts, get_args, get_time_as_str
+from .Cache import cache_factory
+from .utils import Dicts, get_args, get_time_as_str, get_pokemon_cp_range
 
 logging.basicConfig(
     format='[%(name)10.10s][%(levelname)8.8s] %(message)s',
@@ -22,8 +23,7 @@ class ManageWebhook(object):
 
     def __init__(self):
         self.__locale = Locale(args.locale)
-        self.__pokemon_hist = {}
-        self.__raid_hist = {}
+        self.__cache = cache_factory(args.cache_type, "History")
         self.__geofences = []
         if str(args.geofences[0]).lower() != 'none':
             self.__geofences = list(args.master_geofences.values())
@@ -45,8 +45,8 @@ class ManageWebhook(object):
             data = await self.__queue.get()
             obj = Webhook.make_object(data)
             if obj is not None:
-                if datetime.utcnow() - last_clean > timedelta(minutes=3):
-                    self.clean_hist()
+                if datetime.utcnow() - last_clean > timedelta(minutes=5):
+                    self.__cache.clean_and_save()
                     last_clean = datetime.utcnow()
                 try:
                     if obj['type'] == "pokemon":
@@ -61,26 +61,15 @@ class ManageWebhook(object):
                     log.error((
                         "Encountered error during processing: {}: {}"
                     ).format(type(e).__name__, e))
-
-    def clean_hist(self):
-        old = []
-        for id_ in self.__pokemon_hist:
-            if self.__pokemon_hist[id_] < datetime.utcnow():
-                old.append(id_)
-        for id_ in old:
-            del self.__pokemon_hist[id_]
-        old = []
-        for id_ in self.__raid_hist:
-            if self.__raid_hist[id_]['raid_end'] < datetime.utcnow():
-                old.append(id_)
-        for id_ in old:
-            del self.__raid_hist[id_]
+        self.__cache.clean_and_save()
+        exit(0)
 
     def process_pokemon(self, pkmn):
-        id_ = pkmn['id']
-        if id_ in self.__pokemon_hist:
+        pkmn_hash = pkmn['id']
+        if self.__cache.get_pokemon_expiration(pkmn_hash) is not None:
             return
-        self.__pokemon_hist[id_] = pkmn['disappear_time']
+        self.__cache.update_pokemon_expiration(
+            pkmn_hash, pkmn['disappear_time'])
         pkmn_id = pkmn['pkmn_id']
         name = self.__locale.get_pokemon_name(pkmn_id)
         lat, lng = pkmn['lat'], pkmn['lng']
@@ -93,8 +82,11 @@ class ManageWebhook(object):
         time_str = get_time_as_str(
             pkmn['disappear_time'], tf.timezone_at(lng=lng, lat=lat))
         iv = pkmn['iv']
+        form_id = pkmn['form_id']
+        form = self.__locale.get_form_name(pkmn_id, form_id)
         pkmn.update({
             'pkmn': name,
+            'pkmn_id_3': '{:03}'.format(pkmn_id),
             'time_left': time_str[0],
             '12h_time': time_str[1],
             '24h_time': time_str[2],
@@ -103,7 +95,10 @@ class ManageWebhook(object):
             'iv_2': "{:.2f}".format(iv) if iv != '?' else '?',
             'quick_move': self.__locale.get_move_name(quick_id),
             'charge_move': self.__locale.get_move_name(charge_id),
-            'form': self.__locale.get_form_name(pkmn_id, pkmn['form_id'])
+            'form_id_or_empty': '' if form_id == '?' else '{:03}'.format(
+                form_id),
+            'form': form,
+            'form_or_empty': '' if form == 'unknown' else form
         })
         for name, mgr in Dicts.managers.items():
             mgr.update(pkmn)
@@ -112,12 +107,9 @@ class ManageWebhook(object):
 
     def process_egg(self, egg):
         gym_id = egg['id']
-        raid_end = egg['raid_end']
-        if gym_id in self.__raid_hist:
-            old_raid_end = self.__raid_hist[gym_id]['raid_end']
-            if old_raid_end == raid_end:
-                return
-        self.__raid_hist[gym_id] = dict(raid_end=raid_end, pkmn_id=0)
+        if self.__cache.get_egg_expiration(gym_id) is not None:
+            return
+        self.__cache.update_egg_expiration(gym_id, egg['raid_begin'])
         lat, lng = egg['lat'], egg['lng']
         egg['geofence'] = self.check_geofences('Raid', lat, lng)
         if len(self.__geofences) > 0 and egg['geofence'] == 'unknown':
@@ -126,13 +118,16 @@ class ManageWebhook(object):
             egg['raid_end'], tf.timezone_at(lng=lng, lat=lat))
         start_time_str = get_time_as_str(
             egg['raid_begin'], tf.timezone_at(lng=lng, lat=lat))
+        team_id = egg['team_id']
         egg.update({
             'time_left': time_str[0],
             '12h_time': time_str[1],
             '24h_time': time_str[2],
             'begin_time_left': start_time_str[0],
             'begin_12h_time': start_time_str[1],
-            'begin_24h_time': start_time_str[2]
+            'begin_24h_time': start_time_str[2],
+            'team_id': team_id,
+            'team_name': self.__locale.get_team_name(team_id)
         })
         for name, mgr in Dicts.managers.items():
             mgr.update(egg)
@@ -142,13 +137,9 @@ class ManageWebhook(object):
     def process_raid(self, raid):
         gym_id = raid['id']
         pkmn_id = raid['pkmn_id']
-        raid_end = raid['raid_end']
-        if gym_id in self.__raid_hist:
-            old_raid_end = self.__raid_hist[gym_id]['raid_end']
-            old_raid_pkmn = self.__raid_hist[gym_id].get('pkmn_id', 0)
-            if old_raid_end == raid_end and old_raid_pkmn == pkmn_id:
-                return
-        self.__raid_hist[gym_id] = dict(raid_end=raid_end, pkmn_id=pkmn_id)
+        if self.__cache.get_raid_expiration(gym_id) is not None:
+            return
+        self.__cache.update_raid_expiration(gym_id, raid['raid_end'])
         lat, lng = raid['lat'], raid['lng']
         raid['geofence'] = self.check_geofences('Raid', lat, lng)
         if len(self.__geofences) > 0 and raid['geofence'] == 'unknown':
@@ -174,8 +165,13 @@ class ManageWebhook(object):
             raid['raid_end'], tf.timezone_at(lng=lng, lat=lat))
         start_time_str = get_time_as_str(
             raid['raid_begin'], tf.timezone_at(lng=lng, lat=lat))
+        form_id = raid_pkmn['form_id']
+        form = self.__locale.get_form_name(pkmn_id, form_id)
+        team_id = raid['team_id']
+        min_cp, max_cp = get_pokemon_cp_range(pkmn_id, 20)
         raid.update({
             'pkmn': name,
+            'pkmn_id_3': '{:03}'.format(pkmn_id),
             'time_left': time_str[0],
             '12h_time': time_str[1],
             '24h_time': time_str[2],
@@ -184,7 +180,14 @@ class ManageWebhook(object):
             'begin_24h_time': start_time_str[2],
             'quick_move': self.__locale.get_move_name(quick_id),
             'charge_move': self.__locale.get_move_name(charge_id),
-            'form': self.__locale.get_form_name(pkmn_id, raid_pkmn['form_id'])
+            'form_id_or_empty': '' if form_id == '?' else '{:03}'.format(
+                form_id),
+            'form': form,
+            'form_or_empty': '' if form == 'unknown' else form,
+            'team_id': team_id,
+            'team_name': self.__locale.get_team_name(team_id),
+            'min_cp': min_cp,
+            'max_cp': max_cp
         })
         for name, mgr in Dicts.managers.items():
             mgr.update(raid)

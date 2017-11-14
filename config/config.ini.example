@@ -1,5 +1,6 @@
 #port:											# Port to listen on (default: 4000)
-#manager_count:									# Number of Managers to run.
+#manager_count:									# Number of Managers to run
+#cache_type:                                    # Type of cache to use. (default: 'mem')
 #tokens:										# List of bot_tokens [token1, token2, ...]
 #bot_client_ids:		 						# List of bot client_ids [client_id1, client_id2, ...]
 #command_channels:								# Channel id that users input subscription commands [channel1, channel2, ...]

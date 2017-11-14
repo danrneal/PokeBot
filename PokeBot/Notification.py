@@ -7,7 +7,7 @@ from datetime import datetime
 from random import randint
 from .DiscordAlarm import Alarm
 from .utils import (get_args, Dicts, reject_leftover_parameters, get_color,
-                    get_static_map_url)
+                    get_static_map_url, get_image_url)
 
 log = logging.getLogger('Notification')
 args = get_args()
@@ -18,10 +18,8 @@ class Notification(Alarm):
     _defaults = {
         'pokemon': {
             'content': "",
-            'icon_url': (
-                "https://raw.githubusercontent.com/RocketMap/PokeAlarm/" +
-                "master/icons/<pkmn_id>.png"
-            ),
+            'icon_url': get_image_url(
+                "monsters/<pkmn_id_3>_<form_id_or_empty>.png"),
             'title': "A wild <pkmn> has appeared!",
             'url': "<gmaps>",
             'body': "Available until <24h_time> (<time_left>).",
@@ -29,10 +27,7 @@ class Notification(Alarm):
         },
         'egg': {
             'content': "",
-            'icon_url': (
-                "https://raw.githubusercontent.com/RocketMap/PokeAlarm/" +
-                "master/icons/egg_<raid_level>.png"
-            ),
+            'icon_url': get_image_url("eggs/<raid_level>.png"),
             'title': "Raid is incoming!",
             'url': "<gmaps>",
             'body': (
@@ -43,10 +38,8 @@ class Notification(Alarm):
         },
         'raid': {
             'content': "",
-            'icon_url': (
-                "https://raw.githubusercontent.com/Rocket/PokeAlarm/" +
-                "master/icons/<pkmn_id>.png"
-            ),
+            'icon_url': get_image_url(
+                "monsters/<pkmn_id_3>_<form_id_or_empty>.png"),
             'title': "Level <raid_level> Raid is available against <pkmn>!",
             'url': "<gmaps>",
             'body': "The raid is available until <24h_time> (<time_left>).",
