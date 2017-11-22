@@ -1251,14 +1251,10 @@ def alerts(bot_number, message):
             for alerts_split in truncate(alerts.pop()):
                 alerts.append(alerts_split)
         for dm in alerts:
-            em = discord.Embed(
-                description=dm,
-                color=int('0x71cd40', 16)
-            )
             Dicts.bots[bot_number]['out_queue'].put((
                 1, Dicts.bots[bot_number]['count'], {
                     'destination': message.author,
-                    'embed': em,
+                    'msg': dm,
                     'timestamp': datetime.utcnow()
                 }
             ))
