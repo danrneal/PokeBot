@@ -260,27 +260,6 @@ def dex(bot_number, message):
         Dicts.bots[bot_number]['count'] += 1
 
 
-async def donate(bot_number, message):
-    em = discord.Embed(
-        title="DONATION INFORMATION",
-        description=(
-            "Support this project!\n" +
-            "https://www.paypal.me/dneal12\n\n" +
-            "Please note: this donation goes directly into the \n" +
-            "pocket of the bot dev, not this Discord server."
-        ),
-        color=int('0x71cd40', 16)
-    )
-    Dicts.bots[bot_number]['out_queue'].put((
-        1, Dicts.bots[bot_number]['count'], {
-            'destination': message.channel,
-            'embed': em,
-            'timestamp': datetime.utcnow()
-        }
-    ))
-    Dicts.bots[bot_number]['count'] += 1
-
-
 def set_(bot_number, message):
     msg = message.content.lower().replace('!set ', '').replace(
         '!set\n', '').replace('%', '').replace('nidoranf', 'nidoran♀').replace(

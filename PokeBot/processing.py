@@ -175,11 +175,17 @@ async def out_q(bot_number):
                 "Bot queue is {} seconds behind..., consider adding more bots."
             ).format((datetime.utcnow() - msg_params[2][
                 'timestamp']).total_seconds()))
-        await msg_params[2]['destination'].send(
-            msg_params[2].get('msg'),
-            embed=msg_params[2].get('embed')
-        )
-        log.info('Sent msg to {}'.format(msg_params[2]['destination'].name))
-        Dicts.bots[bot_number]['timestamps'].append(datetime.utcnow())
+        try:
+            await msg_params[2]['destination'].send(
+                msg_params[2].get('msg'),
+                embed=msg_params[2].get('embed')
+            )
+            log.info('Sent msg to {}'.format(
+                msg_params[2]['destination'].name))
+            Dicts.bots[bot_number]['timestamps'].append(datetime.utcnow())
+        except Exception as e:
+            log.exception((
+                "Encountered error during DM processing: {}: {}: {}"
+            ).format(type(e).__name__, e, msg_params[2]))
     Dicts.bots[bot_number]['count'] = 0
     await asyncio.sleep(0)

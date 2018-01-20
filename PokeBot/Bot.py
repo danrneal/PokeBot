@@ -7,8 +7,8 @@ import asyncio
 from datetime import datetime
 from .processing import in_q
 from .utils import get_args, Dicts, update_dicts
-from .commands import (status, commands, dex, donate, set_, delete, reset,
-                       pause, resume, activate, deactivate, alerts, areas)
+from .commands import (status, commands, dex, set_, delete, reset, pause,
+                       resume, activate, deactivate, alerts, areas)
 
 log = logging.getLogger('Bot')
 args = get_args()
@@ -128,8 +128,6 @@ class Bot(discord.Client):
                     await commands(bot_number, message)
                 elif message.content.lower().startswith('!dex '):
                     dex(bot_number, message)
-                elif message.content.lower() == '!donate':
-                    await donate(bot_number, message)
                 elif message.content.lower().startswith('!set '):
                     set_(bot_number, message)
                 elif message.content.lower().startswith(
