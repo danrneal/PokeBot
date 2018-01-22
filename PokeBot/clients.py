@@ -228,7 +228,7 @@ def start_clients():
     for token in args.tokens:
         bot = Bot()
         entries.append(Entry(client=bot, event=asyncio.Event()))
-        await bot.login(token)
+        loop.run_until_complete(bot.login(token))
         loop.create_task(in_q(client=bot, bot_number=bot_num))
         loop.create_task(out_q(bot_number=bot_num))
         bot_num += 1
