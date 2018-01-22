@@ -62,7 +62,6 @@ class Bot(discord.Client):
                     "Bot number {} removed {} user(s) outdated areas"
                 ).format(bot_number + 1, area_count))
         log.info("Bot number {} is ready".format(bot_number + 1))
-        await in_q(self, bot_number)
 
     async def on_member_update(self, before, after):
         bot_number = args.bot_client_ids.index(self.user.id)
@@ -90,7 +89,7 @@ class Bot(discord.Client):
                         after.mention),
                     color=int('0xee281f', 16)
                 )
-                Dicts.bots[bot_number]['out_queue'].put((
+                await Dicts.bots[bot_number]['out_queue'].put((
                     1, Dicts.bots[bot_number]['count'], {
                         'destination': discord.utils.get(
                             after.guild.members,
@@ -101,7 +100,7 @@ class Bot(discord.Client):
                     }
                 ))
                 Dicts.bots[bot_number]['count'] += 1
-                log.info('Paused {} on mute.'.fotmat(after.display_name))
+                log.info('Paused {} on mute.'.format(after.display_name))
 
     async def on_member_remove(self, member):
         bot_number = args.bot_client_ids.index(self.user.id)
@@ -127,26 +126,26 @@ class Bot(discord.Client):
                 if message.content.lower() in ['!commands', '!help']:
                     await commands(bot_number, message)
                 elif message.content.lower().startswith('!dex '):
-                    dex(bot_number, message)
+                    await dex(bot_number, message)
                 elif message.content.lower().startswith('!set '):
-                    set_(bot_number, message)
+                    await set_(bot_number, message)
                 elif message.content.lower().startswith(
                         ('!delete ', '!remove ')):
-                    delete(bot_number, message)
+                    await delete(bot_number, message)
                 elif message.content.lower().startswith('!reset '):
-                    reset(bot_number, message)
+                    await reset(bot_number, message)
                 elif message.content.lower() in ['!pause', '!p']:
-                    pause(bot_number, message)
+                    await pause(bot_number, message)
                 elif message.content.lower() in ['!resume', '!r']:
-                    resume(bot_number, message)
+                    await resume(bot_number, message)
                 elif message.content.lower().startswith('!activate '):
-                    activate(bot_number, message)
+                    await activate(bot_number, message)
                 elif message.content.lower().startswith('!deactivate '):
-                    deactivate(bot_number, message)
+                    await deactivate(bot_number, message)
                 elif message.content.lower() == '!alerts':
-                    alerts(bot_number, message)
+                    await alerts(bot_number, message)
                 elif message.content.lower() == '!areas':
-                    areas(bot_number, message)
+                    await areas(bot_number, message)
                 elif message.content.lower().startswith('!'):
                     em = discord.Embed(
                         description=(
@@ -155,7 +154,7 @@ class Bot(discord.Client):
                         ).format(message.author.mention),
                         color=int('0xee281f', 16)
                     )
-                    Dicts.bots[bot_number]['out_queue'].put((
+                    await Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'embed': em,
@@ -170,7 +169,7 @@ class Bot(discord.Client):
                 ).format(message.author.mention),
                 color=int('0xee281f', 16)
             )
-            Dicts.bots[bot_number]['out_queue'].put((
+            await Dicts.bots[bot_number]['out_queue'].put((
                 1, Dicts.bots[bot_number]['count'], {
                     'destination': message.channel,
                     'embed': em,

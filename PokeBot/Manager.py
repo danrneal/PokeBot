@@ -5,7 +5,6 @@ import logging
 import json
 import asyncio
 import sys
-from queue import Queue
 from .LocationServices import LocationService
 from .DiscordAlarm import DiscordAlarm
 from .Filter import load_pokemon_section, load_egg_section
@@ -35,11 +34,11 @@ class Manager(object):
         self.__geofences = []
         if str(args.geofence_names[0]).lower() != 'none':
             self.__geofences = geofence_names
-        self.__queue = Queue()
+        self.__queue = asyncio.Queue()
         log.info("Manager '{}' successfully created.".format(self.__name))
 
-    def update(self, obj):
-        self.__queue.put(obj)
+    async def update(self, obj):
+        await self.__queue.put(obj)
 
     def get_name(self):
         return self.__name
@@ -140,9 +139,9 @@ class Manager(object):
 
     async def connect(self):
         while True:
-            while self.__queue.empty():
-                await asyncio.sleep(0)
-            obj = self.__queue.get()
+            obj = await self.__queue.get()
+            if obj is None:
+                break
             try:
                 if obj['type'] == "pokemon":
                     self.process_pokemon(obj)

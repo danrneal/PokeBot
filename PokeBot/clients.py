@@ -6,7 +6,7 @@ import sys
 import json
 import asyncio
 import copy
-from queue import Queue, PriorityQueue
+from asyncio import Queue, PriorityQueue
 from collections import namedtuple
 from aiohttp import web
 from .Manager import Manager
@@ -16,6 +16,7 @@ from .ManageWebhook import ManageWebhook
 from .LocationServices import LocationService
 from .Filter import load_pokemon_section, load_egg_section
 from .Notification import Notification
+from .processing import in_q, out_q
 from .utils import (get_path, get_args, Dicts, contains_arg,
                     require_and_remove_key)
 
@@ -91,54 +92,13 @@ def bot_init():
             'timestamps': [],
             'count': 0
         })
-        try:
-            with open(get_path('../user_dicts/user_alarms.json'), 'r') as f:
-                alarm = json.load(f)
-            if type(alarm) is not dict:
-                log.critical("User Alarms file must be a dictionary")
-                sys.exit(1)
-            geo_args = {
-                'street', 'street_num', 'address', 'postal', 'neighborhood',
-                'sublocality', 'city', 'county', 'state', 'country'
-            }
-            if contains_arg(str(alarm), geo_args):
-                if Dicts.loc_service is None:
-                    log.critical(
-                        "Reverse location DTS were detected but no API key " +
-                        "was provided!"
-                    )
-                    log.critical(
-                        "Please either remove the DTS, add an API key, or " +
-                        "disable the alarm and try again."
-                    )
-                    sys.exit(1)
-                Dicts.loc_service.enable_reverse_location()
-            Dicts.bots[bot_number]['alarm'] = Notification(alarm)
-            log.info('Active DM alarm found.')
-        except ValueError as e:
-            log.critical((
-                "Encountered error while loading Alarms file: {}: {}"
-            ).format(type(e).__name__, e))
-            log.critical(
-                "Encountered a 'ValueError' while loading the Alarms file. " +
-                "This typically means your file isn't in the correct json " +
-                "format. Try loading your file contents into a json validator."
-            )
-            sys.exit(1)
-        except IOError as e:
-            log.critical((
-                "Encountered error while loading Alarms: {}: {}"
-            ).format(type(e).__name__, e))
-            log.critical((
-                "Unable to find a filters file at {}. Please check that " +
-                "this file exists and has the correct permissions."
-            ).format(get_path('../user_dicts/user_alarms.json')))
-            sys.exit(1)
-        except Exception as e:
-            log.critical((
-                "Encountered error while loading Alarms: {}: {}"
-            ).format(type(e).__name__, e))
-            sys.exit(1)
+        load_user_alarms(bot_number)
+    load_user_filters()
+    log.info('DM bot successfully created.')
+    return
+
+
+def load_user_filters():
     try:
         with open(get_path(
                 '../user_dicts/user_filters.json'), encoding="utf-8") as f:
@@ -177,8 +137,57 @@ def bot_init():
         log.critical((
             "Encountered error while loading Filters: {}: {}"
         ).format(type(e).__name__, e))
-    log.info('DM bot successfully created.')
-    return
+
+
+def load_user_alarms(bot_number):
+    try:
+        with open(get_path('../user_dicts/user_alarms.json'), 'r') as f:
+            alarm = json.load(f)
+        if type(alarm) is not dict:
+            log.critical("User Alarms file must be a dictionary")
+            sys.exit(1)
+        geo_args = {
+            'street', 'street_num', 'address', 'postal', 'neighborhood',
+            'sublocality', 'city', 'county', 'state', 'country'
+        }
+        if contains_arg(str(alarm), geo_args):
+            if Dicts.loc_service is None:
+                log.critical(
+                    "Reverse location DTS were detected but no API key " +
+                    "was provided!"
+                )
+                log.critical(
+                    "Please either remove the DTS, add an API key, or " +
+                    "disable the alarm and try again."
+                )
+                sys.exit(1)
+            Dicts.loc_service.enable_reverse_location()
+        Dicts.bots[bot_number]['alarm'] = Notification(alarm)
+        log.info('Active DM alarm found.')
+    except ValueError as e:
+        log.critical((
+            "Encountered error while loading Alarms file: {}: {}"
+        ).format(type(e).__name__, e))
+        log.critical(
+            "Encountered a 'ValueError' while loading the Alarms file. " +
+            "This typically means your file isn't in the correct json " +
+            "format. Try loading your file contents into a json validator."
+        )
+        sys.exit(1)
+    except IOError as e:
+        log.critical((
+            "Encountered error while loading Alarms: {}: {}"
+        ).format(type(e).__name__, e))
+        log.critical((
+            "Unable to find a filters file at {}. Please check that " +
+            "this file exists and has the correct permissions."
+        ).format(get_path('../user_dicts/user_alarms.json')))
+        sys.exit(1)
+    except Exception as e:
+        log.critical((
+            "Encountered error while loading Alarms: {}: {}"
+        ).format(type(e).__name__, e))
+        sys.exit(1)
 
 
 async def index(request):
@@ -194,13 +203,6 @@ async def handler(request):
             type(e).__name__, e))
         raise web.HTTPBadRequest()
     return web.Response()
-
-
-async def login():
-    bot_num = 0
-    for entry in entries:
-        bot_num += 1
-        await entry.client.login(args.tokens.pop(0))
 
 
 async def wrapped_connect(entry):
@@ -222,9 +224,14 @@ def start_clients():
     bot_init()
     loop = asyncio.get_event_loop()
     Entry = namedtuple('Entry', 'client event')
-    for bot in range(len(args.tokens)):
-        entries.append(Entry(client=Bot(), event=asyncio.Event()))
-    loop.run_until_complete(login())
+    bot_num = 0
+    for token in args.tokens:
+        bot = Bot()
+        entries.append(Entry(client=bot, event=asyncio.Event()))
+        await bot.login(token)
+        loop.create_task(in_q(client=bot, bot_number=bot_num))
+        loop.create_task(out_q(bot_number=bot_num))
+        bot_num += 1
     for name, mgr in Dicts.managers.items():
         entries.append(Entry(client=mgr, event=asyncio.Event()))
     entries.append(Entry(client=wh_mgr, event=asyncio.Event()))

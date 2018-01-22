@@ -42,9 +42,10 @@ class LocationService(object):
         try:
             api_key = args.gmaps_keys[randint(0, len(
                 args.gmaps_keys) - 1)]
-            result = googlemaps.Client(
-                key=api_key, timeout=3, retry_timeout=5
-            ).reverse_geocode(location, language=self.__locale)[0]
+            client = googlemaps.Client(key=api_key, timeout=3, retry_timeout=5)
+            result = client.reverse_geocode(
+                location, language=self.__locale
+            )[0]
             loc = {}
             for item in result['address_components']:
                 for category in item['types']:

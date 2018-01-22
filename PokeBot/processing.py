@@ -12,22 +12,20 @@ args = get_args()
 
 async def in_q(client, bot_number):
     while True:
-        if not Dicts.bots[bot_number]['in_queue'].empty():
-            obj = Dicts.bots[bot_number]['in_queue'].get()
-            try:
-                if obj['type'] == "pokemon":
-                    process_pokemon(client, bot_number, obj)
-                elif obj['type'] == 'egg':
-                    process_egg(client, bot_number, obj)
-                elif obj['type'] == "raid":
-                    process_raid(client, bot_number, obj)
-                else:
-                    pass
-            except Exception as e:
-                log.error((
-                    "Encountered error during DM processing: {}: {}"
-                ).format(type(e).__name__, e))
-        await out_q(bot_number)
+        obj = Dicts.bots[bot_number]['in_queue'].get()
+        try:
+            if obj['type'] == "pokemon":
+                process_pokemon(client, bot_number, obj)
+            elif obj['type'] == 'egg':
+                process_egg(client, bot_number, obj)
+            elif obj['type'] == "raid":
+                process_raid(client, bot_number, obj)
+            else:
+                pass
+        except Exception as e:
+            log.error((
+                "Encountered error during DM processing: {}: {}"
+            ).format(type(e).__name__, e))
 
 
 def check_pokemon_filter(filters, pkmn):
@@ -83,7 +81,7 @@ def check_egg_filter(settings, egg):
     return True
 
 
-def process_pokemon(client, bot_number, pkmn):
+async def process_pokemon(client, bot_number, pkmn):
     user_ids = []
     pkmn_id = pkmn['pkmn_id']
     lat, lng = pkmn['lat'], pkmn['lng']
@@ -107,11 +105,11 @@ def process_pokemon(client, bot_number, pkmn):
         if Dicts.loc_service and 'street_num' not in pkmn:
             Dicts.loc_service.add_optional_arguments([lat, lng], pkmn)
         log.info("{} DM notification has been triggered!".format(name))
-        Dicts.bots[bot_number]['alarm'].pokemon_alert(
+        await Dicts.bots[bot_number]['alarm'].pokemon_alert(
             client, bot_number, pkmn, user_ids)
 
 
-def process_egg(client, bot_number, egg):
+async def process_egg(client, bot_number, egg):
     user_ids = []
     lat, lng = egg['lat'], egg['lng']
     gym_id = egg['id']
@@ -132,11 +130,11 @@ def process_egg(client, bot_number, egg):
         if Dicts.loc_service and 'street_num' not in egg:
             Dicts.loc_service.add_optional_arguments([lat, lng], egg)
         log.info("Egg ({}) notification has been triggered!".format(gym_id))
-        Dicts.bots[bot_number]['alarm'].raid_egg_alert(
+        await Dicts.bots[bot_number]['alarm'].raid_egg_alert(
             client, bot_number, egg, user_ids)
 
 
-def process_raid(client, bot_number, raid):
+async def process_raid(client, bot_number, raid):
     user_ids = []
     pkmn_id = raid['pkmn_id']
     lat, lng = raid['lat'], raid['lng']
@@ -156,18 +154,16 @@ def process_raid(client, bot_number, raid):
         if Dicts.loc_service and 'street_num' not in raid:
             Dicts.loc_service.add_optional_arguments([lat, lng], raid)
         log.info("Raid ({}) notification has been triggered!".format(gym_id))
-        Dicts.bots[bot_number]['alarm'].raid_alert(
+        await Dicts.bots[bot_number]['alarm'].raid_alert(
             client, bot_number, raid, user_ids)
 
 
 async def out_q(bot_number):
-    while not Dicts.bots[bot_number]['out_queue'].empty():
+    while True:
         while len(Dicts.bots[bot_number]['timestamps']) >= 120:
             if datetime.utcnow() - Dicts.bots[bot_number]['timestamps'][
                     0] > timedelta(minutes=1):
                 Dicts.bots[bot_number]['timestamps'].pop(0)
-            else:
-                await asyncio.sleep(0)
         msg_params = Dicts.bots[bot_number]['out_queue'].get()
         if datetime.utcnow() - msg_params[2]['timestamp'] > timedelta(
                 minutes=1):
@@ -183,9 +179,9 @@ async def out_q(bot_number):
             log.info('Sent msg to {}'.format(
                 msg_params[2]['destination'].name))
             Dicts.bots[bot_number]['timestamps'].append(datetime.utcnow())
+            if Dicts.bots[bot_number]['out_queue'].empty():
+                Dicts.bots[bot_number]['count'] = 0
         except Exception as e:
-            log.exception((
-                "Encountered error during DM processing: {}: {}: {}"
-            ).format(type(e).__name__, e, msg_params[2]))
-    Dicts.bots[bot_number]['count'] = 0
-    await asyncio.sleep(0)
+            log.error((
+                "Encountered error during DM processing: {}: {}"
+            ).format(type(e).__name__, e))

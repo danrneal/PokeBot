@@ -24,7 +24,7 @@ async def status(client, bot_number, message):
             bot_number + 1, len(args.tokens)),
         color=int('0x71cd40', 16)
     )
-    Dicts.bots[bot_number]['out_queue'].put((
+    await Dicts.bots[bot_number]['out_queue'].put((
         1, Dicts.bots[bot_number]['count'], {
             'destination': message.channel,
             'embed': em,
@@ -34,7 +34,7 @@ async def status(client, bot_number, message):
     Dicts.bots[bot_number]['count'] += 1
     if bot_number == 0:
         await asyncio.sleep(0.1 * int(len(args.tokens)))
-        Dicts.bots[bot_number]['out_queue'].put((
+        await Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'msg': 'https://youtu.be/kxH6YErAIgA',
@@ -49,7 +49,7 @@ async def commands(bot_number, message):
         description=Dicts.info_msg,
         color=int('0x71cd40', 16)
     )
-    Dicts.bots[bot_number]['out_queue'].put((
+    await Dicts.bots[bot_number]['out_queue'].put((
         1, Dicts.bots[bot_number]['count'], {
             'destination': message.channel,
             'embed': em,
@@ -59,7 +59,7 @@ async def commands(bot_number, message):
     Dicts.bots[bot_number]['count'] += 1
 
 
-def dex(bot_number, message):
+async def dex(bot_number, message):
     pokemon = message.content.lower().split()[1]
     dex_number = get_pkmn_id(pokemon)
     if dex_number is not None:
@@ -235,7 +235,7 @@ def dex(bot_number, message):
         em.set_thumbnail(
             url=(get_image_url("monsters/{:03}_.png")).format(dex_number))
 
-        Dicts.bots[bot_number]['out_queue'].put((
+        await Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'embed': em,
@@ -250,7 +250,7 @@ def dex(bot_number, message):
             ).format(message.author.mention, pokemon.title()),
             color=int('0xee281f', 16)
         )
-        Dicts.bots[bot_number]['out_queue'].put((
+        await Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'embed': em,
@@ -260,7 +260,7 @@ def dex(bot_number, message):
         Dicts.bots[bot_number]['count'] += 1
 
 
-def set_(bot_number, message):
+async def set_(bot_number, message):
     msg = message.content.lower().replace('!set ', '').replace(
         '!set\n', '').replace('%', '').replace('nidoranf', 'nidoran♀').replace(
         'nidoranm', 'nidoran♂').replace('mr. mime', 'mr.mime').replace(
@@ -298,7 +298,7 @@ def set_(bot_number, message):
                     ).format(message.author.mention),
                     color=int('0xee281f', 16)
                 )
-                Dicts.bots[bot_number]['out_queue'].put((
+                await Dicts.bots[bot_number]['out_queue'].put((
                     1, Dicts.bots[bot_number]['count'], {
                         'destination': message.channel,
                         'embed': em,
@@ -342,7 +342,7 @@ def set_(bot_number, message):
                         ).format(message.author.mention, pokemon),
                         color=int('0xee281f', 16)
                     )
-                    Dicts.bots[bot_number]['out_queue'].put((
+                    await Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'embed': em,
@@ -365,7 +365,7 @@ def set_(bot_number, message):
                             ).format(message.author.mention),
                             color=int('0xee281f', 16)
                         )
-                        Dicts.bots[bot_number]['out_queue'].put((
+                        await Dicts.bots[bot_number]['out_queue'].put((
                             1, Dicts.bots[bot_number]['count'], {
                                 'destination': message.channel,
                                 'embed': em,
@@ -387,7 +387,7 @@ def set_(bot_number, message):
                             ).format(message.author.mention),
                             color=int('0xee281f', 16)
                         )
-                        Dicts.bots[bot_number]['out_queue'].put((
+                        await Dicts.bots[bot_number]['out_queue'].put((
                             1, Dicts.bots[bot_number]['count'], {
                                 'destination': message.channel,
                                 'embed': em,
@@ -411,7 +411,7 @@ def set_(bot_number, message):
                             ).format(message.author.mention),
                             color=int('0xee281f', 16)
                         )
-                        Dicts.bots[bot_number]['out_queue'].put((
+                        await Dicts.bots[bot_number]['out_queue'].put((
                             1, Dicts.bots[bot_number]['count'], {
                                 'destination': message.channel,
                                 'embed': em,
@@ -429,7 +429,7 @@ def set_(bot_number, message):
                         ).format(message.author.mention, char),
                         color=int('0xee281f', 16)
                     )
-                    Dicts.bots[bot_number]['out_queue'].put((
+                    await Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'embed': em,
@@ -485,7 +485,7 @@ def set_(bot_number, message):
             ).format(message.author.mention, str(set_count)),
             color=int('0x71cd40', 16)
         )
-        Dicts.bots[bot_number]['out_queue'].put((
+        await Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'embed': em,
@@ -495,7 +495,7 @@ def set_(bot_number, message):
         Dicts.bots[bot_number]['count'] += 1
 
 
-def delete(bot_number, message):
+async def delete(bot_number, message):
     msg = message.content.lower().replace('!delete ', '').replace(
         '!delete\n', '').replace('!remove ', '').replace(
         '!remove\n', '').replace('%', '').replace(
@@ -510,7 +510,7 @@ def delete(bot_number, message):
             ).format(message.author.mention),
             color=int('0xee281f', 16)
         )
-        Dicts.bots[bot_number]['out_queue'].put((
+        await Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'embed': em,
@@ -534,7 +534,7 @@ def delete(bot_number, message):
                     ).format(message.author.mention, command.title()),
                     color=int('0xee281f', 16)
                 )
-                Dicts.bots[bot_number]['out_queue'].put((
+                await Dicts.bots[bot_number]['out_queue'].put((
                     1, Dicts.bots[bot_number]['count'], {
                         'destination': message.channel,
                         'embed': em,
@@ -556,7 +556,7 @@ def delete(bot_number, message):
                         ).format(message.author.mention, pkmn),
                         color=int('0xee281f', 16)
                     )
-                    Dicts.bots[bot_number]['out_queue'].put((
+                    await Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'embed': em,
@@ -580,7 +580,7 @@ def delete(bot_number, message):
                         ).format(message.author.mention),
                         color=int('0xee281f', 16)
                     )
-                    Dicts.bots[bot_number]['out_queue'].put((
+                    await Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'embed': em,
@@ -602,7 +602,7 @@ def delete(bot_number, message):
                         ).format(message.author.mention),
                         color=int('0xee281f', 16)
                     )
-                    Dicts.bots[bot_number]['out_queue'].put((
+                    await Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'embed': em,
@@ -644,7 +644,7 @@ def delete(bot_number, message):
                 ).format(message.author.mention, str(del_count)),
                 color=int('0x71cd40', 16)
             )
-            Dicts.bots[bot_number]['out_queue'].put((
+            await Dicts.bots[bot_number]['out_queue'].put((
                 1, Dicts.bots[bot_number]['count'], {
                     'destination': message.channel,
                     'embed': em,
@@ -654,7 +654,7 @@ def delete(bot_number, message):
             Dicts.bots[bot_number]['count'] += 1
 
 
-def reset(bot_number, message):
+async def reset(bot_number, message):
     msg = message.content.lower().replace('!reset ', '').replace(
         '!reset\n', '').replace('%', '').replace(
         'nidoranf', 'nidoran♀').replace('nidoranm', 'nidoran♂').replace(
@@ -668,7 +668,7 @@ def reset(bot_number, message):
             ).format(message.author.mention),
             color=int('0xee281f', 16)
         )
-        Dicts.bots[bot_number]['out_queue'].put((
+        await Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'embed': em,
@@ -691,7 +691,7 @@ def reset(bot_number, message):
                     ).format(message.author.mention, command.title()),
                     color=int('0xee281f', 16)
                 )
-                Dicts.bots[bot_number]['out_queue'].put((
+                await Dicts.bots[bot_number]['out_queue'].put((
                     1, Dicts.bots[bot_number]['count'], {
                         'destination': message.channel,
                         'embed': em,
@@ -717,7 +717,7 @@ def reset(bot_number, message):
                         ).format(message.author.mention, pkmn),
                         color=int('0xee281f', 16)
                     )
-                    Dicts.bots[bot_number]['out_queue'].put((
+                    await Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'embed': em,
@@ -745,7 +745,7 @@ def reset(bot_number, message):
                         ).format(message.author.mention),
                         color=int('0xee281f', 16)
                     )
-                    Dicts.bots[bot_number]['out_queue'].put((
+                    await Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'embed': em,
@@ -788,7 +788,7 @@ def reset(bot_number, message):
                 ).format(message.author.mention, str(reset_count)),
                 color=int('0x71cd40', 16)
             )
-            Dicts.bots[bot_number]['out_queue'].put((
+            await Dicts.bots[bot_number]['out_queue'].put((
                 1, Dicts.bots[bot_number]['count'], {
                     'destination': message.channel,
                     'embed': em,
@@ -798,7 +798,7 @@ def reset(bot_number, message):
             Dicts.bots[bot_number]['count'] += 1
 
 
-def pause(bot_number, message):
+async def pause(bot_number, message):
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
     if user_dict is None:
         em = discord.Embed(
@@ -807,7 +807,7 @@ def pause(bot_number, message):
             ).format(message.author.mention),
             color=int('0xee281f', 16)
         )
-        Dicts.bots[bot_number]['out_queue'].put((
+        await Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'embed': em,
@@ -821,7 +821,7 @@ def pause(bot_number, message):
                 message.author.mention),
             color=int('0xee281f', 16)
         )
-        Dicts.bots[bot_number]['out_queue'].put((
+        await Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'embed': em,
@@ -837,7 +837,7 @@ def pause(bot_number, message):
                 message.author.mention),
             color=int('0x71cd40', 16)
         )
-        Dicts.bots[bot_number]['out_queue'].put((
+        await Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'embed': em,
@@ -847,7 +847,7 @@ def pause(bot_number, message):
         Dicts.bots[bot_number]['count'] += 1
 
 
-def resume(bot_number, message):
+async def resume(bot_number, message):
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
     if user_dict is None:
         em = discord.Embed(
@@ -856,7 +856,7 @@ def resume(bot_number, message):
             ).format(message.author.mention),
             color=int('0xee281f', 16)
         )
-        Dicts.bots[bot_number]['out_queue'].put((
+        await Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'embed': em,
@@ -870,7 +870,7 @@ def resume(bot_number, message):
                 message.author.mention),
             color=int('0xee281f', 16)
         )
-        Dicts.bots[bot_number]['out_queue'].put((
+        await Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'embed': em,
@@ -886,7 +886,7 @@ def resume(bot_number, message):
                 message.author.mention),
             color=int('0x71cd40', 16)
         )
-        Dicts.bots[bot_number]['out_queue'].put((
+        await Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'embed': em,
@@ -896,7 +896,7 @@ def resume(bot_number, message):
         Dicts.bots[bot_number]['count'] += 1
 
 
-def activate(bot_number, message):
+async def activate(bot_number, message):
     if message.content.lower() == '!activate all':
         msg = Dicts.geofences
     else:
@@ -918,7 +918,7 @@ def activate(bot_number, message):
                             message.author.mention),
                         color=int('0xee281f', 16)
                     )
-                    Dicts.bots[bot_number]['out_queue'].put((
+                    await Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'embed': em,
@@ -963,7 +963,7 @@ def activate(bot_number, message):
                     ).format(message.author.mention, command.title()),
                     color=int('0xee281f', 16)
                 )
-                Dicts.bots[bot_number]['out_queue'].put((
+                await Dicts.bots[bot_number]['out_queue'].put((
                     1, Dicts.bots[bot_number]['count'], {
                         'destination': message.channel,
                         'embed': em,
@@ -979,7 +979,7 @@ def activate(bot_number, message):
                 ).format(message.author.mention, command.title()),
                 color=int('0xee281f', 16)
             )
-            Dicts.bots[bot_number]['out_queue'].put((
+            await Dicts.bots[bot_number]['out_queue'].put((
                 1, Dicts.bots[bot_number]['count'], {
                     'destination': message.channel,
                     'embed': em,
@@ -1005,7 +1005,7 @@ def activate(bot_number, message):
             ).format(message.author.mention, str(activate_count)),
             color=int('0x71cd40', 16)
         )
-        Dicts.bots[bot_number]['out_queue'].put((
+        await Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'embed': em,
@@ -1015,7 +1015,7 @@ def activate(bot_number, message):
         Dicts.bots[bot_number]['count'] += 1
 
 
-def deactivate(bot_number, message):
+async def deactivate(bot_number, message):
     if message.content.lower() == '!deactivate all':
         msg = Dicts.geofences
     else:
@@ -1037,7 +1037,7 @@ def deactivate(bot_number, message):
                             message.author.mention),
                         color=int('0xee281f', 16)
                     )
-                    Dicts.bots[bot_number]['out_queue'].put((
+                    await Dicts.bots[bot_number]['out_queue'].put((
                         1, Dicts.bots[bot_number]['count'], {
                             'destination': message.channel,
                             'embed': em,
@@ -1082,7 +1082,7 @@ def deactivate(bot_number, message):
                     ).format(message.author.mention, command.title()),
                     color=int('0xee281f', 16)
                 )
-                Dicts.bots[bot_number]['out_queue'].put((
+                await Dicts.bots[bot_number]['out_queue'].put((
                     1, Dicts.bots[bot_number]['count'], {
                         'destination': message.channel,
                         'embed': em,
@@ -1098,7 +1098,7 @@ def deactivate(bot_number, message):
                 ).format(message.author.mention, command.title()),
                 color=int('0xee281f', 16)
             )
-            Dicts.bots[bot_number]['out_queue'].put((
+            await Dicts.bots[bot_number]['out_queue'].put((
                 1, Dicts.bots[bot_number]['count'], {
                     'destination': message.channel,
                     'embed': em,
@@ -1124,7 +1124,7 @@ def deactivate(bot_number, message):
             ).format(message.author.mention, str(deactivate_count)),
             color=int('0x71cd40', 16)
         )
-        Dicts.bots[bot_number]['out_queue'].put((
+        await Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'embed': em,
@@ -1134,7 +1134,7 @@ def deactivate(bot_number, message):
         Dicts.bots[bot_number]['count'] += 1
 
 
-def alerts(bot_number, message):
+async def alerts(bot_number, message):
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
     if user_dict is None:
         em = discord.Embed(
@@ -1143,7 +1143,7 @@ def alerts(bot_number, message):
             ).format(message.author.mention),
             color=int('0xee281f', 16)
         )
-        Dicts.bots[bot_number]['out_queue'].put((
+        await Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.channel,
                 'embed': em,
@@ -1230,7 +1230,7 @@ def alerts(bot_number, message):
             for alerts_split in truncate(alerts.pop()):
                 alerts.append(alerts_split)
         for dm in alerts:
-            Dicts.bots[bot_number]['out_queue'].put((
+            await Dicts.bots[bot_number]['out_queue'].put((
                 1, Dicts.bots[bot_number]['count'], {
                     'destination': message.author,
                     'msg': dm,
@@ -1240,7 +1240,7 @@ def alerts(bot_number, message):
             Dicts.bots[bot_number]['count'] += 1
 
 
-def areas(bot_number, message):
+async def areas(bot_number, message):
     user_dict = Dicts.bots[bot_number]['filters'].get(str(message.author.id))
     areas = '__AVAILABLE AREAS__ (Your active areas are in **bold**.)\n\n'
     for area in Dicts.geofences:
@@ -1261,7 +1261,7 @@ def areas(bot_number, message):
             description=dm,
             color=int('0x71cd40', 16)
         )
-        Dicts.bots[bot_number]['out_queue'].put((
+        await Dicts.bots[bot_number]['out_queue'].put((
             1, Dicts.bots[bot_number]['count'], {
                 'destination': message.author,
                 'embed': em,

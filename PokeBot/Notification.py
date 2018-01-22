@@ -73,7 +73,7 @@ class Notification(Alarm):
         reject_leftover_parameters(settings, "'Alert level in DM alarm.")
         return alert
 
-    def send_alert(self, client, bot_number, alert, info, user_ids):
+    async def send_alert(self, client, bot_number, alert, info, user_ids):
         msg = self.replace(alert['content'], info)
         em = discord.Embed(
             title=self.replace(alert['title'], info),
@@ -90,7 +90,7 @@ class Notification(Alarm):
                 })
             )
         for user_id in user_ids:
-            Dicts.bots[bot_number]['out_queue'].put((
+            await Dicts.bots[bot_number]['out_queue'].put((
                 2, Dicts.bots[bot_number]['count'], {
                     'destination': discord.utils.get(
                         client.get_all_members(),
@@ -103,12 +103,12 @@ class Notification(Alarm):
             ))
             Dicts.bots[bot_number]['count'] += 1
 
-    def pokemon_alert(self, client, bot_number, pokemon_info, user_ids):
-        self.send_alert(
+    async def pokemon_alert(self, client, bot_number, pokemon_info, user_ids):
+        await self.send_alert(
             client, bot_number, self.__pokemon, pokemon_info, user_ids)
 
-    def raid_egg_alert(self, client, bot_number, raid_info, user_ids):
-        self.send_alert(client, bot_number, self.__egg, raid_info, user_ids)
+    async def raid_egg_alert(self, client, bot_number, raid_info, user_ids):
+        await self.send_alert(client, bot_number, self.__egg, raid_info, user_ids)
 
-    def raid_alert(self, client, bot_number, raid_info, user_ids):
-        self.send_alert(client, bot_number, self.__raid, raid_info, user_ids)
+    async def raid_alert(self, client, bot_number, raid_info, user_ids):
+        await self.send_alert(client, bot_number, self.__raid, raid_info, user_ids)

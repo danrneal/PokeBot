@@ -40,8 +40,6 @@ class ManageWebhook(object):
                     "Queue length is at {}... this may be causing a delay " +
                     "in notifications."
                 ).format(self.__queue.qsize()))
-            while self.__queue.empty():
-                await asyncio.sleep(0)
             data = await self.__queue.get()
             obj = Webhook.make_object(data)
             if obj is not None:
@@ -50,11 +48,11 @@ class ManageWebhook(object):
                     last_clean = datetime.utcnow()
                 try:
                     if obj['type'] == "pokemon":
-                        self.process_pokemon(obj)
+                        await self.process_pokemon(obj)
                     elif obj['type'] == 'egg':
-                        self.process_egg(obj)
+                        await self.process_egg(obj)
                     elif obj['type'] == "raid":
-                        self.process_raid(obj)
+                        await self.process_raid(obj)
                     else:
                         pass
                 except Exception as e:
@@ -64,7 +62,7 @@ class ManageWebhook(object):
         self.__cache.clean_and_save()
         exit(0)
 
-    def process_pokemon(self, pkmn):
+    async def process_pokemon(self, pkmn):
         pkmn_hash = pkmn['id']
         if self.__cache.get_pokemon_expiration(pkmn_hash) is not None:
             return
@@ -101,11 +99,11 @@ class ManageWebhook(object):
             'form_or_empty': '' if form == 'unknown' else form
         })
         for name, mgr in Dicts.managers.items():
-            mgr.update(pkmn)
+            await mgr.update(pkmn)
         for bot in Dicts.bots:
-            bot['in_queue'].put(pkmn)
+            await bot['in_queue'].put(pkmn)
 
-    def process_egg(self, egg):
+    async def process_egg(self, egg):
         gym_id = egg['id']
         if self.__cache.get_egg_expiration(gym_id) is not None:
             return
@@ -130,11 +128,11 @@ class ManageWebhook(object):
             'team_name': self.__locale.get_team_name(team_id)
         })
         for name, mgr in Dicts.managers.items():
-            mgr.update(egg)
+            await mgr.update(egg)
         for bot in Dicts.bots:
-            bot['in_queue'].put(egg)
+            await bot['in_queue'].put(egg)
 
-    def process_raid(self, raid):
+    async def process_raid(self, raid):
         gym_id = raid['id']
         pkmn_id = raid['pkmn_id']
         if self.__cache.get_raid_expiration(gym_id) is not None:
@@ -190,9 +188,9 @@ class ManageWebhook(object):
             'max_cp': max_cp
         })
         for name, mgr in Dicts.managers.items():
-            mgr.update(raid)
+            await mgr.update(raid)
         for bot in Dicts.bots:
-            bot['in_queue'].put(raid)
+            await bot['in_queue'].put(raid)
 
     def check_geofences(self, name, lat, lng):
         for gf in self.__geofences:
