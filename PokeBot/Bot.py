@@ -5,7 +5,6 @@ import logging
 import discord
 import asyncio
 from datetime import datetime
-from .processing import in_q
 from .utils import get_args, Dicts, update_dicts
 from .commands import (status, commands, dex, set_, delete, reset, pause,
                        resume, activate, deactivate, alerts, areas)

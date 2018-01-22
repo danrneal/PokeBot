@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import logging
-import asyncio
 from datetime import datetime, timedelta
 from .utils import get_args, Dicts
 

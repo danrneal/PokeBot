@@ -108,7 +108,9 @@ class Notification(Alarm):
             client, bot_number, self.__pokemon, pokemon_info, user_ids)
 
     async def raid_egg_alert(self, client, bot_number, raid_info, user_ids):
-        await self.send_alert(client, bot_number, self.__egg, raid_info, user_ids)
+        await self.send_alert(
+            client, bot_number, self.__egg, raid_info, user_ids)
 
     async def raid_alert(self, client, bot_number, raid_info, user_ids):
-        await self.send_alert(client, bot_number, self.__raid, raid_info, user_ids)
+        await self.send_alert(
+            client, bot_number, self.__raid, raid_info, user_ids)
