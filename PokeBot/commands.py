@@ -44,8 +44,8 @@ async def commands(client, message):
             "blank,\n\n" +
             "`!delete [pokemon/default/all]` to remove an alert for a given " +
             "pokemon\n\n" +
-            "`!reset [pokemon/all]` to reset an alert for a given pokemon to " +
-            "your default alert characteristics\n\n" +
+            "`!reset [pokemon/all]` to reset an alert for a given pokemon " +
+            "to your default alert characteristics\n\n" +
             "`!pause` or `!p` to pause all notifcations,\n\n" +
             "`!resume` or `!r` to resume all alerts,\n\n" +
             "`!activate [area/all]` to resume a given area,\n\n" +
@@ -472,7 +472,7 @@ async def set_(client, message, all_areas, filter_file, locale):
                         })
                         log.info((
                             'Unrecognized arg passed from {}.'
-                        ).format(message.author.display_name))                    
+                        ).format(message.author.display_name))
                         break
                 if error is True:
                     break
@@ -641,8 +641,8 @@ async def delete(client, message, geofences, all_areas, filter_file, locale):
                         else:
                             embeds = discord.Embed(
                                 description=(
-                                    "{} You did not previously have any alerts " +
-                                    "set."
+                                    "{} You did not previously have any " +
+                                    "alerts set."
                                 ).format(message.author.mention),
                                 color=int('0xee281f', 16)
                             )
@@ -667,8 +667,8 @@ async def delete(client, message, geofences, all_areas, filter_file, locale):
                         })
                         log.info((
                             'Unrecognized pokemon from {}.'
-                        ).format(message.author.display_name))   
-        if reload:                
+                        ).format(message.author.display_name))
+        if reload:
             if all_areas is True:
                 gfs = list(geofences.keys())
             else:
@@ -724,7 +724,7 @@ async def reset(client, message, geofences, all_areas, filter_file, locale):
     reload = False
     with open(filter_file, 'r+', encoding="utf-8") as f:
         user_filters = json.load(f, object_pairs_hook=OrderedDict)
-        user_dict = user_filters[str(message.author.id)]    
+        user_dict = user_filters[str(message.author.id)]
         if user_dict is None:
             embeds = discord.Embed(
                 description=(
@@ -755,7 +755,7 @@ async def reset(client, message, geofences, all_areas, filter_file, locale):
                     for filt_name in user_dict['monsters']['filters'].copy():
                         if int(filt_name[:3]) == pokemon:
                             user_dict['monsters']['filters'].pop(filt_name)
-                            if reset == False:
+                            if reset is False:
                                 reset_count += 1
                                 reload = True
                             reset = True
@@ -788,7 +788,7 @@ async def reset(client, message, geofences, all_areas, filter_file, locale):
                             locale.get_pokemon_name(pokemon),
                             message.author.display_name
                         ))
-                except ValueError:    
+                except ValueError:
                     if command != 'all':
                         embeds = discord.Embed(
                             description=(
@@ -816,7 +816,7 @@ async def reset(client, message, geofences, all_areas, filter_file, locale):
                                 user_dict['monsters']['filters'].pop(filt_name)
                             if ('000' in user_dict['monsters']['filters']):
                                 user_dict['monsters']['filters']['000'][
-                                    'monsters'] = list(range(1, 722))                  
+                                    'monsters'] = list(range(1, 722))
                         else:
                             embeds = discord.Embed(
                                 description=(
@@ -864,8 +864,8 @@ async def reset(client, message, geofences, all_areas, filter_file, locale):
             update_filters(user_filters, filter_file, f)
             embeds = discord.Embed(
                 description=(
-                        "{} You have reset **{}** pokemon spawn filters to your " +
-                        "default filter."
+                        "{} You have reset **{}** pokemon spawn filters to " +
+                        "your default filter."
                     ).format(message.author.mention, str(reset_count)),
                 color=int('0x71cd40', 16)
             )
@@ -956,7 +956,7 @@ async def pause(client, message, geofences, all_areas, filter_file):
                         'embeds': embeds
                     })
                     log.info('{} tried to pause but already paused.'.format(
-                        message.author.display_name)) 
+                        message.author.display_name))
             else:
                 embeds = discord.Embed(
                     description=((
@@ -1067,7 +1067,7 @@ async def resume(client, message, geofences, all_areas, filter_file):
                         'embeds': embeds
                     })
                     log.info("{} tried to resume but wasn't paused.".format(
-                        message.author.display_name)) 
+                        message.author.display_name))
             else:
                 embeds = discord.Embed(
                     description=((
@@ -1373,8 +1373,8 @@ async def deactivate(client, message, geofences, all_areas, filter_file):
                     elif message.content.lower() != '!deactivate all':
                         embeds = discord.Embed(
                             description=((
-                                "{} The **{}** area was not previously active " +
-                                "for you."
+                                "{} The **{}** area was not previously " +
+                                "active for you."
                             ).format(message.author.mention, command)),
                             color=int('0xee281f', 16)
                         )
@@ -1433,7 +1433,7 @@ async def deactivate(client, message, geofences, all_areas, filter_file):
             embeds = discord.Embed(
                 description=((
                     "{} Your alerts have been deactivated for **{}** areas."
-                ).format(message.author.mention, str(activate_count))),
+                ).format(message.author.mention, str(deactivate_count))),
                 color=int('0x71cd40', 16)
             )
             await client.get_alarm().update(1, {
@@ -1441,7 +1441,7 @@ async def deactivate(client, message, geofences, all_areas, filter_file):
                 'embeds': embeds
             })
             log.info('Deactivated {} areas for {}.'.format(
-                str(activate_count), message.author.display_name))
+                str(deactivate_count), message.author.display_name))
     if reload:
         client.load_filter_file(get_path(filter_file))
 
@@ -1546,10 +1546,10 @@ async def alerts(client, message, bot_number, geofences, all_areas,
                             if filters['monsters']['filters'][filt_name][
                                     'genders'] is not None:
                                 if filters['monsters']['filters'][filt_name][
-                                    'genders'] == ['female']:
+                                        'genders'] == ['female']:
                                     alerts += '♀, '
                                 else:
-                                    alerts += '♂, '                
+                                    alerts += '♂, '
                         alerts = alerts[:-2] + ' | '
                 alerts = alerts[:-3] + '\n'
         alerts += '```'
