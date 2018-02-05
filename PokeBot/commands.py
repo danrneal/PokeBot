@@ -13,7 +13,7 @@ from .Utilities.GenUtils import (
 log = logging.getLogger('Commands')
 
 
-async def status(client ,message, bot_number, number_of_bots):
+async def status(client, message, bot_number, number_of_bots):
     await asyncio.sleep(bot_number * 0.1)
     embeds = discord.Embed(
         description='PokeBot **{}** (of **{}**) standing by.'.format(
@@ -38,9 +38,10 @@ async def commands(client, message):
     embeds = discord.Embed(
         description=(
             "Hello there!\n\n" +
-            "`!set [pokemon/default/all] [IV] CP[CP] L[level] [gender]` to add " +
-            "an alert for a given pokemon based on it's characteristics, any of " +
-            "the characteristics can be left blank,\n\n" +
+            "`!set [pokemon/default/all] [IV] CP[CP] L[level] [gender]` to " +
+            "add an alert for a given pokemon based on it's " +
+            "characteristics, any of the characteristics can be left " +
+            "blank,\n\n" +
             "`!delete [pokemon/default/all]` to remove an alert for a given " +
             "pokemon\n\n" +
             "`!reset [pokemon/all]` to reset an alert for a given pokemon to " +
@@ -49,14 +50,16 @@ async def commands(client, message):
             "`!resume` or `!r` to resume all alerts,\n\n" +
             "`!activate [area/all]` to resume a given area,\n\n" +
             "`!deactivate [area/all]` to pause a given area,\n\n" +
-            "`!areas` to see what areas area available to pause or resume,\n\n" +
+            "`!areas` to see what areas area available to pause or " +
+            "resume,\n\n" +
             "`!alerts` to see your alert settings,\n\n"
             "`!dex [pokemon]` to get pokedex information for a given " +
             "pokemon,\n\n" +
             "`!status` to see which bots are currently online,\n\n" +
             "`!help` or `!commands` to see this message,\n\n" +
             "It is possible to add or delete multiple pokemon or areas by " +
-            "putting pokemon on seperate lines or separating them with commas.\n" +
+            "putting pokemon on seperate lines or separating them with " +
+            "commas.\n" +
             "Commands should be in the #custom_filters channel.\n\n"
         ),
         color=int('0x71cd40', 16)
@@ -139,12 +142,6 @@ async def dex(client, message):
             zip(defensive_grade[1:], quick[1:], charge[1:], legacy_moves[1:]),
             key=lambda x: x[0]
         )
-        if len(soup.find_all(class_=("raid-boss-counters"))) > 0:
-            raid_counters = soup.find_all(class_=("raid-boss-counters"))[
-                0].find_all(class_=(
-                    "field field--name-title " +
-                    "field--type-string field--label-hidden"
-                ))
         title = "%03d" % dex_number + ' | ' + pokemon.upper()
         try:
             descript = "Rating: " + rating[0].get_text().strip() + ' / 10'

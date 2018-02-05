@@ -156,7 +156,6 @@ def is_weather_boosted(pokemon_id, weather_id):
             j = json.loads(f.read())
         for w_id in j:
             is_weather_boosted.info[w_id] = j[w_id]
-
     boosted_types = is_weather_boosted.info.get(str(weather_id), {})
     types = get_base_types(pokemon_id)
     return types[0] in boosted_types or types[1] in boosted_types
@@ -174,19 +173,6 @@ def get_base_types(pokemon_id):
                     j[id_].get('type2')
                 ]
     return get_base_types.info.get(pokemon_id)
-
-
-def is_weather_boosted(pokemon_id, weather_id):
-    if not hasattr(is_weather_boosted, 'info'):
-        is_weather_boosted.info = {}
-        file_ = get_path('data/weather_boosts.json')
-        with open(file_, 'r') as f:
-            j = json.loads(f.read())
-        for w_id in j:
-            is_weather_boosted.info[w_id] = j[w_id]
-    boosted_types = is_weather_boosted.info.get(str(weather_id), {})
-    types = get_base_types(pokemon_id)
-    return types[0] in boosted_types or types[1] in boosted_types
 
 
 def get_type_emoji(type_id):

@@ -1,5 +1,4 @@
 import logging
-import json
 from .. import Unknown
 
 log = logging.getLogger('Filter')
@@ -61,7 +60,6 @@ class BaseFilter(object):
         for value in values:
             allowed.add(value_type(value))
         return allowed
-
 
     @staticmethod
     def parse_as_dict(key_type, value_type, param_name, data):

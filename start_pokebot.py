@@ -311,7 +311,7 @@ def parse_settings(root_path, loop, Entry):
         loop.create_task(bot_manager.connect())
         loop.create_task(bot_manager.run())
         loop.create_task(bot_manager.get_alarm().send_dm())
-        
+
 
 def get_from_list(arg, i, default):
     return arg[i] if len(arg) > 1 else default

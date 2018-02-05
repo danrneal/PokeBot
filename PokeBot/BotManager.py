@@ -152,8 +152,8 @@ class BotManager(discord.Client):
                 return
             except Exception as e:
                 log.error(
-                    "Encountered error while parsing Filters. This is because " +
-                    "of a mistake in your Filters file."
+                    "Encountered error while parsing Filters. This is " +
+                    "because of a mistake in your Filters file."
                 )
                 log.error("{}: {}".format(type(e).__name__, e))
                 sys.exit(1)
@@ -421,7 +421,6 @@ class BotManager(discord.Client):
         with open(self.__filter_file, 'r+', encoding="utf-8") as f:
             user_filters = json.load(f, object_pairs_hook=OrderedDict)
             old_users = []
-            muted_users = []
             old_geofences = []
             for user_id in user_filters:
                 if int(user_id) % self.__number_of_bots == self.__bot_number:
@@ -556,10 +555,10 @@ class BotManager(discord.Client):
             with open(self.__filter_file, 'r+', encoding="utf-8") as f:
                 user_filters = json.load(f, object_pairs_hook=OrderedDict)
                 if str(member.id) in list(user_filters.keys()):
-                    user_filters.pop(str(after.id))
+                    user_filters.pop(str(member.id))
                     reload = True
                     log.info('Removed user {} from user filters'.format(
-                        after.display_name))
+                        member.display_name))
                 if reload:
                     update_filters(user_filters, self.__filter_file, f)
             if reload:

@@ -4,7 +4,6 @@ import sys
 import asyncio
 from collections import OrderedDict, namedtuple
 from datetime import datetime, timedelta
-from . import Filters
 from .LocationServices import location_service_factory
 from .Locale import Locale
 from .Geofence import load_geofence_file

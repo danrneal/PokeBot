@@ -28,7 +28,7 @@ class EggEvent(BaseEvent):
         self.gym_image = check_for_none(str, data.get('url'), Unknown.REGULAR)
         self.gym_sponsor = check_for_none(
             int, data.get('sponsor'), Unknown.SMALL)
-        self.gym_park = check_for_none(str, data.get('park'), Unknown.REGULAR)        
+        self.gym_park = check_for_none(str, data.get('park'), Unknown.REGULAR)
         self.current_team_id = check_for_none(
             int, data.get('team'), Unknown.TINY)
         self.name = self.gym_id

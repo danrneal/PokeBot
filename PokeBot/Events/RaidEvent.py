@@ -51,7 +51,7 @@ class RaidEvent(BaseEvent):
     def generate_dts(self, locale):
         raid_end_time = get_time_as_str(self.raid_end, self.lat, self.lng)
         dts = self.custom_dts.copy()
-        boosted_weather_name = locale.get_weather_name(boosted_weather_id)
+        boosted_weather_name = locale.get_weather_name(self.boosted_weather_id)
         weather_name = locale.get_weather_name(self.weather_id)
         type1 = locale.get_type_name(self.types[0])
         type2 = locale.get_type_name(self.types[1])

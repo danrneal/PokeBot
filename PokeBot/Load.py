@@ -1,4 +1,7 @@
 import logging
+import json
+import sys
+from collections import OrderedDict
 from .Utilities.GenUtils import get_path
 
 log = logging.getLogger('LoadConfig')
@@ -13,7 +16,6 @@ def parse_rules_file(manager, filename):
         log.info("Loading Rules from file at {}".format(filepath))
         with open(filepath, 'r') as f:
             rules = json.load(f, object_pairs_hook=OrderedDict)
-            
         if type(rules) is not OrderedDict:
             log.critical(
                 "Rules files must be a JSON object: { \"monsters\":[...],... }"
@@ -45,6 +47,7 @@ def parse_rules_file(manager, filename):
         )
         log.error("{}: {}".format(type(e).__name__, e))
         sys.exit(1)
+
 
 def load_rules_section(set_rule, rules):
     for name, settings in rules.items():

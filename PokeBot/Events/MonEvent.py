@@ -2,12 +2,11 @@ from datetime import datetime
 from .BaseEvent import BaseEvent
 from .. import Unknown
 from ..Utilities.MonUtils import (
-    get_pokemon_size, get_base_types, get_type_emoji, get_gender_sym,
-    get_base_height, get_base_weight
+    get_pokemon_size, get_base_types, get_type_emoji, get_gender_sym
 )
 from ..Utilities.GenUtils import (
     get_gmaps_link, get_applemaps_link, get_time_as_str, get_seconds_remaining,
-    get_weather_emoji, 
+    get_weather_emoji
 )
 
 
@@ -102,9 +101,9 @@ class MonEvent(BaseEvent):
                 else Unknown.or_empty(boosted_weather_name)),
             'boosted_weather_emoji':
                 get_weather_emoji(self.boosted_weather_id),
-            'boosted_or_empty': locale.get_boosted_text() if \
+            'boosted_or_empty': locale.get_boosted_text() if (
                 Unknown.is_not(self.boosted_weather_id) and
-                self.boosted_weather_id != 0 else '',
+                self.boosted_weather_id != 0) else '',
             'mon_lvl': self.mon_lvl,
             'cp': self.cp,
             'iv_0': (

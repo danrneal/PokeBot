@@ -1,5 +1,4 @@
 import logging
-import requests
 import discord
 import asyncio
 from datetime import datetime, timedelta
@@ -131,7 +130,7 @@ class UserAlarm(Alarm):
                 log.warning((
                     "Bot queue is {} seconds behind..., consider adding " +
                     "more bots."
-                ).format((datetime.utcnow() - msg_params[1]).total_seconds()))
+                ).format((datetime.utcnow() - message[1]).total_seconds()))
             try:
                 await message[3]['destination'].send(
                     message[3].get('content'),

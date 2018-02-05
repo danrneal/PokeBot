@@ -1,6 +1,5 @@
 import logging
 from datetime import datetime
-from ..Utilities.GenUtils import get_image_url
 
 log = logging.getLogger('Cache')
 
