@@ -12,6 +12,10 @@ from .Utilities.GenUtils import (
 
 log = logging.getLogger('Commands')
 
+female_only = [29, 30, 31, 113, 115, 124, 238, 241, 242]
+male_only = [32, 33, 34, 106, 107, 128, 236, 237]
+genderless = [81, 82, 100, 101, 120, 121, 137, 201, 233]
+
 
 async def status(client, message, bot_number, number_of_bots):
     await asyncio.sleep(bot_number * 0.1)
@@ -290,7 +294,7 @@ async def dex(client, message):
             message.author.display_name))
 
 
-async def set_(client, message, all_areas, filter_file, locale):
+async def set_(client, message, geofences, all_areas, filter_file, locale):
     msg = message.content.lower().replace('!set ', '').replace(
         '!set\n', '').replace('%', '').replace('nidoranf', 'nidoran♀').replace(
         'nidoranm', 'nidoran♂').replace('mr. mime', 'mr.mime').replace(
@@ -353,16 +357,18 @@ async def set_(client, message, all_areas, filter_file, locale):
                 }]
             for inp, filt in zip(input_, filters):
                 if pokemon > 0:
-                    if (len(set(inp).intersection(set(['female', 'f']))) > 0 and
-                        get_monster_id(pokemon) not in Dicts.male_only and
-                            get_monster_id(pokemon) not in Dicts.genderless):
+                    if (len(set(inp).intersection(
+                            set(['female', 'f']))) > 0 and
+                        get_monster_id(pokemon) not in male_only and
+                            get_monster_id(pokemon) not in genderless):
                         filt['genders'] = ['female']
                         filt['is_missing_info'] = False
                         inp.remove(list(set(inp).intersection(set(
                             ['female', 'f'])))[0])
-                    elif (len(set(inp).intersection(set(['male', 'm']))) > 0 and
-                          get_monster_id(pokemon) not in Dicts.female_only and
-                          get_monster_id(pokemon) not in Dicts.genderless):
+                    elif (len(set(inp).intersection(
+                            set(['male', 'm']))) > 0 and
+                          get_monster_id(pokemon) not in female_only and
+                          get_monster_id(pokemon) not in genderless):
                         filt['genders'] = ['male']
                         filt['is_missing_info'] = False
                         inp.remove(list(set(inp).intersection(set(

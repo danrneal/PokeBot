@@ -580,8 +580,8 @@ class BotManager(discord.Client):
                     await dex(self, message)
                 elif message.content.lower().startswith('!set '):
                     await set_(
-                        self, message, self.__all_areas, self.__filter_file,
-                        self.__locale
+                        self, message, self.geofences, self.__all_areas,
+                        self.__filter_file, self.__locale
                     )
                 elif message.content.lower().startswith(
                         ('!delete ', '!remove ')):
