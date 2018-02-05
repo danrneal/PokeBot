@@ -1,7 +1,7 @@
 {
     "374308043439079424": {
         "monsters": {
-            "enabled": true,
+            "enabled": false,
             "defaults": {
                 "geofences": [
                     "all"
@@ -34,6 +34,15 @@
                     "min_lvl": "0",
                     "monsters": [
                         68
+                    ]
+                },
+                "083": {
+                    "genders": null,
+                    "min_cp": "0",
+                    "min_iv": "0",
+                    "min_lvl": "0",
+                    "monsters": [
+                        83
                     ]
                 },
                 "113": {
@@ -312,7 +321,7 @@
             }
         },
         "eggs": {
-            "enabled": true,
+            "enabled": false,
             "defaults": {
                 "geofences": [
                     "all"
@@ -326,7 +335,7 @@
             }
         },
         "raids": {
-            "enabled": true,
+            "enabled": false,
             "defaults": {
                 "geofences": [
                     "all"

@@ -193,7 +193,7 @@ def parse_settings(root_path, loop, Entry):
     parser.add_argument(
         '-uf', '--user_filters',
         type=str,
-        default='/user_filters/user_filters.json',
+        default='./user_filters/user_filters.json',
         help=(
             'User filters configuration file. default: ' +
             '/user_filters/user_filters.json'

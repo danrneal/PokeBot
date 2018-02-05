@@ -311,7 +311,9 @@ async def set_(client, message, geofences, all_areas, filter_file, locale):
     msg = message.content.lower().replace('!set ', '').replace(
         '!set\n', '').replace('%', '').replace('nidoranf', 'nidoran♀').replace(
         'nidoranm', 'nidoran♂').replace('mr. mime', 'mr.mime').replace(
-        ',\n', ',').replace('\n', ',').replace(', ', ',').split(',')
+        'mime jr.', 'mimejr.').replace('farfetchd', "farfetch'd").replace(
+        'flabebe', 'flab\u00E9b\u00E9').replace(',\n', ',').replace(
+        '\n', ',').replace(', ', ',').split(',')
     set_count = 0
     reload = False
     with open(filter_file, 'r+', encoding="utf-8") as f:
@@ -327,7 +329,7 @@ async def set_(client, message, geofences, all_areas, filter_file, locale):
                 if is_number(command.split()[0]):
                     raise ValueError
                 pokemon = get_monster_id(command.split()[0].replace(
-                    'mr.mime', 'mr. mime'))
+                    'mr.mime', 'mr. mime').replace('mimejr.', 'mime jr.'))
                 command = command.replace(locale.get_pokemon_name(
                     pokemon).lower().replace(' ', ''), '').strip().split('|')
                 if len(command) > 3:
@@ -575,8 +577,10 @@ async def delete(client, message, geofences, all_areas, filter_file, locale):
         '!delete\n', '').replace('!remove ', '').replace(
         '!remove\n', '').replace('%', '').replace(
         'nidoranf', 'nidoran♀').replace('nidoranm', 'nidoran♂').replace(
-        'mr. mime', 'mr.mime').replace(',\n', ',').replace('\n', ',').replace(
-        ', ', ',').split(',')
+        'mr. mime', 'mr.mime').replace('mime jr.', 'mimejr.').replace(
+        'farfetchd', "farfetch'd").replace(
+        'flabebe', 'flab\u00E9b\u00E9').replace(',\n', ',').replace(
+        '\n', ',').replace(', ', ',').split(',')
     del_count = 0
     reload = False
     with open(filter_file, 'r+', encoding="utf-8") as f:
@@ -611,7 +615,8 @@ async def delete(client, message, geofences, all_areas, filter_file, locale):
                         pokemon = 0
                     else:
                         pokemon = get_monster_id(command.replace(
-                            'mr.mime', 'mr. mime'))
+                            'mr.mime', 'mr. mime').replace(
+                                'mimejr.', 'mime jr.'))
                     for filt_name in user_dict['monsters']['filters'].copy():
                         if int(filt_name[:3]) == pokemon:
                             deleted = True
@@ -737,8 +742,10 @@ async def reset(client, message, geofences, all_areas, filter_file, locale):
     msg = message.content.lower().replace('!reset ', '').replace(
         '!reset\n', '').replace('%', '').replace(
         'nidoranf', 'nidoran♀').replace('nidoranm', 'nidoran♂').replace(
-        'mr. mime', 'mr.mime').replace(',\n', ',').replace('\n', ',').replace(
-        ', ', ',').split(',')
+        'mr. mime', 'mr.mime').replace('mime jr.', 'mimejr.').replace(
+        'farfetchd', "farfetch'd").replace(
+        'flabebe', 'flab\u00E9b\u00E9').replace(',\n', ',').replace(
+        '\n', ',').replace(', ', ',').split(',')
     reset_count = 0
     reload = False
     with open(filter_file, 'r+', encoding="utf-8") as f:
@@ -770,7 +777,7 @@ async def reset(client, message, geofences, all_areas, filter_file, locale):
                         raise ValueError
                     reset = False
                     pokemon = get_monster_id(command.replace(
-                        'mr.mime', 'mr. mime'))
+                        'mr.mime', 'mr. mime').replace('mimejr.', 'mime jr.'))
                     for filt_name in user_dict['monsters']['filters'].copy():
                         if int(filt_name[:3]) == pokemon:
                             user_dict['monsters']['filters'].pop(filt_name)
