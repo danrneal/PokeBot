@@ -10,4 +10,4 @@ def cache_factory(kind, name):
     elif kind == cache_options[1]:
         return FileCache(name)
     else:
-        raise ValueError("%s is not a valid cache type!".format(kind))
+        raise ValueError("{} is not a valid cache type!".format(kind))

@@ -1,10 +1,31 @@
+# Copy this file to config.ini and modify to suit your needs
+# Uncomment a line (remove the #) when you want to change its default value.
+# Multiple arguments can be listed as [arg1, arg2, ... ]
+# Number of arguments must match manager_count or be a single arguement (single arguements will apply to all Managers)
+# To exclude an argument for a specific manager, use 'None'
+
+# Server Settings
+#host:											# Address to listen on (default 127.0.0.1)
 #port:											# Port to listen on (default: 4000)
-#manager_count:									# Number of Managers to run
-#cache_type:                                    # Type of cache to use. (default: 'mem')
-#tokens:										# List of bot_tokens [token1, token2, ...]
-#bot_client_ids:		 						# List of bot client_ids [client_id1, client_id2, ...]
-#command_channels:								# Channel id that users input subscription commands [channel1, channel2, ...]
-#alert_role:									# Role name of users who can use the bot (default = '@everyone')
+#manager_count: 1								# Number of Managers to run. (default: 1)
+
+# Manager-Specific Settings
+#manager_name: manager_0                        # Name of the Manager in the logs. Default(manager_0).
+#key:                                           # Google Maps API Key to use
+#filters:										# File containing filter settings (default: filters.json)
+#alarms: 										# File containing alarm settings (default: alarms.json)
+#rules: 										# File containing rules settings (default: None)
+#geofences:										# File containing geofence(s) used to filter (default: None)
+#locale:										# Language to be used to translate names (default: en)
+#cache_type:                                    # Specify the type of cache to use. Options: ['mem', 'file'] (Default: 'mem')
+#max_attempts:									# Maximum number of attempts an alarm makes to send a notification. (default: 3)
+
+# DM settings
+#bot_tokens:									# List of tokens for Discord Bots
+#user_filters:									# File containing user filter settings (default: user_filters.json)
+#user_alarms: 									# File containing user alarm settings (default: user_alarms.json)
+#user_geofences:								# File containing user geofence(s) used to filter (default: None)
+#command_channels:								# Channel id that users input subscription commands
+#alert_role:									# Role name of users who can use the bot (default: '@everyone')
 #muted_role:									# Role name for muted users
-#gmaps_keys:									# Gmaps api keys with geocoding and static map enabled [optional but required for map inlay and neighborhood data] [key1, key2, ...]
-#all_areas:										# Set to True to subscribe to all areas by default (default = False)
+#all_areas:										# Set to True to subscribe to all areas by default (default: False)

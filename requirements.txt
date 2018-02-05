@@ -1,10 +1,10 @@
+aiohttp
 asyncio
+bs4
+configargparse
 git+https://github.com/Rapptz/discord.py@rewrite
 googlemaps
-configargparse
-aiohttp
-bs4
-requests
 pytz
-timezonefinder
 portalocker
+requests
+timezonefinder

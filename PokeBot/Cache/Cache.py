@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime
+from ..Utilities.GenUtils import get_image_url
 
 log = logging.getLogger('Cache')
 
@@ -31,10 +32,6 @@ class Cache(object):
 
     def clean_and_save(self):
         self._clean_hist()
-        self._save()
-
-    def _save(self):
-        pass
 
     def _clean_hist(self):
         for hist in (self._pokemon_hist, self._egg_hist, self._raid_hist):

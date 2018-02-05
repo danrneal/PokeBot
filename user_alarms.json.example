@@ -1,0 +1,42 @@
+{
+	"monsters":{
+		"icon_url":"<YOUR CUSTOM URL HERE>/<mon_id_3>_<form_id_3>.png",
+		"title":"A wild <mon_name> has appeared!",
+		"url":"<gmaps>",
+		"body":"Available until <24h_time> (<time_left>).",
+		"map":{
+			"enabled":"true",
+			"width":"250",
+			"height":"125",
+			"maptype":"roadmap",
+			"zoom":"15"
+		}
+	},
+	"eggs":{
+		"icon_url":"<YOUR CUSTOM URL HERE>/<egg_lvl>.png",
+		"title":"Raid is incoming!",
+		"url":"<gmaps>",
+		"body":"A level <egg_lvl> raid will hatch at <24h_hatch_time> (<hatch_time_left>).",
+		"map":{
+			"enabled":"true",
+			"width":"250",
+			"height":"125",
+			"maptype":"roadmap",
+			"zoom":"15"
+		}
+	},
+	"raids":{
+		"icon_url":"<YOUR CUSTOM URL HERE>/<mon_id_3>_000.png",
+		"title":"Level <raid_lvl> Raid is available against <mon_name>!",
+		"url":"<gmaps>",
+		"body":"The raid is available until <24h_raid_end> (<raid_time_left>).",
+		"map":{
+			"enabled":"true",
+			"width":"250",
+			"height":"125",
+			"maptype":"roadmap",
+			"zoom":"15"
+		}
+	}
+
+}

@@ -1,0 +1,355 @@
+{
+    "374308043439079424": {
+        "monsters": {
+            "enabled": true,
+            "defaults": {
+                "geofences": [
+                    "all"
+                ]
+            },
+            "filters": {
+                "066": {
+                    "genders": null,
+                    "is_missing_info": false,
+                    "min_cp": "0",
+                    "min_iv": "100",
+                    "min_lvl": "0",
+                    "monsters": [
+                        66
+                    ]
+                },
+                "067": {
+                    "genders": null,
+                    "min_cp": "0",
+                    "min_iv": "0",
+                    "min_lvl": "0",
+                    "monsters": [
+                        67
+                    ]
+                },
+                "068": {
+                    "genders": null,
+                    "min_cp": "0",
+                    "min_iv": "0",
+                    "min_lvl": "0",
+                    "monsters": [
+                        68
+                    ]
+                },
+                "113": {
+                    "genders": null,
+                    "min_cp": "0",
+                    "min_iv": "0",
+                    "min_lvl": "0",
+                    "monsters": [
+                        113
+                    ]
+                },
+                "133": {
+                    "genders": null,
+                    "is_missing_info": false,
+                    "min_cp": "0",
+                    "min_iv": "100",
+                    "min_lvl": "33",
+                    "monsters": [
+                        133
+                    ]
+                },
+                "143": {
+                    "genders": null,
+                    "is_missing_info": false,
+                    "min_cp": "0",
+                    "min_iv": "100",
+                    "min_lvl": "0",
+                    "monsters": [
+                        143
+                    ]
+                },
+                "201": {
+                    "genders": null,
+                    "min_cp": "0",
+                    "min_iv": "0",
+                    "min_lvl": "0",
+                    "monsters": [
+                        201
+                    ]
+                },
+                "242": {
+                    "genders": null,
+                    "min_cp": "0",
+                    "min_iv": "0",
+                    "min_lvl": "0",
+                    "monsters": [
+                        242
+                    ]
+                },
+                "246": {
+                    "genders": null,
+                    "is_missing_info": false,
+                    "min_cp": "0",
+                    "min_iv": "100",
+                    "min_lvl": "0",
+                    "monsters": [
+                        246
+                    ]
+                },
+                "247": {
+                    "genders": null,
+                    "is_missing_info": false,
+                    "min_cp": "0",
+                    "min_iv": "100",
+                    "min_lvl": "0",
+                    "monsters": [
+                        247
+                    ]
+                },
+                "248": {
+                    "genders": null,
+                    "min_cp": "0",
+                    "min_iv": "0",
+                    "min_lvl": "0",
+                    "monsters": [
+                        248
+                    ]
+                },
+                "253": {
+                    "genders": null,
+                    "is_missing_info": false,
+                    "min_cp": "0",
+                    "min_iv": "100",
+                    "min_lvl": "0",
+                    "monsters": [
+                        253
+                    ]
+                },
+                "255": {
+                    "genders": null,
+                    "is_missing_info": false,
+                    "min_cp": "0",
+                    "min_iv": "100",
+                    "min_lvl": "0",
+                    "monsters": [
+                        255
+                    ]
+                },
+                "256": {
+                    "genders": null,
+                    "is_missing_info": false,
+                    "min_cp": "0",
+                    "min_iv": "100",
+                    "min_lvl": "0",
+                    "monsters": [
+                        256
+                    ]
+                },
+                "270": {
+                    "genders": null,
+                    "is_missing_info": false,
+                    "min_cp": "0",
+                    "min_iv": "100",
+                    "min_lvl": "0",
+                    "monsters": [
+                        270
+                    ]
+                },
+                "271": {
+                    "genders": null,
+                    "is_missing_info": false,
+                    "min_cp": "0",
+                    "min_iv": "100",
+                    "min_lvl": "0",
+                    "monsters": [
+                        271
+                    ]
+                },
+                "272": {
+                    "genders": null,
+                    "min_cp": "0",
+                    "min_iv": "0",
+                    "min_lvl": "0",
+                    "monsters": [
+                        272
+                    ]
+                },
+                "280": {
+                    "genders": null,
+                    "is_missing_info": false,
+                    "min_cp": "0",
+                    "min_iv": "100",
+                    "min_lvl": "0",
+                    "monsters": [
+                        280
+                    ]
+                },
+                "281": {
+                    "genders": null,
+                    "is_missing_info": false,
+                    "min_cp": "0",
+                    "min_iv": "100",
+                    "min_lvl": "0",
+                    "monsters": [
+                        281
+                    ]
+                },
+                "282": {
+                    "genders": null,
+                    "min_cp": "0",
+                    "min_iv": "0",
+                    "min_lvl": "0",
+                    "monsters": [
+                        282
+                    ]
+                },
+                "287": {
+                    "genders": null,
+                    "is_missing_info": false,
+                    "min_cp": "0",
+                    "min_iv": "100",
+                    "min_lvl": "0",
+                    "monsters": [
+                        287
+                    ]
+                },
+                "294": {
+                    "genders": null,
+                    "is_missing_info": false,
+                    "min_cp": "0",
+                    "min_iv": "100",
+                    "min_lvl": "0",
+                    "monsters": [
+                        294
+                    ]
+                },
+                "305": {
+                    "genders": null,
+                    "is_missing_info": false,
+                    "min_cp": "0",
+                    "min_iv": "100",
+                    "min_lvl": "0",
+                    "monsters": [
+                        305
+                    ]
+                },
+                "309": {
+                    "genders": null,
+                    "is_missing_info": false,
+                    "min_cp": "0",
+                    "min_iv": "100",
+                    "min_lvl": "0",
+                    "monsters": [
+                        309
+                    ]
+                },
+                "318": {
+                    "genders": null,
+                    "is_missing_info": false,
+                    "min_cp": "0",
+                    "min_iv": "100",
+                    "min_lvl": "0",
+                    "monsters": [
+                        318
+                    ]
+                },
+                "331": {
+                    "genders": null,
+                    "is_missing_info": false,
+                    "min_cp": "0",
+                    "min_iv": "100",
+                    "min_lvl": "0",
+                    "monsters": [
+                        331
+                    ]
+                },
+                "332": {
+                    "genders": null,
+                    "is_missing_info": false,
+                    "min_cp": "0",
+                    "min_iv": "100",
+                    "min_lvl": "0",
+                    "monsters": [
+                        332
+                    ]
+                },
+                "336": {
+                    "genders": null,
+                    "is_missing_info": false,
+                    "min_cp": "0",
+                    "min_iv": "100",
+                    "min_lvl": "0",
+                    "monsters": [
+                        336
+                    ]
+                },
+                "339": {
+                    "genders": null,
+                    "is_missing_info": false,
+                    "min_cp": "0",
+                    "min_iv": "100",
+                    "min_lvl": "0",
+                    "monsters": [
+                        339
+                    ]
+                },
+                "340": {
+                    "genders": null,
+                    "is_missing_info": false,
+                    "min_cp": "0",
+                    "min_iv": "100",
+                    "min_lvl": "0",
+                    "monsters": [
+                        340
+                    ]
+                },
+                "349": {
+                    "genders": null,
+                    "min_cp": "0",
+                    "min_iv": "0",
+                    "min_lvl": "0",
+                    "monsters": [
+                        349
+                    ]
+                }
+            }
+        },
+        "eggs": {
+            "enabled": true,
+            "defaults": {
+                "geofences": [
+                    "all"
+                ]
+            },
+            "filters": {
+                "filter_by_lvl_example": {
+                    "max_egg_lvl": 5,
+                    "min_egg_lvl": 0
+                }
+            }
+        },
+        "raids": {
+            "enabled": true,
+            "defaults": {
+                "geofences": [
+                    "all"
+                ]
+            },
+            "filters": {
+                "filter_by_monster": {
+                    "monsters": [
+                        "Raikou",
+                        "Entei",
+                        "Suicune"
+                    ]
+                },
+                "filter_raid_lvl_and_teams": {
+                    "current_teams": [
+                        "Valor",
+                        "Instinct",
+                        "Mystic"
+                    ],
+                    "max_raid_lvl": 5,
+                    "min_raid_lvl": 0
+                }
+            }
+        }
+    }
+}

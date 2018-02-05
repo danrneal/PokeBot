@@ -4,7 +4,34 @@
     "1": "Blanche", 
     "2": "Candela", 
     "3": "Spark"
-  }, 
+  },
+  "sizes": {
+	"1": "winzig",
+	"2": "klein",
+	"3": "\u00dcblich",
+	"4": "gro\u00DF",
+	"5": "riesig"
+  },
+  "types": {
+    "1": "Normal",
+    "2": "Kampf",
+    "3": "Flug",
+    "4": "Gift",
+    "5": "Boden",
+    "6": "Stein",
+    "7": "K\u00E4fer",
+    "8": "Geist",
+    "9": "Stahl",
+    "10": "Feuer",
+    "11": "Wasser",
+    "12": "Pflanze",
+    "13": "Elektro",
+    "14": "Psycho",
+    "15": "Eis",
+    "16": "Drache",
+    "17": "Fee",
+    "18": "Unlicht"
+  },
   "moves": {
     "100": "Kreuzschere", 
     "101": "Nitroladung", 
@@ -181,7 +208,18 @@
     "94": "Knochenkeule", 
     "95": "Dampfwalze", 
     "96": "Schlammbombe", 
-    "99": "Ampelleuchte"
+    "99": "Ampelleuchte",
+    "281": "Kraftreserve",
+    "282": "Bodycheck",
+    "283": "Kaskade",
+    "284": "Surfer",
+    "285": "Draco Meteor",
+    "286": "Kismetwunsch",
+    "287": "G\u0344hner",
+    "288": "Psyschub",
+    "289": "Ursprungswoge",
+    "290": "Abgrundsklinge",
+    "291": "Geschenk"
   }, 
   "pokemon": {
     "1": "Bisasam", 
@@ -911,5 +949,18 @@
     "1": "Weisheit", 
     "2": "Wagemut", 
     "3": "Intuition"
+  },
+  "weather": {
+	"0": "Keiner",
+	"1": "klar",
+	"2": "Regen",
+	"3": "Teilweise wolkig",
+	"4": "Bew\u00F6lkt",
+	"5": "Windig",
+	"6": "Schnee",
+	"7": "Nebel"
+  },
+  "misc": {
+    "boosted": "verstärktes"
   }
 }

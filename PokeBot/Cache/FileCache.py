@@ -2,8 +2,8 @@ import os
 import logging
 import pickle
 import portalocker
-from ..utils import get_path
-from .Cache import Cache
+from ..Utilities.GenUtils import get_path
+from . import Cache
 
 log = logging.getLogger('FileCache')
 
@@ -37,5 +37,6 @@ class FileCache(Cache):
             with portalocker.Lock(self._file, timeout=5, mode="wb+") as f:
                 pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
         except Exception as e:
-            log.error("Encountered error while saving cache: {}: {}".format(
-                type(e).__name__, e))
+            log.error((
+                "Encountered error while saving cache: {}: {}"
+            ).format(type(e).__name__, e))

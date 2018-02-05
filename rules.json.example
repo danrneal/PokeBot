@@ -1,0 +1,24 @@
+{
+    "monsters": {
+        "first_rule" : {
+            "filters": [ "filter_by_monsters_example" ],
+            "alarms": [ "discord_alarm" ]
+        },
+        "second_rule" : {
+            "filters": [ "filter_by_ivs_example", "filter_by_moves_example" ],
+            "alarms": [ "other_discord_alarm" ]
+        }
+    },
+    "eggs": {
+        "all" : {
+            "filters": [ "filter_by_lvl_example" ],
+            "alarms": [ "discord_alarm", "other_discord_alarm" ]
+        }
+    },
+    "raids": {
+        "all" : {
+            "filters": [ "filter_by_monster", "filter_raid_lvl_and_teams" ],
+            "alarms": [ "discord_alarm", "other_discord_alarm" ]
+        }
+    }
+}

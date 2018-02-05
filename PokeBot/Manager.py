@@ -1,41 +1,61 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
-
 import logging
 import json
-import asyncio
 import sys
-from .LocationServices import LocationService
-from .DiscordAlarm import DiscordAlarm
-from .Filter import load_pokemon_section, load_egg_section
-from .utils import require_and_remove_key, get_path, get_args, contains_arg
+import asyncio
+from collections import OrderedDict, namedtuple
+from datetime import datetime, timedelta
+from . import Filters
+from .LocationServices import location_service_factory
+from .Locale import Locale
+from .Geofence import load_geofence_file
+from .Cache import cache_factory
+from .Alarms import alarm_factory
+from .Events import MonEvent, EggEvent, RaidEvent
+from .Filters.MonFilter import MonFilter
+from .Filters.EggFilter import EggFilter
+from .Filters.RaidFilter import RaidFilter
+from .Utilities.GenUtils import get_path, contains_arg
 
 log = logging.getLogger('Manager')
-args = get_args()
+
+Rule = namedtuple('Rule', ['filter_names', 'alarm_names'])
 
 
 class Manager(object):
 
-    def __init__(self, name, alarm_file, filter_file, geofence_names):
+    def __init__(self, name, google_key, locale, max_attempts, cache_type,
+                 filter_file, geofence_file, alarm_file):
         self.__name = str(name).lower()
+        log.info("----------- Manager '{}' is being created.".format(
+            self.__name))
+        self.__google_key = None
         self.__loc_service = None
-        if len(args.gmaps_keys) > 0:
-            self.__loc_service = LocationService()
+        if len(google_key) > 0:
+            self.__google_key = google_key
+            self.__loc_service = location_service_factory(
+                "GoogleMaps", google_key, locale)
         else:
             log.warning(
-                "NO GOOGLE API KEY SET - Reverse Location DTS will NOT be " +
+                "NO GOOGLE API KEY SET - Reverse Location will NOT be "
                 "detected."
             )
-        self.__pokemon_settings = {}
-        self.__raid_settings = {}
-        self.__egg_settings = {}
+        self.__locale = Locale(locale)
+        self.__cache = cache_factory(cache_type, self.__name)
+        self.__mons_enabled, self.__mon_filters = False, OrderedDict()
+        self.__eggs_enabled, self.__egg_filters = False, OrderedDict()
+        self.__raids_enabled, self.__raid_filters = False, OrderedDict()
         self.load_filter_file(get_path(filter_file))
-        self.load_alarms_file(get_path(alarm_file), args.max_attempts)
-        self.__geofences = []
-        if str(args.geofence_names[0]).lower() != 'none':
-            self.__geofences = geofence_names
+        self.geofences = None
+        if str(geofence_file).lower() != 'none':
+            self.geofences = load_geofence_file(get_path(geofence_file))
+        self.__alarms = []
+        self.load_alarms_file(get_path(alarm_file), int(max_attempts))
+        self.__mon_rules = {}
+        self.__egg_rules = {}
+        self.__raid_rules = {}
         self.__queue = asyncio.Queue()
-        log.info("Manager '{}' successfully created.".format(self.__name))
+        log.info("----------- Manager '{}' successfully created.".format(
+            self.__name))
 
     async def update(self, obj):
         await self.__queue.put(obj)
@@ -43,78 +63,166 @@ class Manager(object):
     def get_name(self):
         return self.__name
 
+    def add_monster_rule(self, name, filters, alarms):
+        if name in self.__mon_rules:
+            raise ValueError((
+                "Unable to add Rule: Monster Rule with the name {} already " +
+                "exists!"
+            ).format(name))
+        for filt in filters:
+            if filt not in self.__mon_filters:
+                raise ValueError((
+                    "Unable to create Rule: No Monster Filter named {}!"
+                ).format(filt))
+        for alarm in alarms:
+            if alarm not in self.__alarms:
+                raise ValueError(
+                    "Unable to create Rule: No Alarm named {}!".format(alarm))
+        self.__mon_rules[name] = Rule(filters, alarms)
+
+    def add_egg_rule(self, name, filters, alarms):
+        if name in self.__egg_rules:
+            raise ValueError((
+                "Unable to add Rule: Egg Rule with the name {} already exists!"
+            ).format(name))
+        for filt in filters:
+            if filt not in self.__egg_filters:
+                raise ValueError((
+                    "Unable to create Rule: No Egg Filter named {}!"
+                ).format(filt))
+        for alarm in alarms:
+            if alarm not in self.__alarms:
+                raise ValueError(
+                    "Unable to create Rule: No Alarm named {}!".format(alarm))
+        self.__egg_rules[name] = Rule(filters, alarms)
+
+    def add_raid_rule(self, name, filters, alarms):
+        if name in self.__raid_rules:
+            raise ValueError((
+                "Unable to add Rule: Raid Rule with the name {} already " +
+                "exists!"
+            ).format(name))
+        for filt in filters:
+            if filt not in self.__raid_filters:
+                raise ValueError((
+                    "Unable to create Rule: No Raid Filter named {}!"
+                ).format(filt))
+        for alarm in alarms:
+            if alarm not in self.__alarms:
+                raise ValueError(
+                    "Unable to create Rule: No Alarm named {}!".format(alarm))
+        self.__raid_rules[name] = Rule(filters, alarms)
+
+    @staticmethod
+    def load_filter_section(section, sect_name, filter_type):
+        defaults = section.pop('defaults', {})
+        filter_set = OrderedDict()
+        for name, settings in section.pop('filters', {}).items():
+            settings = dict(list(defaults.items()) + list(settings.items()))
+            try:
+                filter_set[name] = filter_type(name, settings)
+            except Exception as e:
+                log.error("Encountered error inside filter named '{}'.".format(
+                    name))
+                raise e
+        for key in section:
+            raise ValueError((
+                "'{}' is not a recognized parameter for the '{}' section."
+            ).format(key, sect_name))
+        return filter_set
+
     def load_filter_file(self, file_path):
         try:
-            with open(file_path, 'r', encoding="utf-8") as f:
-                filters = json.load(f)
-            if type(filters) is not dict:
+            log.info("Loading Filters from file at {}".format(file_path))
+            with open(file_path, 'r') as f:
+                filters = json.load(f, object_pairs_hook=OrderedDict)
+            if type(filters) is not OrderedDict:
                 log.critical(
-                    "Filters file's must be a JSON object: { " +
-                    "\"pokemon\":{...},... }"
+                    "Filters files must be a JSON object: { " +
+                    "\"monsters\":{...},... }"
                 )
-                sys.exit(1)
-            self.__pokemon_settings = load_pokemon_section(
-                require_and_remove_key('pokemon', filters, "Filters file."))
-            self.__egg_settings = load_egg_section(
-                require_and_remove_key("eggs", filters, "Filters file."))
-            self.__raid_settings = load_pokemon_section(
-                require_and_remove_key('raids', filters, "Filters file."))
-            log.info("Loaded Filters from file at {}".format(
-                file_path.split('/')[-1]))
-            return
+                raise ValueError("Filter file did not contain a dict.")
         except ValueError as e:
-            log.critical((
-                "Encountered error while loading Filters: {}: {}"
-            ).format(type(e).__name__, e))
-            log.critical(
-                "Encountered a 'ValueError' while loading the Filters file. " +
-                "This typically means your file isn't in the correct json " +
-                "format. Try loading your file contents into a json validator."
+            log.error("Encountered error while loading Filters: {}: {}".format(
+                type(e).__name__, e))
+            log.error(
+                "PokeBot has encountered a 'ValueError' while loading the "
+                "Filters file. This typically means the file isn't in the "
+                "correct json format. Try loading the file contents into a "
+                "json validator."
             )
+            sys.exit(1)
         except IOError as e:
-            log.critical((
-                "Encountered error while loading Filters: {}: {}"
-            ).format(type(e).__name__, e))
-            log.critical(
-                "Unable to find a filters file at {}. Please check that " +
-                "this file exists and has the correct permissions."
-            ).format(file_path)
+            log.error("Encountered error while loading Filters: {}: {}".format(
+                type(e).__name__, e))
+            log.error((
+                "PokeBot was unable to find a filters file at {}. Please " +
+                "check that this file exists and that PA has read permissions."
+            ).format(file_path))
+            sys.exit(1)
+        try:
+            log.info("Parsing 'monsters' section.")
+            section = filters.pop('monsters', {})
+            self.__mons_enabled = bool(section.pop('enabled', False))
+            self.__mon_filters = self.load_filter_section(
+                section, 'monsters', MonFilter)
+            log.info("Parsing 'eggs' section.")
+            section = filters.pop('eggs', {})
+            self.__eggs_enabled = bool(section.pop('enabled', False))
+            self.__egg_filters = self.load_filter_section(
+                section, 'eggs', EggFilter)
+            log.info("Parsing 'raids' section.")
+            section = filters.pop('raids', {})
+            self.__raids_enabled = bool(section.pop('enabled', False))
+            self.__raid_filters = self.load_filter_section(
+                section, 'raids', RaidFilter)
+            return
         except Exception as e:
-            log.critical((
-                "Encountered error while loading Filters: {}: {}"
-            ).format(type(e).__name__, e))
-        sys.exit(1)
+            log.error(
+                "Encountered error while parsing Filters. This is because " +
+                "of a mistake in your Filters file."
+            )
+            log.error("{}: {}".format(type(e).__name__, e))
+            sys.exit(1)
 
     def load_alarms_file(self, file_path, max_attempts):
+        log.info("Loading Alarms from the file at {}".format(file_path))
         try:
             with open(file_path, 'r') as f:
-                alarm = json.load(f)
-            if type(alarm) is not dict:
-                log.critical("Alarms file must be a dictionary")
+                alarm_settings = json.load(f)
+            if type(alarm_settings) is not dict:
+                log.critical(
+                    "Alarms file must be an object of Alarms objects - { " +
+                    "'alarm1': {...}, ... 'alarm5': {...} }"
+                )
                 sys.exit(1)
-            self.set_optional_args(str(alarm))
-            self.__alarm = DiscordAlarm(alarm, max_attempts)
-            log.info("Active Discord alarm found.")
+            self.__alarms = {}
+            for name, alarm in alarm_settings.items():
+                self.set_optional_args(str(alarm))
+                self.__alarms[name] = alarm_factory(
+                    alarm, max_attempts, self.__google_key, 'discord')
+            log.info("{} active alarms found.".format(len(self.__alarms)))
             return
         except ValueError as e:
-            log.critical((
+            log.error((
                 "Encountered error while loading Alarms file: {}: {}"
             ).format(type(e).__name__, e))
-            log.critical(
-                "Encountered a 'ValueError' while loading the Alarms file. " +
-                "This typically means your file isn't in the correct json " +
-                "format. Try loading your file contents into a json validator."
+            log.error(
+                "PokeBot has encountered a 'ValueError' while loading the " +
+                "Alarms file. This typically means your file isn't in the " +
+                "correct json format. Try loading your file contents into a " +
+                "json validator."
             )
         except IOError as e:
-            log.critical((
+            log.error((
                 "Encountered error while loading Alarms: {}: {}"
             ).format(type(e).__name__, e))
-            log.critical((
-                "Unable to find a filters file at {}. Please check that " +
-                "this file exists and has the correct permissions."
+            log.error((
+                "PokeBot was unable to find a filters file  at {}. Please " +
+                "check that this file exists and PA has read permissions."
             ).format(file_path))
         except Exception as e:
-            log.critical((
+            log.error((
                 "Encountered error while loading Alarms: {}: {}"
             ).format(type(e).__name__, e))
         sys.exit(1)
@@ -137,121 +245,155 @@ class Manager(object):
                 sys.exit(1)
             self.__loc_service.enable_reverse_location()
 
-    async def connect(self):
+    async def run(self):
+        last_clean = datetime.utcnow()
         while True:
-            obj = await self.__queue.get()
-            if obj is None:
-                break
+            if datetime.utcnow() - last_clean > timedelta(minutes=5):
+                self.__cache.clean_and_save()
+                last_clean = datetime.utcnow()
             try:
-                if obj['type'] == "pokemon":
-                    self.process_pokemon(obj)
-                elif obj['type'] == 'egg':
-                    self.process_egg(obj)
-                elif obj['type'] == "raid":
-                    self.process_raid(obj)
+                event = await self.__queue.get()
+            except asyncio.QueueEmpty:
+                await asyncio.sleep(0)
+                continue
+            try:
+                kind = type(event)
+                if kind == MonEvent:
+                    self.process_monster(event)
+                elif kind == EggEvent:
+                    self.process_egg(event)
+                elif kind == RaidEvent:
+                    self.process_raid(event)
                 else:
                     pass
             except Exception as e:
-                log.error("Encountered error during processing: {}: {}".format(
-                    type(e).__name__, e))
+                log.error((
+                    "Encountered error during processing: {}: {}"
+                ).format(type(e).__name__, e))
+        self.__cache.clean_and_save()
 
-    def check_pokemon_filter(self, filters, pkmn):
-        passed = False
-        cp = pkmn['cp']
-        level = pkmn['level']
-        iv = pkmn['iv']
-        size = pkmn['size']
-        gender = pkmn['gender']
-        for filt_ct in range(len(filters)):
-            filt = filters[filt_ct]
-            if cp != '?':
-                if not filt.check_cp(cp):
+    def process_monster(self, mon):
+        if self.__mons_enabled is False:
+            return
+        mon.name = self.__locale.get_pokemon_name(mon.monster_id)
+        if self.__cache.get_pokemon_expiration(mon.enc_id) is not None:
+            return
+        self.__cache.update_pokemon_expiration(
+            mon.enc_id, mon.disappear_time)
+        rules = self.__mon_rules
+        if len(rules) == 0:
+            rules = {
+                "default": Rule(
+                    self.__mon_filters.keys(), self.__alarms.keys())
+            }
+        for r_name, rule in rules.items():
+            for f_name in rule.filter_names:
+                f = self.__mon_filters.get(f_name)
+                passed = f.check_event(mon) and self.check_geofences(f, mon)
+                if not passed:
                     continue
-            else:
-                if filt.ignore_missing is True:
-                    continue
-            if level != '?':
-                if not filt.check_level(level):
-                    continue
-            else:
-                if filt.ignore_missing is True:
-                    continue
-            if iv != '?':
-                if not filt.check_iv(float(iv)):
-                    continue
-            else:
-                if filt.ignore_missing is True:
-                    continue
-            if size != 'unknown':
-                if not filt.check_size(size):
-                    continue
-            else:
-                if filt.ignore_missing is True:
-                    continue
-            if gender != 'unknown':
-                if not filt.check_gender(gender):
-                    continue
-            else:
-                if filt.ignore_missing is True:
-                    continue
-            passed = True
-            break
-        return passed
+                mon.custom_dts = f.custom_dts
+                log.info((
+                    "{} monster notification has been triggered in rule '{}'!"
+                ).format(mon.name, r_name))
+                self._trigger_mon(mon, rule.alarm_names)
+                break
 
-    def check_egg_filter(self, settings, egg):
-        level = egg['raid_level']
-        if level < settings['min_level']:
-            return False
-        if level > settings['max_level']:
-            return False
-        return True
-
-    def process_pokemon(self, pkmn):
-        pkmn_id = pkmn['pkmn_id']
-        lat, lng = pkmn['lat'], pkmn['lng']
-        name = pkmn['pkmn']
-        if (self.__pokemon_settings['enabled'] is False or
-                pkmn_id not in self.__pokemon_settings['filters']):
-            return
-        filters = self.__pokemon_settings['filters'][pkmn_id]
-        passed = self.check_pokemon_filter(filters, pkmn)
-        if not passed:
-            return
-        if (len(self.__geofences) > 0 and
-                pkmn['geofence'] not in self.__geofences):
-            return
-        if self.__loc_service and 'street_num' not in pkmn:
-            self.__loc_service.add_optional_arguments([lat, lng], pkmn)
-        log.info("{} notification has been triggered!".format(name))
-        self.__alarm.pokemon_alert(pkmn)
+    def _trigger_mon(self, mon, alarms):
+        dts = mon.generate_dts(self.__locale)
+        if self.__loc_service:
+            self.__loc_service.add_optional_arguments([mon.lat, mon.lng], dts)
+        for name in alarms:
+            alarm = self.__alarms.get(name)
+            if alarm:
+                alarm.pokemon_alert(dts)
+            else:
+                log.critical("Alarm '{}' not found!".format(name))
 
     def process_egg(self, egg):
-        lat, lng = egg['lat'], egg['lng']
-        gym_id = egg['id']
-        if self.__egg_settings['enabled'] is False:
+        if self.__eggs_enabled is False:
             return
-        passed = self.check_egg_filter(self.__egg_settings, egg)
-        if not passed:
+        if self.__cache.get_egg_expiration(egg.gym_id) is not None:
             return
-        if (len(self.__geofences) > 0 and
-                egg['geofence'] not in self.__geofences):
-            return
-        if self.__loc_service and 'street_num' not in egg:
-            self.__loc_service.add_optional_arguments([lat, lng], egg)
-        log.info("Egg ({}) notification has been triggered!".format(gym_id))
-        self.__alarm.raid_egg_alert(egg)
+        self.__cache.update_egg_expiration(egg.gym_id, egg.hatch_time)
+        rules = self.__egg_rules
+        if len(rules) == 0:
+            rules = {
+                "default": Rule(
+                    self.__egg_filters.keys(), self.__alarms.keys())
+            }
+        for r_name, rule in rules.items():
+            for f_name in rule.filter_names:
+                f = self.__egg_filters.get(f_name)
+                passed = f.check_event(egg) and self.check_geofences(f, egg)
+                if not passed:
+                    continue
+                egg.custom_dts = f.custom_dts
+                log.info((
+                    "{} egg notification has been triggered in rule '{}'!"
+                ).format(egg.name, r_name))
+                self._trigger_egg(egg, rule.alarm_names)
+                break
+
+    def _trigger_egg(self, egg, alarms):
+        dts = egg.generate_dts(self.__locale, self.__timezone, self.__units)
+        if self.__loc_service:
+            self.__loc_service.add_optional_arguments([egg.lat, egg.lng], dts)
+        for name in alarms:
+            alarm = self.__alarms.get(name)
+            if alarm:
+                alarm.raid_egg_alert(dts)
+            else:
+                log.critical("Alarm '{}' not found!".format(name))
 
     def process_raid(self, raid):
-        pkmn_id = raid['pkmn_id']
-        lat, lng = raid['lat'], raid['lng']
-        gym_id = raid['id']
-        if (self.__raid_settings['enabled'] is False or
-                pkmn_id not in self.__raid_settings['filters']):
+        if self.__raids_enabled is False:
             return
-        if (len(self.__geofences) > 0 and
-                raid['geofence'] not in self.__geofences):
+        if self.__cache.get_raid_expiration(raid.gym_id) is not None:
             return
-        if self.__loc_service and 'street_num' not in raid:
-            self.__loc_service.add_optional_arguments([lat, lng], raid)
-        log.info("Raid ({}) notification has been triggered!".format(gym_id))
-        self.__alarm.raid_alert(raid)
+        self.__cache.update_raid_expiration(raid.gym_id, raid.raid_end)
+        rules = self.__raid_rules
+        if len(rules) == 0:
+            rules = {
+                "default": Rule(
+                    self.__raid_filters.keys(), self.__alarms.keys())
+            }
+        for r_name, rule in rules.items():
+            for f_name in rule.filter_names:
+                f = self.__raid_filters.get(f_name)
+                passed = f.check_event(raid) and self.check_geofences(f, raid)
+                if not passed:
+                    continue
+                raid.custom_dts = f.custom_dts
+                log.info((
+                    "{} raid notification has been triggered in rule '{}'!"
+                ).format(raid.name, r_name))
+                self._trigger_raid(raid, rule.alarm_names)
+                break
+
+    def _trigger_raid(self, raid, alarms):
+        dts = raid.generate_dts(self.__locale, self.__timezone, self.__units)
+        if self.__loc_service:
+            self.__loc_service.add_optional_arguments(
+                [raid.lat, raid.lng], dts)
+        for name in alarms:
+            alarm = self.__alarms.get(name)
+            if alarm:
+                alarm.raid_alert(dts)
+            else:
+                log.critical("Alarm '{}' not found!".format(name))
+
+    def check_geofences(self, f, e):
+        if self.geofences is None or f.geofences is None:
+            return True
+        targets = f.geofences
+        if len(targets) == 1 and "all" in targets:
+            targets = self.geofences.keys()
+        for name in targets:
+            gf = self.geofences.get(name)
+            if not gf:
+                log.error("Cannot check geofence %s: does not exist!", name)
+            elif gf.contains(e.lat, e.lng):
+                e.geofence = name
+                return True
+        return False
