@@ -82,7 +82,9 @@ def converter():
 
         if len(default_monsters) > 0:
             new_filter['monsters']['filters']['000'] = {
-                'monsters': default_monsters,
+                'ignore_monsters': sorted(
+                    list(set(list(range(1, 722))) - set(default_monsters))
+                ),
                 'min_iv': user_filter['pokemon']['default']['min_iv'],
                 'min_cp': user_filter['pokemon']['default']['min_cp'],
                 'min_lvl': user_filter['pokemon']['default']['min_level'],
