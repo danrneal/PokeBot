@@ -4,6 +4,7 @@ _build
 *.json
 *.ini
 *.txt
+*.log
 !data/*.json
 !locales/*.json
 *.pyc

@@ -29,7 +29,7 @@ logging.basicConfig(
         '[%(levelname)8.8s] %(message)s'
     ),
     level=logging.INFO,
-    handlers = [filehandler, consolehandler]
+    handlers=[filehandler, consolehandler]
 )
 
 log = logging.getLogger('Server')
