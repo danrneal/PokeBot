@@ -537,7 +537,7 @@ async def set_(client, message, geofences, all_areas, filter_file, locale):
                 for filt_name in user_dict['monsters']['filters']:
                     if (int(filt_name[:3]) not in user_dict['monsters'][
                         'filters']['000']['ignore_monsters'] and
-                            int(filt_name[:3]) > 0:
+                            int(filt_name[:3]) > 0):
                         user_dict['monsters']['filters']['000'][
                             'ignore_monsters'].append(int(filt_name[:3]))
                         user_dict['monsters']['filters']['000'][
