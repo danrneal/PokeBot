@@ -357,7 +357,7 @@ async def set_(client, message, geofences, all_areas, filter_file, locale):
                     'all', '').strip()
                 input_ = [command.split()]
                 filters = [{
-                    'monsters': [],
+                    'ignore_monsters': [],
                     'min_iv': '0',
                     'min_cp': '0',
                     'min_lvl': '0',
@@ -533,13 +533,16 @@ async def set_(client, message, geofences, all_areas, filter_file, locale):
                         user_dict['monsters']['filters'].pop(filt_name)
                 user_dict['monsters']['filters'].update(filter_dict)
                 set_count += 1
-            already_filtered = []
-            for filt_name in user_dict['monsters']['filters']:
-                if int(filt_name[:3]) not in already_filtered:
-                    already_filtered.append(int(filt_name[:3]))
             if '000' in user_dict['monsters']['filters']:
-                user_dict['monsters']['filters']['000']['monsters'] = sorted(
-                    list(set(range(1, 722)) - set(already_filtered)))
+                for filt_name in user_dict['monsters']['filters']:
+                    if (int(filt_name[:3]) not in user_dict['monsters'][
+                        'filters']['000']['ignore_monsters'] and
+                            int(filt_name[:3]) > 0:
+                        user_dict['monsters']['filters']['000'][
+                            'ignore_monsters'].append(int(filt_name[:3]))
+                        user_dict['monsters']['filters']['000'][
+                            'ignore_monsters'] = sorted(user_dict['monsters'][
+                                'filters']['000']['ignore_monsters'])
         if set_count > 0:
             update_filters(user_filters, filter_file, f)
             embeds = discord.Embed(
@@ -609,11 +612,14 @@ async def delete(client, message, geofences, all_areas, filter_file, locale):
                                 del_count += 1
                                 deleted = True
                     if ('000' in user_dict['monsters']['filters'] and
-                        pokemon in user_dict['monsters']['filters']['000'][
-                            'monsters']):
+                        pokemon not in user_dict['monsters']['filters']['000'][
+                            'ignore_monsters']):
                         deleted = True
                         user_dict['monsters']['filters']['000'][
-                            'monsters'].remove(pokemon)
+                            'ignore_monsters'].append(pokemon)
+                        user_dict['monsters']['filters']['000'][
+                            'ignore_monsters'] = sorted(user_dict['monsters'][
+                                'filters']['000']['ignore_monsters'])
                         del_count += 1
                     elif deleted is False:
                         if pokemon == 0:
@@ -764,15 +770,12 @@ async def reset(client, message, geofences, all_areas, filter_file, locale):
                             user_dict['monsters']['filters'].pop(filt_name)
                             reset = True
                     if ('000' in user_dict['monsters']['filters'] and
-                        pokemon not in user_dict['monsters']['filters']['000'][
-                            'monsters']):
+                        pokemon in user_dict['monsters']['filters']['000'][
+                            'ignore_monsters']):
                         reset = True
                         reset_count += 1
                         user_dict['monsters']['filters']['000'][
-                            'monsters'].append(pokemon)
-                        user_dict['monsters']['filters']['000'][
-                            'monsters'] = sorted(user_dict['monsters'][
-                                'filters']['000']['monsters'])
+                            'ignore_monsters'].remove(pokemon)
                     if reset is False:
                         embeds = discord.Embed(
                             description=(
@@ -807,7 +810,7 @@ async def reset(client, message, geofences, all_areas, filter_file, locale):
                                         reset_count += 1
                             if ('000' in user_dict['monsters']['filters']):
                                 user_dict['monsters']['filters']['000'][
-                                    'monsters'] = list(range(1, 722))
+                                    'ignore_monsters'] = []
                         else:
                             embeds = discord.Embed(
                                 description=(
@@ -1523,8 +1526,8 @@ async def alerts(client, message, bot_number, geofences, all_areas,
             alerts += 'Default: None\n\n'
         for pokemon in range(721):
             if ('000' in user_dict['monsters']['filters'] and
-                pokemon in user_dict['monsters']['filters']['000'][
-                    'monsters']):
+                pokemon not in user_dict['monsters']['filters']['000'][
+                    'ignore_monsters']):
                 continue
             elif '{:03}'.format(pokemon) not in user_dict['monsters'][
                     'filters']:
