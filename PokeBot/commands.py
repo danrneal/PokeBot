@@ -499,7 +499,7 @@ async def set_(client, message, geofences, all_areas, filter_file, locale):
                     suffix = 'b'
             if user_dict is None:
                 if all_areas is True:
-                    gfs = 'all'
+                    gfs = ['all']
                 else:
                     gfs = []
                 user_filters[str(message.author.id)] = {
@@ -676,7 +676,7 @@ async def delete(client, message, geofences, all_areas, filter_file, locale):
                         ).format(message.author.display_name))
         if del_count > 0:
             if all_areas is True:
-                gfs = 'all'
+                gfs = ['all']
             else:
                 gfs = []
             if user_filters[str(message.author.id)] == {
@@ -840,7 +840,7 @@ async def reset(client, message, geofences, all_areas, filter_file, locale):
                         ).format(message.author.display_name))
         if reset_count > 0:
             if all_areas is True:
-                gfs = 'all'
+                gfs = ['all']
             else:
                 gfs = []
             if user_filters[str(message.author.id)] == {
@@ -925,7 +925,7 @@ async def pause(client, message, geofences, all_areas, filter_file):
                     reload = True
                 if reload:
                     if all_areas is True:
-                        gfs = 'all'
+                        gfs = ['all']
                     else:
                         gfs = []
                     if user_filters[str(message.author.id)] == {
@@ -1035,7 +1035,7 @@ async def resume(client, message, geofences, all_areas, filter_file):
                     reload = True
                 if reload:
                     if all_areas is True:
-                        gfs = 'all'
+                        gfs = ['all']
                     else:
                         gfs = []
                     if user_filters[str(message.author.id)] == {
@@ -1233,7 +1233,7 @@ async def activate(client, message, geofences, all_areas, filter_file):
                 ).format(message.author.display_name))
         if activate_count > 0:
             if all_areas is True:
-                gfs = 'all'
+                gfs = ['all']
             else:
                 gfs = []
             if user_filters[str(message.author.id)] == {
@@ -1399,7 +1399,7 @@ async def deactivate(client, message, geofences, all_areas, filter_file):
                 ).format(message.author.display_name))
         if deactivate_count > 0:
             if all_areas is True:
-                gfs = 'all'
+                gfs = ['all']
             else:
                 gfs = []
             if user_filters[str(message.author.id)] == {
