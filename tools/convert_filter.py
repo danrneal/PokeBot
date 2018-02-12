@@ -39,21 +39,21 @@ def converter():
         new_filter = OrderedDict({
             'monsters': OrderedDict({
                 'enabled': True,
-                'defaults':{
+                'defaults': {
                     'geofences': []
                 },
                 'filters': OrderedDict({})
             }),
             'eggs': OrderedDict({
                 'enabled': True,
-                'defaults':{
+                'defaults': {
                     'geofences': []
                 },
                 'filters': OrderedDict({})
             }),
             'raids': OrderedDict({
                 'enabled': True,
-                'defaults':{
+                'defaults': {
                     'geofences': []
                 },
                 'filters': OrderedDict({})
@@ -79,7 +79,7 @@ def converter():
 
             if user_filter['pokemon'][monster] is True:
                 default_monsters.append(pokemon)
-            
+
         if len(default_monsters) > 0:
             new_filter['monsters']['filters']['000'] = {
                 'monsters': default_monsters,
@@ -116,7 +116,7 @@ def converter():
         new_filters[user_id] = new_filter
 
     with open('user_filters_converted.json', 'w+', encoding="utf-8") as f:
-        json.dump(new_filters, f, indent=4)  
+        json.dump(new_filters, f, indent=4)
 
     print('done.')
 

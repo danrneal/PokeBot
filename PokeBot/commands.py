@@ -1175,8 +1175,8 @@ async def activate(client, message, geofences, all_areas, filter_file):
                 else:
                     if ('all' not in user_dict['monsters']['defaults'][
                         'geofences'] and
-                         command not in user_dict['monsters']['defaults'][
-                             'geofences']):
+                        command not in user_dict['monsters']['defaults'][
+                            'geofences']):
                         if command == 'all':
                             user_dict['monsters']['defaults']['geofences'] = [
                                 command]
