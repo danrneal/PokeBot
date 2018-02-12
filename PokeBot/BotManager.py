@@ -127,29 +127,24 @@ class BotManager(discord.Client):
                 "check that this file exists and that PA has read permissions."
             ).format(file_path))
             sys.exit(1)
+        log.info("Parsing user filters file")
         for user_id in user_filters:
             try:
-                log.info("Parsing 'monsters' section for user {}.".format(
-                    user_id))
                 section = user_filters[user_id].pop('monsters', {})
                 self.__mons_enabled[user_id] = bool(section.pop(
                     'enabled', False))
                 self.__mon_filters[user_id] = self.load_filter_section(
                     section, 'monsters', MonFilter)
-                log.info("Parsing 'eggs' section for user {}.".format(user_id))
                 section = user_filters[user_id].pop('eggs', {})
                 self.__eggs_enabled[user_id] = bool(section.pop(
                     'enabled', False))
                 self.__egg_filters[user_id] = self.load_filter_section(
                     section, 'eggs', EggFilter)
-                log.info("Parsing 'raids' section for user {}.".format(
-                    user_id))
                 section = user_filters[user_id].pop('raids', {})
                 self.__raids_enabled[user_id] = bool(section.pop(
                     'enabled', False))
                 self.__raid_filters[user_id] = self.load_filter_section(
                     section, 'raids', RaidFilter)
-                return
             except Exception as e:
                 log.error(
                     "Encountered error while parsing Filters. This is " +
@@ -157,6 +152,7 @@ class BotManager(discord.Client):
                 )
                 log.error("{}: {}".format(type(e).__name__, e))
                 sys.exit(1)
+        return
 
     def load_alarms_file(self, file_path):
         log.info("Loading Alarms from the file at {}".format(file_path))
@@ -251,9 +247,9 @@ class BotManager(discord.Client):
             mon.enc_id, mon.disappear_time)
         for user_id in self.__mons_enabled:
             if int(user_id) % self.__number_of_bots != self.__bot_number:
-                return
+                continue
             if self.__mons_enabled[user_id] is False:
-                return
+                continue
             mon.name = self.__locale.get_pokemon_name(mon.monster_id)
             rules = {
                 "default": Rule(
@@ -296,9 +292,9 @@ class BotManager(discord.Client):
         self.__cache.update_egg_expiration(egg.gym_id, egg.hatch_time)
         for user_id in self.__eggs_enabled:
             if int(user_id) % self.__number_of_bots != self.__bot_number:
-                return
+                continue
             if self.__eggs_enabled[user_id] is False:
-                return
+                continue
             rules = {
                 "default": Rule(
                     self.__egg_filters[user_id].keys(), self.__alarms.keys())
@@ -339,9 +335,9 @@ class BotManager(discord.Client):
         self.__cache.update_raid_expiration(raid.gym_id, raid.raid_end)
         for user_id in self.__raids_enabled:
             if int(user_id) % self.__number_of_bots != self.__bot_number:
-                return
+                continue
             if self.__raids_enabled[user_id] is False:
-                return
+                continue
             rules = {
                 "default": Rule(
                     self.__raid_filters[user_id].keys(), self.__alarms.keys())

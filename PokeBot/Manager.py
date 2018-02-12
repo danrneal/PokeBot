@@ -335,7 +335,7 @@ class Manager(object):
                 break
 
     def _trigger_egg(self, egg, alarms):
-        dts = egg.generate_dts(self.__locale, self.__timezone, self.__units)
+        dts = egg.generate_dts(self.__locale)
         if self.__loc_service:
             self.__loc_service.add_optional_arguments([egg.lat, egg.lng], dts)
         for name in alarms:
@@ -371,7 +371,7 @@ class Manager(object):
                 break
 
     def _trigger_raid(self, raid, alarms):
-        dts = raid.generate_dts(self.__locale, self.__timezone, self.__units)
+        dts = raid.generate_dts(self.__locale)
         if self.__loc_service:
             self.__loc_service.add_optional_arguments(
                 [raid.lat, raid.lng], dts)

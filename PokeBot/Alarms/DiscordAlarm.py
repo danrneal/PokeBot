@@ -54,7 +54,7 @@ class DiscordAlarm(Alarm):
                 "The raid is available until <24h_raid_end> " +
                 "(<raid_time_left>)."
             ),
-            'color': "<raid_level>"
+            'color': "<raid_lvl>"
         }
     }
 

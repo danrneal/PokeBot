@@ -169,7 +169,7 @@ def update_filters(user_filters, filter_file, f):
     except OSError:
         mod = datetime.utcnow() - timedelta(minutes=60)
     if datetime.utcnow() - mod >= timedelta(minutes=60):
-        with open(filter_file + '_hr_backup', 'w+', encoding="utf-8") as hr:
+        with open(filter_file + '_hr_backup.json', 'w+', encoding="utf-8") as hr:
             json.dump(user_filters, hr, indent=4)
     try:
         mod = datetime.utcfromtimestamp(
@@ -177,5 +177,5 @@ def update_filters(user_filters, filter_file, f):
     except OSError:
         mod = datetime.utcnow() - timedelta(hours=24)
     if datetime.utcnow() - mod >= timedelta(hours=24):
-        with open(filter_file + '_day_backup', 'w+', encoding="utf-8") as day:
+        with open(filter_file + '_day_backup.json', 'w+', encoding="utf-8") as day:
             json.dump(user_filters, day, indent=4)

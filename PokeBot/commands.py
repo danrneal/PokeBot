@@ -42,13 +42,6 @@ async def status(client, message, bot_number, number_of_bots):
         'embeds': embeds
     })
     log.info('Sent status message for bot {}'.format(bot_number))
-    if bot_number == 0:
-        await asyncio.sleep(0.1 * number_of_bots)
-        await client.get_alarm().update(1, {
-                'destination': message.channel,
-                'content': 'https://youtu.be/kxH6YErAIgA'
-        })
-        log.info('Sent standing by video')
 
 
 async def commands(client, message):
@@ -314,11 +307,10 @@ async def set_(client, message, geofences, all_areas, filter_file, locale):
         'mime jr.', 'mimejr.').replace('farfetchd', "farfetch'd").replace(
         'flabebe', 'flab\u00E9b\u00E9').replace(',\n', ',').replace(
         '\n', ',').replace(', ', ',').split(',')
-    set_count = 0
-    reload = False
     with open(filter_file, 'r+', encoding="utf-8") as f:
         user_filters = json.load(f, object_pairs_hook=OrderedDict)
-        user_dict = user_filters[str(message.author.id)]
+        user_dict = user_filters.get(str(message.author.id))
+        set_count = 0
         for command in msg:
             if len(command) == 0:
                 continue
@@ -368,7 +360,8 @@ async def set_(client, message, geofences, all_areas, filter_file, locale):
                     'monsters': [],
                     'min_iv': '0',
                     'min_cp': '0',
-                    'min_lvl': '0'
+                    'min_lvl': '0',
+                    'genders': None
                 }]
             for inp, filt in zip(input_, filters):
                 if pokemon > 0:
@@ -419,8 +412,7 @@ async def set_(client, message, geofences, all_areas, filter_file, locale):
                             embeds = discord.Embed(
                                 description=((
                                     '{} Pokemon IV must be between 0 and 100.'
-                                ).format(
-                                    message.author.mention)),
+                                ).format(message.author.mention)),
                                 color=int('0xee281f', 16)
                             )
                             await client.get_alarm().update(1, {
@@ -441,8 +433,7 @@ async def set_(client, message, geofences, all_areas, filter_file, locale):
                             embeds = discord.Embed(
                                 description=((
                                     '{} Pokemon level must not be less than 1.'
-                                ).format(
-                                    message.author.mention)),
+                                ).format(message.author.mention)),
                                 color=int('0xee281f', 16)
                             )
                             await client.get_alarm().update(1, {
@@ -465,8 +456,7 @@ async def set_(client, message, geofences, all_areas, filter_file, locale):
                             embeds = discord.Embed(
                                 description=((
                                     '{} Pokemon CP must not be less than 10.'
-                                ).format(
-                                    message.author.mention)),
+                                ).format(message.author.mention)),
                                 color=int('0xee281f', 16)
                             )
                             await client.get_alarm().update(1, {
@@ -483,8 +473,7 @@ async def set_(client, message, geofences, all_areas, filter_file, locale):
                             description=((
                                 '{} Your command has an unrecognized ' +
                                 'argumnet (**{}**).'
-                            ).format(
-                                message.author.mention, char)),
+                            ).format(message.author.mention, char)),
                             color=int('0xee281f', 16)
                         )
                         await client.get_alarm().update(1, {
@@ -510,7 +499,7 @@ async def set_(client, message, geofences, all_areas, filter_file, locale):
                     suffix = 'b'
             if user_dict is None:
                 if all_areas is True:
-                    gfs = list(geofences.keys())
+                    gfs = 'all'
                 else:
                     gfs = []
                 user_filters[str(message.author.id)] = {
@@ -537,7 +526,6 @@ async def set_(client, message, geofences, all_areas, filter_file, locale):
                     }
                 }
                 set_count += 1
-                reload = True
                 user_dict = user_filters[str(message.author.id)]
             else:
                 for filt_name in user_dict['monsters']['filters'].copy():
@@ -545,16 +533,14 @@ async def set_(client, message, geofences, all_areas, filter_file, locale):
                         user_dict['monsters']['filters'].pop(filt_name)
                 user_dict['monsters']['filters'].update(filter_dict)
                 set_count += 1
-                reload = True
             already_filtered = []
             for filt_name in user_dict['monsters']['filters']:
                 if int(filt_name[:3]) not in already_filtered:
                     already_filtered.append(int(filt_name[:3]))
             if '000' in user_dict['monsters']['filters']:
                 user_dict['monsters']['filters']['000']['monsters'] = sorted(
-                    list(set(list(range(1, 722))) - set(already_filtered)))
-            user_dict['monsters']['filters'] = user_dict['monsters']['filters']
-        if reload:
+                    list(set(range(1, 722)) - set(already_filtered)))
+        if set_count > 0:
             update_filters(user_filters, filter_file, f)
             embeds = discord.Embed(
                 description=(
@@ -568,7 +554,7 @@ async def set_(client, message, geofences, all_areas, filter_file, locale):
             })
             log.info('Activated {} pokemon filters for {}.'.format(
                 str(set_count), message.author.display_name))
-    if reload:
+    if set_count > 0:
         client.load_filter_file(get_path(filter_file))
 
 
@@ -581,11 +567,9 @@ async def delete(client, message, geofences, all_areas, filter_file, locale):
         'farfetchd', "farfetch'd").replace(
         'flabebe', 'flab\u00E9b\u00E9').replace(',\n', ',').replace(
         '\n', ',').replace(', ', ',').split(',')
-    del_count = 0
-    reload = False
     with open(filter_file, 'r+', encoding="utf-8") as f:
         user_filters = json.load(f, object_pairs_hook=OrderedDict)
-        user_dict = user_filters[str(message.author.id)]
+        user_dict = user_filters.get(str(message.author.id))
         if user_dict is None:
             embeds = discord.Embed(
                 description=(
@@ -602,6 +586,7 @@ async def delete(client, message, geofences, all_areas, filter_file, locale):
                 'Nothing to delete for {}.'
             ).format(message.author.display_name))
         else:
+            del_count = 0
             for command in msg:
                 if len(command) == 0:
                     continue
@@ -610,35 +595,36 @@ async def delete(client, message, geofences, all_areas, filter_file, locale):
                 try:
                     if is_number(command):
                         raise ValueError
-                    deleted = False
                     if command == 'default':
                         pokemon = 0
                     else:
                         pokemon = get_monster_id(command.replace(
                             'mr.mime', 'mr. mime').replace(
                                 'mimejr.', 'mime jr.'))
+                    deleted = False
                     for filt_name in user_dict['monsters']['filters'].copy():
                         if int(filt_name[:3]) == pokemon:
-                            deleted = True
                             user_dict['monsters']['filters'].pop(filt_name)
+                            if deleted is False:
+                                del_count += 1
+                                deleted = True
                     if ('000' in user_dict['monsters']['filters'] and
                         pokemon in user_dict['monsters']['filters']['000'][
                             'monsters']):
                         deleted = True
                         user_dict['monsters']['filters']['000'][
                             'monsters'].remove(pokemon)
-                    if deleted is True:
-                        reload = True
                         del_count += 1
-                    else:
+                    elif deleted is False:
+                        if pokemon == 0:
+                            name = 'default'
+                        else:
+                            name = locale.get_pokemon_name(pokemon)
                         embeds = discord.Embed(
                             description=(
                                 "{} You did not previously have any alerts " +
                                 "set for **{}**."
-                            ).format(
-                                message.author.mention,
-                                locale.get_pokemon_name(pokemon)
-                            ),
+                            ).format(message.author.mention, name),
                             color=int('0xee281f', 16)
                         )
                         await client.get_alarm().update(1, {
@@ -647,21 +633,17 @@ async def delete(client, message, geofences, all_areas, filter_file, locale):
                         })
                         log.info((
                             '{} not previously set for {}.'
-                        ).format(
-                            locale.get_pokemon_name(pokemon),
-                            message.author.display_name
-                        ))
+                        ).format(name, message.author.display_name))
                 except ValueError:
                     if command == 'all':
                         deleted = []
                         if len(user_dict['monsters']['filters']) > 0:
                             for filt_name in user_dict['monsters'][
                                     'filters'].copy():
-                                if int(filt_name[:3]) not in deleted:
-                                    deleted.append(int(filt_name[:3]))
-                                    del_count += 1
-                                    reload = True
                                 user_dict['monsters']['filters'].pop(filt_name)
+                                if filt_name not in deleted:
+                                    del_count += 1
+                                    deleted.append(filt_name)
                         else:
                             embeds = discord.Embed(
                                 description=(
@@ -692,9 +674,9 @@ async def delete(client, message, geofences, all_areas, filter_file, locale):
                         log.info((
                             'Unrecognized pokemon from {}.'
                         ).format(message.author.display_name))
-        if reload:
+        if del_count > 0:
             if all_areas is True:
-                gfs = list(geofences.keys())
+                gfs = 'all'
             else:
                 gfs = []
             if user_filters[str(message.author.id)] == {
@@ -734,7 +716,7 @@ async def delete(client, message, geofences, all_areas, filter_file, locale):
             })
             log.info('Removed {} pokemon filters for {}.'.format(
                 str(del_count), message.author.display_name))
-    if reload:
+    if del_count > 0:
         client.load_filter_file(get_path(filter_file))
 
 
@@ -746,11 +728,9 @@ async def reset(client, message, geofences, all_areas, filter_file, locale):
         'farfetchd', "farfetch'd").replace(
         'flabebe', 'flab\u00E9b\u00E9').replace(',\n', ',').replace(
         '\n', ',').replace(', ', ',').split(',')
-    reset_count = 0
-    reload = False
     with open(filter_file, 'r+', encoding="utf-8") as f:
         user_filters = json.load(f, object_pairs_hook=OrderedDict)
-        user_dict = user_filters[str(message.author.id)]
+        user_dict = user_filters.get(str(message.author.id))
         if user_dict is None:
             embeds = discord.Embed(
                 description=(
@@ -767,6 +747,7 @@ async def reset(client, message, geofences, all_areas, filter_file, locale):
                 'Nothing to reset for {}.'
             ).format(message.author.display_name))
         else:
+            reset_count = 0
             for command in msg:
                 if len(command) == 0:
                     continue
@@ -775,20 +756,18 @@ async def reset(client, message, geofences, all_areas, filter_file, locale):
                 try:
                     if is_number(command):
                         raise ValueError
-                    reset = False
                     pokemon = get_monster_id(command.replace(
                         'mr.mime', 'mr. mime').replace('mimejr.', 'mime jr.'))
+                    reset = False
                     for filt_name in user_dict['monsters']['filters'].copy():
                         if int(filt_name[:3]) == pokemon:
                             user_dict['monsters']['filters'].pop(filt_name)
-                            if reset is False:
-                                reset_count += 1
-                                reload = True
                             reset = True
                     if ('000' in user_dict['monsters']['filters'] and
                         pokemon not in user_dict['monsters']['filters']['000'][
                             'monsters']):
                         reset = True
+                        reset_count += 1
                         user_dict['monsters']['filters']['000'][
                             'monsters'].append(pokemon)
                         user_dict['monsters']['filters']['000'][
@@ -815,31 +794,17 @@ async def reset(client, message, geofences, all_areas, filter_file, locale):
                             message.author.display_name
                         ))
                 except ValueError:
-                    if command != 'all':
-                        embeds = discord.Embed(
-                            description=(
-                                "{} **{}** is not a recognized pokemon, " +
-                                "check your spelling."
-                            ).format(message.author.mention, command.title()),
-                            color=int('0xee281f', 16)
-                        )
-                        await client.get_alarm().update(1, {
-                            'destination': message.channel,
-                            'embeds': embeds
-                        })
-                        log.info((
-                            'Unrecognized pokemon from {}.'
-                        ).format(message.author.display_name))
-                    else:
+                    if command == 'all':
                         reset = []
-                        if user_dict['monsters']['filters'] > 0:
+                        if len(user_dict['monsters']['filters']) > 0:
                             for filt_name in user_dict['monsters'][
                                     'filters'].copy():
-                                if int(filt_name[:3]) not in reset:
-                                    reset.append(int(filt_name[:3]))
-                                    reset_count += 1
-                                    reload = True
-                                user_dict['monsters']['filters'].pop(filt_name)
+                                if int(filt_name[:3]) > 0:
+                                    user_dict['monsters']['filters'].pop(
+                                        filt_name)
+                                    if int(filt_name[:3]) not in reset:
+                                        reset.append(int(filt_name[:3]))
+                                        reset_count += 1
                             if ('000' in user_dict['monsters']['filters']):
                                 user_dict['monsters']['filters']['000'][
                                     'monsters'] = list(range(1, 722))
@@ -858,9 +823,24 @@ async def reset(client, message, geofences, all_areas, filter_file, locale):
                             log.info((
                                 'Alerts not previously set for {}.'
                             ).format(message.author.display_name))
-        if reload:
+                    else:
+                        embeds = discord.Embed(
+                            description=(
+                                "{} **{}** is not a recognized pokemon, " +
+                                "check your spelling."
+                            ).format(message.author.mention, command.title()),
+                            color=int('0xee281f', 16)
+                        )
+                        await client.get_alarm().update(1, {
+                            'destination': message.channel,
+                            'embeds': embeds
+                        })
+                        log.info((
+                            'Unrecognized pokemon from {}.'
+                        ).format(message.author.display_name))
+        if reset_count > 0:
             if all_areas is True:
-                gfs = list(geofences.keys())
+                gfs = 'all'
             else:
                 gfs = []
             if user_filters[str(message.author.id)] == {
@@ -901,7 +881,7 @@ async def reset(client, message, geofences, all_areas, filter_file, locale):
             })
             log.info('Reset {} pokemon filters for {}.'.format(
                 str(reset_count), message.author.display_name))
-    if reload:
+    if reset_count > 0:
         client.load_filter_file(get_path(filter_file))
 
 
@@ -915,23 +895,37 @@ async def pause(client, message, geofences, all_areas, filter_file):
         reload = False
         with open(filter_file, 'r+', encoding="utf-8") as f:
             user_filters = json.load(f, object_pairs_hook=OrderedDict)
-            if str(message.author.id) in list(user_filters.keys()):
-                filters = user_filters[str(message.author.id)]
+            user_dict = user_filters.get(str(message.author.id))
+            if user_dict is None:
+                embeds = discord.Embed(
+                    description=((
+                        "{} There is nothing to pause, you don't have any " +
+                        "alerts set."
+                    ).format(message.author.mention)),
+                    color=int('0xee281f', 16)
+                )
+                await client.get_alarm().update(1, {
+                    'destination': message.channel,
+                    'embeds': embeds
+                })
+                log.info('{} tried to pause but nothing to pause.'.format(
+                    message.author.display_name))
+            else:
                 if (kind in ['all', 'pokemon'] and
-                        filters['monsters']['enabled'] is True):
-                    filters['monsters']['enabled'] = False
+                        user_dict['monsters']['enabled'] is True):
+                    user_dict['monsters']['enabled'] = False
                     reload = True
                 if (kind in ['all', 'eggs'] and
-                        filters['eggs']['enabled'] is True):
-                    filters['eggs']['enabled'] = False
+                        user_dict['eggs']['enabled'] is True):
+                    user_dict['eggs']['enabled'] = False
                     reload = True
                 if (kind in ['all', 'raids'] and
-                        filters['raids']['enabled'] is True):
-                    filters['raids']['enabled'] = False
+                        user_dict['raids']['enabled'] is True):
+                    user_dict['raids']['enabled'] = False
                     reload = True
                 if reload:
                     if all_areas is True:
-                        gfs = list(geofences.keys())
+                        gfs = 'all'
                     else:
                         gfs = []
                     if user_filters[str(message.author.id)] == {
@@ -983,20 +977,6 @@ async def pause(client, message, geofences, all_areas, filter_file):
                     })
                     log.info('{} tried to pause but already paused.'.format(
                         message.author.display_name))
-            else:
-                embeds = discord.Embed(
-                    description=((
-                        "{} There is nothing to pause, you don't have any " +
-                        "alerts set."
-                    ).format(message.author.mention)),
-                    color=int('0xee281f', 16)
-                )
-                await client.get_alarm().update(1, {
-                    'destination': message.channel,
-                    'embeds': embeds
-                })
-                log.info('{} tried to pause but nothing to pause.'.format(
-                    message.author.display_name))
         if reload:
             client.load_filter_file(get_path(filter_file))
     else:
@@ -1025,23 +1005,37 @@ async def resume(client, message, geofences, all_areas, filter_file):
         reload = False
         with open(filter_file, 'r+', encoding="utf-8") as f:
             user_filters = json.load(f, object_pairs_hook=OrderedDict)
-            if str(message.author.id) in list(user_filters.keys()):
-                filters = user_filters[str(message.author.id)]
+            user_dict = user_filters.get(str(message.author.id))
+            if user_dict is None:
+                embeds = discord.Embed(
+                    description=((
+                        "{} There is nothing to resume, you don't have any " +
+                        "alerts set."
+                    ).format(message.author.mention)),
+                    color=int('0xee281f', 16)
+                )
+                await client.get_alarm().update(1, {
+                    'destination': message.channel,
+                    'embeds': embeds
+                })
+                log.info('{} tried to resume but nothing to resume.'.format(
+                    message.author.display_name))
+            else:
                 if (kind in ['all', 'pokemon'] and
-                        filters['monsters']['enabled'] is False):
-                    filters['monsters']['enabled'] = True
+                        user_dict['monsters']['enabled'] is False):
+                    user_dict['monsters']['enabled'] = True
                     reload = True
                 if (kind in ['all', 'eggs'] and
-                        filters['eggs']['enabled'] is False):
-                    filters['eggs']['enabled'] = True
+                        user_dict['eggs']['enabled'] is False):
+                    user_dict['eggs']['enabled'] = True
                     reload = True
                 if (kind in ['all', 'raids'] and
-                        filters['raids']['enabled'] is False):
-                    filters['raids']['enabled'] = True
+                        user_dict['raids']['enabled'] is False):
+                    user_dict['raids']['enabled'] = True
                     reload = True
                 if reload:
                     if all_areas is True:
-                        gfs = list(geofences.keys())
+                        gfs = 'all'
                     else:
                         gfs = []
                     if user_filters[str(message.author.id)] == {
@@ -1094,20 +1088,6 @@ async def resume(client, message, geofences, all_areas, filter_file):
                     })
                     log.info("{} tried to resume but wasn't paused.".format(
                         message.author.display_name))
-            else:
-                embeds = discord.Embed(
-                    description=((
-                        "{} There is nothing to resume, you don't have any " +
-                        "alerts set."
-                    ).format(message.author.mention)),
-                    color=int('0xee281f', 16)
-                )
-                await client.get_alarm().update(1, {
-                    'destination': message.channel,
-                    'embeds': embeds
-                })
-                log.info('{} tried to resume but nothing to resume.'.format(
-                    message.author.display_name))
         if reload:
             client.load_filter_file(get_path(filter_file))
     else:
@@ -1130,12 +1110,11 @@ async def activate(client, message, geofences, all_areas, filter_file):
     msg = message.content.lower().replace('!activate ', '').replace(
         '!activate\n', '').replace(',\n', ',').replace('\n', ',').replace(
             ', ', ',').split(',')
-    activate_count = 0
-    reload = False
     with open(filter_file, 'r+', encoding="utf-8") as f:
         user_filters = json.load(f, object_pairs_hook=OrderedDict)
-        filters = user_filters.get(str(message.author.id))
+        user_dict = user_filters.get(str(message.author.id))
         gf_lower = [gf.lower() for gf in list(geofences.keys())]
+        activate_count = 0
         for command in msg:
             if len(command) == 0:
                 continue
@@ -1143,8 +1122,12 @@ async def activate(client, message, geofences, all_areas, filter_file):
                 command = command.strip()
             if command in gf_lower or command == 'all':
                 if command != 'all':
-                    command = list(geofences.keys())[gf_lower.index(command)]
-                if filters is None:
+                    idx = next(
+                        i for i, gf in enumerate(
+                            list(geofences.keys())) if gf.lower() == command
+                    )
+                    command = list(geofences.keys())[idx]
+                if user_dict is None:
                     if all_areas is True:
                         embeds = discord.Embed(
                             description=((
@@ -1184,45 +1167,35 @@ async def activate(client, message, geofences, all_areas, filter_file):
                                 "filters": {}
                             }
                         }
-                        activate_count += 1
-                        reload = True
-                else:
-                    mon_geofences = filters['monsters']['defaults'][
-                        'geofences']
-                    egg_geofences = filters['eggs']['defaults']['geofences']
-                    raid_geofences = filters['raids']['defaults']['geofences']
-                    if (('all' not in mon_geofences and
-                         command not in mon_geofences) or
-                        ('all' not in egg_geofences and
-                         command not in egg_geofences) or
-                        ('all' not in raid_geofences and
-                         command not in raid_geofences)):
+                        user_dict = user_filters[str(message.author.id)]
                         if command == 'all':
-                            activate_count += (
-                                len(list(geofences.keys())) -
-                                len(mon_geofences)
-                            )
+                            activate_count += len(geofences)
                         else:
                             activate_count += 1
-                        reload = True
-                        if ('all' not in mon_geofences and
-                                command not in mon_geofences):
-                            if command == 'all':
-                                mon_geofences = [command]
-                            else:
-                                mon_geofences.append(command)
-                        if ('all' not in egg_geofences and
-                                command not in egg_geofences):
-                            if command == 'all':
-                                egg_geofences = [command]
-                            else:
-                                egg_geofences.append(command)
-                        if ('all' not in raid_geofences and
-                                command not in raid_geofences):
-                            if command == 'all':
-                                raid_geofences = [command]
-                            else:
-                                raid_geofences.append(command)
+                else:
+                    if ('all' not in user_dict['monsters']['defaults'][
+                        'geofences'] and
+                         command not in user_dict['monsters']['defaults'][
+                             'geofences']):
+                        if command == 'all':
+                            user_dict['monsters']['defaults']['geofences'] = [
+                                command]
+                            user_dict['eggs']['defaults']['geofences'] = [
+                                command]
+                            user_dict['raids']['defaults']['geofences'] = [
+                                command]
+                            activate_count += (
+                                len(geofences.keys()) - len(user_dict[
+                                    'monsters']['defaults']['geofences'])
+                            )
+                        else:
+                            user_dict['monsters']['defaults'][
+                                'geofences'].append(command)
+                            user_dict['eggs']['defaults']['geofences'].append(
+                                command)
+                            user_dict['raids']['defaults']['geofences'].append(
+                                command)
+                            activate_count += 1
                     else:
                         if command == 'all':
                             descript = ((
@@ -1258,9 +1231,9 @@ async def activate(client, message, geofences, all_areas, filter_file):
                 log.info((
                     'Unrecognized area from {}.'
                 ).format(message.author.display_name))
-        if reload:
+        if activate_count > 0:
             if all_areas is True:
-                gfs = list(geofences.keys())
+                gfs = 'all'
             else:
                 gfs = []
             if user_filters[str(message.author.id)] == {
@@ -1300,22 +1273,21 @@ async def activate(client, message, geofences, all_areas, filter_file):
             })
             log.info('Activated {} areas for {}.'.format(
                 str(activate_count), message.author.display_name))
-    if reload:
+    if activate_count > 0:
         client.load_filter_file(get_path(filter_file))
 
 
 async def deactivate(client, message, geofences, all_areas, filter_file):
     if message.content.lower() == '!deactivate all':
-        msg = list(geofences.keys())
+        msg = [gf.lower() for gf in list(geofences.keys())]
     else:
         msg = message.content.lower().replace('!deactivate ', '').replace(
             '!deactivate\n', '').replace(',\n', ',').replace(
                 '\n', ',').replace(', ', ',').split(',')
     deactivate_count = 0
-    reload = False
     with open(filter_file, 'r+', encoding="utf-8") as f:
         user_filters = json.load(f, object_pairs_hook=OrderedDict)
-        filters = user_filters.get(str(message.author.id))
+        user_dict = user_filters.get(str(message.author.id))
         gf_lower = [gf.lower() for gf in list(geofences.keys())]
         for command in msg:
             if len(command) == 0:
@@ -1323,7 +1295,12 @@ async def deactivate(client, message, geofences, all_areas, filter_file):
             else:
                 command = command.strip()
             if command in gf_lower:
-                if filters is None:
+                idx = next(
+                    i for i, gf in enumerate(
+                        list(geofences.keys())) if gf.lower() == command
+                )
+                command = list(geofences.keys())[idx]
+                if user_dict is None:
                     if all_areas is False:
                         embeds = discord.Embed(
                             description=((
@@ -1340,62 +1317,56 @@ async def deactivate(client, message, geofences, all_areas, filter_file):
                         ).format(message.author.display_name))
                         break
                     else:
+                        gfs = list(geofences.keys())
+                        gfs.remove(command)
                         user_filters[str(message.author.id)] = {
                             "monsters": {
                                 "enabled": True,
                                 "defaults": {
-                                    "geofences": list(geofences.keys()).remove(
-                                        command)
+                                    "geofences": list(gfs)
                                 },
                                 "filters": {}
                             },
                             "eggs": {
                                 "enabled": True,
                                 "defaults": {
-                                    "geofences": list(geofences.keys()).remove(
-                                        command)
+                                    "geofences": list(gfs)
                                 },
                                 "filters": {}
                             },
                             "raids": {
                                 "enabled": True,
                                 "defaults": {
-                                    "geofences": list(geofences.keys()).remove(
-                                        command)
+                                    "geofences": list(gfs)
                                 },
                                 "filters": {}
                             }
                         }
+                        user_dict = user_filters[str(message.author.id)]
                         deactivate_count += 1
-                        reload = True
                 else:
-                    mon_geofences = filters['monsters']['defaults'][
-                        'geofences']
-                    egg_geofences = filters['eggs']['defaults']['geofences']
-                    raid_geofences = filters['raids']['defaults']['geofences']
-                    if ('all' in mon_geofences or
-                        command in mon_geofences or
-                        'all' in egg_geofences or
-                        command in egg_geofences or
-                        'all' in raid_geofences or
-                            command in raid_geofences):
+                    if ('all' in user_dict['monsters']['defaults'][
+                        'geofences'] or
+                        command in user_dict['monsters']['defaults'][
+                            'geofences']):
                         deactivate_count += 1
-                        reload = True
-                        if 'all' in mon_geofences:
-                            mon_geofences = list(geofences.keys()).remove(
+                        if 'all' in user_dict['monsters']['defaults'][
+                                'geofences']:
+                            gfs = list(geofences.keys())
+                            gfs.remove(command)
+                            user_dict['monsters']['defaults'][
+                                'geofences'] = list(gfs)
+                            user_dict['eggs']['defaults']['geofences'] = list(
+                                gfs)
+                            user_dict['raids']['defaults']['geofences'] = list(
+                                gfs)
+                        else:
+                            user_dict['monsters']['defaults'][
+                                'geofences'].remove(command)
+                            user_dict['eggs']['defaults']['geofences'].remove(
                                 command)
-                        elif command in mon_geofences:
-                            mon_geofences.remove(command)
-                        if 'all' in egg_geofences:
-                            egg_geofences = list(geofences.keys()).remove(
+                            user_dict['raids']['defaults']['geofences'].remove(
                                 command)
-                        elif command in egg_geofences:
-                            egg_geofences.remove(command)
-                        if 'all' in raid_geofences:
-                            raid_geofences = list(geofences.keys()).remove(
-                                command)
-                        elif command in raid_geofences:
-                            raid_geofences.remove(command)
                     elif message.content.lower() != '!deactivate all':
                         embeds = discord.Embed(
                             description=((
@@ -1426,9 +1397,9 @@ async def deactivate(client, message, geofences, all_areas, filter_file):
                 log.info((
                     'Unrecognized area from {}.'
                 ).format(message.author.display_name))
-        if reload:
+        if deactivate_count > 0:
             if all_areas is True:
-                gfs = list(geofences.keys())
+                gfs = 'all'
             else:
                 gfs = []
             if user_filters[str(message.author.id)] == {
@@ -1468,7 +1439,20 @@ async def deactivate(client, message, geofences, all_areas, filter_file):
             })
             log.info('Deactivated {} areas for {}.'.format(
                 str(deactivate_count), message.author.display_name))
-    if reload:
+        elif message.content.lower() == '!deactivate all':
+            embeds = discord.Embed(
+                description=((
+                    "{} **All** areas were not previously active for you."
+                ).format(message.author.mention)),
+                color=int('0xee281f', 16)
+            )
+            await client.get_alarm().update(1, {
+                'destination': message.channel,
+                'embeds': embeds
+            })
+            log.info('Area not previously active for {}.').format(
+                message.author.display_name)
+    if deactivate_count > 0:
         client.load_filter_file(get_path(filter_file))
 
 
@@ -1476,8 +1460,8 @@ async def alerts(client, message, bot_number, geofences, all_areas,
                  filter_file, locale):
     with open(filter_file, encoding="utf-8") as f:
         user_filters = json.load(f, object_pairs_hook=OrderedDict)
-    filters = user_filters.get(str(message.author.id))
-    if filters is None:
+        user_dict = user_filters.get(str(message.author.id))
+    if user_dict is None:
         embeds = discord.Embed(
             description=((
                 "{} You don't have any alerts set."
@@ -1493,85 +1477,94 @@ async def alerts(client, message, bot_number, geofences, all_areas,
         alerts = ((
             "**{}**'s Pokemon Alert Settings:\nBOT NUMBER: {}\nPAUSED: "
         ).format(message.author.mention, str(bot_number + 1)))
-        if filters['monsters']['enabled'] is True:
-            alerts += "**TRUE**\n\n"
-        else:
+        if user_dict['monsters']['enabled'] is True:
             alerts += "**FALSE**\n\n"
+        else:
+            alerts += "**TRUE**\n\n"
         if all_areas is True:
             alerts += '__PAUSED AREAS__\n\n```\n'
-            if len(filters['monsters']['defaults']['geofences']) == len(
-                    geofences):
-                alerts += 'None\n'
+            if ('all' in user_dict['monsters']['defaults']['geofences'] or
+                len(user_dict['monsters']['defaults']['geofences']) == len(
+                    geofences)):
+                alerts += 'None \n'
             else:
                 for area in list(
-                        set(geofences.keys()) - set(filters['monsters'][
+                        set(geofences.keys()) - set(user_dict['monsters'][
                             'defaults']['geofences'])):
                     alerts += '{}, '.format(area)
         else:
             alerts += '__ALERT AREAS__\n\n```\n'
-            if len(filters['monsters']['defaults']['geofences']) == 0:
+            if len(user_dict['monsters']['defaults']['geofences']) == 0:
                 alerts += (
                     "You don't any areas set.  Type `!activate [area/all]` " +
                     "in #custom_filters to set one! \n"
                 )
+            elif 'all' in user_dict['monsters']['defaults']['geofences']:
+                for area in list(geofences.keys()):
+                    alerts += '{}, '.format(area)
             else:
-                for area in filters['monsters']['defaults']['geofences']:
+                for area in user_dict['monsters']['defaults']['geofences']:
                     alerts += '{}, '.format(area)
         alerts = alerts[:-2] + '\n```\n'
         alerts += '__POKEMON__\n\n```\n'
-        if '000' in filters['monsters']['filters']:
+        if '000' in user_dict['monsters']['filters']:
             alerts += 'Default (all unlisted): '
-            if int(filters['monsters']['filters']['000']['min_iv']) > 0:
+            if int(user_dict['monsters']['filters']['000']['min_iv']) > 0:
                 alerts += '{}%+, '.format(
-                    filters['monsters']['filters']['000']['min_iv'])
-            if int(filters['monsters']['filters']['000']['min_cp']) > 0:
+                    user_dict['monsters']['filters']['000']['min_iv'])
+            if int(user_dict['monsters']['filters']['000']['min_cp']) > 0:
                 alerts += '{}CP+, '.format(
-                    filters['monsters']['filters']['000']['min_cp'])
-            if int(filters['monsters']['filters']['000']['min_lvl']) > 0:
+                    user_dict['monsters']['filters']['000']['min_cp'])
+            if int(user_dict['monsters']['filters']['000']['min_lvl']) > 0:
                 alerts += 'L{}+, '.format(
-                    filters['monsters']['filters']['000']['min_lvl'])
+                    user_dict['monsters']['filters']['000']['min_lvl'])
             alerts = alerts[:-2] + '\n\n'
         else:
             alerts += 'Default: None\n\n'
-        for pkmn_id in range(721):
-            if ('000' in filters['monsters']['filters'] and
-                    pkmn_id in filters['monsters']['filters']['monsters']):
+        for pokemon in range(721):
+            if ('000' in user_dict['monsters']['filters'] and
+                pokemon in user_dict['monsters']['filters']['000'][
+                    'monsters']):
                 continue
-            elif '{:03}'.format(pkmn_id) not in filters['monsters']['filters']:
-                if '000' in filters['monsters']['filters']:
+            elif '{:03}'.format(pokemon) not in user_dict['monsters'][
+                    'filters']:
+                if '000' in user_dict['monsters']['filters']:
                     alerts += '{}: None\n'.format(
-                        locale.get_pokemon_name(pkmn_id))
+                        locale.get_pokemon_name(pokemon))
                 else:
                     continue
             else:
-                alerts += '{}: '.format(locale.get_pokemon_name(pkmn_id))
-                for filt_name in filters['monsters']['filters']:
-                    if filt_name.startswith('{:03}'.format(pkmn_id)):
-                        if (int(filters['monsters']['filters'][filt_name][
+                alerts += '{}: '.format(locale.get_pokemon_name(pokemon))
+                for filt_name in user_dict['monsters']['filters']:
+                    if filt_name.startswith('{:03}'.format(pokemon)):
+                        if (int(user_dict['monsters']['filters'][filt_name][
                                 'min_iv']) == 0 and
-                            int(filters['monsters']['filters'][filt_name][
+                            int(user_dict['monsters']['filters'][filt_name][
                                 'min_cp']) == 0 and
-                            int(filters['monsters']['filters'][filt_name][
+                            int(user_dict['monsters']['filters'][filt_name][
                                 'min_lvl']) == 0 and
-                            filters['monsters']['filters'][filt_name][
-                                'genders'] is None):
+                            user_dict['monsters']['filters'][filt_name].get(
+                                'genders') is None):
                             alerts += 'All  '
                         else:
-                            if int(filters['monsters']['filters'][filt_name][
+                            if int(user_dict['monsters']['filters'][filt_name][
                                     'min_iv']) > 0:
-                                alerts += '{}%+, '.format(filters['monsters'][
-                                    'filters'][filt_name]['min_iv'])
-                            if int(filters['monsters']['filters'][filt_name][
+                                alerts += '{}%+, '.format(user_dict[
+                                    'monsters']['filters'][filt_name][
+                                        'min_iv'])
+                            if int(user_dict['monsters']['filters'][filt_name][
                                     'min_cp']) > 0:
-                                alerts += '{}CP+, '.format(filters['monsters'][
-                                    'filters'][filt_name]['min_cp'])
-                            if int(filters['monsters']['filters'][filt_name][
+                                alerts += '{}CP+, '.format(user_dict[
+                                    'monsters']['filters'][filt_name][
+                                        'min_cp'])
+                            if int(user_dict['monsters']['filters'][filt_name][
                                     'min_lvl']) > 0:
-                                alerts += 'L{}+, '.format(filters['monsters'][
-                                    'filters'][filt_name]['min_lvl'])
-                            if filters['monsters']['filters'][filt_name][
-                                    'genders'] is not None:
-                                if filters['monsters']['filters'][filt_name][
+                                alerts += 'L{}+, '.format(user_dict[
+                                    'monsters']['filters'][filt_name][
+                                        'min_lvl'])
+                            if user_dict['monsters']['filters'][filt_name].get(
+                                    'genders') is not None:
+                                if user_dict['monsters']['filters'][filt_name][
                                         'genders'] == ['female']:
                                     alerts += '♀, '
                                 else:
@@ -1595,11 +1588,12 @@ async def alerts(client, message, bot_number, geofences, all_areas,
 async def areas(client, message, geofences, filter_file):
     with open(filter_file, encoding="utf-8") as f:
         user_filters = json.load(f, object_pairs_hook=OrderedDict)
-    filters = user_filters.get(str(message.author.id))
+    user_dict = user_filters.get(str(message.author.id))
     areas = '__AVAILABLE AREAS__ (Your active areas are in **bold**.)\n\n'
     for gf in list(geofences.keys()):
-        if (filters is not None and
-                gf in filters['monsters']['defaults']['geofences']):
+        if (user_dict is not None and
+            (gf in user_dict['monsters']['defaults']['geofences'] or
+             'all' in user_dict['monsters']['defaults']['geofences'])):
             areas += '**{}**, '.format(gf)
         else:
             areas += '{}, '.format(gf)
