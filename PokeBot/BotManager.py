@@ -20,7 +20,6 @@ from .Commands import (
     deactivate, alerts, areas
 )
 
-
 log = logging.getLogger('BotManager')
 
 Rule = namedtuple('Rule', ['filter_names', 'alarm_names'])

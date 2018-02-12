@@ -6,6 +6,7 @@ import os
 import sys
 import configargparse
 import asyncio
+import logging.handlers
 from collections import namedtuple
 from aiohttp import web
 from PokeBot import config
@@ -14,17 +15,27 @@ from PokeBot.Manager import Manager
 from PokeBot.BotManager import BotManager
 from PokeBot.Load import parse_rules_file
 from PokeBot.Events import event_factory
-from PokeBot.Utilities.GenUtils import get_path
+from PokeBot.Utilities.GenUtils import get_path, LoggerWriter
 
-
+filehandler = logging.handlers.TimedRotatingFileHandler(
+    'pokebot.log',
+    when='midnight',
+    backupCount=2
+)
+consolehandler = logging.StreamHandler()
 logging.basicConfig(
     format=(
         '%(asctime)s [%(processName)15.15s][%(name)10.10s]' +
         '[%(levelname)8.8s] %(message)s'
     ),
-    level=logging.INFO
+    level=logging.INFO,
+    handlers = [filehandler, consolehandler]
 )
+
 log = logging.getLogger('Server')
+sys.stdout = LoggerWriter(log.info)
+sys.stderr = LoggerWriter(log.warning)
+
 managers = {}
 bot_managers = {}
 entries = []
@@ -85,6 +96,8 @@ def start_server():
         loop.run_until_complete(check_close(entries))
     except KeyboardInterrupt:
         loop.close()
+    except Exception:
+        raise Exception
 
 
 def parse_settings(root_path, loop, Entry):
