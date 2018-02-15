@@ -118,7 +118,7 @@ class UserAlarm(Alarm):
     async def raid_alert(self, raid_info, dest):
         await self.send_alert(self.__raids, raid_info, dest)
 
-    async def send_dm(self, filter_file):
+    async def send_dm(self, filter_file, max_dms, dm_time_period):
         timestamps = []
         user_timestamps = {}
         while True:
@@ -140,9 +140,9 @@ class UserAlarm(Alarm):
             if (destination.guild is not None and
                     destination.id in user_timestamps):
                 paused = False
-                while len(user_timestamps[destination.id]) > 6:
+                while len(user_timestamps[destination.id]) > max_dms:
                     if datetime.utcnow() - user_timestamps[destination.id][
-                            0] > timedelta(seconds=30):
+                            0] > timedelta(seconds=dm_time_period):
                         user_timestamps[destination.id].pop(0)
                     else:
                         with open(filter_file, 'r+', encoding="utf-8") as f:

@@ -2,7 +2,8 @@ from datetime import datetime
 from .BaseEvent import BaseEvent
 from .. import Unknown
 from ..Utilities.MonUtils import (
-    get_pokemon_cp_range, is_weather_boosted, get_base_types, get_type_emoji
+    get_pokemon_cp_range, is_weather_boosted, get_base_types, get_type_emoji,
+    get_move_damage, get_move_dps, get_move_duration, get_move_energy
 )
 from ..Utilities.GenUtils import (
     get_gmaps_link, get_applemaps_link, get_time_as_str, get_seconds_remaining,
@@ -35,7 +36,15 @@ class RaidEvent(BaseEvent):
             self.boosted_weather_id = self.weather_id
             self.boss_level = 25
         self.quick_id = check_for_none(int, data.get('move_1'), Unknown.TINY)
+        self.quick_damage = get_move_damage(self.quick_id)
+        self.quick_dps = get_move_dps(self.quick_id)
+        self.quick_duration = get_move_duration(self.quick_id)
+        self.quick_energy = get_move_energy(self.quick_id)
         self.charge_id = check_for_none(int, data.get('move_2'), Unknown.TINY)
+        self.charge_damage = get_move_damage(self.charge_id)
+        self.charge_dps = get_move_dps(self.charge_id)
+        self.charge_duration = get_move_duration(self.quick_id)
+        self.charge_energy = get_move_energy(self.charge_id)
         self.gym_name = check_for_none(
             str, data.get('name'), Unknown.REGULAR).strip()
         self.gym_image = check_for_none(str, data.get('url'), Unknown.REGULAR)
@@ -98,11 +107,18 @@ class RaidEvent(BaseEvent):
             'raid_lvl': self.raid_lvl,
             'mon_name': locale.get_pokemon_name(self.mon_id),
             'mon_id': self.mon_id,
-            'mon_id_3': "{:03}".format(self.mon_id),
             'quick_move': locale.get_move_name(self.quick_id),
             'quick_id': self.quick_id,
+            'quick_damage': self.quick_damage,
+            'quick_dps': self.quick_dps,
+            'quick_duration': self.quick_duration,
+            'quick_energy': self.quick_energy,
             'charge_move': locale.get_move_name(self.charge_id),
             'charge_id': self.charge_id,
+            'charge_damage': self.charge_damage,
+            'charge_dps': self.charge_dps,
+            'charge_duration': self.charge_duration,
+            'charge_energy': self.charge_energy,
             'cp': self.cp,
             'min_cp': cp_range[0],
             'max_cp': cp_range[1],

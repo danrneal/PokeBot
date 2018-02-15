@@ -251,6 +251,24 @@ def parse_settings(root_path, loop, Entry):
             'Set to True to subscribe to all areas by default (default: False)'
         )
     )
+    parser.add_argument(
+        '-mdm', '--max_dms',
+        type=int,
+        default=5,
+        help=(
+            'Max DMs to be sent to a user in a given time before pausing ' +
+            'their alerts (default: 5)'
+        )
+    )
+    parser.add_argument(
+        '-dmtp', '--dm_time_period',
+        type=int,
+        default=5,
+        help=(
+            'Time period to measure if user is exceeding dm limit before ' +
+            'pausing their alerts in seconds (default: 60)'
+        )
+    )
     args = parser.parse_args()
     config['HOST'] = args.host
     config['PORT'] = args.port
@@ -323,7 +341,8 @@ def parse_settings(root_path, loop, Entry):
             args.bot_tokens[bot_manager.get_bot_number()]))
         loop.create_task(bot_manager.connect())
         loop.create_task(bot_manager.run())
-        loop.create_task(bot_manager.get_alarm().send_dm(args.user_filters))
+        loop.create_task(bot_manager.get_alarm().send_dm(
+            args.user_filters, args.max_dms, args.dm_time_period))
 
 
 def get_from_list(arg, i, default):

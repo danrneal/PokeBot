@@ -46,6 +46,50 @@ def get_gender_sym(gender):
         ).format(gender))
 
 
+def get_move_damage(move_id):
+    if not hasattr(get_move_damage, 'info'):
+        get_move_damage.info = {}
+        file_ = get_path('data/move_info.json')
+        with open(file_, 'r') as f:
+            j = json.loads(f.read())
+        for id_ in j:
+            get_move_damage.info[int(id_)] = j[id_]['damage']
+    return get_move_damage.info.get(move_id, 'unkn')
+
+
+def get_move_dps(move_id):
+    if not hasattr(get_move_dps, 'info'):
+        get_move_dps.info = {}
+        file_ = get_path('data/move_info.json')
+        with open(file_, 'r') as f:
+            j = json.loads(f.read())
+        for id_ in j:
+            get_move_dps.info[int(id_)] = j[id_]['dps']
+    return get_move_dps.info.get(move_id, 'unkn')
+
+
+def get_move_duration(move_id):
+    if not hasattr(get_move_duration, 'info'):
+        get_move_duration.info = {}
+        file_ = get_path('data/move_info.json')
+        with open(file_, 'r') as f:
+            j = json.loads(f.read())
+        for id_ in j:
+            get_move_duration.info[int(id_)] = j[id_]['duration']
+    return get_move_duration.info.get(move_id, 'unkn')
+
+
+def get_move_energy(move_id):
+    if not hasattr(get_move_energy, 'info'):
+        get_move_energy.info = {}
+        file_ = get_path('data/move_info.json')
+        with open(file_, 'r') as f:
+            j = json.loads(f.read())
+        for id_ in j:
+            get_move_energy.info[int(id_)] = j[id_]['energy']
+    return get_move_energy.info.get(move_id, 'unkn')
+
+
 def get_base_height(pokemon_id):
     if not hasattr(get_base_height, 'info'):
         get_base_height.info = {}

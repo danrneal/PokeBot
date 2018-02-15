@@ -10445,3 +10445,929 @@ task: <Task pending coro=<Manager.run() running at /root/Dropbox/TallyPokeMap/Po
 2018-02-15 14:08:28,798 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'zer0_her0es'!
 2018-02-15 14:08:29,697 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
 2018-02-15 14:08:34,753 [    MainProcess][   Manager][    INFO] Spheal monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:08:49,369 [    MainProcess][   Manager][    INFO] Roselia monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:08:49,799 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:08:50,048 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:08:50,066 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'hope'!
+2018-02-15 14:08:50,079 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:08:50,313 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:08:50,518 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:08:50,987 [    MainProcess][   Manager][    INFO] Hitmonlee monster notification has been triggered in rule 'uber_dooper'!
+2018-02-15 14:08:51,642 [    MainProcess][   Manager][    INFO] Treecko monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:08:52,022 [    MainProcess][BotManager][    INFO] Treecko monster notification has been triggered for user 'GainzGoblin'!
+2018-02-15 14:08:59,953 [    MainProcess][   Manager][    INFO] Roselia monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:09:03,892 [    MainProcess][BotManager][    INFO] Bagon monster notification has been triggered for user 'Ghstmarauder'!
+2018-02-15 14:09:04,168 [    MainProcess][BotManager][    INFO] Bagon monster notification has been triggered for user 'robvious1'!
+2018-02-15 14:09:04,169 [    MainProcess][BotManager][    INFO] Bagon monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:09:12,154 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:09:21,430 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:09:21,738 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:09:21,757 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:09:21,947 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:09:22,192 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:09:40,688 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:09:50,394 [    MainProcess][   Manager][    INFO] Chansey monster notification has been triggered in rule '30plus_rock'!
+2018-02-15 14:09:50,845 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:09:51,165 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:09:51,168 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'hope'!
+2018-02-15 14:09:51,174 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:09:51,409 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:09:51,623 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:10:03,595 [    MainProcess][   Manager][    INFO] e306841fcc2d4812a1242d7473ec9bb9.16 raid notification has been triggered in rule 'legendary_raids'!
+2018-02-15 14:10:04,195 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:10:05,423 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:10:07,462 [    MainProcess][   Manager][    INFO] Whismur monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:10:09,292 [    MainProcess][   Manager][    INFO] 89554544054a4baf8a1eb5e349af345e.16 raid notification has been triggered in rule 'hard_raids'!
+2018-02-15 14:10:10,293 [    MainProcess][BotManager][    INFO] Onix monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:10:11,309 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:10:15,650 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:10:17,478 [    MainProcess][   Manager][    INFO] 987b3588335b4ce197d5dc1b874968d3.11 raid notification has been triggered in rule 'easy_raids'!
+2018-02-15 14:10:24,297 [    MainProcess][   Manager][    INFO] e349bb54b6f246fc88c5d9717be88c35.16 raid notification has been triggered in rule 'easy_raids'!
+2018-02-15 14:10:41,909 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:10:42,670 [    MainProcess][   Manager][    INFO] b6ea989ae0964a4d8921bf22abf48e28.16 egg notification has been triggered in rule 'hard_boiled_eggs'!
+2018-02-15 14:10:48,021 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:10:58,961 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:10:59,260 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:10:59,270 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:10:59,460 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:10:59,687 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:11:10,292 [    MainProcess][   Manager][    INFO] 2726671868844b5cb46fde5748bcde35.16 egg notification has been triggered in rule 'hard_boiled_eggs'!
+2018-02-15 14:11:13,776 [    MainProcess][   Manager][    INFO] fcdfc208db8e4740acd8b68183fd55b6.16 egg notification has been triggered in rule 'over_easy_eggs'!
+2018-02-15 14:11:20,419 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:11:20,666 [    MainProcess][   Manager][    INFO] 23d3a42183d7436c90ad5dfdea4e041f.16 egg notification has been triggered in rule 'over_easy_eggs'!
+2018-02-15 14:11:26,757 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'hope'!
+2018-02-15 14:11:27,019 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:11:42,992 [    MainProcess][   Manager][    INFO] 23afd863cb724ffd88926eb5a594b43e.16 egg notification has been triggered in rule 'over_easy_eggs'!
+2018-02-15 14:11:43,531 [    MainProcess][   Manager][    INFO] e12e85066fd84eecbd24c5e21a73916d.16 raid notification has been triggered in rule 'easy_raids'!
+2018-02-15 14:11:46,990 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:12:08,399 [    MainProcess][BotManager][    INFO] Ralts monster notification has been triggered for user 'GainzGoblin'!
+2018-02-15 14:12:12,727 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:12:19,455 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:12:32,681 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:12:40,112 [    MainProcess][   Manager][    INFO] 9e46cfd3c00543dc8edc2d26d7ef09de.12 egg notification has been triggered in rule 'over_easy_eggs'!
+2018-02-15 14:12:40,634 [    MainProcess][   Manager][    INFO] Carvanha monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:12:51,786 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:12:54,268 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:12:54,524 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:12:54,532 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:12:54,642 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:12:55,058 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:12:55,609 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:12:58,760 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:12:59,177 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:12:59,190 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:12:59,398 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:12:59,702 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:13:06,448 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:13:06,978 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:13:07,310 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:13:07,326 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:13:07,553 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:13:07,747 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:13:08,869 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:13:09,269 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:13:15,203 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:13:15,488 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:13:15,491 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'hope'!
+2018-02-15 14:13:15,501 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:13:15,678 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:13:15,861 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:13:27,101 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:13:41,786 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:13:42,046 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:13:42,050 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:13:42,265 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:13:42,487 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:13:46,130 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:14:11,325 [    MainProcess][   Manager][    INFO] Taillow monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:14:13,712 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:14:14,145 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:14:17,433 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:14:18,381 [    MainProcess][   Manager][    INFO] Seviper monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:14:18,920 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:14:19,200 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:14:19,208 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'thr3geo'!
+2018-02-15 14:14:19,217 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:14:19,322 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:14:19,613 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:14:19,636 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:14:32,661 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:14:41,037 [    MainProcess][   Manager][    INFO] 10451ff61dc14bf5a533c2db4222e824.16 egg notification has been triggered in rule 'hard_boiled_eggs'!
+2018-02-15 14:14:46,229 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:14:49,098 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'zer0_her0es'!
+2018-02-15 14:14:52,276 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:14:53,182 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:14:54,294 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:14:54,573 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:14:54,580 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:14:54,888 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:14:55,094 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:14:58,172 [    MainProcess][   Manager][    INFO] Houndour monster notification has been triggered in rule 'hunnit_huntas'!
+2018-02-15 14:14:58,587 [    MainProcess][BotManager][    INFO] Houndour monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:14:59,318 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:15:06,825 [    MainProcess][   Manager][    INFO] 2f8ecda8dce940909e68728edb737beb.16 egg notification has been triggered in rule 'hard_boiled_eggs'!
+2018-02-15 14:15:08,182 [    MainProcess][   Manager][    INFO] 9e5b7575a3f44dec8ea7126d6dbc722c.16 egg notification has been triggered in rule 'over_easy_eggs'!
+2018-02-15 14:15:20,796 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:15:30,684 [    MainProcess][   Manager][    INFO] Aron monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:15:32,116 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:15:34,919 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:15:35,179 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:15:35,189 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:15:35,383 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:15:35,554 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:15:37,975 [    MainProcess][   Manager][    INFO] 9852d59335ea42e1be14b9aec7d5c3ec.16 raid notification has been triggered in rule 'legendary_raids'!
+2018-02-15 14:16:07,455 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:16:07,867 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:16:08,122 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:16:08,137 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:16:08,370 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:16:08,577 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:16:08,690 [    MainProcess][BotManager][    INFO] Bagon monster notification has been triggered for user 'Ghstmarauder'!
+2018-02-15 14:16:08,962 [    MainProcess][BotManager][    INFO] Bagon monster notification has been triggered for user 'robvious1'!
+2018-02-15 14:16:08,965 [    MainProcess][BotManager][    INFO] Bagon monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:16:25,958 [    MainProcess][   Manager][    INFO] ccf090ba261842238fb067b1bc8ed1b9.16 egg notification has been triggered in rule 'legendary_eggs'!
+2018-02-15 14:16:28,771 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:16:47,748 [    MainProcess][   Manager][    INFO] 7054e5602d324220838cb93bf052a09b.16 raid notification has been triggered in rule 'hard_raids'!
+2018-02-15 14:16:49,786 [    MainProcess][   Manager][    INFO] Seedot monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:16:50,225 [    MainProcess][BotManager][    INFO] Seedot monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:16:59,449 [    MainProcess][   Manager][    INFO] Makuhita monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:16:59,884 [    MainProcess][BotManager][    INFO] Makuhita monster notification has been triggered for user 'GainzGoblin'!
+2018-02-15 14:17:02,950 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:17:11,242 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:17:13,455 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:17:13,744 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:17:13,752 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:17:14,002 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:17:14,164 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:17:14,242 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:17:24,490 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:17:24,762 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:17:24,764 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'hope'!
+2018-02-15 14:17:24,766 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:17:24,988 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:17:25,222 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:17:25,331 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:17:25,742 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:17:41,105 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:17:55,404 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:17:58,260 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:18:13,563 [    MainProcess][  Commands][    INFO] Activated 1 pokemon filters for AeChik06..
+2018-02-15 14:18:13,564 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:18:13,583 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:18:37,196 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:18:38,372 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:18:44,289 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:18:51,754 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:18:57,151 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:19:04,198 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:19:16,303 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:19:16,601 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:19:16,611 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:19:16,846 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:19:17,047 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:19:26,242 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:19:38,860 [    MainProcess][   Manager][    INFO] 308763d7e81c4a4f9210268b81fe6750.16 raid notification has been triggered in rule 'legendary_raids'!
+2018-02-15 14:19:43,496 [    MainProcess][   Manager][    INFO] Taillow monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:19:45,797 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fbad12b32e8>
+2018-02-15 14:19:45,800 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fbad12b32e8>
+2018-02-15 14:19:45,840 [    MainProcess][    Server][ WARNING] Traceback (most recent call last):
+2018-02-15 14:19:45,843 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 343, in <module>
+2018-02-15 14:19:45,843 [    MainProcess][    Server][ WARNING] start_server()
+2018-02-15 14:19:45,847 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 94, in start_server
+2018-02-15 14:19:45,847 [    MainProcess][    Server][ WARNING] loop.run_until_complete(web.run_app(app, port=config['PORT']))
+2018-02-15 14:19:45,847 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 364, in run_until_complete
+2018-02-15 14:19:45,848 [    MainProcess][    Server][ WARNING] self._check_closed()
+2018-02-15 14:19:45,849 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 334, in _check_closed
+2018-02-15 14:19:45,849 [    MainProcess][    Server][ WARNING] raise RuntimeError('Event loop is closed')
+2018-02-15 14:19:45,849 [    MainProcess][    Server][ WARNING] RuntimeError
+2018-02-15 14:19:45,850 [    MainProcess][    Server][ WARNING] :
+2018-02-15 14:19:45,850 [    MainProcess][    Server][ WARNING] Event loop is closed
+2018-02-15 14:19:45,853 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fbad12b32e8>
+2018-02-15 14:19:45,853 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fbad12b32e8>
+2018-02-15 14:19:45,854 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fbad12b32e8>
+2018-02-15 14:19:46,076 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<manage_webhook_data() running at start_pokebot.py:72> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 14:19:46,083 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<Manager.run() running at /root/Dropbox/TallyPokeMap/PokeBot/PokeBot/Manager.py:261> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 14:19:48,066 [    MainProcess][    Server][    INFO] PokeBot is getting ready...
+2018-02-15 14:19:48,072 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' is being created.
+2018-02-15 14:19:48,076 [    MainProcess][   Manager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/filters.json
+2018-02-15 14:19:48,077 [    MainProcess][   Manager][    INFO] Parsing 'monsters' section.
+2018-02-15 14:19:48,111 [    MainProcess][   Manager][    INFO] Parsing 'eggs' section.
+2018-02-15 14:19:48,111 [    MainProcess][   Manager][    INFO] Parsing 'raids' section.
+2018-02-15 14:19:48,113 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:19:48,113 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:19:48,113 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:19:48,114 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:19:48,114 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:19:48,115 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:19:48,115 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:19:48,116 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:19:48,116 [    MainProcess][   Manager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/alarms.json
+2018-02-15 14:19:48,117 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:19:48,117 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:48,117 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:48,118 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:48,118 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:48,119 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:48,119 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:48,120 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:48,120 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:48,120 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:48,121 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:48,121 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:48,121 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:48,122 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:48,122 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:48,122 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:48,123 [    MainProcess][   Manager][    INFO] 15 active alarms found.
+2018-02-15 14:19:48,123 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' successfully created.
+2018-02-15 14:19:48,124 [    MainProcess][LoadConfig][    INFO] Loading Rules from file at /root/Dropbox/TallyPokeMap/PokeBot/rules.json
+2018-02-15 14:19:48,124 [    MainProcess][    Server][    INFO] Starting up the Managers
+2018-02-15 14:19:48,125 [    MainProcess][discord.cl][ WARNING] PyNaCl is not installed, voice will NOT be supported
+2018-02-15 14:19:48,125 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is being created.
+2018-02-15 14:19:48,132 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:19:48,162 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:19:48,234 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:19:48,235 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:19:48,235 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:19:48,236 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:19:48,236 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:19:48,237 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:19:48,237 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:19:48,237 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:19:48,239 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:19:48,242 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:19:48,244 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:48,244 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:19:48,244 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_0' successfully created.
+2018-02-15 14:19:48,245 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is being created.
+2018-02-15 14:19:48,247 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:19:48,273 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:19:48,348 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:19:48,348 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:19:48,349 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:19:48,349 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:19:48,350 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:19:48,371 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:19:48,371 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:19:48,372 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:19:48,373 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:19:48,373 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:19:48,384 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:48,384 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:19:48,385 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_1' successfully created.
+2018-02-15 14:19:48,395 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is being created.
+2018-02-15 14:19:48,398 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:19:48,456 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:19:48,578 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:19:48,578 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:19:48,579 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:19:48,586 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:19:48,587 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:19:48,588 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:19:48,588 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:19:48,591 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:19:48,591 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:19:48,593 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:19:48,593 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:48,596 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:19:48,598 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_2' successfully created.
+2018-02-15 14:19:48,599 [    MainProcess][    Server][    INFO] Starting up the Bots
+2018-02-15 14:19:49,039 [    MainProcess][    Server][    INFO] PokeBot is listening for webhooks on: http://127.0.0.1:4002
+2018-02-15 14:19:49,054 [    MainProcess][    Server][    INFO] ======== Running on http://0.0.0.0:4002 ========
+2018-02-15 14:19:49,055 [    MainProcess][    Server][    INFO] (Press CTRL+C to quit)
+2018-02-15 14:19:49,252 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:49,253 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:49,262 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:49,276 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:49,297 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:49,310 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:49,911 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:49,946 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:49,955 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:50,029 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:50,040 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:51,090 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:51,092 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:51,097 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:51,099 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:51,101 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:51,103 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:51,104 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:51,121 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:51,270 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:51,275 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:52,160 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:52,167 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:52,168 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:52,168 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:52,168 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:52,233 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:52,276 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:53,246 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is starting up.
+2018-02-15 14:19:53,277 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is connected.
+2018-02-15 14:19:53,366 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:53,366 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:53,368 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:53,368 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:53,416 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is starting up.
+2018-02-15 14:19:53,443 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is connected.
+2018-02-15 14:19:53,582 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is starting up.
+2018-02-15 14:19:53,602 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is connected.
+2018-02-15 14:19:53,696 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f32841464a8>
+2018-02-15 14:19:53,696 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f32841464a8>
+2018-02-15 14:19:53,750 [    MainProcess][    Server][ WARNING] Traceback (most recent call last):
+2018-02-15 14:19:53,759 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 343, in <module>
+2018-02-15 14:19:53,760 [    MainProcess][    Server][ WARNING] start_server()
+2018-02-15 14:19:53,760 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 94, in start_server
+2018-02-15 14:19:53,760 [    MainProcess][    Server][ WARNING] loop.run_until_complete(web.run_app(app, port=config['PORT']))
+2018-02-15 14:19:53,760 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 364, in run_until_complete
+2018-02-15 14:19:53,760 [    MainProcess][    Server][ WARNING] self._check_closed()
+2018-02-15 14:19:53,760 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 334, in _check_closed
+2018-02-15 14:19:53,761 [    MainProcess][    Server][ WARNING] raise RuntimeError('Event loop is closed')
+2018-02-15 14:19:53,764 [    MainProcess][    Server][ WARNING] RuntimeError
+2018-02-15 14:19:53,764 [    MainProcess][    Server][ WARNING] :
+2018-02-15 14:19:53,764 [    MainProcess][    Server][ WARNING] Event loop is closed
+2018-02-15 14:19:53,764 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f32841464a8>
+2018-02-15 14:19:53,765 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f32841464a8>
+2018-02-15 14:19:53,765 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f32841464a8>
+2018-02-15 14:19:53,951 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<Manager.run() running at /root/Dropbox/TallyPokeMap/PokeBot/PokeBot/Manager.py:261> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 14:19:53,955 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<manage_webhook_data() running at start_pokebot.py:72> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 14:19:56,312 [    MainProcess][    Server][    INFO] PokeBot is getting ready...
+2018-02-15 14:19:56,318 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' is being created.
+2018-02-15 14:19:56,321 [    MainProcess][   Manager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/filters.json
+2018-02-15 14:19:56,321 [    MainProcess][   Manager][    INFO] Parsing 'monsters' section.
+2018-02-15 14:19:56,361 [    MainProcess][   Manager][    INFO] Parsing 'eggs' section.
+2018-02-15 14:19:56,366 [    MainProcess][   Manager][    INFO] Parsing 'raids' section.
+2018-02-15 14:19:56,370 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:19:56,370 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:19:56,370 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:19:56,375 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:19:56,375 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:19:56,376 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:19:56,376 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:19:56,377 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:19:56,377 [    MainProcess][   Manager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/alarms.json
+2018-02-15 14:19:56,378 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:19:56,378 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:56,379 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:56,379 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:56,382 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:56,383 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:56,383 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:56,383 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:56,384 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:56,384 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:56,385 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:56,386 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:56,387 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:56,388 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:56,389 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:56,389 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:56,390 [    MainProcess][   Manager][    INFO] 15 active alarms found.
+2018-02-15 14:19:56,391 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' successfully created.
+2018-02-15 14:19:56,392 [    MainProcess][LoadConfig][    INFO] Loading Rules from file at /root/Dropbox/TallyPokeMap/PokeBot/rules.json
+2018-02-15 14:19:56,393 [    MainProcess][    Server][    INFO] Starting up the Managers
+2018-02-15 14:19:56,394 [    MainProcess][discord.cl][ WARNING] PyNaCl is not installed, voice will NOT be supported
+2018-02-15 14:19:56,403 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is being created.
+2018-02-15 14:19:56,405 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:19:56,422 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:19:56,477 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:19:56,478 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:19:56,478 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:19:56,480 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:19:56,481 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:19:56,481 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:19:56,482 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:19:56,482 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:19:56,482 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:19:56,483 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:19:56,483 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:56,484 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:19:56,484 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_0' successfully created.
+2018-02-15 14:19:56,485 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is being created.
+2018-02-15 14:19:56,487 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:19:56,502 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:19:56,559 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:19:56,560 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:19:56,561 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:19:56,561 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:19:56,562 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:19:56,562 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:19:56,562 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:19:56,563 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:19:56,563 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:19:56,564 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:19:56,564 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:56,565 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:19:56,565 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_1' successfully created.
+2018-02-15 14:19:56,566 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is being created.
+2018-02-15 14:19:56,568 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:19:56,584 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:19:56,678 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:19:56,678 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:19:56,679 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:19:56,680 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:19:56,680 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:19:56,680 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:19:56,681 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:19:56,681 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:19:56,682 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:19:56,683 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:19:56,683 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:19:56,684 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:19:56,684 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_2' successfully created.
+2018-02-15 14:19:56,685 [    MainProcess][    Server][    INFO] Starting up the Bots
+2018-02-15 14:19:57,100 [    MainProcess][    Server][    INFO] PokeBot is listening for webhooks on: http://127.0.0.1:4002
+2018-02-15 14:19:57,106 [    MainProcess][    Server][    INFO] ======== Running on http://0.0.0.0:4002 ========
+2018-02-15 14:19:57,106 [    MainProcess][    Server][    INFO] (Press CTRL+C to quit)
+2018-02-15 14:19:57,391 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:57,395 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:57,396 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:57,398 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:57,762 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:58,284 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:58,285 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:58,286 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:58,288 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:58,290 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:58,297 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:58,316 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:58,324 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:58,395 [    MainProcess][    Events][   ERROR] Encountered error while converting webhook data (NameError: name 'get_move_damage' is not defined)
+2018-02-15 14:19:59,150 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f7be2f074a8>
+2018-02-15 14:19:59,153 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f7be2f074a8>
+2018-02-15 14:19:59,188 [    MainProcess][    Server][ WARNING] Traceback (most recent call last):
+2018-02-15 14:19:59,194 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 343, in <module>
+2018-02-15 14:19:59,198 [    MainProcess][    Server][ WARNING] start_server()
+2018-02-15 14:19:59,201 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 94, in start_server
+2018-02-15 14:19:59,203 [    MainProcess][    Server][ WARNING] loop.run_until_complete(web.run_app(app, port=config['PORT']))
+2018-02-15 14:19:59,203 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 364, in run_until_complete
+2018-02-15 14:19:59,205 [    MainProcess][    Server][ WARNING] self._check_closed()
+2018-02-15 14:19:59,205 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 334, in _check_closed
+2018-02-15 14:19:59,206 [    MainProcess][    Server][ WARNING] raise RuntimeError('Event loop is closed')
+2018-02-15 14:19:59,207 [    MainProcess][    Server][ WARNING] RuntimeError
+2018-02-15 14:19:59,209 [    MainProcess][    Server][ WARNING] :
+2018-02-15 14:19:59,210 [    MainProcess][    Server][ WARNING] Event loop is closed
+2018-02-15 14:19:59,211 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f7be2f074a8>
+2018-02-15 14:19:59,212 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f7be2f074a8>
+2018-02-15 14:19:59,213 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f7be2f074a8>
+2018-02-15 14:19:59,355 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<Manager.run() running at /root/Dropbox/TallyPokeMap/PokeBot/PokeBot/Manager.py:261> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 14:19:59,372 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<manage_webhook_data() running at start_pokebot.py:72> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 14:20:59,730 [    MainProcess][    Server][    INFO] PokeBot is getting ready...
+2018-02-15 14:20:59,738 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' is being created.
+2018-02-15 14:20:59,741 [    MainProcess][   Manager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/filters.json
+2018-02-15 14:20:59,743 [    MainProcess][   Manager][    INFO] Parsing 'monsters' section.
+2018-02-15 14:20:59,775 [    MainProcess][   Manager][    INFO] Parsing 'eggs' section.
+2018-02-15 14:20:59,776 [    MainProcess][   Manager][    INFO] Parsing 'raids' section.
+2018-02-15 14:20:59,777 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:20:59,778 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:20:59,778 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:20:59,779 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:20:59,780 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:20:59,780 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:20:59,780 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:20:59,781 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:20:59,782 [    MainProcess][   Manager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/alarms.json
+2018-02-15 14:20:59,782 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:20:59,783 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:20:59,784 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:20:59,784 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:20:59,785 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:20:59,785 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:20:59,786 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:20:59,786 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:20:59,787 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:20:59,787 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:20:59,788 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:20:59,788 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:20:59,789 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:20:59,789 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:20:59,789 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:20:59,790 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:20:59,790 [    MainProcess][   Manager][    INFO] 15 active alarms found.
+2018-02-15 14:20:59,791 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' successfully created.
+2018-02-15 14:20:59,792 [    MainProcess][LoadConfig][    INFO] Loading Rules from file at /root/Dropbox/TallyPokeMap/PokeBot/rules.json
+2018-02-15 14:20:59,792 [    MainProcess][    Server][    INFO] Starting up the Managers
+2018-02-15 14:20:59,799 [    MainProcess][discord.cl][ WARNING] PyNaCl is not installed, voice will NOT be supported
+2018-02-15 14:20:59,800 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is being created.
+2018-02-15 14:20:59,802 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:20:59,827 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:20:59,878 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:20:59,879 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:20:59,880 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:20:59,880 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:20:59,881 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:20:59,881 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:20:59,882 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:20:59,882 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:20:59,882 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:20:59,887 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:20:59,888 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:20:59,888 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:20:59,891 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_0' successfully created.
+2018-02-15 14:20:59,892 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is being created.
+2018-02-15 14:20:59,894 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:20:59,909 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:20:59,960 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:20:59,961 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:20:59,962 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:20:59,962 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:20:59,963 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:20:59,963 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:20:59,964 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:20:59,964 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:20:59,964 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:20:59,965 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:20:59,966 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:20:59,966 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:20:59,966 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_1' successfully created.
+2018-02-15 14:20:59,967 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is being created.
+2018-02-15 14:20:59,970 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:20:59,985 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:21:00,041 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:21:00,042 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:21:00,042 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:21:00,043 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:21:00,043 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:21:00,043 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:21:00,044 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:21:00,044 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:21:00,045 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:21:00,045 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:21:00,046 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:21:00,046 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:21:00,047 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_2' successfully created.
+2018-02-15 14:21:00,047 [    MainProcess][    Server][    INFO] Starting up the Bots
+2018-02-15 14:21:00,452 [    MainProcess][    Server][    INFO] PokeBot is listening for webhooks on: http://127.0.0.1:4002
+2018-02-15 14:21:00,457 [    MainProcess][    Server][    INFO] ======== Running on http://0.0.0.0:4002 ========
+2018-02-15 14:21:00,457 [    MainProcess][    Server][    INFO] (Press CTRL+C to quit)
+2018-02-15 14:21:03,308 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:21:03,638 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:21:03,642 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:21:03,822 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:21:04,070 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:21:04,654 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is starting up.
+2018-02-15 14:21:04,670 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is connected.
+2018-02-15 14:21:04,929 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is starting up.
+2018-02-15 14:21:04,957 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is connected.
+2018-02-15 14:21:04,991 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is starting up.
+2018-02-15 14:21:05,009 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is connected.
+2018-02-15 14:21:09,298 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:21:26,360 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:21:36,353 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:21:52,501 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:21:52,926 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:21:57,102 [    MainProcess][   Manager][    INFO] f394d25b2d254afaa7fe3d55ce8d35a2.16 raid notification has been triggered in rule 'legendary_raids'!
+2018-02-15 14:22:12,826 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:22:13,099 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:22:13,103 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'hope'!
+2018-02-15 14:22:13,115 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:22:13,319 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:22:13,529 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:22:22,153 [    MainProcess][   Manager][    INFO] 4c3ef78d81eb4b5f9ba34c4bd6464004.16 raid notification has been triggered in rule 'legendary_raids'!
+2018-02-15 14:22:23,641 [    MainProcess][   Manager][    INFO] 27239fa49c664e17a1ae493516c41053.16 raid notification has been triggered in rule 'hard_raids'!
+2018-02-15 14:22:31,093 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:22:41,368 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:22:50,180 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:23:01,143 [    MainProcess][BotManager][    INFO] Beldum monster notification has been triggered for user 'dabnet0'!
+2018-02-15 14:23:01,415 [    MainProcess][BotManager][    INFO] Beldum monster notification has been triggered for user 'Ghstmarauder'!
+2018-02-15 14:23:01,714 [    MainProcess][BotManager][    INFO] Beldum monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:23:01,726 [    MainProcess][BotManager][    INFO] Beldum monster notification has been triggered for user 'bigman2005'!
+2018-02-15 14:23:03,964 [    MainProcess][   Manager][    INFO] Swellow monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:23:04,358 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:23:09,181 [    MainProcess][   Manager][    INFO] Illumise monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:23:22,239 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:23:28,916 [    MainProcess][   Manager][    INFO] f7c5c2ab399f4dd78ceae7a32ec07d20.16 egg notification has been triggered in rule 'legendary_eggs'!
+2018-02-15 14:23:32,330 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:23:32,623 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:23:32,634 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:23:32,724 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:23:32,982 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:23:34,026 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:23:34,299 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:23:34,303 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:23:34,511 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:23:34,731 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:23:34,744 [    MainProcess][   Manager][    INFO] Oddish monster notification has been triggered in rule '30plus_junk'!
+2018-02-15 14:23:35,169 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:23:36,006 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:23:36,278 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:23:36,287 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:23:36,454 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:23:36,704 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:23:37,347 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:23:48,987 [    MainProcess][   Manager][    INFO] ac514096c61f4111ae8f8dfe7b1b666a.16 raid notification has been triggered in rule 'hard_raids'!
+2018-02-15 14:23:55,632 [    MainProcess][BotManager][    INFO] Makuhita monster notification has been triggered for user 'GainzGoblin'!
+2018-02-15 14:24:05,838 [    MainProcess][  Commands][    INFO] Paused all alerts for Ghstmarauder..
+2018-02-15 14:24:05,840 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:24:05,859 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:24:31,975 [    MainProcess][   Manager][    INFO] 5ee8e03efa4247718f887ad060aee0f4.16 raid notification has been triggered in rule 'easy_raids'!
+2018-02-15 14:24:43,339 [    MainProcess][   Manager][    INFO] Ivysaur monster notification has been triggered in rule '30plus_rock'!
+2018-02-15 14:24:50,393 [    MainProcess][   Manager][    INFO] 3ca07544dd4c40508d6d756b32a5675d.16 raid notification has been triggered in rule 'easy_raids'!
+2018-02-15 14:24:59,499 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:24:59,771 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:24:59,777 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:25:00,036 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:25:00,239 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:25:06,007 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:25:06,488 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:25:06,747 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:25:06,806 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:25:07,024 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:25:07,126 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:25:24,322 [    MainProcess][   Manager][    INFO] Illumise monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:25:25,648 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:25:27,069 [    MainProcess][   Manager][    INFO] c7c7e5d4fc68447697d000bdfca14c29.16 egg notification has been triggered in rule 'over_easy_eggs'!
+2018-02-15 14:25:33,276 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:25:35,688 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'hunnit_huntas'!
+2018-02-15 14:25:36,086 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule '30plus_rock'!
+2018-02-15 14:25:36,307 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:25:36,451 [    MainProcess][BotManager][    INFO] Luvdisc monster notification has been triggered for user 'hoffafsu'!
+2018-02-15 14:25:36,648 [    MainProcess][BotManager][    INFO] Luvdisc monster notification has been triggered for user 'queenbee'!
+2018-02-15 14:25:36,834 [    MainProcess][BotManager][    INFO] Luvdisc monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:25:36,839 [    MainProcess][BotManager][    INFO] Luvdisc monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:25:38,129 [    MainProcess][   Manager][    INFO] 66d11b3065c54ce68cccc688ad251d14.16 egg notification has been triggered in rule 'hard_boiled_eggs'!
+2018-02-15 14:25:44,148 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:25:44,434 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:25:44,439 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:25:44,636 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:25:44,827 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:26:12,212 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:26:19,312 [    MainProcess][   Manager][    INFO] 9b3f2125640840428c73ad7788179afe.16 egg notification has been triggered in rule 'legendary_eggs'!
+2018-02-15 14:26:19,746 [    MainProcess][BotManager][    INFO] Scyther monster notification has been triggered for user 'bigman2005'!
+2018-02-15 14:26:28,626 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:26:28,928 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:26:28,938 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:26:29,174 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:26:29,407 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:26:30,217 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:26:30,508 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:26:30,517 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:26:30,807 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:26:31,060 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:26:31,122 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:26:33,409 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:26:36,756 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:27:11,224 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:27:14,918 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:27:15,912 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:27:37,389 [    MainProcess][   Manager][    INFO] e328bdfdbf6f4cf38ffd7d0e87fc242c.16 raid notification has been triggered in rule 'easy_raids'!
+2018-02-15 14:27:43,728 [    MainProcess][   Manager][    INFO] Bulbasaur monster notification has been triggered in rule '30plus_rock'!
+2018-02-15 14:27:45,582 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:27:54,335 [    MainProcess][   Manager][    INFO] Spheal monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:28:04,362 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:28:07,812 [    MainProcess][BotManager][    INFO] Beldum monster notification has been triggered for user 'dabnet0'!
+2018-02-15 14:28:08,118 [    MainProcess][BotManager][    INFO] Beldum monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:28:08,378 [    MainProcess][BotManager][    INFO] Beldum monster notification has been triggered for user 'bigman2005'!
+2018-02-15 14:28:16,787 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:28:21,085 [    MainProcess][   Manager][    INFO] Vigoroth monster notification has been triggered in rule 'uber_dooper'!
+2018-02-15 14:28:21,507 [    MainProcess][   Manager][    INFO] 55f54a97f4de45a992ebaa7940d66437.16 egg notification has been triggered in rule 'over_easy_eggs'!
+2018-02-15 14:28:24,060 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:28:24,304 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:28:24,314 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:28:24,504 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:28:24,635 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:28:31,315 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:28:35,635 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:28:35,913 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:28:35,920 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:28:36,156 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:28:36,364 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:28:45,598 [    MainProcess][   Manager][    INFO] 703cdf17773d47ae8e58a689334663db.16 raid notification has been triggered in rule 'legendary_raids'!
+2018-02-15 14:28:46,251 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:29:08,370 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f93893c44a8>
+2018-02-15 14:29:08,371 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f93893c44a8>
+2018-02-15 14:29:08,413 [    MainProcess][    Server][ WARNING] Traceback (most recent call last):
+2018-02-15 14:29:08,413 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 343, in <module>
+2018-02-15 14:29:08,414 [    MainProcess][    Server][ WARNING] start_server()
+2018-02-15 14:29:08,414 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 94, in start_server
+2018-02-15 14:29:08,414 [    MainProcess][    Server][ WARNING] loop.run_until_complete(web.run_app(app, port=config['PORT']))
+2018-02-15 14:29:08,414 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 364, in run_until_complete
+2018-02-15 14:29:08,415 [    MainProcess][    Server][ WARNING] self._check_closed()
+2018-02-15 14:29:08,415 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 334, in _check_closed
+2018-02-15 14:29:08,415 [    MainProcess][    Server][ WARNING] raise RuntimeError('Event loop is closed')
+2018-02-15 14:29:08,415 [    MainProcess][    Server][ WARNING] RuntimeError
+2018-02-15 14:29:08,415 [    MainProcess][    Server][ WARNING] :
+2018-02-15 14:29:08,415 [    MainProcess][    Server][ WARNING] Event loop is closed
+2018-02-15 14:29:08,416 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f93893c44a8>
+2018-02-15 14:29:08,416 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f93893c44a8>
+2018-02-15 14:29:08,416 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f93893c44a8>
+2018-02-15 14:29:08,566 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<manage_webhook_data() running at start_pokebot.py:72> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 14:29:08,566 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<Manager.run() running at /root/Dropbox/TallyPokeMap/PokeBot/PokeBot/Manager.py:261> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 14:29:22,465 [    MainProcess][    Server][    INFO] PokeBot is getting ready...
+2018-02-15 14:29:22,473 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' is being created.
+2018-02-15 14:29:22,481 [    MainProcess][   Manager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/filters.json
+2018-02-15 14:29:22,482 [    MainProcess][   Manager][    INFO] Parsing 'monsters' section.
+2018-02-15 14:29:22,529 [    MainProcess][   Manager][    INFO] Parsing 'eggs' section.
+2018-02-15 14:29:22,532 [    MainProcess][   Manager][    INFO] Parsing 'raids' section.
+2018-02-15 14:29:22,535 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:29:22,535 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:29:22,535 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:29:22,535 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:29:22,535 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:29:22,536 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:29:22,537 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:29:22,540 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:29:22,540 [    MainProcess][   Manager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/alarms.json
+2018-02-15 14:29:22,541 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:29:22,542 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:29:22,542 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:29:22,545 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:29:22,545 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:29:22,546 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:29:22,549 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:29:22,549 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:29:22,550 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:29:22,550 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:29:22,550 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:29:22,561 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:29:22,562 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:29:22,563 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:29:22,563 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:29:22,564 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:29:22,574 [    MainProcess][   Manager][    INFO] 15 active alarms found.
+2018-02-15 14:29:22,574 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' successfully created.
+2018-02-15 14:29:22,575 [    MainProcess][LoadConfig][    INFO] Loading Rules from file at /root/Dropbox/TallyPokeMap/PokeBot/rules.json
+2018-02-15 14:29:22,575 [    MainProcess][    Server][    INFO] Starting up the Managers
+2018-02-15 14:29:22,577 [    MainProcess][discord.cl][ WARNING] PyNaCl is not installed, voice will NOT be supported
+2018-02-15 14:29:22,577 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is being created.
+2018-02-15 14:29:22,593 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:29:22,676 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:29:22,807 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:29:22,810 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:29:22,813 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:29:22,815 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:29:22,818 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:29:22,820 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:29:22,823 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:29:22,823 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:29:22,827 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:29:22,832 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:29:22,833 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:29:22,833 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:29:22,833 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_0' successfully created.
+2018-02-15 14:29:22,834 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is being created.
+2018-02-15 14:29:22,840 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:29:22,864 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:29:22,945 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:29:22,945 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:29:22,945 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:29:22,945 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:29:22,946 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:29:22,946 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:29:22,946 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:29:22,946 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:29:22,946 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:29:22,946 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:29:22,947 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:29:22,947 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:29:22,947 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_1' successfully created.
+2018-02-15 14:29:22,947 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is being created.
+2018-02-15 14:29:22,950 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:29:22,967 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:29:23,066 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:29:23,067 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:29:23,070 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:29:23,070 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:29:23,071 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:29:23,071 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:29:23,075 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:29:23,075 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:29:23,076 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:29:23,076 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:29:23,077 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:29:23,077 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:29:23,077 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_2' successfully created.
+2018-02-15 14:29:23,078 [    MainProcess][    Server][    INFO] Starting up the Bots
+2018-02-15 14:29:23,469 [    MainProcess][    Server][    INFO] PokeBot is listening for webhooks on: http://127.0.0.1:4002
+2018-02-15 14:29:23,485 [    MainProcess][    Server][    INFO] ======== Running on http://0.0.0.0:4002 ========
+2018-02-15 14:29:23,487 [    MainProcess][    Server][    INFO] (Press CTRL+C to quit)
+2018-02-15 14:29:25,429 [    MainProcess][   Manager][    INFO] 6f217eb2e9c349fe8e42c6b72f894dff.16 egg notification has been triggered in rule 'over_easy_eggs'!
+2018-02-15 14:29:28,005 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is starting up.
+2018-02-15 14:29:28,038 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is connected.
+2018-02-15 14:29:28,290 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is starting up.
+2018-02-15 14:29:28,333 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is connected.
+2018-02-15 14:29:28,662 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is starting up.
+2018-02-15 14:29:28,704 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is connected.
+2018-02-15 14:29:37,476 [    MainProcess][  Commands][    INFO] Activated 10 pokemon filters for AeChik06..
+2018-02-15 14:29:37,477 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:29:37,503 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:29:45,672 [    MainProcess][   Manager][    INFO] f66f60f9c05b40cb99a5391ca5138469.11 egg notification has been triggered in rule 'hard_boiled_eggs'!
+2018-02-15 14:29:50,395 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:29:56,060 [    MainProcess][   Manager][    INFO] 541d4cc54e74465dab027088e685b71c.16 raid notification has been triggered in rule 'legendary_raids'!
+2018-02-15 14:29:58,785 [    MainProcess][BotManager][    INFO] Makuhita monster notification has been triggered for user 'GainzGoblin'!
+2018-02-15 14:30:08,135 [    MainProcess][   Manager][    INFO] 38b088e9c2f44c23a5400ea06cf12e62.11 raid notification has been triggered in rule 'hard_raids'!
+2018-02-15 14:30:11,708 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:30:15,432 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:30:19,621 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:30:23,266 [    MainProcess][   Manager][    INFO] ed344683f24e41dc9d520039dd67c9ea.16 egg notification has been triggered in rule 'over_easy_eggs'!
+2018-02-15 14:30:23,815 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:30:24,064 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:30:24,071 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:30:24,376 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:30:24,585 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:30:31,627 [    MainProcess][BotManager][    INFO] Scyther monster notification has been triggered for user 'bigman2005'!
+2018-02-15 14:30:51,798 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:30:55,443 [    MainProcess][   Manager][    INFO] 42097e8836764474ab38552795accde3.16 raid notification has been triggered in rule 'hard_raids'!
+2018-02-15 14:30:56,711 [    MainProcess][BotManager][    INFO] Rhyhorn monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:30:59,182 [    MainProcess][   Manager][    INFO] aac987f139454f219b2a00a67320a789.16 egg notification has been triggered in rule 'hard_boiled_eggs'!
+2018-02-15 14:31:10,667 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'zer0_her0es'!
+2018-02-15 14:31:24,255 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'hunnit_huntas'!
+2018-02-15 14:31:24,705 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:31:24,883 [    MainProcess][BotManager][    INFO] Luvdisc monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:31:34,456 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:31:35,239 [    MainProcess][BotManager][    INFO] Rhyhorn monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:31:36,464 [    MainProcess][   Manager][    INFO] Seedot monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:31:37,290 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:31:45,485 [    MainProcess][   Manager][    INFO] Castform monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:31:49,783 [    MainProcess][   Manager][    INFO] Minun monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:32:02,891 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:32:17,684 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:32:17,938 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:32:17,942 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:32:18,135 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:32:18,333 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:32:18,357 [    MainProcess][BotManager][    INFO] Ralts monster notification has been triggered for user 'GainzGoblin'!
+2018-02-15 14:32:20,648 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:32:28,720 [    MainProcess][BotManager][    INFO] Makuhita monster notification has been triggered for user 'GainzGoblin'!
+2018-02-15 14:32:29,021 [    MainProcess][BotManager][    INFO] Beldum monster notification has been triggered for user 'dabnet0'!
+2018-02-15 14:32:29,276 [    MainProcess][BotManager][    INFO] Beldum monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:32:29,464 [    MainProcess][BotManager][    INFO] Beldum monster notification has been triggered for user 'bigman2005'!
+2018-02-15 14:32:36,769 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule '30plus_rock'!
+2018-02-15 14:32:37,190 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:32:37,662 [    MainProcess][   Manager][    INFO] 6fac192adce448dbb0fed0fe7893dbe5.16 egg notification has been triggered in rule 'over_easy_eggs'!
+2018-02-15 14:32:43,880 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:32:44,161 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:32:44,165 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'thr3geo'!
+2018-02-15 14:32:44,170 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:32:44,434 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:32:44,634 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:32:48,929 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'zer0_her0es'!
+2018-02-15 14:32:52,313 [    MainProcess][   Manager][    INFO] a1310097f7b04203992718a0a50599ab.16 egg notification has been triggered in rule 'over_easy_eggs'!
+2018-02-15 14:33:16,204 [    MainProcess][   Manager][    INFO] Castform monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:33:17,262 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:33:17,496 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:33:17,505 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:33:17,686 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:33:17,774 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:33:20,408 [    MainProcess][   Manager][    INFO] 9c203877f9f846d4ae20c12f473e6b4f.16 raid notification has been triggered in rule 'hard_raids'!
+2018-02-15 14:33:25,121 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:33:31,429 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:33:35,119 [    MainProcess][   Manager][    INFO] cd898e046daf471a8dc9f37dc6b8f409.16 egg notification has been triggered in rule 'hard_boiled_eggs'!
+2018-02-15 14:33:43,747 [    MainProcess][BotManager][    INFO] Makuhita monster notification has been triggered for user 'GainzGoblin'!
+2018-02-15 14:33:46,159 [    MainProcess][   Manager][    INFO] 468320a264ed47b0b314e3b292a87c4d.16 egg notification has been triggered in rule 'hard_boiled_eggs'!
+2018-02-15 14:34:10,206 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:34:14,421 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:34:14,994 [    MainProcess][   Manager][    INFO] 5724d17d6a634d128f15756c73b5b7e4.16 raid notification has been triggered in rule 'easy_raids'!
+2018-02-15 14:34:20,167 [    MainProcess][   Manager][    INFO] e6c82d25054c40a69f2dd70f170fb617.16 raid notification has been triggered in rule 'easy_raids'!
+2018-02-15 14:34:35,992 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:34:36,270 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:34:36,299 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:34:36,574 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:34:36,775 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:35:08,538 [    MainProcess][   Manager][    INFO] Taillow monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:35:18,455 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:35:18,701 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:35:18,707 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:35:19,057 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:35:19,272 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:35:33,834 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:35:43,715 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:35:45,728 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:35:45,938 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:35:45,942 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:35:46,153 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:35:46,319 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:35:46,344 [    MainProcess][   Manager][    INFO] 0735e241bf4a41dd82c23ac906f01cdc.16 raid notification has been triggered in rule 'hard_raids'!
+2018-02-15 14:35:52,317 [    MainProcess][   Manager][    INFO] b31068a605644fe088899403a5a65ce9.16 raid notification has been triggered in rule 'easy_raids'!
+2018-02-15 14:36:00,174 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:36:01,052 [    MainProcess][BotManager][    INFO] Makuhita monster notification has been triggered for user 'GainzGoblin'!
+2018-02-15 14:36:13,485 [    MainProcess][   Manager][    INFO] Spheal monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:36:15,500 [    MainProcess][BotManager][    INFO] Makuhita monster notification has been triggered for user 'GainzGoblin'!
+2018-02-15 14:36:19,294 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:36:19,585 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:36:19,590 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:36:19,811 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:36:20,029 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:36:23,565 [    MainProcess][   Manager][    INFO] 40b7ae67ffa64b21878ade48a76abd18.16 raid notification has been triggered in rule 'legendary_raids'!
+2018-02-15 14:36:32,975 [    MainProcess][   Manager][    INFO] 434668e9e6caa305fadee959d0b60571 egg notification has been triggered in rule 'legendary_eggs'!
+2018-02-15 14:36:33,435 [    MainProcess][   Manager][    INFO] 434668e9e6caa305fadee959d0b60571 egg notification has been triggered in rule 'parks_and_rec_eggs'!
+2018-02-15 14:36:46,159 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:36:46,442 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:36:46,449 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:36:46,673 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:36:46,874 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:37:00,686 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:37:00,962 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:37:00,965 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:37:01,160 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:37:01,330 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:37:21,770 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
