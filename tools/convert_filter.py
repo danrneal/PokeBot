@@ -60,6 +60,9 @@ def converter():
             })
         })
 
+        user_filter['areas'] = [area.title() for area in user_filter['areas']]
+        user_filter['areas'] = list(set(user_filter['areas']))
+
         new_filter['monsters']['enabled'] = not user_filter['paused']
         new_filter['monsters']['defaults']['geofences'] = user_filter['areas']
         new_filter['eggs']['defaults']['geofences'] = user_filter['areas']

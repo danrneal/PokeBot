@@ -353,11 +353,17 @@ async def set_(client, message, geofences, all_areas, filter_file, locale):
                     })
             except ValueError:
                 pokemon = 0
+                if (user_dict is not None and
+                        '000' in user_dict['monsters']['filters']):
+                    im = user_dict['monsters']['filters']['000'][
+                        'ignore_monsters']
+                else:
+                    im = []
                 command = command.replace('default', '').replace(
                     'all', '').strip()
                 input_ = [command.split()]
                 filters = [{
-                    'ignore_monsters': [],
+                    'ignore_monsters': im,
                     'min_iv': '0',
                     'min_cp': '0',
                     'min_lvl': '0',
@@ -489,10 +495,9 @@ async def set_(client, message, geofences, all_areas, filter_file, locale):
             if error is True:
                 continue
             suffix = ''
+            filter_dict = {}
             for filt in filters:
-                filter_dict = {
-                    "{:03}{}".format(pokemon, suffix): filt
-                }
+                filter_dict["{:03}{}".format(pokemon, suffix)] = filt
                 if suffix == '':
                     suffix = 'a'
                 elif suffix == 'a':

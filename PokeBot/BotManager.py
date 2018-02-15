@@ -15,7 +15,7 @@ from .Filters.MonFilter import MonFilter
 from .Filters.EggFilter import EggFilter
 from .Filters.RaidFilter import RaidFilter
 from .Utilities.GenUtils import get_path, contains_arg, update_filters
-from .Commands import (
+from .commands import (
     status, commands, dex, set_, delete, reset, pause, resume, activate,
     deactivate, alerts, areas
 )
@@ -82,10 +82,17 @@ class BotManager(discord.Client):
     @staticmethod
     def load_filter_section(section, sect_name, filter_type):
         defaults = section.pop('defaults', {})
+        default_dts = defaults.pop('custom_dts', {})
         filter_set = OrderedDict()
         for name, settings in section.pop('filters', {}).items():
             settings = dict(list(defaults.items()) + list(settings.items()))
             try:
+                local_dts = dict(
+                    list(default_dts.items()) +
+                    list(settings.pop('custom_dts', {}).items())
+                )
+                if len(local_dts) > 0:
+                    settings['custom_dts'] = local_dts
                 filter_set[name] = filter_type(name, settings)
             except Exception as e:
                 log.error("Encountered error inside filter named '{}'.".format(
@@ -167,7 +174,7 @@ class BotManager(discord.Client):
             self.__alarms = {}
             self.set_optional_args(str(alarm_settings))
             self.__alarms['user_alarm'] = alarm_factory(
-                alarm_settings, 1, self.__google_key, 'user')
+                alarm_settings, 1, self.__google_key, 'user', self)
             log.info("{} active alarms found.".format(len(self.__alarms)))
             return
         except ValueError as e:
@@ -437,7 +444,8 @@ class BotManager(discord.Client):
                             )
                             embeds = discord.Embed(
                                 description=((
-                                    "{} Your alerts have been paused."
+                                    "{} Your alerts have been paused due to " +
+                                    "being muted, please contact an admin."
                                 ).format(member.mention)),
                                 color=int('0xee281f', 16)
                             )
@@ -483,7 +491,8 @@ class BotManager(discord.Client):
                                         "Removed old geofence {} from user " +
                                         "filters."
                                     ).format(geofence))
-            if len(old_users) / len(list(user_filters.keys())) < 0.1:
+            if (len(list(user_filters.keys())) > 0 and
+                len(old_users) / len(list(user_filters.keys())) < 0.1):
                 for user in old_users:
                     user_filters.pop(user)
                     reload = True

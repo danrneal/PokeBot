@@ -115,10 +115,17 @@ class Manager(object):
     @staticmethod
     def load_filter_section(section, sect_name, filter_type):
         defaults = section.pop('defaults', {})
+        default_dts = defaults.pop('custom_dts', {})
         filter_set = OrderedDict()
         for name, settings in section.pop('filters', {}).items():
             settings = dict(list(defaults.items()) + list(settings.items()))
             try:
+                local_dts = dict(
+                    list(default_dts.items()) +
+                    list(settings.pop('custom_dts', {}).items())
+                )
+                if len(local_dts) > 0:
+                    settings['custom_dts'] = local_dts
                 filter_set[name] = filter_type(name, settings)
             except Exception as e:
                 log.error("Encountered error inside filter named '{}'.".format(

@@ -323,7 +323,7 @@ def parse_settings(root_path, loop, Entry):
             args.bot_tokens[bot_manager.get_bot_number()]))
         loop.create_task(bot_manager.connect())
         loop.create_task(bot_manager.run())
-        loop.create_task(bot_manager.get_alarm().send_dm())
+        loop.create_task(bot_manager.get_alarm().send_dm(args.user_filters))
 
 
 def get_from_list(arg, i, default):
