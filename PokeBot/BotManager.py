@@ -492,7 +492,7 @@ class BotManager(discord.Client):
                                         "filters."
                                     ).format(geofence))
             if (len(list(user_filters.keys())) > 0 and
-                len(old_users) / len(list(user_filters.keys())) < 0.1):
+                    len(old_users) / len(list(user_filters.keys())) < 0.1):
                 for user in old_users:
                     user_filters.pop(user)
                     reload = True

@@ -138,7 +138,7 @@ class UserAlarm(Alarm):
                 ).format((datetime.utcnow() - message[1]).total_seconds()))
             destination = message[3]['destination']
             if (destination.guild is not None and
-                destination.id in user_timestamps):
+                    destination.id in user_timestamps):
                 paused = False
                 while len(user_timestamps[destination.id]) > 6:
                     if datetime.utcnow() - user_timestamps[destination.id][
@@ -157,7 +157,7 @@ class UserAlarm(Alarm):
                             paused = True
                             embeds = discord.Embed(
                                 description=((
-                                    "{} Your alerts have been paused for
+                                    "{} Your alerts have been paused for" +
                                     "exceeding messaging rate limits, please" +
                                     "adjust your filters before resuming."
                                 ).format(destination.mention)),

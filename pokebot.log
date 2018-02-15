@@ -10339,3 +10339,109 @@ task: <Task pending coro=<Manager.run() running at /root/Dropbox/TallyPokeMap/Po
 2018-02-15 14:02:21,409 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
 2018-02-15 14:02:33,674 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
 2018-02-15 14:02:35,221 [    MainProcess][BotManager][    INFO] Scyther monster notification has been triggered for user 'bigman2005'!
+2018-02-15 14:02:56,563 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:02:57,458 [    MainProcess][   Manager][    INFO] ade322e48c6c4952b1336109889974b5.16 raid notification has been triggered in rule 'easy_raids'!
+2018-02-15 14:02:57,960 [    MainProcess][   Manager][    INFO] ade322e48c6c4952b1336109889974b5.16 egg notification has been triggered in rule 'over_easy_eggs'!
+2018-02-15 14:03:08,843 [    MainProcess][   Manager][    INFO] Taillow monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:03:09,294 [    MainProcess][   Manager][    INFO] Chansey monster notification has been triggered in rule '30plus_rock'!
+2018-02-15 14:03:09,728 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'hope'!
+2018-02-15 14:03:09,879 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:03:10,182 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:03:12,324 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:03:15,705 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:03:16,721 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:03:31,262 [    MainProcess][   Manager][    INFO] Bulbasaur monster notification has been triggered in rule '30plus_rock'!
+2018-02-15 14:03:34,151 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:03:40,153 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:03:48,301 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:03:51,245 [    MainProcess][   Manager][    INFO] b8647b437f154fa4958645945dc90e85.16 raid notification has been triggered in rule 'hard_raids'!
+2018-02-15 14:03:51,785 [    MainProcess][   Manager][    INFO] Tentacruel monster notification has been triggered in rule 'hunnit_huntas'!
+2018-02-15 14:03:52,217 [    MainProcess][BotManager][    INFO] Tentacruel monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:03:55,084 [    MainProcess][   Manager][    INFO] 79cd560e4dc9472684f37dddb78a5fa4.12 raid notification has been triggered in rule 'hard_raids'!
+2018-02-15 14:03:59,790 [    MainProcess][   Manager][    INFO] 1ba0c9d92fa34ad5862837a0c8cd18d4.16 raid notification has been triggered in rule 'hard_raids'!
+2018-02-15 14:04:10,397 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:04:10,824 [    MainProcess][   Manager][    INFO] Aron monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:04:11,726 [    MainProcess][BotManager][    INFO] Kirlia monster notification has been triggered for user 'acheron9381'!
+2018-02-15 14:04:12,037 [    MainProcess][BotManager][    INFO] Kirlia monster notification has been triggered for user 'robvious1'!
+2018-02-15 14:04:12,891 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:04:20,346 [    MainProcess][   Manager][    INFO] 7580f02f634d48c69a8793d50422a2b0.16 egg notification has been triggered in rule 'legendary_eggs'!
+2018-02-15 14:04:22,719 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:04:27,468 [    MainProcess][   Manager][    INFO] 200cf32254a8408c8692eaf59587a848.16 egg notification has been triggered in rule 'hard_boiled_eggs'!
+2018-02-15 14:04:42,968 [    MainProcess][   Manager][    INFO] f1bbdff02842433da61aec0ed4f50ed4.16 egg notification has been triggered in rule 'hard_boiled_eggs'!
+2018-02-15 14:04:43,586 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:04:50,463 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:05:00,223 [    MainProcess][   Manager][    INFO] 061e969a3f4144dd9fa100c3d01d269f.16 egg notification has been triggered in rule 'over_easy_eggs'!
+2018-02-15 14:05:00,496 [    MainProcess][BotManager][    INFO] Scyther monster notification has been triggered for user 'bigman2005'!
+2018-02-15 14:05:01,057 [    MainProcess][BotManager][    INFO] Feebas monster notification has been triggered for user 'Ghstmarauder'!
+2018-02-15 14:05:02,969 [    MainProcess][   Manager][    INFO] db8f176a872b4976af709acf7c344491.16 raid notification has been triggered in rule 'easy_raids'!
+2018-02-15 14:05:11,017 [    MainProcess][   Manager][    INFO] 19ac32c60c4a42a7a021ca67fb833f65.16 raid notification has been triggered in rule 'hard_raids'!
+2018-02-15 14:05:11,864 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:05:16,337 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:05:16,773 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule '30plus_rock'!
+2018-02-15 14:05:25,028 [    MainProcess][   Manager][    INFO] 0c19167327004665aefb01ad4e00ac6d.16 raid notification has been triggered in rule 'easy_raids'!
+2018-02-15 14:05:48,094 [    MainProcess][   Manager][    INFO] Numel monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:05:54,240 [    MainProcess][   Manager][    INFO] 4935a7142ac74d3796ba956fe701fec4.16 egg notification has been triggered in rule 'hard_boiled_eggs'!
+2018-02-15 14:06:10,438 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'zer0_her0es'!
+2018-02-15 14:06:12,079 [    MainProcess][   Manager][    INFO] d12402e85f7d453b8d301e775c30d09d.16 egg notification has been triggered in rule 'over_easy_eggs'!
+2018-02-15 14:06:13,505 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:06:18,232 [    MainProcess][   Manager][    INFO] ea4a5b1f913646e38bfe5bfa6e6c969d.16 egg notification has been triggered in rule 'over_easy_eggs'!
+2018-02-15 14:06:24,796 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:06:29,251 [    MainProcess][   Manager][    INFO] 7c710327382d4d96a868c2bd05a501b6.16 egg notification has been triggered in rule 'hard_boiled_eggs'!
+2018-02-15 14:06:32,195 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:06:32,492 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:06:32,505 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:06:32,821 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:06:33,053 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:06:36,808 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'hope'!
+2018-02-15 14:06:37,267 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:06:42,237 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'zer0_her0es'!
+2018-02-15 14:06:43,162 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:06:46,118 [    MainProcess][   Manager][    INFO] Taillow monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:06:46,561 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:06:46,846 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:06:46,857 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:06:47,130 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:06:47,367 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:06:47,420 [    MainProcess][   Manager][    INFO] 7d60a846a21e43e7b390f019e1de5fa8.16 egg notification has been triggered in rule 'over_easy_eggs'!
+2018-02-15 14:06:52,477 [    MainProcess][BotManager][    INFO] Makuhita monster notification has been triggered for user 'GainzGoblin'!
+2018-02-15 14:06:55,845 [    MainProcess][   Manager][    INFO] Roselia monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:07:00,463 [    MainProcess][BotManager][    INFO] Scyther monster notification has been triggered for user 'bigman2005'!
+2018-02-15 14:07:01,698 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:07:02,004 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:07:02,024 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:07:02,220 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:07:02,412 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:07:02,695 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:07:18,975 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:07:20,621 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:07:20,882 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:07:20,887 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:07:21,087 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:07:21,277 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:07:28,639 [    MainProcess][BotManager][    INFO] Makuhita monster notification has been triggered for user 'GainzGoblin'!
+2018-02-15 14:07:28,933 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:07:29,186 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:07:29,203 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:07:29,417 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:07:29,513 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:07:30,719 [    MainProcess][BotManager][    INFO] Scyther monster notification has been triggered for user 'bigman2005'!
+2018-02-15 14:07:31,727 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:07:32,006 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:07:32,010 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:07:32,326 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:07:32,533 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:07:36,798 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:07:41,005 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:07:41,256 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:07:41,270 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:07:41,465 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:07:41,664 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:07:43,286 [    MainProcess][BotManager][    INFO] Combusken monster notification has been triggered for user 'acheron9381'!
+2018-02-15 14:07:56,461 [    MainProcess][   Manager][    INFO] e7a0f140ac89451e9d3966dc32fd1286.16 raid notification has been triggered in rule 'easy_raids'!
+2018-02-15 14:08:08,269 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:08:16,133 [    MainProcess][BotManager][    INFO] Ralts monster notification has been triggered for user 'GainzGoblin'!
+2018-02-15 14:08:21,326 [    MainProcess][BotManager][    INFO] Onix monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:08:22,983 [    MainProcess][   Manager][    INFO] c0672cd65d89467fb0e3ef142f6cfc0d.16 raid notification has been triggered in rule 'legendary_raids'!
+2018-02-15 14:08:28,798 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'zer0_her0es'!
+2018-02-15 14:08:29,697 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:08:34,753 [    MainProcess][   Manager][    INFO] Spheal monster notification has been triggered in rule 'gen_3'!
