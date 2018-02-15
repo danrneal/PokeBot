@@ -11,6 +11,7 @@ _build
 *.pyc
 cache/*.cache
 user_filters/*
+!user_filters/.gitignore
 .DS_Store
 __pycache__
 null
