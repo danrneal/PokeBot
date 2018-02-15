@@ -263,7 +263,7 @@ def parse_settings(root_path, loop, Entry):
     parser.add_argument(
         '-dmtp', '--dm_time_period',
         type=int,
-        default=5,
+        default=60,
         help=(
             'Time period to measure if user is exceeding dm limit before ' +
             'pausing their alerts in seconds (default: 60)'

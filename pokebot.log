@@ -11371,3 +11371,1242 @@ task: <Task pending coro=<Manager.run() running at /root/Dropbox/TallyPokeMap/Po
 2018-02-15 14:37:01,160 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
 2018-02-15 14:37:01,330 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
 2018-02-15 14:37:21,770 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:37:26,134 [    MainProcess][   Manager][    INFO] Metang monster notification has been triggered in rule 'uber_dooper'!
+2018-02-15 14:37:26,579 [    MainProcess][BotManager][    INFO] Metang monster notification has been triggered for user 'hope'!
+2018-02-15 14:37:26,772 [    MainProcess][BotManager][    INFO] Metang monster notification has been triggered for user 'acheron9381'!
+2018-02-15 14:37:26,774 [    MainProcess][BotManager][    INFO] Metang monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:37:26,778 [    MainProcess][BotManager][    INFO] Metang monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:37:27,072 [    MainProcess][BotManager][    INFO] Metang monster notification has been triggered for user 'harlenshack'!
+2018-02-15 14:37:27,162 [    MainProcess][BotManager][    INFO] Metang monster notification has been triggered for user 'travelingbelle'!
+2018-02-15 14:37:27,170 [    MainProcess][BotManager][    INFO] Metang monster notification has been triggered for user 'kmga12'!
+2018-02-15 14:37:27,173 [    MainProcess][BotManager][    INFO] Metang monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:37:30,685 [    MainProcess][   Manager][    INFO] Roselia monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:37:48,475 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:37:48,696 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:37:48,708 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:37:48,916 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:37:49,116 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:37:49,321 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:37:50,034 [    MainProcess][BotManager][    INFO] Makuhita monster notification has been triggered for user 'GainzGoblin'!
+2018-02-15 14:37:50,656 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:37:51,124 [    MainProcess][BotManager][    INFO] Makuhita monster notification has been triggered for user 'GainzGoblin'!
+2018-02-15 14:38:00,016 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:38:21,792 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:38:29,506 [    MainProcess][   Manager][    INFO] 28d9340e4d2a4d91a167264ef0c07afd.16 egg notification has been triggered in rule 'over_easy_eggs'!
+2018-02-15 14:38:32,233 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:38:32,790 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:38:46,100 [    MainProcess][   Manager][    INFO] a0e1ba5c9f94490eb009e62dd62aa2f5.16 egg notification has been triggered in rule 'hard_boiled_eggs'!
+2018-02-15 14:38:51,781 [    MainProcess][BotManager][    INFO] Ralts monster notification has been triggered for user 'GainzGoblin'!
+2018-02-15 14:38:52,952 [    MainProcess][BotManager][    INFO] Scyther monster notification has been triggered for user 'bigman2005'!
+2018-02-15 14:38:53,649 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:38:56,951 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'greybaum'!
+2018-02-15 14:38:57,315 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'chiefgod420'!
+2018-02-15 14:38:57,340 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user '0hmsy'!
+2018-02-15 14:38:57,638 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:38:57,864 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'fernzpat1'!
+2018-02-15 14:38:58,228 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:39:06,510 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:39:12,852 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:39:20,137 [    MainProcess][   Manager][    INFO] Seedot monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:39:29,352 [    MainProcess][   Manager][    INFO] Treecko monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:39:43,096 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7ff8f3855470>
+2018-02-15 14:39:43,097 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7ff8f3855470>
+2018-02-15 14:39:43,141 [    MainProcess][    Server][ WARNING] Traceback (most recent call last):
+2018-02-15 14:39:43,142 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 343, in <module>
+2018-02-15 14:39:43,143 [    MainProcess][    Server][ WARNING] loop.create_task(bot_manager.run())
+2018-02-15 14:39:43,143 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 94, in start_server
+2018-02-15 14:39:43,143 [    MainProcess][    Server][ WARNING] loop.run_until_complete(web.run_app(app, port=config['PORT']))
+2018-02-15 14:39:43,144 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 364, in run_until_complete
+2018-02-15 14:39:43,144 [    MainProcess][    Server][ WARNING] self._check_closed()
+2018-02-15 14:39:43,145 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 334, in _check_closed
+2018-02-15 14:39:43,145 [    MainProcess][    Server][ WARNING] raise RuntimeError('Event loop is closed')
+2018-02-15 14:39:43,146 [    MainProcess][    Server][ WARNING] RuntimeError
+2018-02-15 14:39:43,146 [    MainProcess][    Server][ WARNING] :
+2018-02-15 14:39:43,146 [    MainProcess][    Server][ WARNING] Event loop is closed
+2018-02-15 14:39:43,147 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7ff8f3855470>
+2018-02-15 14:39:43,147 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7ff8f3855470>
+2018-02-15 14:39:43,148 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7ff8f3855470>
+2018-02-15 14:39:43,276 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<manage_webhook_data() running at start_pokebot.py:72> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 14:39:43,277 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<Manager.run() running at /root/Dropbox/TallyPokeMap/PokeBot/PokeBot/Manager.py:261> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 14:39:47,521 [    MainProcess][    Server][    INFO] PokeBot is getting ready...
+2018-02-15 14:39:47,527 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' is being created.
+2018-02-15 14:39:47,530 [    MainProcess][   Manager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/filters.json
+2018-02-15 14:39:47,531 [    MainProcess][   Manager][    INFO] Parsing 'monsters' section.
+2018-02-15 14:39:47,543 [    MainProcess][   Manager][    INFO] Parsing 'eggs' section.
+2018-02-15 14:39:47,544 [    MainProcess][   Manager][    INFO] Parsing 'raids' section.
+2018-02-15 14:39:47,545 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:39:47,546 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:39:47,546 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:39:47,547 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:39:47,547 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:39:47,548 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:39:47,548 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:39:47,549 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:39:47,549 [    MainProcess][   Manager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/alarms.json
+2018-02-15 14:39:47,550 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:39:47,550 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:39:47,551 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:39:47,551 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:39:47,551 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:39:47,552 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:39:47,552 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:39:47,553 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:39:47,553 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:39:47,554 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:39:47,554 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:39:47,555 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:39:47,555 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:39:47,575 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:39:47,576 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:39:47,576 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:39:47,577 [    MainProcess][   Manager][    INFO] 15 active alarms found.
+2018-02-15 14:39:47,577 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' successfully created.
+2018-02-15 14:39:47,578 [    MainProcess][LoadConfig][    INFO] Loading Rules from file at /root/Dropbox/TallyPokeMap/PokeBot/rules.json
+2018-02-15 14:39:47,578 [    MainProcess][    Server][    INFO] Starting up the Managers
+2018-02-15 14:39:47,579 [    MainProcess][discord.cl][ WARNING] PyNaCl is not installed, voice will NOT be supported
+2018-02-15 14:39:47,580 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is being created.
+2018-02-15 14:39:47,582 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:39:47,600 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:39:47,662 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:39:47,667 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:39:47,668 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:39:47,671 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:39:47,672 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:39:47,672 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:39:47,673 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:39:47,676 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:39:47,677 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:39:47,677 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:39:47,678 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:39:47,678 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:39:47,679 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_0' successfully created.
+2018-02-15 14:39:47,679 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is being created.
+2018-02-15 14:39:47,683 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:39:47,734 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:39:47,869 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:39:47,875 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:39:47,875 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:39:47,875 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:39:47,876 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:39:47,876 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:39:47,876 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:39:47,876 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:39:47,877 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:39:47,878 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:39:47,878 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:39:47,878 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:39:47,878 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_1' successfully created.
+2018-02-15 14:39:47,879 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is being created.
+2018-02-15 14:39:47,881 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:39:47,917 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:39:47,998 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:39:47,999 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:39:47,999 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:39:47,999 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:39:47,999 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:39:47,999 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:39:47,999 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:39:47,999 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:39:48,000 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:39:48,001 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:39:48,001 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:39:48,001 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:39:48,002 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_2' successfully created.
+2018-02-15 14:39:48,002 [    MainProcess][    Server][    INFO] Starting up the Bots
+2018-02-15 14:39:48,382 [    MainProcess][    Server][    INFO] PokeBot is listening for webhooks on: http://127.0.0.1:4002
+2018-02-15 14:39:48,385 [    MainProcess][    Server][    INFO] ======== Running on http://0.0.0.0:4002 ========
+2018-02-15 14:39:48,385 [    MainProcess][    Server][    INFO] (Press CTRL+C to quit)
+2018-02-15 14:39:49,717 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:39:52,567 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is starting up.
+2018-02-15 14:39:52,583 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is connected.
+2018-02-15 14:39:52,880 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is starting up.
+2018-02-15 14:39:52,906 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is connected.
+2018-02-15 14:39:52,970 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is starting up.
+2018-02-15 14:39:53,032 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is connected.
+2018-02-15 14:39:55,106 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:40:13,552 [    MainProcess][   Manager][    INFO] Chansey monster notification has been triggered in rule '30plus_rock'!
+2018-02-15 14:40:13,965 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'hope'!
+2018-02-15 14:40:14,149 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:40:14,818 [    MainProcess][  Commands][    INFO] Activated 1 pokemon filters for Chick-fil-A-hole.
+2018-02-15 14:40:14,819 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:40:14,841 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:40:15,472 [    MainProcess][BotManager][    INFO] Kakuna monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:15,776 [    MainProcess][   Manager][    INFO] 89c4883082954734b044a59b4fe7c255.16 raid notification has been triggered in rule 'easy_raids'!
+2018-02-15 14:40:16,280 [    MainProcess][BotManager][    INFO] Oddish monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:16,577 [    MainProcess][BotManager][    INFO] Luvdisc monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:17,988 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:40:18,433 [    MainProcess][BotManager][    INFO] Luvdisc monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:19,669 [    MainProcess][BotManager][    INFO] Luvdisc monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:21,630 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:40:22,113 [    MainProcess][BotManager][    INFO] Kakuna monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:22,399 [    MainProcess][BotManager][    INFO] Swablu monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:22,671 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:40:23,095 [    MainProcess][BotManager][    INFO] Swablu monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:25,687 [    MainProcess][BotManager][    INFO] Furret monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:26,694 [    MainProcess][BotManager][    INFO] Luvdisc monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:27,625 [    MainProcess][BotManager][    INFO] Luvdisc monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:28,904 [    MainProcess][   Manager][    INFO] 9eb2aa3073774761b43e3edb43f1bed7.16 raid notification has been triggered in rule 'easy_raids'!
+2018-02-15 14:40:29,339 [    MainProcess][BotManager][    INFO] Luvdisc monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:31,152 [    MainProcess][BotManager][    INFO] Taillow monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:32,680 [    MainProcess][BotManager][    INFO] Tentacool monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:34,726 [    MainProcess][BotManager][    INFO] Luvdisc monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:35,071 [    MainProcess][BotManager][    INFO] Swablu monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:36,499 [    MainProcess][BotManager][    INFO] Treecko monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:36,791 [    MainProcess][BotManager][    INFO] Swablu monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:40,799 [    MainProcess][BotManager][    INFO] Luvdisc monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:43,820 [    MainProcess][BotManager][    INFO] Luvdisc monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:52,152 [    MainProcess][BotManager][    INFO] Numel monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:53,093 [    MainProcess][BotManager][    INFO] Luvdisc monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:56,314 [    MainProcess][BotManager][    INFO] Vulpix monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:57,780 [    MainProcess][BotManager][    INFO] Luvdisc monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:58,862 [    MainProcess][BotManager][    INFO] Luvdisc monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:59,447 [    MainProcess][BotManager][    INFO] Swablu monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:40:59,648 [    MainProcess][BotManager][    INFO] Luvdisc monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:41:00,604 [    MainProcess][  Commands][    INFO] Activated 1 pokemon filters for Chick-fil-A-hole.
+2018-02-15 14:41:00,604 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:41:00,628 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:41:16,271 [    MainProcess][   Manager][    INFO] 850ee971139043ea99de0eb88f9911b8.12 egg notification has been triggered in rule 'over_easy_eggs'!
+2018-02-15 14:41:37,494 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7faccbe40518>
+2018-02-15 14:41:37,495 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7faccbe40518>
+2018-02-15 14:41:37,536 [    MainProcess][    Server][ WARNING] Traceback (most recent call last):
+2018-02-15 14:41:37,537 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 362, in <module>
+2018-02-15 14:41:37,541 [    MainProcess][    Server][ WARNING] start_server()
+2018-02-15 14:41:37,541 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 94, in start_server
+2018-02-15 14:41:37,542 [    MainProcess][    Server][ WARNING] loop.run_until_complete(web.run_app(app, port=config['PORT']))
+2018-02-15 14:41:37,542 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 364, in run_until_complete
+2018-02-15 14:41:37,542 [    MainProcess][    Server][ WARNING] self._check_closed()
+2018-02-15 14:41:37,542 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 334, in _check_closed
+2018-02-15 14:41:37,543 [    MainProcess][    Server][ WARNING] raise RuntimeError('Event loop is closed')
+2018-02-15 14:41:37,543 [    MainProcess][    Server][ WARNING] RuntimeError
+2018-02-15 14:41:37,543 [    MainProcess][    Server][ WARNING] :
+2018-02-15 14:41:37,543 [    MainProcess][    Server][ WARNING] Event loop is closed
+2018-02-15 14:41:37,544 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7faccbe40518>
+2018-02-15 14:41:37,544 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7faccbe40518>
+2018-02-15 14:41:37,544 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7faccbe40518>
+2018-02-15 14:41:37,788 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<manage_webhook_data() running at start_pokebot.py:72> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 14:41:37,789 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<Manager.run() running at /root/Dropbox/TallyPokeMap/PokeBot/PokeBot/Manager.py:261> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 14:41:45,198 [    MainProcess][    Server][    INFO] PokeBot is getting ready...
+2018-02-15 14:41:45,213 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' is being created.
+2018-02-15 14:41:45,221 [    MainProcess][   Manager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/filters.json
+2018-02-15 14:41:45,224 [    MainProcess][   Manager][    INFO] Parsing 'monsters' section.
+2018-02-15 14:41:45,294 [    MainProcess][   Manager][    INFO] Parsing 'eggs' section.
+2018-02-15 14:41:45,295 [    MainProcess][   Manager][    INFO] Parsing 'raids' section.
+2018-02-15 14:41:45,296 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:41:45,297 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:41:45,297 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:41:45,298 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:41:45,298 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:41:45,298 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:41:45,298 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:41:45,299 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:41:45,299 [    MainProcess][   Manager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/alarms.json
+2018-02-15 14:41:45,300 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:41:45,300 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:41:45,301 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:41:45,302 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:41:45,302 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:41:45,303 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:41:45,306 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:41:45,306 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:41:45,307 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:41:45,307 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:41:45,307 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:41:45,308 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:41:45,308 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:41:45,308 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:41:45,309 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:41:45,309 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:41:45,310 [    MainProcess][   Manager][    INFO] 15 active alarms found.
+2018-02-15 14:41:45,311 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' successfully created.
+2018-02-15 14:41:45,312 [    MainProcess][LoadConfig][    INFO] Loading Rules from file at /root/Dropbox/TallyPokeMap/PokeBot/rules.json
+2018-02-15 14:41:45,314 [    MainProcess][    Server][    INFO] Starting up the Managers
+2018-02-15 14:41:45,320 [    MainProcess][discord.cl][ WARNING] PyNaCl is not installed, voice will NOT be supported
+2018-02-15 14:41:45,321 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is being created.
+2018-02-15 14:41:45,326 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:41:45,346 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:41:45,433 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:41:45,433 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:41:45,433 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:41:45,434 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:41:45,434 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:41:45,434 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:41:45,434 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:41:45,434 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:41:45,434 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:41:45,435 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:41:45,435 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:41:45,435 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:41:45,435 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_0' successfully created.
+2018-02-15 14:41:45,436 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is being created.
+2018-02-15 14:41:45,438 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:41:45,452 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:41:45,517 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:41:45,517 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:41:45,517 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:41:45,517 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:41:45,517 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:41:45,517 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:41:45,518 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:41:45,518 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:41:45,518 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:41:45,518 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:41:45,518 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:41:45,518 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:41:45,518 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_1' successfully created.
+2018-02-15 14:41:45,519 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is being created.
+2018-02-15 14:41:45,521 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:41:45,539 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:41:45,646 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:41:45,650 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:41:45,652 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:41:45,652 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:41:45,652 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:41:45,652 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:41:45,652 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:41:45,652 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:41:45,653 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:41:45,653 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:41:45,653 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:41:45,653 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:41:45,653 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_2' successfully created.
+2018-02-15 14:41:45,653 [    MainProcess][    Server][    INFO] Starting up the Bots
+2018-02-15 14:41:46,274 [    MainProcess][    Server][    INFO] PokeBot is listening for webhooks on: http://127.0.0.1:4002
+2018-02-15 14:41:46,277 [    MainProcess][    Server][    INFO] ======== Running on http://0.0.0.0:4002 ========
+2018-02-15 14:41:46,278 [    MainProcess][    Server][    INFO] (Press CTRL+C to quit)
+2018-02-15 14:41:47,697 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:41:48,967 [    MainProcess][   Manager][    INFO] Oddish monster notification has been triggered in rule '30plus_junk'!
+2018-02-15 14:41:50,466 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is starting up.
+2018-02-15 14:41:50,484 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is connected.
+2018-02-15 14:41:50,632 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is starting up.
+2018-02-15 14:41:50,653 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is connected.
+2018-02-15 14:41:50,717 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is starting up.
+2018-02-15 14:41:50,742 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is connected.
+2018-02-15 14:41:55,022 [    MainProcess][   Manager][    INFO] 0b55024a093c481eb14d7a094fce621c.11 egg notification has been triggered in rule 'hard_boiled_eggs'!
+2018-02-15 14:42:03,297 [    MainProcess][  Commands][    INFO] Activated 1 pokemon filters for Chick-fil-A-hole.
+2018-02-15 14:42:03,298 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:42:03,327 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:42:03,654 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:42:04,037 [    MainProcess][BotManager][    INFO] Swablu monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:42:09,680 [    MainProcess][BotManager][    INFO] Bulbasaur monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:42:09,971 [    MainProcess][BotManager][    INFO] Gloom monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:42:11,704 [    MainProcess][BotManager][    INFO] Totodile monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:42:16,538 [    MainProcess][BotManager][    INFO] Luvdisc monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:42:17,266 [    MainProcess][BotManager][    INFO] Bulbasaur monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:42:21,421 [    MainProcess][   Manager][    INFO] Swablu monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:42:21,819 [    MainProcess][BotManager][    INFO] Swablu monster notification has been triggered for user 'SuperCoderMcGee (Dan)'!
+2018-02-15 14:42:22,169 [    MainProcess][   Discord][    INFO] Paused Chick-fil-A-hole for exceeding DM limit.
+2018-02-15 14:42:22,566 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:42:22,592 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:42:27,453 [    MainProcess][   Manager][    INFO] Luvdisc monster notification has been triggered in rule 'gen_3'!
+2018-02-15 14:42:47,281 [    MainProcess][BotManager][    INFO] Onix monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:42:48,056 [    MainProcess][BotManager][    INFO] Onix monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:42:49,835 [    MainProcess][BotManager][    INFO] Chansey monster notification has been triggered for user 'lorrimar'!
+2018-02-15 14:43:08,662 [    MainProcess][   Manager][    INFO] c6a867fdf7f34d04a49cea60c08a2992.16 raid notification has been triggered in rule 'hard_raids'!
+2018-02-15 14:45:20,314 [    MainProcess][   Manager][    INFO] 9f1a2a3554de497fa40dcfc4913520d6.16 egg notification has been triggered in rule 'over_easy_eggs'!
+2018-02-15 14:45:35,007 [    MainProcess][   Manager][    INFO] a8244bff9fbb46889c14569df4712277.16 egg notification has been triggered in rule 'over_easy_eggs'!
+2018-02-15 14:45:37,944 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fef904ea518>
+2018-02-15 14:45:37,959 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fef904ea518>
+2018-02-15 14:45:38,020 [    MainProcess][    Server][ WARNING] Traceback (most recent call last):
+2018-02-15 14:45:38,022 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 362, in <module>
+2018-02-15 14:45:38,024 [    MainProcess][    Server][ WARNING] start_server()
+2018-02-15 14:45:38,026 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 94, in start_server
+2018-02-15 14:45:38,026 [    MainProcess][    Server][ WARNING] loop.run_until_complete(web.run_app(app, port=config['PORT']))
+2018-02-15 14:45:38,027 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 364, in run_until_complete
+2018-02-15 14:45:38,030 [    MainProcess][    Server][ WARNING] self._check_closed()
+2018-02-15 14:45:38,030 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 334, in _check_closed
+2018-02-15 14:45:38,031 [    MainProcess][    Server][ WARNING] raise RuntimeError('Event loop is closed')
+2018-02-15 14:45:38,031 [    MainProcess][    Server][ WARNING] RuntimeError
+2018-02-15 14:45:38,031 [    MainProcess][    Server][ WARNING] :
+2018-02-15 14:45:38,031 [    MainProcess][    Server][ WARNING] Event loop is closed
+2018-02-15 14:45:38,032 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fef904ea518>
+2018-02-15 14:45:38,032 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fef904ea518>
+2018-02-15 14:45:38,032 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fef904ea518>
+2018-02-15 14:45:38,284 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<manage_webhook_data() running at start_pokebot.py:72> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 14:45:38,285 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<Manager.run() running at /root/Dropbox/TallyPokeMap/PokeBot/PokeBot/Manager.py:261> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 14:45:50,056 [    MainProcess][    Server][    INFO] PokeBot is getting ready...
+2018-02-15 14:45:50,068 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' is being created.
+2018-02-15 14:45:50,074 [    MainProcess][   Manager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/filters.json
+2018-02-15 14:45:50,077 [    MainProcess][   Manager][    INFO] Parsing 'monsters' section.
+2018-02-15 14:45:50,110 [    MainProcess][   Manager][    INFO] Parsing 'eggs' section.
+2018-02-15 14:45:50,114 [    MainProcess][   Manager][    INFO] Parsing 'raids' section.
+2018-02-15 14:45:50,116 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:45:50,116 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:45:50,117 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:45:50,117 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:45:50,118 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:45:50,118 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:45:50,119 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:45:50,119 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:45:50,120 [    MainProcess][   Manager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/alarms.json
+2018-02-15 14:45:50,121 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:45:50,121 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:45:50,122 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:45:50,122 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:45:50,122 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:45:50,123 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:45:50,124 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:45:50,124 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:45:50,125 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:45:50,125 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:45:50,125 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:45:50,126 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:45:50,126 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:45:50,127 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:45:50,127 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:45:50,128 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:45:50,128 [    MainProcess][   Manager][    INFO] 15 active alarms found.
+2018-02-15 14:45:50,128 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' successfully created.
+2018-02-15 14:45:50,129 [    MainProcess][LoadConfig][    INFO] Loading Rules from file at /root/Dropbox/TallyPokeMap/PokeBot/rules.json
+2018-02-15 14:45:50,129 [    MainProcess][    Server][    INFO] Starting up the Managers
+2018-02-15 14:45:50,130 [    MainProcess][discord.cl][ WARNING] PyNaCl is not installed, voice will NOT be supported
+2018-02-15 14:45:50,130 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is being created.
+2018-02-15 14:45:50,139 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:45:50,145 [    MainProcess][BotManager][   ERROR] Encountered error while loading Filters: JSONDecodeError: Extra data: line 2904 column 6 (char 89404)
+2018-02-15 14:45:50,145 [    MainProcess][BotManager][   ERROR] PokeBot has encountered a 'ValueError' while loading the Filters file. This typically means the file isn't in the correct json format. Try loading the file contents into a json validator.
+2018-02-15 14:45:50,146 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fbab5089518>
+2018-02-15 14:45:50,146 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fbab5089518>
+2018-02-15 14:45:50,148 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fbab5089518>
+2018-02-15 14:45:50,149 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fbab5089518>
+2018-02-15 14:45:50,150 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fbab5089518>
+2018-02-15 14:45:50,172 [    MainProcess][   asyncio][   ERROR] Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7fbabd73d1d0>
+2018-02-15 14:46:43,114 [    MainProcess][    Server][    INFO] PokeBot is getting ready...
+2018-02-15 14:46:43,122 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' is being created.
+2018-02-15 14:46:43,125 [    MainProcess][   Manager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/filters.json
+2018-02-15 14:46:43,126 [    MainProcess][   Manager][    INFO] Parsing 'monsters' section.
+2018-02-15 14:46:43,160 [    MainProcess][   Manager][    INFO] Parsing 'eggs' section.
+2018-02-15 14:46:43,161 [    MainProcess][   Manager][    INFO] Parsing 'raids' section.
+2018-02-15 14:46:43,162 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:46:43,162 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:46:43,163 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:46:43,163 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:46:43,163 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:46:43,164 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:46:43,164 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:46:43,164 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:46:43,165 [    MainProcess][   Manager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/alarms.json
+2018-02-15 14:46:43,165 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:46:43,165 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:46:43,166 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:46:43,166 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:46:43,166 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:46:43,167 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:46:43,167 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:46:43,167 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:46:43,168 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:46:43,168 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:46:43,168 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:46:43,169 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:46:43,169 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:46:43,169 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:46:43,170 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:46:43,170 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:46:43,170 [    MainProcess][   Manager][    INFO] 15 active alarms found.
+2018-02-15 14:46:43,171 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' successfully created.
+2018-02-15 14:46:43,171 [    MainProcess][LoadConfig][    INFO] Loading Rules from file at /root/Dropbox/TallyPokeMap/PokeBot/rules.json
+2018-02-15 14:46:43,171 [    MainProcess][    Server][    INFO] Starting up the Managers
+2018-02-15 14:46:43,172 [    MainProcess][discord.cl][ WARNING] PyNaCl is not installed, voice will NOT be supported
+2018-02-15 14:46:43,172 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is being created.
+2018-02-15 14:46:43,175 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:46:43,192 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:46:43,246 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:46:43,247 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:46:43,247 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:46:43,248 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:46:43,248 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:46:43,248 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:46:43,249 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:46:43,249 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:46:43,249 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:46:43,250 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:46:43,250 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:46:43,250 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:46:43,251 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_0' successfully created.
+2018-02-15 14:46:43,251 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is being created.
+2018-02-15 14:46:43,253 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:46:43,268 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:46:43,335 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:46:43,335 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:46:43,335 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:46:43,336 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:46:43,336 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:46:43,336 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:46:43,336 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:46:43,336 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:46:43,336 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:46:43,337 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:46:43,337 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:46:43,337 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:46:43,337 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_1' successfully created.
+2018-02-15 14:46:43,337 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is being created.
+2018-02-15 14:46:43,353 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:46:43,371 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:46:43,428 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:46:43,428 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:46:43,428 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:46:43,428 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:46:43,429 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:46:43,430 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:46:43,430 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:46:43,431 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:46:43,431 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:46:43,431 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:46:43,432 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:46:43,432 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:46:43,432 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_2' successfully created.
+2018-02-15 14:46:43,433 [    MainProcess][    Server][    INFO] Starting up the Bots
+2018-02-15 14:46:43,890 [    MainProcess][    Server][    INFO] PokeBot is listening for webhooks on: http://127.0.0.1:4002
+2018-02-15 14:46:43,895 [    MainProcess][    Server][    INFO] ======== Running on http://0.0.0.0:4002 ========
+2018-02-15 14:46:43,895 [    MainProcess][    Server][    INFO] (Press CTRL+C to quit)
+2018-02-15 14:46:48,156 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is starting up.
+2018-02-15 14:46:48,170 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is connected.
+2018-02-15 14:46:48,356 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is starting up.
+2018-02-15 14:46:48,378 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is connected.
+2018-02-15 14:46:48,402 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is starting up.
+2018-02-15 14:46:48,422 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is connected.
+2018-02-15 14:47:24,404 [    MainProcess][  Commands][    INFO] Sent pokemon alerts message to Chick-fil-A-hole.
+2018-02-15 14:47:35,920 [    MainProcess][  Commands][    INFO] Resumed all alerts for Chick-fil-A-hole.
+2018-02-15 14:47:35,921 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:47:35,959 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:52:47,683 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f3868974518>
+2018-02-15 14:52:47,693 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f3868974518>
+2018-02-15 14:52:47,775 [    MainProcess][    Server][ WARNING] Traceback (most recent call last):
+2018-02-15 14:52:47,786 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 362, in <module>
+2018-02-15 14:52:47,787 [    MainProcess][    Server][ WARNING] start_server()
+2018-02-15 14:52:47,787 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 94, in start_server
+2018-02-15 14:52:47,787 [    MainProcess][    Server][ WARNING] loop.run_until_complete(web.run_app(app, port=config['PORT']))
+2018-02-15 14:52:47,788 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 364, in run_until_complete
+2018-02-15 14:52:47,794 [    MainProcess][    Server][ WARNING] self._check_closed()
+2018-02-15 14:52:47,794 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 334, in _check_closed
+2018-02-15 14:52:47,795 [    MainProcess][    Server][ WARNING] raise RuntimeError('Event loop is closed')
+2018-02-15 14:52:47,795 [    MainProcess][    Server][ WARNING] RuntimeError
+2018-02-15 14:52:47,795 [    MainProcess][    Server][ WARNING] :
+2018-02-15 14:52:47,799 [    MainProcess][    Server][ WARNING] Event loop is closed
+2018-02-15 14:52:47,800 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f3868974518>
+2018-02-15 14:52:47,800 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f3868974518>
+2018-02-15 14:52:47,800 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f3868974518>
+2018-02-15 14:52:48,049 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<manage_webhook_data() running at start_pokebot.py:72> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 14:52:48,050 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<Manager.run() running at /root/Dropbox/TallyPokeMap/PokeBot/PokeBot/Manager.py:261> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 14:52:49,806 [    MainProcess][    Server][    INFO] PokeBot is getting ready...
+2018-02-15 14:52:49,812 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' is being created.
+2018-02-15 14:52:49,816 [    MainProcess][   Manager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/filters.json
+2018-02-15 14:52:49,816 [    MainProcess][   Manager][    INFO] Parsing 'monsters' section.
+2018-02-15 14:52:49,859 [    MainProcess][   Manager][    INFO] Parsing 'eggs' section.
+2018-02-15 14:52:49,859 [    MainProcess][   Manager][    INFO] Parsing 'raids' section.
+2018-02-15 14:52:49,860 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:52:49,860 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:52:49,860 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:52:49,860 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:52:49,861 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:52:49,861 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:52:49,861 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:52:49,861 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:52:49,861 [    MainProcess][   Manager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/alarms.json
+2018-02-15 14:52:49,863 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:52:49,863 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:52:49,863 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:52:49,863 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:52:49,863 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:52:49,864 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:52:49,864 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:52:49,864 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:52:49,864 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:52:49,865 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:52:49,865 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:52:49,865 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:52:49,865 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:52:49,865 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:52:49,865 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:52:49,865 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:52:49,866 [    MainProcess][   Manager][    INFO] 15 active alarms found.
+2018-02-15 14:52:49,866 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' successfully created.
+2018-02-15 14:52:49,866 [    MainProcess][LoadConfig][    INFO] Loading Rules from file at /root/Dropbox/TallyPokeMap/PokeBot/rules.json
+2018-02-15 14:52:49,866 [    MainProcess][    Server][    INFO] Starting up the Managers
+2018-02-15 14:52:49,867 [    MainProcess][discord.cl][ WARNING] PyNaCl is not installed, voice will NOT be supported
+2018-02-15 14:52:49,867 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is being created.
+2018-02-15 14:52:49,869 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:52:49,886 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:52:49,945 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:52:49,946 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:52:49,946 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:52:49,946 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:52:49,946 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:52:49,946 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:52:49,946 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:52:49,946 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:52:49,947 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:52:49,947 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:52:49,947 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:52:49,947 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:52:49,947 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_0' successfully created.
+2018-02-15 14:52:49,948 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is being created.
+2018-02-15 14:52:49,950 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:52:49,967 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:52:50,020 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:52:50,021 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:52:50,021 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:52:50,021 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:52:50,021 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:52:50,021 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:52:50,021 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:52:50,022 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:52:50,022 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:52:50,022 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:52:50,022 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:52:50,022 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:52:50,023 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_1' successfully created.
+2018-02-15 14:52:50,023 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is being created.
+2018-02-15 14:52:50,025 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:52:50,039 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:52:50,092 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:52:50,093 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:52:50,093 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:52:50,093 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:52:50,094 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:52:50,095 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:52:50,095 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:52:50,095 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:52:50,095 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:52:50,095 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:52:50,096 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:52:50,096 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:52:50,096 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_2' successfully created.
+2018-02-15 14:52:50,096 [    MainProcess][    Server][    INFO] Starting up the Bots
+2018-02-15 14:52:50,532 [    MainProcess][    Server][    INFO] PokeBot is listening for webhooks on: http://127.0.0.1:4002
+2018-02-15 14:52:50,537 [    MainProcess][    Server][    INFO] ======== Running on http://0.0.0.0:4002 ========
+2018-02-15 14:52:50,537 [    MainProcess][    Server][    INFO] (Press CTRL+C to quit)
+2018-02-15 14:52:54,780 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is starting up.
+2018-02-15 14:52:54,804 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is connected.
+2018-02-15 14:52:54,837 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is starting up.
+2018-02-15 14:52:54,853 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is connected.
+2018-02-15 14:52:55,021 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is starting up.
+2018-02-15 14:52:55,039 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is connected.
+2018-02-15 14:53:06,361 [    MainProcess][    Server][ WARNING] Ignoring exception in on_message
+2018-02-15 14:53:06,396 [    MainProcess][    Server][ WARNING] Traceback (most recent call last):
+2018-02-15 14:53:06,397 [    MainProcess][    Server][ WARNING]   File "/usr/local/lib/python3.5/dist-packages/discord/client.py", line 223, in _run_event
+2018-02-15 14:53:06,397 [    MainProcess][    Server][ WARNING]     yield from coro(*args, **kwargs)
+2018-02-15 14:53:06,398 [    MainProcess][    Server][ WARNING]   File "/root/Dropbox/TallyPokeMap/PokeBot/PokeBot/BotManager.py", line 606, in on_message
+2018-02-15 14:53:06,398 [    MainProcess][    Server][ WARNING]     self.__filter_file
+2018-02-15 14:53:06,398 [    MainProcess][    Server][ WARNING]   File "/root/Dropbox/TallyPokeMap/PokeBot/PokeBot/commands.py", line 963, in pause
+2018-02-15 14:53:06,398 [    MainProcess][    Server][ WARNING]     update_filters(user_filters, filter_file, f)
+2018-02-15 14:53:06,399 [    MainProcess][    Server][ WARNING]   File "/root/Dropbox/TallyPokeMap/PokeBot/PokeBot/Utilities/GenUtils.py", line 168, in update_filters
+2018-02-15 14:53:06,399 [    MainProcess][    Server][ WARNING]     os.path.getmtime(filter_file + '_hr_backup'))
+2018-02-15 14:53:06,402 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/genericpath.py", line 55, in getmtime
+2018-02-15 14:53:06,404 [    MainProcess][    Server][ WARNING]     return os.stat(filename).st_mtime
+2018-02-15 14:53:06,404 [    MainProcess][    Server][ WARNING] FileNotFoundError: [Errno 2] No such file or directory: './user_filters/user_filters.json_hr_backup'
+2018-02-15 14:54:12,794 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fd46e0465c0>
+2018-02-15 14:54:12,794 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fd46e0465c0>
+2018-02-15 14:54:12,840 [    MainProcess][    Server][ WARNING] Traceback (most recent call last):
+2018-02-15 14:54:12,840 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 362, in <module>
+2018-02-15 14:54:12,841 [    MainProcess][    Server][ WARNING] start_server()
+2018-02-15 14:54:12,841 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 94, in start_server
+2018-02-15 14:54:12,841 [    MainProcess][    Server][ WARNING] loop.run_until_complete(web.run_app(app, port=config['PORT']))
+2018-02-15 14:54:12,841 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 364, in run_until_complete
+2018-02-15 14:54:12,841 [    MainProcess][    Server][ WARNING] self._check_closed()
+2018-02-15 14:54:12,842 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 334, in _check_closed
+2018-02-15 14:54:12,842 [    MainProcess][    Server][ WARNING] raise RuntimeError('Event loop is closed')
+2018-02-15 14:54:12,842 [    MainProcess][    Server][ WARNING] RuntimeError
+2018-02-15 14:54:12,842 [    MainProcess][    Server][ WARNING] :
+2018-02-15 14:54:12,842 [    MainProcess][    Server][ WARNING] Event loop is closed
+2018-02-15 14:54:12,843 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fd46e0465c0>
+2018-02-15 14:54:12,843 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fd46e0465c0>
+2018-02-15 14:54:12,843 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fd46e0465c0>
+2018-02-15 14:54:12,991 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<manage_webhook_data() running at start_pokebot.py:72> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 14:54:12,995 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<Manager.run() running at /root/Dropbox/TallyPokeMap/PokeBot/PokeBot/Manager.py:261> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 14:54:31,869 [    MainProcess][    Server][    INFO] PokeBot is getting ready...
+2018-02-15 14:54:31,877 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' is being created.
+2018-02-15 14:54:31,879 [    MainProcess][   Manager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/filters.json
+2018-02-15 14:54:31,882 [    MainProcess][   Manager][    INFO] Parsing 'monsters' section.
+2018-02-15 14:54:31,919 [    MainProcess][   Manager][    INFO] Parsing 'eggs' section.
+2018-02-15 14:54:31,923 [    MainProcess][   Manager][    INFO] Parsing 'raids' section.
+2018-02-15 14:54:31,926 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:54:31,928 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:54:31,929 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:54:31,929 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:54:31,930 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:54:31,932 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:54:31,933 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:54:31,934 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:54:31,934 [    MainProcess][   Manager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/alarms.json
+2018-02-15 14:54:31,935 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:54:31,936 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:54:31,936 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:54:31,937 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:54:31,937 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:54:31,938 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:54:31,940 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:54:31,940 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:54:31,941 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:54:31,942 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:54:31,943 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:54:31,946 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:54:31,946 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:54:31,947 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:54:31,948 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:54:31,949 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:54:31,949 [    MainProcess][   Manager][    INFO] 15 active alarms found.
+2018-02-15 14:54:31,949 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' successfully created.
+2018-02-15 14:54:31,952 [    MainProcess][LoadConfig][    INFO] Loading Rules from file at /root/Dropbox/TallyPokeMap/PokeBot/rules.json
+2018-02-15 14:54:31,954 [    MainProcess][    Server][    INFO] Starting up the Managers
+2018-02-15 14:54:31,956 [    MainProcess][discord.cl][ WARNING] PyNaCl is not installed, voice will NOT be supported
+2018-02-15 14:54:31,956 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is being created.
+2018-02-15 14:54:31,961 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:54:31,981 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:54:32,191 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:54:32,191 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:54:32,191 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:54:32,192 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:54:32,192 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:54:32,192 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:54:32,192 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:54:32,193 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:54:32,193 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:54:32,193 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:54:32,193 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:54:32,193 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:54:32,194 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_0' successfully created.
+2018-02-15 14:54:32,194 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is being created.
+2018-02-15 14:54:32,201 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:54:32,244 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:54:32,306 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:54:32,306 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:54:32,307 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:54:32,307 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:54:32,307 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:54:32,308 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:54:32,308 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:54:32,308 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:54:32,309 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:54:32,309 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:54:32,310 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:54:32,310 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:54:32,310 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_1' successfully created.
+2018-02-15 14:54:32,311 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is being created.
+2018-02-15 14:54:32,313 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:54:32,329 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:54:32,399 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:54:32,399 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:54:32,399 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:54:32,400 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:54:32,400 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:54:32,400 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:54:32,400 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:54:32,400 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:54:32,401 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:54:32,401 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:54:32,402 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:54:32,402 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:54:32,402 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_2' successfully created.
+2018-02-15 14:54:32,402 [    MainProcess][    Server][    INFO] Starting up the Bots
+2018-02-15 14:54:32,812 [    MainProcess][    Server][    INFO] PokeBot is listening for webhooks on: http://127.0.0.1:4002
+2018-02-15 14:54:32,815 [    MainProcess][    Server][    INFO] ======== Running on http://0.0.0.0:4002 ========
+2018-02-15 14:54:32,815 [    MainProcess][    Server][    INFO] (Press CTRL+C to quit)
+2018-02-15 14:54:36,983 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is starting up.
+2018-02-15 14:54:37,005 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is connected.
+2018-02-15 14:54:37,146 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is starting up.
+2018-02-15 14:54:37,176 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is connected.
+2018-02-15 14:54:37,338 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is starting up.
+2018-02-15 14:54:37,371 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is connected.
+2018-02-15 14:54:37,555 [    MainProcess][  Commands][    INFO] Chick-fil-A-hole tried to pause but already paused.
+2018-02-15 14:54:40,144 [    MainProcess][    Server][ WARNING] Ignoring exception in on_message
+2018-02-15 14:54:40,147 [    MainProcess][    Server][ WARNING] Traceback (most recent call last):
+2018-02-15 14:54:40,147 [    MainProcess][    Server][ WARNING]   File "/usr/local/lib/python3.5/dist-packages/discord/client.py", line 223, in _run_event
+2018-02-15 14:54:40,147 [    MainProcess][    Server][ WARNING]     yield from coro(*args, **kwargs)
+2018-02-15 14:54:40,147 [    MainProcess][    Server][ WARNING]   File "/root/Dropbox/TallyPokeMap/PokeBot/PokeBot/BotManager.py", line 612, in on_message
+2018-02-15 14:54:40,148 [    MainProcess][    Server][ WARNING]     self.__filter_file
+2018-02-15 14:54:40,148 [    MainProcess][    Server][ WARNING]   File "/root/Dropbox/TallyPokeMap/PokeBot/PokeBot/commands.py", line 1073, in resume
+2018-02-15 14:54:40,148 [    MainProcess][    Server][ WARNING]     update_filters(user_filters, filter_file, f)
+2018-02-15 14:54:40,148 [    MainProcess][    Server][ WARNING]   File "/root/Dropbox/TallyPokeMap/PokeBot/PokeBot/Utilities/GenUtils.py", line 168, in update_filters
+2018-02-15 14:54:40,148 [    MainProcess][    Server][ WARNING]     get_path(filter_file + '_hr_backup')))
+2018-02-15 14:54:40,149 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/genericpath.py", line 55, in getmtime
+2018-02-15 14:54:40,149 [    MainProcess][    Server][ WARNING]     return os.stat(filename).st_mtime
+2018-02-15 14:54:40,149 [    MainProcess][    Server][ WARNING] FileNotFoundError: [Errno 2] No such file or directory: '/root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json_hr_backup'
+2018-02-15 14:58:51,026 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f4fec0695c0>
+2018-02-15 14:58:51,029 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f4fec0695c0>
+2018-02-15 14:58:51,121 [    MainProcess][    Server][ WARNING] Traceback (most recent call last):
+2018-02-15 14:58:51,121 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 362, in <module>
+2018-02-15 14:58:51,127 [    MainProcess][    Server][ WARNING] start_server()
+2018-02-15 14:58:51,128 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 94, in start_server
+2018-02-15 14:58:51,128 [    MainProcess][    Server][ WARNING] loop.run_until_complete(web.run_app(app, port=config['PORT']))
+2018-02-15 14:58:51,128 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 364, in run_until_complete
+2018-02-15 14:58:51,131 [    MainProcess][    Server][ WARNING] self._check_closed()
+2018-02-15 14:58:51,132 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 334, in _check_closed
+2018-02-15 14:58:51,132 [    MainProcess][    Server][ WARNING] raise RuntimeError('Event loop is closed')
+2018-02-15 14:58:51,132 [    MainProcess][    Server][ WARNING] RuntimeError
+2018-02-15 14:58:51,132 [    MainProcess][    Server][ WARNING] :
+2018-02-15 14:58:51,132 [    MainProcess][    Server][ WARNING] Event loop is closed
+2018-02-15 14:58:51,133 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f4fec0695c0>
+2018-02-15 14:58:51,133 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f4fec0695c0>
+2018-02-15 14:58:51,133 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f4fec0695c0>
+2018-02-15 14:58:51,499 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<manage_webhook_data() running at start_pokebot.py:72> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 14:58:51,502 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<Manager.run() running at /root/Dropbox/TallyPokeMap/PokeBot/PokeBot/Manager.py:261> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 14:59:33,902 [    MainProcess][    Server][    INFO] PokeBot is getting ready...
+2018-02-15 14:59:33,910 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' is being created.
+2018-02-15 14:59:33,915 [    MainProcess][   Manager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/filters.json
+2018-02-15 14:59:33,918 [    MainProcess][   Manager][    INFO] Parsing 'monsters' section.
+2018-02-15 14:59:33,953 [    MainProcess][   Manager][    INFO] Parsing 'eggs' section.
+2018-02-15 14:59:33,957 [    MainProcess][   Manager][    INFO] Parsing 'raids' section.
+2018-02-15 14:59:33,960 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:59:33,962 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:59:33,962 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:59:33,963 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:59:33,964 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:59:33,964 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:59:33,964 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:59:33,966 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:59:33,967 [    MainProcess][   Manager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/alarms.json
+2018-02-15 14:59:33,967 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:59:33,970 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:59:33,970 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:59:33,971 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:59:33,971 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:59:33,972 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:59:33,972 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:59:33,972 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:59:33,973 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:59:33,973 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:59:33,973 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:59:33,975 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:59:33,976 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:59:33,976 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:59:33,976 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:59:33,977 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:59:33,978 [    MainProcess][   Manager][    INFO] 15 active alarms found.
+2018-02-15 14:59:33,979 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' successfully created.
+2018-02-15 14:59:33,979 [    MainProcess][LoadConfig][    INFO] Loading Rules from file at /root/Dropbox/TallyPokeMap/PokeBot/rules.json
+2018-02-15 14:59:33,980 [    MainProcess][    Server][    INFO] Starting up the Managers
+2018-02-15 14:59:33,981 [    MainProcess][discord.cl][ WARNING] PyNaCl is not installed, voice will NOT be supported
+2018-02-15 14:59:33,981 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is being created.
+2018-02-15 14:59:33,983 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:59:34,009 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:59:34,126 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:59:34,127 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:59:34,127 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:59:34,127 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:59:34,127 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:59:34,127 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:59:34,127 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:59:34,128 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:59:34,128 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:59:34,129 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:59:34,129 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:59:34,129 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:59:34,129 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_0' successfully created.
+2018-02-15 14:59:34,129 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is being created.
+2018-02-15 14:59:34,133 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:59:34,153 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:59:34,224 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:59:34,225 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:59:34,225 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:59:34,225 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:59:34,225 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:59:34,225 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:59:34,225 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:59:34,225 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:59:34,226 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:59:34,226 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:59:34,226 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:59:34,226 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:59:34,227 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_1' successfully created.
+2018-02-15 14:59:34,227 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is being created.
+2018-02-15 14:59:34,230 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 14:59:34,247 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 14:59:34,305 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 14:59:34,305 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 14:59:34,305 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 14:59:34,305 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 14:59:34,306 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 14:59:34,306 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 14:59:34,306 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 14:59:34,306 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 14:59:34,307 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 14:59:34,307 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 14:59:34,307 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 14:59:34,307 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 14:59:34,307 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_2' successfully created.
+2018-02-15 14:59:34,307 [    MainProcess][    Server][    INFO] Starting up the Bots
+2018-02-15 14:59:34,681 [    MainProcess][    Server][    INFO] PokeBot is listening for webhooks on: http://127.0.0.1:4002
+2018-02-15 14:59:34,688 [    MainProcess][    Server][    INFO] ======== Running on http://0.0.0.0:4002 ========
+2018-02-15 14:59:34,694 [    MainProcess][    Server][    INFO] (Press CTRL+C to quit)
+2018-02-15 14:59:38,883 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is starting up.
+2018-02-15 14:59:38,900 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is connected.
+2018-02-15 14:59:39,016 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is starting up.
+2018-02-15 14:59:39,032 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is connected.
+2018-02-15 14:59:39,213 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is starting up.
+2018-02-15 14:59:39,233 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is connected.
+2018-02-15 14:59:58,594 [    MainProcess][    Server][ WARNING] Ignoring exception in on_message
+2018-02-15 14:59:58,600 [    MainProcess][    Server][ WARNING] Traceback (most recent call last):
+2018-02-15 14:59:58,600 [    MainProcess][    Server][ WARNING]   File "/usr/local/lib/python3.5/dist-packages/discord/client.py", line 223, in _run_event
+2018-02-15 14:59:58,601 [    MainProcess][    Server][ WARNING]     yield from coro(*args, **kwargs)
+2018-02-15 14:59:58,601 [    MainProcess][    Server][ WARNING]   File "/root/Dropbox/TallyPokeMap/PokeBot/PokeBot/BotManager.py", line 606, in on_message
+2018-02-15 14:59:58,601 [    MainProcess][    Server][ WARNING]     self.__filter_file
+2018-02-15 14:59:58,602 [    MainProcess][    Server][ WARNING]   File "/root/Dropbox/TallyPokeMap/PokeBot/PokeBot/commands.py", line 963, in pause
+2018-02-15 14:59:58,604 [    MainProcess][    Server][ WARNING]     update_filters(user_filters, filter_file, f)
+2018-02-15 14:59:58,605 [    MainProcess][    Server][ WARNING]   File "/root/Dropbox/TallyPokeMap/PokeBot/PokeBot/Utilities/GenUtils.py", line 174, in update_filters
+2018-02-15 14:59:58,606 [    MainProcess][    Server][ WARNING]     encoding="utf-8"
+2018-02-15 14:59:58,606 [    MainProcess][    Server][ WARNING] TypeError: get_path() got an unexpected keyword argument 'encoding'
+2018-02-15 15:00:47,602 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fa10a97d5c0>
+2018-02-15 15:00:47,604 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fa10a97d5c0>
+2018-02-15 15:00:47,655 [    MainProcess][    Server][ WARNING] Traceback (most recent call last):
+2018-02-15 15:00:47,656 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 362, in <module>
+2018-02-15 15:00:47,656 [    MainProcess][    Server][ WARNING] start_server()
+2018-02-15 15:00:47,657 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 94, in start_server
+2018-02-15 15:00:47,657 [    MainProcess][    Server][ WARNING] loop.run_until_complete(web.run_app(app, port=config['PORT']))
+2018-02-15 15:00:47,657 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 364, in run_until_complete
+2018-02-15 15:00:47,658 [    MainProcess][    Server][ WARNING] self._check_closed()
+2018-02-15 15:00:47,658 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 334, in _check_closed
+2018-02-15 15:00:47,658 [    MainProcess][    Server][ WARNING] raise RuntimeError('Event loop is closed')
+2018-02-15 15:00:47,658 [    MainProcess][    Server][ WARNING] RuntimeError
+2018-02-15 15:00:47,658 [    MainProcess][    Server][ WARNING] :
+2018-02-15 15:00:47,658 [    MainProcess][    Server][ WARNING] Event loop is closed
+2018-02-15 15:00:47,659 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fa10a97d5c0>
+2018-02-15 15:00:47,660 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fa10a97d5c0>
+2018-02-15 15:00:47,660 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fa10a97d5c0>
+2018-02-15 15:00:47,823 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<manage_webhook_data() running at start_pokebot.py:72> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 15:00:47,824 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<Manager.run() running at /root/Dropbox/TallyPokeMap/PokeBot/PokeBot/Manager.py:261> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 15:01:09,758 [    MainProcess][    Server][    INFO] PokeBot is getting ready...
+2018-02-15 15:01:09,766 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' is being created.
+2018-02-15 15:01:09,769 [    MainProcess][   Manager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/filters.json
+2018-02-15 15:01:09,770 [    MainProcess][   Manager][    INFO] Parsing 'monsters' section.
+2018-02-15 15:01:09,814 [    MainProcess][   Manager][    INFO] Parsing 'eggs' section.
+2018-02-15 15:01:09,815 [    MainProcess][   Manager][    INFO] Parsing 'raids' section.
+2018-02-15 15:01:09,816 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 15:01:09,816 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 15:01:09,817 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 15:01:09,817 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 15:01:09,818 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 15:01:09,818 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 15:01:09,819 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 15:01:09,819 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 15:01:09,820 [    MainProcess][   Manager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/alarms.json
+2018-02-15 15:01:09,821 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 15:01:09,821 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:01:09,822 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:01:09,822 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:01:09,823 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:01:09,824 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:01:09,824 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:01:09,824 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:01:09,825 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:01:09,825 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:01:09,826 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:01:09,826 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:01:09,827 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:01:09,828 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:01:09,828 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:01:09,828 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:01:09,829 [    MainProcess][   Manager][    INFO] 15 active alarms found.
+2018-02-15 15:01:09,829 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' successfully created.
+2018-02-15 15:01:09,830 [    MainProcess][LoadConfig][    INFO] Loading Rules from file at /root/Dropbox/TallyPokeMap/PokeBot/rules.json
+2018-02-15 15:01:09,830 [    MainProcess][    Server][    INFO] Starting up the Managers
+2018-02-15 15:01:09,831 [    MainProcess][discord.cl][ WARNING] PyNaCl is not installed, voice will NOT be supported
+2018-02-15 15:01:09,832 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is being created.
+2018-02-15 15:01:09,834 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 15:01:09,849 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 15:01:09,905 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 15:01:09,906 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 15:01:09,907 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 15:01:09,907 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 15:01:09,908 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 15:01:09,908 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 15:01:09,909 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 15:01:09,909 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 15:01:09,910 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 15:01:09,910 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 15:01:09,911 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:01:09,912 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 15:01:09,912 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_0' successfully created.
+2018-02-15 15:01:09,912 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is being created.
+2018-02-15 15:01:09,915 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 15:01:09,932 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 15:01:10,001 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 15:01:10,002 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 15:01:10,002 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 15:01:10,003 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 15:01:10,003 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 15:01:10,003 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 15:01:10,004 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 15:01:10,004 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 15:01:10,004 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 15:01:10,005 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 15:01:10,005 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:01:10,006 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 15:01:10,006 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_1' successfully created.
+2018-02-15 15:01:10,007 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is being created.
+2018-02-15 15:01:10,013 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 15:01:10,037 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 15:01:10,116 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 15:01:10,120 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 15:01:10,122 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 15:01:10,123 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 15:01:10,123 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 15:01:10,124 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 15:01:10,124 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 15:01:10,125 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 15:01:10,125 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 15:01:10,127 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 15:01:10,127 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:01:10,129 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 15:01:10,130 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_2' successfully created.
+2018-02-15 15:01:10,131 [    MainProcess][    Server][    INFO] Starting up the Bots
+2018-02-15 15:01:10,600 [    MainProcess][    Server][    INFO] PokeBot is listening for webhooks on: http://127.0.0.1:4002
+2018-02-15 15:01:10,610 [    MainProcess][    Server][    INFO] ======== Running on http://0.0.0.0:4002 ========
+2018-02-15 15:01:10,610 [    MainProcess][    Server][    INFO] (Press CTRL+C to quit)
+2018-02-15 15:01:14,978 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is starting up.
+2018-02-15 15:01:15,013 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is connected.
+2018-02-15 15:01:15,232 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is starting up.
+2018-02-15 15:01:15,267 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is connected.
+2018-02-15 15:01:15,306 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is starting up.
+2018-02-15 15:01:15,321 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is connected.
+2018-02-15 15:01:19,413 [    MainProcess][  Commands][    INFO] Chick-fil-A-hole tried to pause but already paused.
+2018-02-15 15:01:21,948 [    MainProcess][  Commands][    INFO] Resumed all alerts for Chick-fil-A-hole.
+2018-02-15 15:01:21,949 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 15:01:21,965 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 15:03:13,828 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fc8431225c0>
+2018-02-15 15:03:13,829 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fc8431225c0>
+2018-02-15 15:03:13,872 [    MainProcess][    Server][ WARNING] Traceback (most recent call last):
+2018-02-15 15:03:13,873 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 362, in <module>
+2018-02-15 15:03:13,873 [    MainProcess][    Server][ WARNING] start_server()
+2018-02-15 15:03:13,874 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 94, in start_server
+2018-02-15 15:03:13,874 [    MainProcess][    Server][ WARNING] loop.run_until_complete(web.run_app(app, port=config['PORT']))
+2018-02-15 15:03:13,875 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 364, in run_until_complete
+2018-02-15 15:03:13,875 [    MainProcess][    Server][ WARNING] self._check_closed()
+2018-02-15 15:03:13,876 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 334, in _check_closed
+2018-02-15 15:03:13,876 [    MainProcess][    Server][ WARNING] raise RuntimeError('Event loop is closed')
+2018-02-15 15:03:13,876 [    MainProcess][    Server][ WARNING] RuntimeError
+2018-02-15 15:03:13,877 [    MainProcess][    Server][ WARNING] :
+2018-02-15 15:03:13,877 [    MainProcess][    Server][ WARNING] Event loop is closed
+2018-02-15 15:03:13,878 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fc8431225c0>
+2018-02-15 15:03:13,878 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fc8431225c0>
+2018-02-15 15:03:13,879 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7fc8431225c0>
+2018-02-15 15:03:14,029 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<manage_webhook_data() running at start_pokebot.py:72> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 15:03:14,040 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<Manager.run() running at /root/Dropbox/TallyPokeMap/PokeBot/PokeBot/Manager.py:261> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 15:03:16,027 [    MainProcess][    Server][    INFO] PokeBot is getting ready...
+2018-02-15 15:03:16,036 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' is being created.
+2018-02-15 15:03:16,041 [    MainProcess][   Manager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/filters.json
+2018-02-15 15:03:16,044 [    MainProcess][   Manager][    INFO] Parsing 'monsters' section.
+2018-02-15 15:03:16,085 [    MainProcess][   Manager][    INFO] Parsing 'eggs' section.
+2018-02-15 15:03:16,087 [    MainProcess][   Manager][    INFO] Parsing 'raids' section.
+2018-02-15 15:03:16,088 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 15:03:16,088 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 15:03:16,088 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 15:03:16,088 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 15:03:16,088 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 15:03:16,089 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 15:03:16,089 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 15:03:16,089 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 15:03:16,089 [    MainProcess][   Manager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/alarms.json
+2018-02-15 15:03:16,090 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 15:03:16,090 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:16,090 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:16,090 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:16,091 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:16,091 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:16,091 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:16,091 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:16,091 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:16,092 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:16,092 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:16,096 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:16,099 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:16,099 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:16,102 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:16,102 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:16,102 [    MainProcess][   Manager][    INFO] 15 active alarms found.
+2018-02-15 15:03:16,102 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' successfully created.
+2018-02-15 15:03:16,102 [    MainProcess][LoadConfig][    INFO] Loading Rules from file at /root/Dropbox/TallyPokeMap/PokeBot/rules.json
+2018-02-15 15:03:16,103 [    MainProcess][    Server][    INFO] Starting up the Managers
+2018-02-15 15:03:16,106 [    MainProcess][discord.cl][ WARNING] PyNaCl is not installed, voice will NOT be supported
+2018-02-15 15:03:16,106 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is being created.
+2018-02-15 15:03:16,109 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 15:03:16,127 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 15:03:16,189 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 15:03:16,190 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 15:03:16,190 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 15:03:16,190 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 15:03:16,190 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 15:03:16,191 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 15:03:16,191 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 15:03:16,191 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 15:03:16,191 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 15:03:16,192 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 15:03:16,192 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:16,195 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 15:03:16,195 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_0' successfully created.
+2018-02-15 15:03:16,195 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is being created.
+2018-02-15 15:03:16,199 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 15:03:16,219 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 15:03:16,325 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 15:03:16,334 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 15:03:16,334 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 15:03:16,334 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 15:03:16,334 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 15:03:16,334 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 15:03:16,334 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 15:03:16,335 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 15:03:16,335 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 15:03:16,348 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 15:03:16,348 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:16,348 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 15:03:16,349 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_1' successfully created.
+2018-02-15 15:03:16,349 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is being created.
+2018-02-15 15:03:16,358 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 15:03:16,374 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 15:03:16,432 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 15:03:16,435 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 15:03:16,437 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 15:03:16,437 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 15:03:16,441 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 15:03:16,441 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 15:03:16,442 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 15:03:16,442 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 15:03:16,443 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 15:03:16,446 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 15:03:16,448 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:16,450 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 15:03:16,453 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_2' successfully created.
+2018-02-15 15:03:16,456 [    MainProcess][    Server][    INFO] Starting up the Bots
+2018-02-15 15:03:16,848 [    MainProcess][    Server][    INFO] PokeBot is listening for webhooks on: http://127.0.0.1:4002
+2018-02-15 15:03:16,854 [    MainProcess][    Server][    INFO] ======== Running on http://0.0.0.0:4002 ========
+2018-02-15 15:03:16,857 [    MainProcess][    Server][    INFO] (Press CTRL+C to quit)
+2018-02-15 15:03:21,054 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is starting up.
+2018-02-15 15:03:21,077 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is connected.
+2018-02-15 15:03:21,518 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is starting up.
+2018-02-15 15:03:21,539 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is connected.
+2018-02-15 15:03:21,675 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is starting up.
+2018-02-15 15:03:21,694 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is connected.
+2018-02-15 15:03:50,421 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f496defb5c0>
+2018-02-15 15:03:50,423 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f496defb5c0>
+2018-02-15 15:03:50,466 [    MainProcess][    Server][ WARNING] Traceback (most recent call last):
+2018-02-15 15:03:50,470 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 362, in <module>
+2018-02-15 15:03:50,473 [    MainProcess][    Server][ WARNING] start_server()
+2018-02-15 15:03:50,476 [    MainProcess][    Server][ WARNING]   File "start_pokebot.py", line 94, in start_server
+2018-02-15 15:03:50,477 [    MainProcess][    Server][ WARNING] loop.run_until_complete(web.run_app(app, port=config['PORT']))
+2018-02-15 15:03:50,477 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 364, in run_until_complete
+2018-02-15 15:03:50,478 [    MainProcess][    Server][ WARNING] self._check_closed()
+2018-02-15 15:03:50,478 [    MainProcess][    Server][ WARNING]   File "/usr/lib/python3.5/asyncio/base_events.py", line 334, in _check_closed
+2018-02-15 15:03:50,479 [    MainProcess][    Server][ WARNING] raise RuntimeError('Event loop is closed')
+2018-02-15 15:03:50,482 [    MainProcess][    Server][ WARNING] RuntimeError
+2018-02-15 15:03:50,482 [    MainProcess][    Server][ WARNING] :
+2018-02-15 15:03:50,482 [    MainProcess][    Server][ WARNING] Event loop is closed
+2018-02-15 15:03:50,484 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f496defb5c0>
+2018-02-15 15:03:50,485 [    MainProcess][    Server][    INFO] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f496defb5c0>
+2018-02-15 15:03:50,485 [    MainProcess][    Server][ WARNING] <PokeBot.Utilities.GenUtils.LoggerWriter object at 0x7f496defb5c0>
+2018-02-15 15:03:50,695 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<manage_webhook_data() running at start_pokebot.py:72> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 15:03:50,698 [    MainProcess][   asyncio][   ERROR] Task was destroyed but it is pending!
+task: <Task pending coro=<Manager.run() running at /root/Dropbox/TallyPokeMap/PokeBot/PokeBot/Manager.py:261> wait_for=<Future pending cb=[Task._wakeup()]>>
+2018-02-15 15:03:52,140 [    MainProcess][    Server][    INFO] PokeBot is getting ready...
+2018-02-15 15:03:52,153 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' is being created.
+2018-02-15 15:03:52,156 [    MainProcess][   Manager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/filters.json
+2018-02-15 15:03:52,161 [    MainProcess][   Manager][    INFO] Parsing 'monsters' section.
+2018-02-15 15:03:52,222 [    MainProcess][   Manager][    INFO] Parsing 'eggs' section.
+2018-02-15 15:03:52,223 [    MainProcess][   Manager][    INFO] Parsing 'raids' section.
+2018-02-15 15:03:52,224 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 15:03:52,225 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 15:03:52,225 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 15:03:52,225 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 15:03:52,225 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 15:03:52,225 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 15:03:52,225 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 15:03:52,225 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 15:03:52,225 [    MainProcess][   Manager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/alarms.json
+2018-02-15 15:03:52,226 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 15:03:52,226 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:52,226 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:52,226 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:52,227 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:52,227 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:52,228 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:52,228 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:52,228 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:52,228 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:52,228 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:52,229 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:52,229 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:52,229 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:52,229 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:52,229 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:52,232 [    MainProcess][   Manager][    INFO] 15 active alarms found.
+2018-02-15 15:03:52,232 [    MainProcess][   Manager][    INFO] ----------- Manager 'manager_0' successfully created.
+2018-02-15 15:03:52,232 [    MainProcess][LoadConfig][    INFO] Loading Rules from file at /root/Dropbox/TallyPokeMap/PokeBot/rules.json
+2018-02-15 15:03:52,232 [    MainProcess][    Server][    INFO] Starting up the Managers
+2018-02-15 15:03:52,233 [    MainProcess][discord.cl][ WARNING] PyNaCl is not installed, voice will NOT be supported
+2018-02-15 15:03:52,233 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is being created.
+2018-02-15 15:03:52,238 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 15:03:52,293 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 15:03:52,380 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 15:03:52,380 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 15:03:52,381 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 15:03:52,381 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 15:03:52,381 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 15:03:52,381 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 15:03:52,381 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 15:03:52,382 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 15:03:52,382 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 15:03:52,382 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 15:03:52,382 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:52,382 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 15:03:52,383 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_0' successfully created.
+2018-02-15 15:03:52,383 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is being created.
+2018-02-15 15:03:52,385 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 15:03:52,404 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 15:03:52,479 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 15:03:52,480 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 15:03:52,480 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 15:03:52,480 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 15:03:52,480 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 15:03:52,480 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 15:03:52,480 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 15:03:52,481 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 15:03:52,481 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 15:03:52,482 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 15:03:52,482 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:52,482 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 15:03:52,482 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_1' successfully created.
+2018-02-15 15:03:52,482 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is being created.
+2018-02-15 15:03:52,485 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 15:03:52,500 [    MainProcess][BotManager][    INFO] Parsing user filters file
+2018-02-15 15:03:52,558 [    MainProcess][  Geofence][    INFO] Geofence Central Tallahassee added.
+2018-02-15 15:03:52,561 [    MainProcess][  Geofence][    INFO] Geofence Northwest Tallahassee added.
+2018-02-15 15:03:52,564 [    MainProcess][  Geofence][    INFO] Geofence North Tallahassee added.
+2018-02-15 15:03:52,566 [    MainProcess][  Geofence][    INFO] Geofence Northeast Tallahassee added.
+2018-02-15 15:03:52,568 [    MainProcess][  Geofence][    INFO] Geofence Southeast Tallahassee added.
+2018-02-15 15:03:52,571 [    MainProcess][  Geofence][    INFO] Geofence South Tallahassee added.
+2018-02-15 15:03:52,571 [    MainProcess][  Geofence][    INFO] Geofence Southwest Tallahassee added.
+2018-02-15 15:03:52,572 [    MainProcess][  Geofence][    INFO] Geofence Bradfordville added!
+2018-02-15 15:03:52,572 [    MainProcess][BotManager][    INFO] Loading Alarms from the file at /root/Dropbox/TallyPokeMap/PokeBot/user_alarms.json
+2018-02-15 15:03:52,577 [    MainProcess][LocService][    INFO] Reverse Location DTS detected - API has been enabled!
+2018-02-15 15:03:52,578 [    MainProcess][   Discord][    INFO] Discord Alarm has been created!
+2018-02-15 15:03:52,580 [    MainProcess][BotManager][    INFO] 1 active alarms found.
+2018-02-15 15:03:52,581 [    MainProcess][BotManager][    INFO] ----------- Manager 'bot_2' successfully created.
+2018-02-15 15:03:52,581 [    MainProcess][    Server][    INFO] Starting up the Bots
+2018-02-15 15:03:53,011 [    MainProcess][    Server][    INFO] PokeBot is listening for webhooks on: http://127.0.0.1:4002
+2018-02-15 15:03:53,014 [    MainProcess][    Server][    INFO] ======== Running on http://0.0.0.0:4002 ========
+2018-02-15 15:03:53,015 [    MainProcess][    Server][    INFO] (Press CTRL+C to quit)
+2018-02-15 15:03:57,407 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is starting up.
+2018-02-15 15:03:57,425 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_0' is connected.
+2018-02-15 15:03:57,448 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is starting up.
+2018-02-15 15:03:57,464 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_2' is connected.
+2018-02-15 15:03:58,140 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is starting up.
+2018-02-15 15:03:58,172 [    MainProcess][BotManager][    INFO] ----------- Bot Manager 'bot_1' is connected.
+2018-02-15 15:04:00,672 [    MainProcess][  GenUtils][    INFO] 2018-02-15 20:01:21.866516
+2018-02-15 15:04:00,672 [    MainProcess][  Commands][    INFO] Paused all alerts for Chick-fil-A-hole.
+2018-02-15 15:04:00,673 [    MainProcess][BotManager][    INFO] Loading Filters from file at /root/Dropbox/TallyPokeMap/PokeBot/./user_filters/user_filters.json
+2018-02-15 15:04:00,688 [    MainProcess][BotManager][    INFO] Parsing user filters file

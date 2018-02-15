@@ -5,6 +5,7 @@ _build
 *.ini
 *.txt
 *.log
+*_backup
 *.log.*
 !data/*.json
 !locales/*.json

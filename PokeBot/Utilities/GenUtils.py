@@ -164,24 +164,24 @@ def update_filters(user_filters, filter_file, f):
     json.dump(user_filters, f, indent=4)
     f.truncate()
     try:
-        mod = datetime.utcfromtimestamp(
-            os.path.getmtime(filter_file + '_hr_backup'))
+        mod = datetime.utcfromtimestamp(os.path.getmtime(
+            get_path(filter_file + '.hr_backup')))
     except OSError:
         mod = datetime.utcnow() - timedelta(minutes=60)
     if datetime.utcnow() - mod >= timedelta(minutes=60):
-        with open(
-            filter_file + '_hr_backup.json', 'w+',
+        with open(get_path(
+            filter_file + '.hr_backup'), 'w+',
             encoding="utf-8"
         ) as hr:
             json.dump(user_filters, hr, indent=4)
     try:
-        mod = datetime.utcfromtimestamp(
-            os.path.getmtime(filter_file + '_day_backup'))
+        mod = datetime.utcfromtimestamp(os.path.getmtime(
+            get_path(filter_file + '.day_backup')))
     except OSError:
         mod = datetime.utcnow() - timedelta(hours=24)
     if datetime.utcnow() - mod >= timedelta(hours=24):
-        with open(
-            filter_file + '_day_backup.json', 'w+',
+        with open(get_path(
+            filter_file + '.day_backup'), 'w+',
             encoding="utf-8"
         ) as day:
             json.dump(user_filters, day, indent=4)

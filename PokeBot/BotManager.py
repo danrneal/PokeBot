@@ -537,7 +537,8 @@ class BotManager(discord.Client):
                         reload = True
                         embeds = discord.Embed(
                             description=((
-                                "{} Your alerts have been paused."
+                                "{} Your alerts have been paused due to " +
+                                "being muted, please contact an admin."
                             ).format(after.mention)),
                             color=int('0xee281f', 16)
                         )

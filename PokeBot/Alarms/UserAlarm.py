@@ -157,9 +157,10 @@ class UserAlarm(Alarm):
                             paused = True
                             embeds = discord.Embed(
                                 description=((
-                                    "{} Your alerts have been paused for" +
-                                    "exceeding messaging rate limits, please" +
-                                    "adjust your filters before resuming."
+                                    "{} Your alerts have been paused for " +
+                                    "exceeding messaging rate limits, " +
+                                    "please adjust your filters before " +
+                                    "resuming."
                                 ).format(destination.mention)),
                                 color=int('0xee281f', 16)
                             )
