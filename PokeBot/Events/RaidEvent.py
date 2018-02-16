@@ -107,6 +107,7 @@ class RaidEvent(BaseEvent):
             'raid_lvl': self.raid_lvl,
             'mon_name': locale.get_pokemon_name(self.mon_id),
             'mon_id': self.mon_id,
+            'mon_id_3': "{:03}".format(self.mon_id),
             'quick_move': locale.get_move_name(self.quick_id),
             'quick_id': self.quick_id,
             'quick_damage': self.quick_damage,
