@@ -247,10 +247,9 @@ class BotManager(discord.Client):
         self.__cache.clean_and_save()
 
     async def process_monster(self, mon):
-        if self.__cache.get_pokemon_expiration(mon.enc_id) is not None:
+        if self.__cache.monster_expiration(mon.enc_id) is not None:
             return
-        self.__cache.update_pokemon_expiration(
-            mon.enc_id, mon.disappear_time)
+        self.__cache.monster_expiration(mon.enc_id, mon.disappear_time)
         for user_id in self.__mons_enabled:
             if int(user_id) % self.__number_of_bots != self.__bot_number:
                 continue
@@ -293,9 +292,9 @@ class BotManager(discord.Client):
                 log.critical("Alarm '{}' not found!".format(name))
 
     async def process_egg(self, egg):
-        if self.__cache.get_egg_expiration(egg.gym_id) is not None:
+        if self.__cache.egg_expiration(egg.gym_id) is not None:
             return
-        self.__cache.update_egg_expiration(egg.gym_id, egg.hatch_time)
+        self.__cache.egg_expiration(egg.gym_id, egg.hatch_time)
         for user_id in self.__eggs_enabled:
             if int(user_id) % self.__number_of_bots != self.__bot_number:
                 continue
@@ -336,9 +335,9 @@ class BotManager(discord.Client):
                 log.critical("Alarm '{}' not found!".format(name))
 
     async def process_raid(self, raid):
-        if self.__cache.get_raid_expiration(raid.gym_id) is not None:
+        if self.__cache.raid_expiration(raid.gym_id) is not None:
             return
-        self.__cache.update_raid_expiration(raid.gym_id, raid.raid_end)
+        self.__cache.raid_expiration(raid.gym_id, raid.raid_end)
         for user_id in self.__raids_enabled:
             if int(user_id) % self.__number_of_bots != self.__bot_number:
                 continue

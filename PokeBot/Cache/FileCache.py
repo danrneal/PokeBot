@@ -14,6 +14,9 @@ class FileCache(Cache):
         super(FileCache, self).__init__()
         self._name = name
         self._file = get_path(os.path.join("cache", "{}.cache".format(name)))
+        cache_folder = get_path("cache")
+        if not os.path.exists(cache_folder):
+            os.makedirs(cache_folder)
         if os.path.isfile(self._file):
             self._load()
         else:
@@ -21,21 +24,31 @@ class FileCache(Cache):
                 pickle.dump({}, f, protocol=pickle.HIGHEST_PROTOCOL)
 
     def _load(self):
-        with portalocker.Lock(self._file, mode="rb") as f:
-            data = pickle.load(f)
-            self._pokemon_hist = data.get('pokemon_hist', {})
-            self._egg_hist = data.get('egg_hist', {})
-            self._raid_hist = data.get('raid_hist', {})
+        try:
+            with portalocker.Lock(self._file, mode="rb") as f:
+                data = pickle.load(f)
+                self._mon_hist = data.get('mon_hist', {})
+                self._egg_hist = data.get('egg_hist', {})
+                self._raid_hist = data.get('raid_hist', {})
+        except Exception as e:
+            log.error(
+                "There was an error attempting to load the cache. The old " +
+                "cache will be overwritten."
+            )
+            log.error("{}: {}".format(type(e).__name__, e))
 
     def _save(self):
         data = {
-            'pokemon_hist': self._pokemon_hist,
+            'mon_hist': self._mon_hist,
             'egg_hist': self._egg_hist,
             'raid_hist': self._raid_hist
         }
         try:
-            with portalocker.Lock(self._file, timeout=5, mode="wb+") as f:
+            temp = self._file + ".new"
+            with portalocker.Lock(temp, timeout=5, mode="wb+") as f:
                 pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
+                os.remove(self._file)
+                os.rename(temp, self._file)
         except Exception as e:
             log.error((
                 "Encountered error while saving cache: {}: {}"

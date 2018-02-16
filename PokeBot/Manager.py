@@ -282,10 +282,9 @@ class Manager(object):
         if self.__mons_enabled is False:
             return
         mon.name = self.__locale.get_pokemon_name(mon.monster_id)
-        if self.__cache.get_pokemon_expiration(mon.enc_id) is not None:
+        if self.__cache.monster_expiration(mon.enc_id) is not None:
             return
-        self.__cache.update_pokemon_expiration(
-            mon.enc_id, mon.disappear_time)
+        self.__cache.monster_expiration(mon.enc_id, mon.disappear_time)
         rules = self.__mon_rules
         if len(rules) == 0:
             rules = {
@@ -319,9 +318,9 @@ class Manager(object):
     def process_egg(self, egg):
         if self.__eggs_enabled is False:
             return
-        if self.__cache.get_egg_expiration(egg.gym_id) is not None:
+        if self.__cache.egg_expiration(egg.gym_id) is not None:
             return
-        self.__cache.update_egg_expiration(egg.gym_id, egg.hatch_time)
+        self.__cache.egg_expiration(egg.gym_id, egg.hatch_time)
         rules = self.__egg_rules
         if len(rules) == 0:
             rules = {
@@ -355,9 +354,9 @@ class Manager(object):
     def process_raid(self, raid):
         if self.__raids_enabled is False:
             return
-        if self.__cache.get_raid_expiration(raid.gym_id) is not None:
+        if self.__cache.raid_expiration(raid.gym_id) is not None:
             return
-        self.__cache.update_raid_expiration(raid.gym_id, raid.raid_end)
+        self.__cache.raid_expiration(raid.gym_id, raid.raid_end)
         rules = self.__raid_rules
         if len(rules) == 0:
             rules = {

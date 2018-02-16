@@ -52,7 +52,7 @@ class RaidEvent(BaseEvent):
             int, data.get('sponsor'), Unknown.SMALL)
         self.gym_park = check_for_none(str, data.get('park'), Unknown.REGULAR)
         self.current_team_id = check_for_none(
-            int, data.get('team'), Unknown.TINY)
+            int, data.get('team_id', data.get('team')), Unknown.TINY)
         self.name = self.gym_id
         self.geofence = Unknown.REGULAR
         self.custom_dts = {}

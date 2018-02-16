@@ -7,33 +7,30 @@ log = logging.getLogger('Cache')
 class Cache(object):
 
     def __init__(self):
-        self._pokemon_hist = {}
+        self._mon_hist = {}
         self._egg_hist = {}
         self._raid_hist = {}
 
-    def get_pokemon_expiration(self, pkmn_id):
-        return self._pokemon_hist.get(pkmn_id)
+    def monster_expiration(self, mon_id, expiration=None):
+        if expiration is not None:
+            self._mon_hist[mon_id] = expiration
+        return self._mon_hist.get(mon_id)
 
-    def update_pokemon_expiration(self, pkmn_id, expiration):
-        self._pokemon_hist[pkmn_id] = expiration
+    def egg_expiration(self, egg_id, expiration=None):
+        if expiration is not None:
+            self._egg_hist[egg_id] = expiration
+        return self._egg_hist.get(egg_id)
 
-    def get_egg_expiration(self, gym_id):
-        return self._egg_hist.get(gym_id)
-
-    def update_egg_expiration(self, gym_id, expiration):
-        self._egg_hist[gym_id] = expiration
-
-    def get_raid_expiration(self, gym_id):
-        return self._raid_hist.get(gym_id)
-
-    def update_raid_expiration(self, gym_id, expiration):
-        self._raid_hist[gym_id] = expiration
+    def raid_expiration(self, raid_id, expiration=None):
+        if expiration is not None:
+            self._raid_hist[raid_id] = expiration
+        return self._raid_hist.get(raid_id)
 
     def clean_and_save(self):
         self._clean_hist()
 
     def _clean_hist(self):
-        for hist in (self._pokemon_hist, self._egg_hist, self._raid_hist):
+        for hist in (self._mon_hist, self._egg_hist, self._raid_hist):
             old = []
             now = datetime.utcnow()
             for key, expiration in hist.items():
