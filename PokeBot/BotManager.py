@@ -203,8 +203,8 @@ class BotManager(discord.Client):
 
     def set_optional_args(self, line):
         args = {
-            'street', 'street_num', 'address', 'postal', 'neighborhood',
-            'sublocality', 'city', 'county', 'state', 'country'
+            'street', 'street_num', 'address', 'address_eu', 'postal',
+            'neighborhood', 'sublocality', 'city', 'county', 'state', 'country'
         }
         if contains_arg(line, args):
             if self.__loc_service is None:
