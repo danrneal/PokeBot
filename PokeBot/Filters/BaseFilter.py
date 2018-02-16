@@ -46,6 +46,21 @@ class BaseFilter(object):
             ).format(value, kind, param_name))
 
     @staticmethod
+    def parse_as_list(value_type, param_name, data):
+        values = data.pop(param_name, None)
+        if values is None or len(values) == 0:
+            return None
+        if not isinstance(values, list):
+            raise ValueError(
+                'The "{0}" parameter must formatted as a list containing '
+                'different values. Example: "{0}": '
+                '[ "value1", "value2", "value3" ] '.format(param_name))
+        allowed = []
+        for value in values:
+            allowed.append(value_type(value))
+        return allowed
+
+    @staticmethod
     def parse_as_set(value_type, param_name, data):
         values = data.pop(param_name, None)
         if values is None or len(values) == 0:

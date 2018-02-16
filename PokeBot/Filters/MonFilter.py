@@ -56,7 +56,7 @@ class MonFilter(BaseFilter):
             event_attribute='size_id',
             eval_func=operator.contains,
             limit=BaseFilter.parse_as_set(get_size_id, 'sizes', data))
-        self.geofences = BaseFilter.parse_as_set(str, 'geofences', data)
+        self.geofences = BaseFilter.parse_as_list(str, 'geofences', data)
         self.custom_dts = BaseFilter.parse_as_dict(
             str, str, 'custom_dts', data)
         self.is_missing_info = BaseFilter.parse_as_type(
