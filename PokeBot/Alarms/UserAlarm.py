@@ -137,7 +137,7 @@ class UserAlarm(Alarm):
                     "more bots."
                 ).format((datetime.utcnow() - message[1]).total_seconds()))
             destination = message[3]['destination']
-            if (destination.guild is not None and
+            if (isinstance(destination, discord.Member) and
                     destination.id in user_timestamps):
                 paused = False
                 while len(user_timestamps[destination.id]) > max_dms:
@@ -174,14 +174,16 @@ class UserAlarm(Alarm):
                         break
                 if paused:
                     continue
-            elif destination.guild is not None:
+            elif isinstance(destination, discord.Member):
                 user_timestamps[destination.id] = []
             try:
                 await destination.send(
                     message[3].get('content'),
                     embed=message[3].get('embeds')
                 )
-                user_timestamps[destination.id].append(datetime.utcnow())
+                if (destination.id in user_timestamps and
+                        message[3].get('embeds') is not None):
+                    user_timestamps[destination.id].append(datetime.utcnow())
                 timestamps.append(datetime.utcnow())
             except Exception as e:
                 log.error((
