@@ -105,7 +105,11 @@ async def dex(client, message):
                 "field field--name-title " +
                 "field--type-string field--label-hidden"
             )))
-            legacy_quick.append(quick_move.find(class_=("move-info")))
+            if (quick_move.find(class_=("move-info")) is not None and
+                    quick_move.find(class_=("move-info")).get_text() == '*'):
+                legacy_quick.append('*')
+            else:
+                legacy_quick.append('')
         charge = []
         legacy_charge = []
         for charge_move in soup.find_all(class_=(
@@ -114,28 +118,11 @@ async def dex(client, message):
                 "field field--name-title " +
                 "field--type-string field--label-hidden"
             )))
-            legacy_charge.append(charge_move.find(class_=("move-info")))
-        legacy_moves = []
-        for (legacy_quick, legacy_charge) in zip(legacy_quick, legacy_charge):
-            try:
-                if legacy_quick.get_text() == '* ':
-                    legacy_moves.append(' (Legacy)')
-                else:
-                    try:
-                        if legacy_charge.get_text() == '* ':
-                            legacy_moves.append(' (Legacy)')
-                        else:
-                            legacy_moves.append('')
-                    except AttributeError:
-                        legacy_moves.append('')
-            except AttributeError:
-                try:
-                    if legacy_charge.get_text() == '* ':
-                        legacy_moves.append(' (Legacy)')
-                    else:
-                        legacy_moves.append('')
-                except AttributeError:
-                    legacy_moves.append('')
+            if (charge_move.find(class_=("move-info")) is not None and
+                    charge_move.find(class_=("move-info")).get_text() == '*'):
+                legacy_charge.append('*')
+            else:
+                legacy_charge.append('')
         offensive_grade = soup.find_all(class_=(
             "views-field views-field-field-offensive-moveset-grade"))
         for index, grade in enumerate(offensive_grade):
@@ -145,18 +132,23 @@ async def dex(client, message):
         for index, grade in enumerate(defensive_grade):
             defensive_grade[index] = str(grade.get_text().strip())
         offensive_moves = sorted(
-            zip(offensive_grade[1:], quick[1:], charge[1:], legacy_moves[1:]),
+            zip(
+                offensive_grade[1:], quick[1:], legacy_quick[1:], charge[1:],
+                legacy_charge[1:]
+            ),
             key=lambda x: x[0]
         )
         defensive_moves = sorted(
-            zip(defensive_grade[1:], quick[1:], charge[1:], legacy_moves[1:]),
+            zip(
+                defensive_grade[1:], quick[1:], legacy_quick[1:], charge[1:],
+                legacy_charge[1:]),
             key=lambda x: x[0]
         )
         title = "%03d" % dex_number + ' | ' + pokemon.upper()
         try:
-            descript = "Rating: " + rating[0].get_text().strip() + ' / 10'
+            descript = "Rating: " + rating[0].get_text().strip() + ' / 5'
         except IndexError:
-            descript = "Rating: - / 10"
+            descript = "Rating: - / 5"
         if len(types[0].get_text().split()) == 1:
             descript += "\nType: " + types[0].get_text().split()[0]
         else:
@@ -182,16 +174,16 @@ async def dex(client, message):
             pass
         if len(offensive_moves) > 0:
             descript += "\nAttacking Movesets:\n```"
-            for (grade, quick, charge, legacy) in offensive_moves:
+            for (grade, quick, q_legacy, charge, c_legacy) in offensive_moves:
                 descript += (
                     '\n[' + grade.strip() + '] ' + quick.get_text() +
-                    ' / ' + charge.get_text() + legacy
+                    q_legacy + ' / ' + charge.get_text() + c_legacy
                 )
             descript += " \n```\nDefensive Movesets:\n```"
-            for (grade, quick, charge, legacy) in defensive_moves:
+            for (grade, quick, q_legacy, charge, c_legacy) in defensive_moves:
                 descript += (
                     '\n[' + grade.strip() + '] ' + quick.get_text() +
-                    ' / ' + charge.get_text() + legacy
+                    q_legacy + ' / ' + charge.get_text() + c_legacy
                 )
             descript += "\n```"
         else:
@@ -222,7 +214,7 @@ async def dex(client, message):
                 descript += '\n' + quick_move.get_text()
             if soup.find(class_=("pokemon-legacy-quick-moves")) is not None:
                 for legacy_move in quick_legacy:
-                    descript += '\n' + legacy_move.get_text() + ' (Legacy)'
+                    descript += '\n' + legacy_move.get_text() + ' *'
             descript += "\n```"
             descript += "\nCharge Moves:\n```"
             for charge_move in charge_moves:
@@ -230,8 +222,10 @@ async def dex(client, message):
             if soup.find(class_=(
                     "secondary-move-legacy secondary-move")) is not None:
                 for legacy_move in charge_legacy:
-                    descript += '\n' + legacy_move.get_text() + ' (Legacy)'
+                    descript += '\n' + legacy_move.get_text() + ' *'
             descript += "\n```"
+        if '*' in descript:
+            descript += '\n* Legacy Moveset'
         type_ = types[0].get_text().split()[0].lower()
         if type_ == 'bug':
             col = 0xA8B820
@@ -271,6 +265,13 @@ async def dex(client, message):
             col = 0x6890F0
         else:
             col = 0x4F545C
+        mobile = False
+        if descript.count('\n') > 26:
+            d_split = descript.split('\nDefensive Movesets:')
+            descript = d_split[0]
+            if '*' in descript:
+                descript += '\n* Legacy Moveset'
+            mobile = True
         embeds = discord.Embed(
             title=title,
             url=site,
@@ -284,6 +285,15 @@ async def dex(client, message):
             'destination': message.channel,
             'embeds': embeds
         })
+        if mobile:
+            embeds = discord.Embed(
+                description='Defensive Movesets:' + d_split[1],
+                color=col
+            )
+            await client.get_alarm().update(1, {
+                'destination': message.channel,
+                'embeds': embeds
+            })
         log.info('Sent dex info for {}'.format(message.author.display_name))
     except ValueError:
         embeds = discord.Embed(
