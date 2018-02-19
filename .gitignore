@@ -9,7 +9,7 @@ _build
 !data/*.json
 !locales/*.json
 *.pyc
-cache/*.cache
+cache/*
 user_filters/*
 .DS_Store
 __pycache__
