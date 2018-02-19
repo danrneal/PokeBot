@@ -47,9 +47,9 @@ class FileCache(Cache):
             with portalocker.Lock(self._file + ".lock", timeout=5, mode="wb+"):
                 with portalocker.Lock(temp, timeout=5, mode="wb+") as f:
                     pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
-                    if os.path.exists(self._file):
-                        os.remove(self._file)
-                    os.rename(temp, self._file)
+                if os.path.exists(self._file):
+                    os.remove(self._file)
+                os.rename(temp, self._file)
         except Exception as e:
             log.error((
                 "Encountered error while saving cache: {}: {}"

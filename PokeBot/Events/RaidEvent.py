@@ -3,7 +3,8 @@ from .BaseEvent import BaseEvent
 from .. import Unknown
 from ..Utilities.MonUtils import (
     get_pokemon_cp_range, is_weather_boosted, get_base_types, get_type_emoji,
-    get_move_damage, get_move_dps, get_move_duration, get_move_energy
+    get_move_type, get_move_damage, get_move_dps, get_move_duration,
+    get_move_energy
 )
 from ..Utilities.GenUtils import (
     get_gmaps_link, get_applemaps_link, get_time_as_str, get_seconds_remaining,
@@ -36,14 +37,16 @@ class RaidEvent(BaseEvent):
             self.boosted_weather_id = self.weather_id
             self.boss_level = 25
         self.quick_id = check_for_none(int, data.get('move_1'), Unknown.TINY)
+        self.quick_type = get_move_type(self.quick_id)
         self.quick_damage = get_move_damage(self.quick_id)
         self.quick_dps = get_move_dps(self.quick_id)
         self.quick_duration = get_move_duration(self.quick_id)
         self.quick_energy = get_move_energy(self.quick_id)
         self.charge_id = check_for_none(int, data.get('move_2'), Unknown.TINY)
+        self.charge_type = get_move_type(self.charge_id)
         self.charge_damage = get_move_damage(self.charge_id)
         self.charge_dps = get_move_dps(self.charge_id)
-        self.charge_duration = get_move_duration(self.quick_id)
+        self.charge_duration = get_move_duration(self.charge_id)
         self.charge_energy = get_move_energy(self.charge_id)
         self.gym_name = check_for_none(
             str, data.get('name'), Unknown.REGULAR).strip()
@@ -110,12 +113,18 @@ class RaidEvent(BaseEvent):
             'mon_id_3': "{:03}".format(self.mon_id),
             'quick_move': locale.get_move_name(self.quick_id),
             'quick_id': self.quick_id,
+            'quick_type_id': self.quick_type,
+            'quick_type': locale.get_type_name(self.quick_type),
+            'quick_type_emoji': get_type_emoji(self.quick_type),
             'quick_damage': self.quick_damage,
             'quick_dps': self.quick_dps,
             'quick_duration': self.quick_duration,
             'quick_energy': self.quick_energy,
             'charge_move': locale.get_move_name(self.charge_id),
             'charge_id': self.charge_id,
+            'charge_type_id': self.charge_type,
+            'charge_type': locale.get_type_name(self.charge_type),
+            'charge_type_emoji': get_type_emoji(self.charge_type),
             'charge_damage': self.charge_damage,
             'charge_dps': self.charge_dps,
             'charge_duration': self.charge_duration,

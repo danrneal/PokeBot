@@ -2,6 +2,7 @@ import logging
 import json
 from glob import glob
 from .GenUtils import get_path
+from .. import Unknown
 
 log = logging.getLogger('GenUtils')
 
@@ -44,6 +45,17 @@ def get_gender_sym(gender):
         raise ValueError((
             "Unable to interpret `{}` as a supported  gender name or id."
         ).format(gender))
+
+
+def get_move_type(move_id):
+    if not hasattr(get_move_type, 'info'):
+        get_move_type.info = {}
+        file_ = get_path('data/move_info.json')
+        with open(file_, 'r') as f:
+            j = json.loads(f.read())
+        for id_ in j:
+            get_move_type.info[int(id_)] = j[id_]['type']
+    return get_move_type.info.get(move_id, Unknown.SMALL)
 
 
 def get_move_damage(move_id):
