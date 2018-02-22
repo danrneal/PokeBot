@@ -569,6 +569,7 @@ class BotManager(discord.Client):
                 self.load_filter_file(get_path(self.__filter_file))
 
     async def on_message(self, message):
+        message.content = message.content.replace('’', "'")
         if (message.channel.id in self.__command_channels and
             message.author.top_role >= self.__roles[message.author.guild.id][
                 self.__alert_role]):
