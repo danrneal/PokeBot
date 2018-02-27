@@ -56,8 +56,8 @@ class RaidFilter(BaseFilter):
             settings['min_lvl'] = self.min_lvl
         if self.max_lvl is not None:
             settings['max_lvl'] = self.max_lvl
-        if self.gym_is_sponsor is not None:
-            settings['gym_is_sponsor'] = self.gym_is_sponsor
+        if self.is_sponsor is not None:
+            settings['is_sponsor'] = self.is_sponsor
         if self.park_contains is not None:
             settings['park_contains'] = self.park_contains
         if self.geofences is not None:
