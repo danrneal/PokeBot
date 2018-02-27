@@ -1,5 +1,6 @@
 import logging
 import json
+import re
 from glob import glob
 from .GenUtils import get_path
 
@@ -29,6 +30,10 @@ def get_team_id(team_name):
         raise ValueError((
             "Unable to interpret `{}` as a valid  team name or id."
         ).format(team_name))
+
+
+def create_regex(pattern):
+    return re.compile(str(pattern), re.I)
 
 
 def match_regex_dict(reg_exs, name):

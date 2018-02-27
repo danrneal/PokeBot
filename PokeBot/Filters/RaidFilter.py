@@ -2,7 +2,7 @@ import operator
 import re
 from .BaseFilter import BaseFilter
 from ..Utilities.MonUtils import get_monster_id
-from ..Utilities.GymUtils import get_team_id, match_regex_dict
+from ..Utilities.GymUtils import get_team_id, create_regex, match_regex_dict
 
 
 class RaidFilter(BaseFilter):
@@ -24,16 +24,18 @@ class RaidFilter(BaseFilter):
             eval_func=operator.ge,
             limit=BaseFilter.parse_as_type(int, 'max_raid_lvl', data)
         )
-        self.gym_sponsor_index_contains = self.evaluate_attribute(
-            event_attribute='gym_sponsor',
+
+
+        self.is_sponsor = self.evaluate_attribute(
+            event_attribute='is_sponsor',
+            eval_func=operator.eq,
+            limit=BaseFilter.parse_as_type(bool, 'is_sponsor', data)
+        )
+        self.park_contains = self.evaluate_attribute(
+            event_attribute='park',
             eval_func=match_regex_dict,
-            limit=BaseFilter.parse_as_set(
-                re.compile, 'gym_sponsor_index_contains', data))
-        self.gym_park_contains = self.evaluate_attribute(
-            event_attribute='gym_park',
-            eval_func=match_regex_dict,
-            limit=BaseFilter.parse_as_set(
-                re.compile, 'gym_park_contains', data))
+            limit=BaseFilter.parse_as_set(create_regex, 'park_contains', data)
+        )
         self.old_team = self.evaluate_attribute(
             event_attribute='current_team_id',
             eval_func=operator.contains,
@@ -57,12 +59,12 @@ class RaidFilter(BaseFilter):
             settings['min_lvl'] = self.min_lvl
         if self.max_lvl is not None:
             settings['max_lvl'] = self.max_lvl
-        if self.gym_sponsor_index_contains is not None:
-            settings['gym_sponsor_matches'] = self.gym_sponsor_index_contains
-        if self.gym_park_contains is not None:
-            settings['gym_park_matches'] = self.gym_park_contains
+        if self.gym_is_sponsor is not None:
+            settings['gym_is_sponsor'] = self.gym_is_sponsor
+        if self.park_contains is not None:
+            settings['park_contains'] = self.park_contains
         if self.geofences is not None:
             settings['geofences'] = self.geofences
         if self.is_missing_info is not None:
-            settings['missing_info'] = self.is_missing_info
+            settings['is_missing_info'] = self.is_missing_info
         return settings
