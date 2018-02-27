@@ -1,5 +1,4 @@
 import operator
-import re
 from .BaseFilter import BaseFilter
 from ..Utilities.GymUtils import get_team_id, create_regex, match_regex_dict
 
@@ -27,7 +26,7 @@ class EggFilter(BaseFilter):
             event_attribute='park',
             eval_func=match_regex_dict,
             limit=BaseFilter.parse_as_set(create_regex, 'park_contains', data)
-        )        
+        )
         self.old_team = self.evaluate_attribute(
             event_attribute='current_team_id',
             eval_func=operator.contains,

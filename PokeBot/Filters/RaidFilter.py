@@ -1,5 +1,4 @@
 import operator
-import re
 from .BaseFilter import BaseFilter
 from ..Utilities.MonUtils import get_monster_id
 from ..Utilities.GymUtils import get_team_id, create_regex, match_regex_dict
@@ -24,8 +23,6 @@ class RaidFilter(BaseFilter):
             eval_func=operator.ge,
             limit=BaseFilter.parse_as_type(int, 'max_raid_lvl', data)
         )
-
-
         self.is_sponsor = self.evaluate_attribute(
             event_attribute='is_sponsor',
             eval_func=operator.eq,
