@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from collections import OrderedDict, namedtuple
 from .Geofence import load_geofence_file
 from .Alarms import alarm_factory
-from .LocationServices import location_service_factory
+from .LocationServices.GMaps import GMaps
 from .Locale import Locale
 from .Cache import cache_factory
 from .Events import MonEvent, EggEvent, RaidEvent
@@ -35,17 +35,12 @@ class BotManager(discord.Client):
         self.__bot_number = bot_number
         log.info("----------- Bot Manager '{}' is being created.".format(
             self.__name))
-        self.__google_key = None
-        self.__loc_service = None
+        self._google_key = None
+        self._gmaps_service = None
         if len(google_key) > 0:
-            self.__google_key = google_key
-            self.__loc_service = location_service_factory(
-                "GoogleMaps", google_key, locale)
-        else:
-            log.warning(
-                "NO GOOGLE API KEY SET - Reverse Location will NOT be "
-                "detected."
-            )
+            self._google_key = google_key
+            self._gmaps_service = GMaps(google_key)
+        self._language = locale
         self.__locale = Locale(locale)
         self.__cache = cache_factory(cache_type, self.__name)
         self.__mons_enabled, self.__mon_filters = {}, OrderedDict()
@@ -56,7 +51,7 @@ class BotManager(discord.Client):
         self.geofences = None
         if str(geofence_file).lower() != 'none':
             self.geofences = load_geofence_file(get_path(geofence_file))
-        self.__alarms = []
+        self.__alarms = {}
         self.load_alarms_file(get_path(alarm_file))
         self.__command_channels = command_channels
         self.__alert_role = alert_role
@@ -78,6 +73,17 @@ class BotManager(discord.Client):
 
     def get_alarm(self):
         return self.__alarms['user_alarm']
+
+    def enable_gmaps_reverse_geocoding(self):
+        if not self._gmaps_service:
+            raise ValueError(
+                "Unable to enable Google Maps Reverse Geocoding.  No GMaps " +
+                "API key has been set."
+            )
+        self._gmaps_reverse_geocode = True
+
+    def disable_gmaps_reverse_geocoding(self):
+        self._gmaps_reverse_geocode = False
 
     @staticmethod
     def load_filter_section(section, sect_name, filter_type):
@@ -172,9 +178,8 @@ class BotManager(discord.Client):
                 )
                 sys.exit(1)
             self.__alarms = {}
-            self.set_optional_args(str(alarm_settings))
             self.__alarms['user_alarm'] = alarm_factory(
-                alarm_settings, 1, self.__google_key, 'user', self)
+                alarm_settings, 1, self._google_key, 'user', self)
             log.info("{} active alarms found.".format(len(self.__alarms)))
             return
         except ValueError as e:
@@ -200,24 +205,6 @@ class BotManager(discord.Client):
                 "Encountered error while loading Alarms: {}: {}"
             ).format(type(e).__name__, e))
         sys.exit(1)
-
-    def set_optional_args(self, line):
-        args = {
-            'street', 'street_num', 'address', 'address_eu', 'postal',
-            'neighborhood', 'sublocality', 'city', 'county', 'state', 'country'
-        }
-        if contains_arg(line, args):
-            if self.__loc_service is None:
-                log.critical(
-                    "Reverse location DTS were detected but no API key was " +
-                    "provided!"
-                )
-                log.critical(
-                    "Please either remove the DTS, add an API key, or " +
-                    "disable the alarm and try again."
-                )
-                sys.exit(1)
-            self.__loc_service.enable_reverse_location()
 
     async def run(self):
         last_clean = datetime.utcnow()
@@ -282,8 +269,9 @@ class BotManager(discord.Client):
 
     async def _trigger_mon(self, mon, alarms, dest):
         dts = mon.generate_dts(self.__locale)
-        if self.__loc_service:
-            self.__loc_service.add_optional_arguments([mon.lat, mon.lng], dts)
+        if self._gmaps_reverse_geocode:
+            dts.update(self._gmaps_service.reverse_geocode(
+                (mon.lat, mon.lng), self._language))
         for name in alarms:
             alarm = self.__alarms.get(name)
             if alarm:
@@ -325,8 +313,9 @@ class BotManager(discord.Client):
 
     async def _trigger_egg(self, egg, alarms, dest):
         dts = egg.generate_dts(self.__locale)
-        if self.__loc_service:
-            self.__loc_service.add_optional_arguments([egg.lat, egg.lng], dts)
+        if self._gmaps_reverse_geocode:
+            dts.update(self._gmaps_service.reverse_geocode(
+                (egg.lat, egg.lng), self._language))
         for name in alarms:
             alarm = self.__alarms.get(name)
             if alarm:
@@ -369,9 +358,9 @@ class BotManager(discord.Client):
 
     async def _trigger_raid(self, raid, alarms, dest):
         dts = raid.generate_dts(self.__locale)
-        if self.__loc_service:
-            self.__loc_service.add_optional_arguments(
-                [raid.lat, raid.lng], dts)
+        if self._gmaps_reverse_geocode:
+            dts.update(self._gmaps_service.reverse_geocode(
+                (raid.lat, raid.lng), self._language))
         for name in alarms:
             alarm = self.__alarms.get(name)
             if alarm:

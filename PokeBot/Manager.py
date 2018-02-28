@@ -4,7 +4,7 @@ import sys
 import asyncio
 from collections import OrderedDict, namedtuple
 from datetime import datetime, timedelta
-from .LocationServices import location_service_factory
+from .LocationServices.GMaps import GMaps
 from .Locale import Locale
 from .Geofence import load_geofence_file
 from .Cache import cache_factory
@@ -27,17 +27,12 @@ class Manager(object):
         self.__name = str(name).lower()
         log.info("----------- Manager '{}' is being created.".format(
             self.__name))
-        self.__google_key = None
-        self.__loc_service = None
+        self._google_key = None
+        self._gmaps_service = None
         if len(google_key) > 0:
-            self.__google_key = google_key
-            self.__loc_service = location_service_factory(
-                "GoogleMaps", google_key, locale)
-        else:
-            log.warning(
-                "NO GOOGLE API KEY SET - Reverse Location will NOT be "
-                "detected."
-            )
+            self._google_key = google_key
+            self._gmaps_service = GMaps(google_key)
+        self._language = locale
         self.__locale = Locale(locale)
         self.__cache = cache_factory(cache_type, self.__name)
         self.__mons_enabled, self.__mon_filters = False, OrderedDict()
@@ -47,7 +42,7 @@ class Manager(object):
         self.geofences = None
         if str(geofence_file).lower() != 'none':
             self.geofences = load_geofence_file(get_path(geofence_file))
-        self.__alarms = []
+        self.__alarms = {}
         self.load_alarms_file(get_path(alarm_file), int(max_attempts))
         self.__mon_rules = {}
         self.__egg_rules = {}
@@ -61,6 +56,17 @@ class Manager(object):
 
     def get_name(self):
         return self.__name
+
+    def enable_gmaps_reverse_geocoding(self):
+        if not self._gmaps_service:
+            raise ValueError(
+                "Unable to enable Google Maps Reverse Geocoding.  No GMaps " +
+                "API key has been set."
+            )
+        self._gmaps_reverse_geocode = True
+
+    def disable_gmaps_reverse_geocoding(self):
+        self._gmaps_reverse_geocode = False
 
     def add_monster_rule(self, name, filters, alarms):
         if name in self.__mon_rules:
@@ -204,9 +210,8 @@ class Manager(object):
                 sys.exit(1)
             self.__alarms = {}
             for name, alarm in alarm_settings.items():
-                self.set_optional_args(str(alarm))
                 self.__alarms[name] = alarm_factory(
-                    alarm, max_attempts, self.__google_key, 'discord')
+                    alarm, max_attempts, self._google_key, 'discord')
             log.info("{} active alarms found.".format(len(self.__alarms)))
             return
         except ValueError as e:
@@ -232,24 +237,6 @@ class Manager(object):
                 "Encountered error while loading Alarms: {}: {}"
             ).format(type(e).__name__, e))
         sys.exit(1)
-
-    def set_optional_args(self, line):
-        args = {
-            'street', 'street_num', 'address', 'address_eu', 'postal',
-            'neighborhood', 'sublocality', 'city', 'county', 'state', 'country'
-        }
-        if contains_arg(line, args):
-            if self.__loc_service is None:
-                log.critical(
-                    "Reverse location DTS were detected but no API key was " +
-                    "provided!"
-                )
-                log.critical(
-                    "Please either remove the DTS, add an API key, or " +
-                    "disable the alarm and try again."
-                )
-                sys.exit(1)
-            self.__loc_service.enable_reverse_location()
 
     async def run(self):
         last_clean = datetime.utcnow()
@@ -306,8 +293,9 @@ class Manager(object):
 
     def _trigger_mon(self, mon, alarms):
         dts = mon.generate_dts(self.__locale)
-        if self.__loc_service:
-            self.__loc_service.add_optional_arguments([mon.lat, mon.lng], dts)
+        if self._gmaps_reverse_geocode:
+            dts.update(self._gmaps_service.reverse_geocode(
+                (mon.lat, mon.lng), self._language))
         for name in alarms:
             alarm = self.__alarms.get(name)
             if alarm:
@@ -342,8 +330,9 @@ class Manager(object):
 
     def _trigger_egg(self, egg, alarms):
         dts = egg.generate_dts(self.__locale)
-        if self.__loc_service:
-            self.__loc_service.add_optional_arguments([egg.lat, egg.lng], dts)
+        if self._gmaps_reverse_geocode:
+            dts.update(self._gmaps_service.reverse_geocode(
+                (egg.lat, egg.lng), self._language))
         for name in alarms:
             alarm = self.__alarms.get(name)
             if alarm:
@@ -378,9 +367,9 @@ class Manager(object):
 
     def _trigger_raid(self, raid, alarms):
         dts = raid.generate_dts(self.__locale)
-        if self.__loc_service:
-            self.__loc_service.add_optional_arguments(
-                [raid.lat, raid.lng], dts)
+        if self._gmaps_reverse_geocode:
+            dts.update(self._gmaps_service.reverse_geocode(
+                (raid.lat, raid.lng), self._language))
         for name in alarms:
             alarm = self.__alarms.get(name)
             if alarm:

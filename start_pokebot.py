@@ -15,7 +15,7 @@ from PokeBot.Manager import Manager
 from PokeBot.BotManager import BotManager
 from PokeBot.Load import parse_rules_file
 from PokeBot.Events import event_factory
-from PokeBot.Utilities.GenUtils import get_path, LoggerWriter
+from PokeBot.Utilities.GenUtils import get_path, LoggerWriter, parse_bool
 
 filehandler = logging.handlers.TimedRotatingFileHandler(
     'pokebot.log',
@@ -136,11 +136,18 @@ def parse_settings(root_path, loop, Entry):
         help='Names of Manager processes to start.'
     )
     parser.add_argument(
-        '-k', '--key',
+        '-k', '--gmaps-key',
         type=str,
         action='append',
         default=[None],
         help='Specify a Google API Key to use.'
+    )
+    parser.add_argument(
+        '--gmaps-rev-geocode',
+        type=parse_bool,
+        action='append',
+        default=[None],
+        help='Enable Reverse Geocoded DTS.'
     )
     parser.add_argument(
         '-f', '--filters',
@@ -225,6 +232,12 @@ def parse_settings(root_path, loop, Entry):
         help='User geofences configuration file. default: None'
     )
     parser.add_argument(
+        '--dm-gmaps-rev-geocode',
+        type=parse_bool,
+        default=None,
+        help='Enable Reverse Geocoded DTS for DMs.'
+    )
+    parser.add_argument(
         '-cc', '--command_channels',
         type=int,
         action='append',
@@ -273,7 +286,8 @@ def parse_settings(root_path, loop, Entry):
     config['HOST'] = args.host
     config['PORT'] = args.port
     for arg in [
-        args.filters, args.alarms, args.rules, args.rules, args.geofences
+        args.filters, args.alarms, args.rules, args.rules, args.geofences,
+        args.gmaps_rev_geocode
     ]:
         if len(arg) > 1:
             arg.pop(0)
@@ -285,15 +299,15 @@ def parse_settings(root_path, loop, Entry):
                 "of arguments.")
             log.critical(arg)
             sys.exit(1)
-    if len(args.key) > 1:
-        args.key.pop(0)
+    if len(args.gmaps_key) > 1:
+        args.gmaps_key.pop(0)
     while len(args.manager_name) < args.manager_count:
         m_ct = len(args.manager_name)
         args.manager_name.append("Manager_{}".format(m_ct))
     for m_ct in range(args.manager_count):
         m = Manager(
             name=args.manager_name[m_ct],
-            google_key=args.key,
+            google_key=args.gmaps_key,
             locale=args.locale,
             max_attempts=args.max_attempts,
             cache_type=args.cache_type,
@@ -303,6 +317,9 @@ def parse_settings(root_path, loop, Entry):
             alarm_file=get_from_list(args.alarms, m_ct, args.alarms[0])
         )
         parse_rules_file(m, get_from_list(args.rules, m_ct, args.rules[0]))
+        if get_from_list(
+                args.gmaps_rev_geocode, m_ct, args.gmaps_rev_geocode[0]):
+            m.enable_gmaps_reverse_geocoding()
         if m.get_name() not in managers:
             managers[m.get_name()] = m
         else:
@@ -320,7 +337,7 @@ def parse_settings(root_path, loop, Entry):
         bm = BotManager(
             name="Bot_{}".format(bm_ct),
             bot_number=bm_ct,
-            google_key=args.key,
+            google_key=args.gmaps_key,
             locale=args.locale,
             cache_type=args.cache_type,
             filter_file=args.user_filters,
@@ -332,6 +349,8 @@ def parse_settings(root_path, loop, Entry):
             all_areas=args.all_areas,
             number_of_bots=len(args.bot_tokens)
         )
+        if args.dm_gmaps_rev_geocode:
+            bm.enable_gmaps_reverse_geocoding()
         bot_managers[bm.get_name()] = bm
     log.info("Starting up the Bots")
     for bm_name in bot_managers:
