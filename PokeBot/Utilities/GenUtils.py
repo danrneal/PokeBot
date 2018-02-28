@@ -3,7 +3,6 @@ import os
 import sys
 import pytz
 import json
-from random import randint
 from datetime import datetime, timedelta
 from collections import OrderedDict
 from timezonefinder import TimezoneFinder
