@@ -3,7 +3,6 @@ asyncio
 bs4
 configargparse
 git+https://github.com/Rapptz/discord.py@rewrite
-googlemaps
 pytz
 portalocker
 requests

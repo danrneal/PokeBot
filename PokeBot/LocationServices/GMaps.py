@@ -1,8 +1,8 @@
 import collections
-import datetime
 import logging
 import time
 import requests
+from datetime import datetime, timedelta
 from random import randint
 from requests.packages.urllib3.util.retry import Retry
 from .. import Unknown
@@ -13,13 +13,13 @@ log = logging.getLogger('Gmaps')
 class GMaps(object):
 
     _queries_per_second = 50
-    _query_warning_window = datetime.timedelta(minutes=5)
+    _warning_window = timedelta(minutes=1)
 
     def __init__(self, api_key):
         self._key = api_key
         self._session = self._create_session()
         self._window = collections.deque(maxlen=self._queries_per_second)
-        self._time_limit = time.time()
+        self._time_limit = datetime.utcnow()
         self._reverse_geocode_hist = {}
 
     @staticmethod
@@ -44,7 +44,7 @@ class GMaps(object):
             elapsed_time = time.time() - self._window[0]
             if elapsed_time > 1:
                 time.sleep(1 - elapsed_time)
-        url = u'https://maps.googleapis.com/maps/api/{}/json'.format(service)
+        url = 'https://maps.googleapis.com/maps/api/{}/json'.format(service)
         if params is None:
             params = {}
         params['key'] = self._key[randint(0, len(self._key) - 1)]
@@ -56,10 +56,9 @@ class GMaps(object):
         if body['status'] == "OK" or body['status'] == "ZERO_RESULTS":
             return body
         elif body['status'] == "OVER_QUERY_LIMIT":
-            self._time_limit = time.time() + datetime.timedelta(minutes=10)
-            raise UserWarning(u'API Limit reached.')
+            raise UserWarning('API Quota exceeded.')
         else:
-            raise ValueError(u'Unexpected response status:\n {}'.format(body))
+            raise ValueError('Unexpected response status:\n {}'.format(body))
 
     _reverse_geocode_defaults = {
         'street_num': Unknown.SMALL,
@@ -76,7 +75,7 @@ class GMaps(object):
     }
 
     def reverse_geocode(self, latlng, language='en'):
-        latlng = u'{:.5f},{:.5f}'.format(latlng[0], latlng[1])
+        latlng = '{:.5f},{:.5f}'.format(latlng[0], latlng[1])
         if latlng in self._reverse_geocode_hist:
             return self._reverse_geocode_hist[latlng]
         dts = self._reverse_geocode_defaults.copy()

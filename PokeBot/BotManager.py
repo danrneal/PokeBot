@@ -14,7 +14,7 @@ from .Events import MonEvent, EggEvent, RaidEvent
 from .Filters.MonFilter import MonFilter
 from .Filters.EggFilter import EggFilter
 from .Filters.RaidFilter import RaidFilter
-from .Utilities.GenUtils import get_path, contains_arg, update_filters
+from .Utilities.GenUtils import get_path, update_filters
 from .commands import (
     status, commands, dex, set_, delete, reset, pause, resume, activate,
     deactivate, alerts, areas
@@ -81,9 +81,6 @@ class BotManager(discord.Client):
                 "API key has been set."
             )
         self._gmaps_reverse_geocode = True
-
-    def disable_gmaps_reverse_geocoding(self):
-        self._gmaps_reverse_geocode = False
 
     @staticmethod
     def load_filter_section(section, sect_name, filter_type):

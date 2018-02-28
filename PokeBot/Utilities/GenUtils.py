@@ -14,13 +14,6 @@ log = logging.getLogger('GenUtils')
 tf = TimezoneFinder()
 
 
-def contains_arg(line, args):
-    for word in args:
-        if ('<' + word + '>') in line:
-            return True
-    return False
-
-
 def get_path(path):
     if not os.path.isabs(path):
         path = os.path.join(config['ROOT_PATH'], path)

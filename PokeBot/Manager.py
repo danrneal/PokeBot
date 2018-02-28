@@ -13,7 +13,7 @@ from .Events import MonEvent, EggEvent, RaidEvent
 from .Filters.MonFilter import MonFilter
 from .Filters.EggFilter import EggFilter
 from .Filters.RaidFilter import RaidFilter
-from .Utilities.GenUtils import get_path, contains_arg
+from .Utilities.GenUtils import get_path
 
 log = logging.getLogger('Manager')
 
@@ -64,9 +64,6 @@ class Manager(object):
                 "API key has been set."
             )
         self._gmaps_reverse_geocode = True
-
-    def disable_gmaps_reverse_geocoding(self):
-        self._gmaps_reverse_geocode = False
 
     def add_monster_rule(self, name, filters, alarms):
         if name in self.__mon_rules:
