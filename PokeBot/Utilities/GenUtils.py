@@ -81,11 +81,8 @@ def get_static_map_url(settings, api_key=None):
         query_center + '&' + query_markers + '&' +
         query_maptype + '&' + query_size + '&' + query_zoom
     )
-
     if api_key is not None:
-        gmaps_key = api_key[randint(0, len(api_key) - 1)]
-        map_ += '&key={}'.format(gmaps_key)
-
+        map_ += '&key={}'.format(api_key)
     return map_
 
 

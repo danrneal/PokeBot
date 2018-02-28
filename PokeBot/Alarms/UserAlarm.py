@@ -2,6 +2,7 @@ import logging
 import discord
 import asyncio
 import json
+import itertools
 from collections import OrderedDict
 from datetime import datetime, timedelta
 from .Alarm import Alarm
@@ -58,7 +59,7 @@ class UserAlarm(Alarm):
         self.__queue = asyncio.PriorityQueue()
         self.__snowflake = 0
         self.__map = settings.pop('map', {})
-        self.__static_map_key = static_map_key
+        self.__static_map_key = itertools.cycle(static_map_key)
         self.__monsters = self.create_alert_settings(
             settings.pop('monsters', {}), self._defaults['monsters'])
         self.__eggs = self.create_alert_settings(
@@ -83,7 +84,7 @@ class UserAlarm(Alarm):
             'body': settings.pop('body', default['body']),
             'color': default['color'],
             'map': get_static_map_url(
-                settings.pop('map', self.__map), self.__static_map_key)
+                settings.pop('map', self.__map), next(self.__static_map_key))
         }
         reject_leftover_parameters(settings, "'Alert level in Discord alarm.")
         return alert

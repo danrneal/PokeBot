@@ -2,8 +2,8 @@ import collections
 import logging
 import time
 import requests
+import itertools
 from datetime import datetime, timedelta
-from random import randint
 from requests.packages.urllib3.util.retry import Retry
 from .. import Unknown
 
@@ -16,7 +16,7 @@ class GMaps(object):
     _warning_window = timedelta(minutes=1)
 
     def __init__(self, api_key):
-        self._key = api_key
+        self._key = itertools.cycle(api_key)
         self._session = self._create_session()
         self._window = collections.deque(maxlen=self._queries_per_second)
         self._time_limit = datetime.utcnow()
@@ -43,11 +43,11 @@ class GMaps(object):
         if len(self._window) == self._queries_per_second:
             elapsed_time = time.time() - self._window[0]
             if elapsed_time > 1:
-                time.sleep(1 - elapsed_time)
+                time.sleep(elapsed_time - 1)
         url = 'https://maps.googleapis.com/maps/api/{}/json'.format(service)
         if params is None:
             params = {}
-        params['key'] = self._key[randint(0, len(self._key) - 1)]
+        params['key'] = next(self._key)
         self._window.append(time.time())
         request = self._session.get(url, params=params, timeout=3)
         if not request.ok:
