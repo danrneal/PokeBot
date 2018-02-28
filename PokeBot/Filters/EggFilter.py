@@ -18,7 +18,7 @@ class EggFilter(BaseFilter):
             limit=BaseFilter.parse_as_type(int, 'max_egg_lvl', data)
         )
         self.is_sponsor = self.evaluate_attribute(
-            event_attribute='is_sponsor',
+            event_attribute='sponsor_id',
             eval_func=operator.eq,
             limit=BaseFilter.parse_as_type(bool, 'is_sponsor', data)
         )
