@@ -1,8 +1,8 @@
 import collections
 import logging
-import time
 import requests
 import itertools
+import asyncio
 from datetime import datetime, timedelta
 from requests.packages.urllib3.util.retry import Retry
 from .. import Unknown
@@ -41,14 +41,14 @@ class GMaps(object):
 
     def _make_request(self, service, params=None):
         if len(self._window) == self._queries_per_second:
-            elapsed_time = time.time() - self._window[0]
-            if elapsed_time > 1:
-                time.sleep(elapsed_time - 1)
+            elapsed_time = datetime.utcnow() - self._window[0]
+            if elapsed_time < timedelta(seconds=1):
+                asyncio.sleep(timedelta(seconds=1) - elapsed_time)
         url = 'https://maps.googleapis.com/maps/api/{}/json'.format(service)
         if params is None:
             params = {}
         params['key'] = next(self._key)
-        self._window.append(time.time())
+        self._window.append(datetime.utcnow())
         request = self._session.get(url, params=params, timeout=3)
         if not request.ok:
             request.raise_for_status()

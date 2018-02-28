@@ -3,7 +3,7 @@ import discord
 import asyncio
 import json
 import itertools
-from collections import OrderedDict
+from collections import OrderedDict, deque
 from datetime import datetime, timedelta
 from .Alarm import Alarm
 from ..Utilities.MonUtils import get_color
@@ -120,12 +120,13 @@ class UserAlarm(Alarm):
         await self.send_alert(self.__raids, raid_info, dest)
 
     async def send_dm(self, filter_file, max_dms, dm_time_period):
-        timestamps = []
+        timestamps = deque(maxlen=120)
         user_timestamps = {}
         while True:
-            while len(timestamps) >= 120:
-                if datetime.utcnow() - timestamps[0] > timedelta(minutes=1):
-                    timestamps.pop(0)
+            if len(timestamps) == 120:
+                elapsed_time = datetime.utcnow() - timestamps[0]
+                if elapsed_time < timedelta(minutes=1):
+                    asyncio.sleep(timedelta(minutes=1) - elapsed_time)
             try:
                 message = await self.__queue.get()
             except asyncio.QueueEmpty:
@@ -141,11 +142,10 @@ class UserAlarm(Alarm):
             if (isinstance(destination, discord.Member) and
                     destination.id in user_timestamps):
                 paused = False
-                while len(user_timestamps[destination.id]) > max_dms:
-                    if datetime.utcnow() - user_timestamps[destination.id][
-                            0] > timedelta(seconds=dm_time_period):
-                        user_timestamps[destination.id].pop(0)
-                    else:
+                if len(user_timestamps[destination.id]) == max_dms:
+                    elapsed_time = datetime.utcnow() - user_timestamps[
+                        destination.id][0]
+                    if elapsed_time < timedelta(seconds=dm_time_period):
                         with open(filter_file, 'r+', encoding="utf-8") as f:
                             user_filters = json.load(
                                 f,
@@ -172,11 +172,10 @@ class UserAlarm(Alarm):
                             ).format(destination.display_name))
                             update_filters(user_filters, filter_file, f)
                         self.__client.load_filter_file(get_path(filter_file))
-                        break
                 if paused:
                     continue
             elif isinstance(destination, discord.Member):
-                user_timestamps[destination.id] = []
+                user_timestamps[destination.id] = deque(maxlen=max_dms)
             try:
                 await destination.send(
                     message[3].get('content'),
