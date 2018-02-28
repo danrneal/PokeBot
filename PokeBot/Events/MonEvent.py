@@ -168,16 +168,24 @@ class MonEvent(BaseEvent):
             'charge_duration': self.charge_duration,
             'charge_energy': self.charge_energy,
             'gender': self.gender,
-            'height': self.height,
+            'height_0': (
+                "{:.0f}".format(self.height) if Unknown.is_not(self.height)
+                else Unknown.TINY),
+            'height': (
+                "{:.1f}".format(self.height) if Unknown.is_not(self.height)
+                else Unknown.SMALL),
             'height_2': (
                 "{:.2f}".format(self.height) if Unknown.is_not(self.height)
-                else Unknown.SMALL
-            ),
-            'weight': self.weight,
+                else Unknown.SMALL),
+            'weight_0': (
+                "{:.0f}".format(self.weight) if Unknown.is_not(self.weight)
+                else Unknown.TINY),
+            'weight': (
+                "{:.1f}".format(self.weight) if Unknown.is_not(self.weight)
+                else Unknown.SMALL),
             'weight_2': (
-                "{:.2f}".format(self.weight) if Unknown.is_not(self.height)
-                else Unknown.SMALL
-            ),
+                "{:.2f}".format(self.weight) if Unknown.is_not(self.weight)
+                else Unknown.SMALL),
             'size': locale.get_size_name(self.size_id),
             'big_karp': (
                 'big' if self.monster_id == 129 and Unknown.is_not(self.weight)
