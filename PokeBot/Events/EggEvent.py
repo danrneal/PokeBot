@@ -64,8 +64,8 @@ class EggEvent(BaseEvent):
             'gym_image': self.gym_image,
             'sponsor_id': self.sponsor_id,
             'is_sponsor':
-                self.sponsor_id > 0
-                if Unknown.is_not(self.sponsor_id) else Unknown.REGULAR,
+                self.sponsor_id > 0 if Unknown.is_not(self.sponsor_id)
+                else Unknown.REGULAR,
             'park': self.park,
             'team_id': self.current_team_id,
             'team_name': locale.get_team_name(self.current_team_id),
