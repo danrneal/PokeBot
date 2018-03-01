@@ -42,12 +42,12 @@ def reject_leftover_parameters(dict_, location):
 def get_weather_emoji(weather_id):
     return {
         1: "<:weather_clear:409041567534415873>",
-        2: "<:weather_rain:409041567412912130>",
-        3: "<:weather_partly_cloudy:409041567790268428>",
-        4: "<:weather_cloudy:409041567517769728>",
+        2: "<:weather_rain:418570342391480320>",
+        3: "<:weather_partly_cloudy:418570238368546837>",
+        4: "<:weather_cloudy:418570003193921536>",
         5: "<:weather_windy:409041567593136128>",
         6: "<:weather_snow:409041567551062016>",
-        7: "<:weather_foggy:409041567358386177>"
+        7: "<:weather_foggy:418570089084747807>"
     }.get(weather_id, '')
 
 
