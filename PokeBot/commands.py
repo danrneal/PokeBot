@@ -762,7 +762,7 @@ async def delete_raids(client, message, geofences, all_areas, filter_file,
                     if 'all' == command:
                         if len(user_dict['raids']['filters']) > 0:
                             if '0' in user_dict['raids']['filters']:
-                                set_count += len(user_dict['raids'][
+                                del_count += len(user_dict['raids'][
                                     'filters']['0']['monsters'])
                             for lvl in range(1, 6):
                                 if str(lvl) in user_dict['raids']['filters']:
