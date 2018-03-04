@@ -56,13 +56,23 @@ async def commands(client, message):
             "pokemon\n\n" +
             "`!reset [pokemon/all]` to reset an alert for a given pokemon " +
             "to your default alert characteristics\n\n" +
-            "`!pause` or `!p` to pause all notifcations,\n\n" +
-            "`!resume` or `!r` to resume all alerts,\n\n" +
+            "`!set  raids [pokemon/lvl] [ex]` to add an alert for a given " +
+            "raid pokemon or a raid level, add 'ex' to the end of your " +
+            "command to only get ex eligible gyms for a level,\n\n" +
+            "`!delete raids [pokemon/lvl]` to remove an alert for a given " +
+            "raid pokemon or a raid level\n\n" +
+            "`!set  eggs [lvl] [ex]` to add an alert for a given egg level, " +
+            "add 'ex' to the end of your command to only get ex eligible " +
+            "gyms for a level,\n\n" +
+            "`!delete eggs [lvl]` to remove an alert for a given egg " +
+            "level\n\n" +
+            "`!pause [pokemon/raids/eggs]` or `!p` to pause alerts,\n\n" +
+            "`!resume [pokemon/raids/eggs` or `!r` to resume alerts,\n\n" +
             "`!activate [area/all]` to resume a given area,\n\n" +
             "`!deactivate [area/all]` to pause a given area,\n\n" +
             "`!areas` to see what areas area available to pause or " +
             "resume,\n\n" +
-            "`!alerts` to see your alert settings,\n\n"
+            "`!alerts [pokemon/raids/eggs]` to see your alert settings,\n\n"
             "`!dex [pokemon]` to get pokedex information for a given " +
             "pokemon,\n\n" +
             "`!status` to see which bots are currently online,\n\n" +
@@ -310,6 +320,691 @@ async def dex(client, message):
             message.author.display_name))
 
 
+async def set_raids(client, message, geofences, all_areas, filter_file):
+    msg = message.content.lower().replace('!set raid ', '').replace(
+        '!set raids ', '').replace('!set raid\n', '').replace(
+        '!set raids\n', '').replace('%', '').replace(
+        'nidoranf', 'nidoran♀').replace('nidoranm', 'nidoran♂').replace(
+        'mr. mime', 'mr.mime').replace('mime jr.', 'mimejr.').replace(
+        'farfetchd', "farfetch'd").replace(
+        'flabebe', 'flab\u00E9b\u00E9').replace(',\n', ',').replace(
+        '\n', ',').replace(', ', ',').split(',')
+    with open(filter_file, 'r+', encoding="utf-8") as f:
+        user_filters = json.load(f, object_pairs_hook=OrderedDict)
+        user_dict = user_filters.get(str(message.author.id))
+        set_count = 0
+        for command in msg:
+            if len(command) == 0:
+                continue
+            else:
+                command = command.strip()
+            new_user = False
+            if user_dict is None:
+                if all_areas is True:
+                    gfs = ['all']
+                else:
+                    gfs = []
+                user_filters[str(message.author.id)] = {
+                    "monsters": {
+                        "enabled": True,
+                        "defaults": {
+                            "geofences": gfs
+                        },
+                        "filters": {}
+                    },
+                    "eggs": {
+                        "enabled": True,
+                        "defaults": {
+                            "geofences": gfs
+                        },
+                        "filters": {}
+                    },
+                    "raids": {
+                        "enabled": True,
+                        "defaults": {
+                            "geofences": gfs
+                        },
+                        "filters": {}
+                    }
+                }
+                new_user = True
+                user_dict = user_filters[str(message.author.id)]
+            try:
+                if is_number(command.split()[0]):
+                    raise ValueError
+                pokemon = get_monster_id(command.split()[0].replace(
+                    'mr.mime', 'mr. mime').replace('mimejr.', 'mime jr.'))
+                if '0' in user_dict['raids']['filters']:
+                    if pokemon not in user_dict['raids']['filters']['0'][
+                            'monsters']:
+                        user_dict['raids']['filters']['0']['monsters'].append(
+                            pokemon)
+                        user_dict['raids']['filters']['0'][
+                            'monsters'] = sorted(user_dict['raids']['filters'][
+                                '0']['monsters'])
+                else:
+                    user_dict['raids']['filters']['0'] = {
+                        'monsters': [pokemon]
+                    }
+                set_count += 1
+            except ValueError:
+                if 'ex' == command:
+                    user_dict['raids']['filters'].update({
+                        '1': {
+                            "is_sponsor": True,
+                            'min_raid_lvl': 1,
+                            'max_raid_lvl': 1,
+                            'is_missing_info': False
+                        },
+                        '1a': {
+                            "park_contains": [ ".*" ],
+                            'min_raid_lvl': 1,
+                            'max_raid_lvl': 1,
+                            'is_missing_info': False
+                        },
+                        '2': {
+                            "is_sponsor": True,
+                            'min_raid_lvl': 2,
+                            'max_raid_lvl': 2,
+                            'is_missing_info': False
+                        },
+                        '2a': {
+                            "park_contains": [ ".*" ],
+                            'min_raid_lvl': 2,
+                            'max_raid_lvl': 2,
+                            'is_missing_info': False
+                        },
+                        '3': {
+                            "is_sponsor": True,
+                            'min_raid_lvl': 3,
+                            'max_raid_lvl': 3,
+                            'is_missing_info': False
+                        },
+                        '3a': {
+                            "park_contains": [ ".*" ],
+                            'min_raid_lvl': 3,
+                            'max_raid_lvl': 3,
+                            'is_missing_info': False
+                        },
+                        '4': {
+                            "is_sponsor": True,
+                            'min_raid_lvl': 4,
+                            'max_raid_lvl': 4,
+                            'is_missing_info': False
+                        },
+                        '4a': {
+                            "park_contains": [ ".*" ],
+                            'min_raid_lvl': 4,
+                            'max_raid_lvl': 4,
+                            'is_missing_info': False
+                        },
+                        '5': {
+                            "is_sponsor": True,
+                            'min_raid_lvl': 5,
+                            'max_raid_lvl': 5,
+                            'is_missing_info': False
+                        },
+                        '5a': {
+                            "park_contains": [ ".*" ],
+                            'min_raid_lvl': 5,
+                            'max_raid_lvl': 5,
+                            'is_missing_info': False
+                        }
+                    })
+                    set_count += 1
+                elif is_number(command) and 0 < int(command) < 6:
+                    user_dict['raids']['filters'][command] = {
+                        'min_raid_lvl': int(command),
+                        'max_raid_lvl': int(command)
+                    }
+                    if command + 'a' in user_dict['raids']['filters']:
+                        user_dict['raids']['filters'].pop(command + 'a')
+                    set_count += 1
+                elif ('ex' in command and
+                      is_number(command.replace('ex', '').strip()) and
+                      0 < int(command.replace('ex', '').strip()) < 6):
+                    lvl = command.replace('ex', '').strip()
+                    user_dict['raids']['filters'][lvl] = {
+                        "is_sponsor": True,
+                        'min_raid_lvl': int(lvl),
+                        'max_raid_lvl': int(lvl),
+                        'is_missing_info': False
+                    }
+                    user_dict['raids']['filters'][lvl + 'a'] = {
+                        "park_contains": [ ".*" ],
+                        'min_raid_lvl': int(lvl),
+                        'max_raid_lvl': int(lvl),
+                        'is_missing_info': False
+                    }
+                    set_count += 1
+                else:
+                    if new_user:
+                        user_filters.pop(str(message.author.id))
+                    embeds = discord.Embed(
+                        description=((
+                            '{} Your command has an unrecognized ' +
+                            'argumnet (**{}**).'
+                        ).format(message.author.mention, command)),
+                        color=int('0xee281f', 16)
+                    )
+                    await client.get_alarm().update(1, {
+                        'destination': message.channel,
+                        'embeds': embeds
+                    })
+                    log.info((
+                        'Unrecognized arg passed from {}.'
+                    ).format(message.author.display_name))                        
+        if set_count > 0:
+            update_filters(user_filters, filter_file, f)
+            embeds = discord.Embed(
+                description=(
+                    '{} You have set **{}** raid filters.'
+                ).format(message.author.mention, str(set_count)),
+                color=int('0x71cd40', 16)
+            )
+            await client.get_alarm().update(1, {
+                'destination': message.channel,
+                'embeds': embeds
+            })
+            log.info('Activated {} raid filters for {}.'.format(
+                str(set_count), message.author.display_name))
+    if set_count > 0:
+        client.load_filter_file(get_path(filter_file))
+
+
+async def set_eggs(client, message, geofences, all_areas, filter_file):
+    msg = message.content.lower().replace('!set egg ', '').replace(
+        '!set eggs ', '').replace('!set egg\n', '').replace(
+        '!set eggs\n', '').replace('%', '').replace(
+        'nidoranf', 'nidoran♀').replace('nidoranm', 'nidoran♂').replace(
+        'mr. mime', 'mr.mime').replace('mime jr.', 'mimejr.').replace(
+        'farfetchd', "farfetch'd").replace(
+        'flabebe', 'flab\u00E9b\u00E9').replace(',\n', ',').replace(
+        '\n', ',').replace(', ', ',').split(',')
+    with open(filter_file, 'r+', encoding="utf-8") as f:
+        user_filters = json.load(f, object_pairs_hook=OrderedDict)
+        user_dict = user_filters.get(str(message.author.id))
+        set_count = 0
+        for command in msg:
+            if len(command) == 0:
+                continue
+            else:
+                command = command.strip()
+            new_user = False
+            if user_dict is None:
+                if all_areas is True:
+                    gfs = ['all']
+                else:
+                    gfs = []
+                user_filters[str(message.author.id)] = {
+                    "monsters": {
+                        "enabled": True,
+                        "defaults": {
+                            "geofences": gfs
+                        },
+                        "filters": {}
+                    },
+                    "eggs": {
+                        "enabled": True,
+                        "defaults": {
+                            "geofences": gfs
+                        },
+                        "filters": {}
+                    },
+                    "raids": {
+                        "enabled": True,
+                        "defaults": {
+                            "geofences": gfs
+                        },
+                        "filters": {}
+                    }
+                }
+                new_user = True
+                user_dict = user_filters[str(message.author.id)]
+            if 'ex' == command:
+                user_dict['eggs']['filters'].update({
+                    '1': {
+                        "is_sponsor": True,
+                        'min_egg_lvl': 1,
+                        'max_egg_lvl': 1,
+                        'is_missing_info': False
+                    },
+                    '1a': {
+                        "park_contains": [ ".*" ],
+                        'min_egg_lvl': 1,
+                        'max_egg_lvl': 1,
+                        'is_missing_info': False
+                    },
+                    '2': {
+                        "is_sponsor": True,
+                        'min_egg_lvl': 2,
+                        'max_egg_lvl': 2,
+                        'is_missing_info': False
+                    },
+                    '2a': {
+                        "park_contains": [ ".*" ],
+                        'min_egg_lvl': 2,
+                        'max_egg_lvl': 2,
+                        'is_missing_info': False
+                    },
+                    '3': {
+                        "is_sponsor": True,
+                        'min_egg_lvl': 3,
+                        'max_egg_lvl': 3,
+                        'is_missing_info': False
+                    },
+                    '3a': {
+                        "park_contains": [ ".*" ],
+                        'min_egg_lvl': 3,
+                        'max_egg_lvl': 3,
+                        'is_missing_info': False
+                    },
+                    '4': {
+                        "is_sponsor": True,
+                        'min_egg_lvl': 4,
+                        'max_egg_lvl': 4,
+                        'is_missing_info': False
+                    },
+                    '4a': {
+                        "park_contains": [ ".*" ],
+                        'min_egg_lvl': 4,
+                        'max_egg_lvl': 4,
+                        'is_missing_info': False
+                    },
+                    '5': {
+                        "is_sponsor": True,
+                        'min_egg_lvl': 5,
+                        'max_egg_lvl': 5,
+                        'is_missing_info': False
+                    },
+                    '5a': {
+                        "park_contains": [ ".*" ],
+                        'min_egg_lvl': 5,
+                        'max_egg_lvl': 5,
+                        'is_missing_info': False
+                    }
+                })
+                set_count += 1
+            elif is_number(command) and 0 < int(command) < 6:
+                user_dict['eggs']['filters'][command] = {
+                    'min_egg_lvl': int(command),
+                    'max_egg_lvl': int(command)
+                }
+                if command + 'a' in user_dict['eggs']['filters']:
+                    user_dict['eggs']['filters'].pop(command + 'a')
+                set_count += 1
+            elif ('ex' in command and
+                  is_number(command.replace('ex', '').strip()) and
+                  0 < int(command.replace('ex', '').strip()) < 6):
+                lvl = command.replace('ex', '').strip()
+                user_dict['eggs']['filters'][lvl] = {
+                    "is_sponsor": True,
+                    'min_egg_lvl': int(lvl),
+                    'max_egg_lvl': int(lvl),
+                    'is_missing_info': False
+                }
+                user_dict['eggs']['filters'][lvl + 'a'] = {
+                    "park_contains": [ ".*" ],
+                    'min_egg_lvl': int(lvl),
+                    'max_egg_lvl': int(lvl),
+                    'is_missing_info': False
+                }
+                set_count += 1
+            else:
+                if new_user:
+                    user_filters.pop(str(message.author.id))
+                embeds = discord.Embed(
+                    description=((
+                        '{} Your command has an unrecognized ' +
+                        'argumnet (**{}**).'
+                    ).format(message.author.mention, command)),
+                    color=int('0xee281f', 16)
+                )
+                await client.get_alarm().update(1, {
+                    'destination': message.channel,
+                    'embeds': embeds
+                })
+                log.info((
+                    'Unrecognized arg passed from {}.'
+                ).format(message.author.display_name))                        
+        if set_count > 0:
+            update_filters(user_filters, filter_file, f)
+            embeds = discord.Embed(
+                description=(
+                    '{} You have set **{}** egg filters.'
+                ).format(message.author.mention, str(set_count)),
+                color=int('0x71cd40', 16)
+            )
+            await client.get_alarm().update(1, {
+                'destination': message.channel,
+                'embeds': embeds
+            })
+            log.info('Activated {} egg filters for {}.'.format(
+                str(set_count), message.author.display_name))
+    if set_count > 0:
+        client.load_filter_file(get_path(filter_file))
+
+
+async def delete_raids(client, message, geofences, all_areas, filter_file,
+                       locale):
+    msg = message.content.lower().replace('!delete raid ', '').replace(
+        '!delete raids ', '').replace('!delete raid\n', '').replace(
+        '!delete raids\n', '').replace('!remove raid ', '').replace(
+        '!remove raids ', '').replace('!remove raid\n', '').replace(
+        '!remove raids\n', '').replace('%', '').replace(
+        'nidoranf', 'nidoran♀').replace('nidoranm', 'nidoran♂').replace(
+        'mr. mime', 'mr.mime').replace('mime jr.', 'mimejr.').replace(
+        'farfetchd', "farfetch'd").replace(
+        'flabebe', 'flab\u00E9b\u00E9').replace(',\n', ',').replace(
+        '\n', ',').replace(', ', ',').split(',')
+    with open(filter_file, 'r+', encoding="utf-8") as f:
+        user_filters = json.load(f, object_pairs_hook=OrderedDict)
+        user_dict = user_filters.get(str(message.author.id))
+        del_count = 0
+        if user_dict is None:
+            embeds = discord.Embed(
+                description=(
+                    "{} There is nothing to delete, you don't have any " +
+                    "alerts set."
+                ).format(message.author.mention),
+                color=int('0xee281f', 16)
+            )
+            await client.get_alarm().update(1, {
+                'destination': message.channel,
+                'embeds': embeds
+            })
+            log.info((
+                'Nothing to delete for {}.'
+            ).format(message.author.display_name))
+        else:
+            for command in msg:
+                if len(command) == 0:
+                    continue
+                else:
+                    command = command.strip()
+                try:
+                    if is_number(command):
+                        raise ValueError
+                    pokemon = get_monster_id(command.replace(
+                        'mr.mime', 'mr. mime').replace(
+                            'mimejr.', 'mime jr.'))
+                    if ('0' in user_dict['raids']['filters'] and
+                        pokemon in user_dict['raids']['filters']['0'][
+                            'monsters']):
+                        user_dict['raids']['filters']['0'][
+                            'monsters'].remove(pokemon)
+                        if user_dict['raids']['filters']['0'][
+                                'monsters'] == []:
+                            user_dict['raids']['filters'].pop('0')
+                        del_count += 1
+                    else:
+                        embeds = discord.Embed(
+                            description=(
+                                "{} You did not previously have any alerts " +
+                                "set for **{}**."
+                            ).format(
+                                message.author.mention,
+                                locale.get_pokemon_name(pokemon)
+                            ),
+                            color=int('0xee281f', 16)
+                        )
+                        await client.get_alarm().update(1, {
+                            'destination': message.channel,
+                            'embeds': embeds
+                        })
+                        log.info((
+                            '{} not previously set for {}.'
+                        ).format(
+                            locale.get_pokemon_name(pokemon),
+                            message.author.display_name
+                        ))
+                except ValueError:
+                    if 'all' == command:
+                        if len(user_dict['raids']['filters']) > 0:
+                            if '0' in user_dict['raids']['filters']:
+                                set_count += len(user_dict['raids'][
+                                    'filters']['0']['monsters'])
+                            for lvl in range(1, 6):
+                                if str(lvl) in user_dict['raids']['filters']:
+                                    del_count += 1
+                            user_dict['raids']['filters'] = {}
+                        else:
+                            embeds = discord.Embed(
+                                description=(
+                                    "{} There is nothing to delete, you " +
+                                    "don't have any raid alerts set."
+                                ).format(message.author.mention),
+                                color=int('0xee281f', 16)
+                            )
+                            await client.get_alarm().update(1, {
+                                'destination': message.channel,
+                                'embeds': embeds
+                            })
+                            log.info((
+                                'No raids to delete for {}.'
+                            ).format(message.author.display_name))
+                    elif is_number(command) and 0 < int(command) < 6:
+                        if command in user_dict['raids']['filters']:
+                            user_dict['raids']['filters'].pop(command)
+                            if command + 'a' in user_dict['eggs']['filters']:
+                                user_dict['eggs']['filters'].pop(command + 'a')
+                            del_count += 1
+                        else:
+                            embeds = discord.Embed(
+                                description=(
+                                    "{} You did not previously have any " +
+                                    "alerts set for **Level {}** raids."
+                                ).format(message.author.mention, command),
+                                color=int('0xee281f', 16)
+                            )
+                            await client.get_alarm().update(1, {
+                                'destination': message.channel,
+                                'embeds': embeds
+                            })
+                            log.info((
+                                'Level {} raids not previously set for {}.'
+                            ).format(command, message.author.display_name))
+                    else:
+                        embeds = discord.Embed(
+                            description=((
+                                '{} Your command has an unrecognized ' +
+                                'argumnet (**{}**).'
+                            ).format(message.author.mention, command)),
+                            color=int('0xee281f', 16)
+                        )
+                        await client.get_alarm().update(1, {
+                            'destination': message.channel,
+                            'embeds': embeds
+                        })
+                        log.info((
+                            'Unrecognized arg passed from {}.'
+                        ).format(message.author.display_name))
+        if del_count > 0:
+            if all_areas is True:
+                gfs = ['all']
+            else:
+                gfs = []
+            if user_filters[str(message.author.id)] == {
+                "monsters": {
+                    "enabled": True,
+                    "defaults": {
+                        "geofences": gfs
+                    },
+                    "filters": {}
+                },
+                "eggs": {
+                    "enabled": True,
+                    "defaults": {
+                        "geofences": gfs
+                    },
+                    "filters": {}
+                },
+                "raids": {
+                    "enabled": True,
+                    "defaults": {
+                        "geofences": gfs
+                    },
+                    "filters": {}
+                }
+            }:
+                user_filters.pop(str(message.author.id))
+            update_filters(user_filters, filter_file, f)
+            embeds = discord.Embed(
+                description=(
+                    "{} You have removed **{}** raid filters."
+                ).format(message.author.mention, str(del_count)),
+                color=int('0x71cd40', 16)
+            )
+            await client.get_alarm().update(1, {
+                'destination': message.channel,
+                'embeds': embeds
+            })
+            log.info('Removed {} raid filters for {}.'.format(
+                str(del_count), message.author.display_name))
+    if del_count > 0:
+        client.load_filter_file(get_path(filter_file))
+
+
+async def delete_eggs(client, message, geofences, all_areas, filter_file,
+                       locale):
+    msg = message.content.lower().replace('!delete egg ', '').replace(
+        '!delete eggs ', '').replace('!delete egg\n', '').replace(
+        '!delete eggs\n', '').replace('!remove egg ', '').replace(
+        '!remove eggs ', '').replace('!remove egg\n', '').replace(
+        '!remove eggs\n', '').replace('%', '').replace(
+        'nidoranf', 'nidoran♀').replace('nidoranm', 'nidoran♂').replace(
+        'mr. mime', 'mr.mime').replace('mime jr.', 'mimejr.').replace(
+        'farfetchd', "farfetch'd").replace(
+        'flabebe', 'flab\u00E9b\u00E9').replace(',\n', ',').replace(
+        '\n', ',').replace(', ', ',').split(',')
+    with open(filter_file, 'r+', encoding="utf-8") as f:
+        user_filters = json.load(f, object_pairs_hook=OrderedDict)
+        user_dict = user_filters.get(str(message.author.id))
+        del_count = 0
+        if user_dict is None:
+            embeds = discord.Embed(
+                description=(
+                    "{} There is nothing to delete, you don't have any " +
+                    "alerts set."
+                ).format(message.author.mention),
+                color=int('0xee281f', 16)
+            )
+            await client.get_alarm().update(1, {
+                'destination': message.channel,
+                'embeds': embeds
+            })
+            log.info((
+                'Nothing to delete for {}.'
+            ).format(message.author.display_name))
+        else:
+            for command in msg:
+                if len(command) == 0:
+                    continue
+                else:
+                    command = command.strip()
+                if 'all' == command:
+                    if len(user_dict['eggs']['filters']) > 0:
+                        for lvl in range(1, 6):
+                            if str(lvl) in user_dict['eggs']['filters']:
+                                del_count += 1
+                        user_dict['eggs']['filters'] = {}
+                    else:
+                        embeds = discord.Embed(
+                            description=(
+                                "{} There is nothing to delete, you " +
+                                "don't have any egg alerts set."
+                            ).format(message.author.mention),
+                            color=int('0xee281f', 16)
+                        )
+                        await client.get_alarm().update(1, {
+                            'destination': message.channel,
+                            'embeds': embeds
+                        })
+                        log.info((
+                            'No eggs to delete for {}.'
+                        ).format(message.author.display_name))
+                elif is_number(command) and 0 < int(command) < 6:
+                    if command in user_dict['eggs']['filters']:
+                        user_dict['eggs']['filters'].pop(command)
+                        if command + 'a' in user_dict['eggs']['filters']:
+                            user_dict['eggs']['filters'].pop(command + 'a')
+                        del_count += 1
+                    else:
+                        embeds = discord.Embed(
+                            description=(
+                                "{} You did not previously have any " +
+                                "alerts set for **Level {}** eggs."
+                            ).format(message.author.mention, command),
+                            color=int('0xee281f', 16)
+                        )
+                        await client.get_alarm().update(1, {
+                            'destination': message.channel,
+                            'embeds': embeds
+                        })
+                        log.info((
+                            'Level {} eggs not previously set for {}.'
+                        ).format(command, message.author.display_name))
+                else:
+                    embeds = discord.Embed(
+                        description=((
+                            '{} Your command has an unrecognized ' +
+                            'argumnet (**{}**).'
+                        ).format(message.author.mention, command)),
+                        color=int('0xee281f', 16)
+                    )
+                    await client.get_alarm().update(1, {
+                        'destination': message.channel,
+                        'embeds': embeds
+                    })
+                    log.info((
+                        'Unrecognized arg passed from {}.'
+                    ).format(message.author.display_name))
+        if del_count > 0:
+            if all_areas is True:
+                gfs = ['all']
+            else:
+                gfs = []
+            if user_filters[str(message.author.id)] == {
+                "monsters": {
+                    "enabled": True,
+                    "defaults": {
+                        "geofences": gfs
+                    },
+                    "filters": {}
+                },
+                "eggs": {
+                    "enabled": True,
+                    "defaults": {
+                        "geofences": gfs
+                    },
+                    "filters": {}
+                },
+                "raids": {
+                    "enabled": True,
+                    "defaults": {
+                        "geofences": gfs
+                    },
+                    "filters": {}
+                }
+            }:
+                user_filters.pop(str(message.author.id))
+            update_filters(user_filters, filter_file, f)
+            embeds = discord.Embed(
+                description=(
+                    "{} You have removed **{}** egg filters."
+                ).format(message.author.mention, str(del_count)),
+                color=int('0x71cd40', 16)
+            )
+            await client.get_alarm().update(1, {
+                'destination': message.channel,
+                'embeds': embeds
+            })
+            log.info('Removed {} egg filters for {}.'.format(
+                str(del_count), message.author.display_name))
+    if del_count > 0:
+        client.load_filter_file(get_path(filter_file))
+
+
 async def set_(client, message, geofences, all_areas, filter_file, locale):
     msg = message.content.lower().replace('!set ', '').replace(
         '!set\n', '').replace('%', '').replace('nidoranf', 'nidoran♀').replace(
@@ -419,15 +1114,15 @@ async def set_(client, message, geofences, all_areas, filter_file, locale):
                         break
                 for char in inp:
                     if is_number(char):
-                        if int(char) >= 0 and int(char) <= 100:
+                        if int(char) > 5 and int(char) <= 100:
                             filt['min_iv'] = str(char)
-                            if int(char) > 0:
+                            if int(char) > 5:
                                 filt['is_missing_info'] = False
                         else:
                             error = True
                             embeds = discord.Embed(
                                 description=((
-                                    '{} Pokemon IV must be between 0 and 100.'
+                                    '{} Pokemon IV must be between 5 and 100.'
                                 ).format(message.author.mention)),
                                 color=int('0xee281f', 16)
                             )
@@ -588,6 +1283,7 @@ async def delete(client, message, geofences, all_areas, filter_file, locale):
     with open(filter_file, 'r+', encoding="utf-8") as f:
         user_filters = json.load(f, object_pairs_hook=OrderedDict)
         user_dict = user_filters.get(str(message.author.id))
+        del_count = 0
         if user_dict is None:
             embeds = discord.Embed(
                 description=(
@@ -604,7 +1300,6 @@ async def delete(client, message, geofences, all_areas, filter_file, locale):
                 'Nothing to delete for {}.'
             ).format(message.author.display_name))
         else:
-            del_count = 0
             for command in msg:
                 if len(command) == 0:
                     continue
@@ -752,6 +1447,7 @@ async def reset(client, message, geofences, all_areas, filter_file, locale):
     with open(filter_file, 'r+', encoding="utf-8") as f:
         user_filters = json.load(f, object_pairs_hook=OrderedDict)
         user_dict = user_filters.get(str(message.author.id))
+        reset_count = 0
         if user_dict is None:
             embeds = discord.Embed(
                 description=(
@@ -768,7 +1464,6 @@ async def reset(client, message, geofences, all_areas, filter_file, locale):
                 'Nothing to reset for {}.'
             ).format(message.author.display_name))
         else:
-            reset_count = 0
             for command in msg:
                 if len(command) == 0:
                     continue
@@ -1474,6 +2169,157 @@ async def deactivate(client, message, geofences, all_areas, filter_file):
         client.load_filter_file(get_path(filter_file))
 
 
+async def alerts_raids(client, message, bot_number, geofences, all_areas,
+                       filter_file, locale):
+    with open(filter_file, encoding="utf-8") as f:
+        user_filters = json.load(f, object_pairs_hook=OrderedDict)
+        user_dict = user_filters.get(str(message.author.id))
+    if user_dict is None:
+        embeds = discord.Embed(
+            description=((
+                "{} You don't have any alerts set."
+            ).format(message.author.mention)),
+            color=int('0xee281f', 16)
+        )
+        await client.get_alarm().update(1, {
+            'destination': message.channel,
+            'embeds': embeds
+        })
+        log.info('No alerts set for {}.'.format(message.author.display_name))
+    else:
+        alerts = ((
+            "**{}**'s Raid Alert Settings:\nBOT NUMBER: {}\n\nPAUSED: "
+        ).format(message.author.mention, str(bot_number + 1)))
+        if user_dict['raids']['enabled'] is True:
+            alerts += "**FALSE**\n\n"
+        else:
+            alerts += "**TRUE**\n\n"
+        if all_areas is True:
+            alerts += '__PAUSED AREAS__\n\n```\n'
+            if ('all' in user_dict['raids']['defaults']['geofences'] or
+                len(user_dict['raids']['defaults']['geofences']) == len(
+                    geofences)):
+                alerts += 'None \n'
+            else:
+                for area in list(
+                        set(geofences.keys()) - set(user_dict['raids'][
+                            'defaults']['geofences'])):
+                    alerts += '{}, '.format(area)
+        else:
+            alerts += '__ALERT AREAS__\n\n```\n'
+            if len(user_dict['raids']['defaults']['geofences']) == 0:
+                alerts += (
+                    "You don't any areas set.  Type `!activate raids " +
+                    "[area/all]` in #custom_filters to set one! \n"
+                )
+            elif 'all' in user_dict['raids']['defaults']['geofences']:
+                for area in list(geofences.keys()):
+                    alerts += '{}, '.format(area)
+            else:
+                for area in user_dict['raids']['defaults']['geofences']:
+                    alerts += '{}, '.format(area)
+        alerts = alerts[:-2] + '\n```\n'
+        alerts += '__LEVELS__\n\n```\n'
+        for lvl in range(1, 6):
+            if str(lvl) + 'a' in user_dict['raids']['filters']:
+                alerts += "{}: EX Only\n".format(lvl)
+            elif str(lvl) in user_dict['raids']['filters']:
+                alerts += "{}: All\n".format(lvl)
+            else:
+                alerts += "{}: None\n".format(lvl)
+        alerts = alerts[:-1] + '\n```\n'
+        alerts += '__POKEMON__\n\n```\n'
+        if '0' not in user_dict['raids']['filters']:
+            alerts += 'None \n'
+        else:
+            for pkmn in user_dict['raids']['filters']['0']['monsters']:
+                alerts += '{}, '.format(locale.get_pokemon_name(pkmn))
+        alerts = alerts[:-2] + '\n```'
+        alerts = [alerts]
+        while len(alerts[-1]) > 2000:
+            for alerts_split in msg_split(alerts.pop()):
+                alerts.append(alerts_split)
+        for dm in alerts:
+            await client.get_alarm().update(1, {
+                'destination': message.author,
+                'content': dm
+            })
+            log.info('Sent raid alerts message to {}.'.format(
+                message.author.display_name))
+
+
+async def alerts_eggs(client, message, bot_number, geofences, all_areas,
+                      filter_file, locale):
+    with open(filter_file, encoding="utf-8") as f:
+        user_filters = json.load(f, object_pairs_hook=OrderedDict)
+        user_dict = user_filters.get(str(message.author.id))
+    if user_dict is None:
+        embeds = discord.Embed(
+            description=((
+                "{} You don't have any alerts set."
+            ).format(message.author.mention)),
+            color=int('0xee281f', 16)
+        )
+        await client.get_alarm().update(1, {
+            'destination': message.channel,
+            'embeds': embeds
+        })
+        log.info('No alerts set for {}.'.format(message.author.display_name))
+    else:
+        alerts = ((
+            "**{}**'s Egg Alert Settings:\nBOT NUMBER: {}\n\nPAUSED: "
+        ).format(message.author.mention, str(bot_number + 1)))
+        if user_dict['eggs']['enabled'] is True:
+            alerts += "**FALSE**\n\n"
+        else:
+            alerts += "**TRUE**\n\n"
+        if all_areas is True:
+            alerts += '__PAUSED AREAS__\n\n```\n'
+            if ('all' in user_dict['eggs']['defaults']['geofences'] or
+                len(user_dict['eggs']['defaults']['geofences']) == len(
+                    geofences)):
+                alerts += 'None \n'
+            else:
+                for area in list(
+                        set(geofences.keys()) - set(user_dict['eggs'][
+                            'defaults']['geofences'])):
+                    alerts += '{}, '.format(area)
+        else:
+            alerts += '__ALERT AREAS__\n\n```\n'
+            if len(user_dict['eggs']['defaults']['geofences']) == 0:
+                alerts += (
+                    "You don't any areas set.  Type `!activate eggs " +
+                    "[area/all]` in #custom_filters to set one! \n"
+                )
+            elif 'all' in user_dict['eggs']['defaults']['geofences']:
+                for area in list(geofences.keys()):
+                    alerts += '{}, '.format(area)
+            else:
+                for area in user_dict['eggs']['defaults']['geofences']:
+                    alerts += '{}, '.format(area)
+        alerts = alerts[:-2] + '\n```\n'
+        alerts += '__LEVELS__\n\n```\n'
+        for lvl in range(1, 6):
+            if str(lvl) + 'a' in user_dict['eggs']['filters']:
+                alerts += "{}: EX Only\n".format(lvl)
+            elif str(lvl) in user_dict['eggs']['filters']:
+                alerts += "{}: All\n".format(lvl)
+            else:
+                alerts += "{}: None\n".format(lvl)
+        alerts = alerts[:-1] + '\n```'
+        alerts = [alerts]
+        while len(alerts[-1]) > 2000:
+            for alerts_split in msg_split(alerts.pop()):
+                alerts.append(alerts_split)
+        for dm in alerts:
+            await client.get_alarm().update(1, {
+                'destination': message.author,
+                'content': dm
+            })
+            log.info('Sent egg alerts message to {}.'.format(
+                message.author.display_name))
+
+
 async def alerts(client, message, bot_number, geofences, all_areas,
                  filter_file, locale):
     with open(filter_file, encoding="utf-8") as f:
@@ -1493,7 +2339,7 @@ async def alerts(client, message, bot_number, geofences, all_areas,
         log.info('No alerts set for {}.'.format(message.author.display_name))
     else:
         alerts = ((
-            "**{}**'s Pokemon Alert Settings:\nBOT NUMBER: {}\nPAUSED: "
+            "**{}**'s Pokemon Alert Settings:\nBOT NUMBER: {}\n\nPAUSED: "
         ).format(message.author.mention, str(bot_number + 1)))
         if user_dict['monsters']['enabled'] is True:
             alerts += "**FALSE**\n\n"

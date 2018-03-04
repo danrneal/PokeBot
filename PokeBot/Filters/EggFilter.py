@@ -19,7 +19,7 @@ class EggFilter(BaseFilter):
         )
         self.is_sponsor = self.evaluate_attribute(
             event_attribute='sponsor_id',
-            eval_func=operator.eq,
+            eval_func=lambda y, x: (x > 0) == y,
             limit=BaseFilter.parse_as_type(bool, 'is_sponsor', data)
         )
         self.park_contains = self.evaluate_attribute(

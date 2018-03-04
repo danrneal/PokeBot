@@ -16,8 +16,9 @@ from .Filters.EggFilter import EggFilter
 from .Filters.RaidFilter import RaidFilter
 from .Utilities.GenUtils import get_path, update_filters
 from .commands import (
-    status, commands, dex, set_, delete, reset, pause, resume, activate,
-    deactivate, alerts, areas
+    status, commands, dex, set_raids, set_eggs, delete_raids, delete_eggs,
+    set_, delete, reset, pause, resume, activate, deactivate, alerts_eggs,
+    alerts_raids, alerts, areas
 )
 
 log = logging.getLogger('BotManager')
@@ -260,7 +261,7 @@ class BotManager(discord.Client):
                     log.info((
                         "{} monster notification has been triggered for " +
                         "user '{}'!"
-                    ).format(mon.name, dest.name))
+                    ).format(mon.name, dest.display_name))
                     await self._trigger_mon(mon, rule.alarm_names, dest)
                     break
 
@@ -304,7 +305,7 @@ class BotManager(discord.Client):
                     )
                     log.info((
                         "{} egg notification has been triggered for user '{}'!"
-                    ).format(egg.name, dest))
+                    ).format(egg.name, dest.display_name))
                     await self._trigger_egg(egg, rule.alarm_names, dest)
                     break
 
@@ -349,7 +350,7 @@ class BotManager(discord.Client):
                     log.info((
                         "{} raid notification has been triggered for user " +
                         "'{}'!"
-                    ).format(raid.name, dest))
+                    ).format(raid.name, dest.display_name))
                     await self._trigger_raid(raid, rule.alarm_names, dest)
                     break
 
@@ -569,6 +570,28 @@ class BotManager(discord.Client):
                     await commands(self, message)
                 elif message.content.lower().startswith('!dex '):
                     await dex(self, message)
+                elif message.content.lower().startswith('!set raid'):
+                    await set_raids(
+                        self, message, self.geofences, self.__all_areas,
+                        self.__filter_file
+                    )
+                elif message.content.lower().startswith('!set egg'):
+                    await set_eggs(
+                        self, message, self.geofences, self.__all_areas,
+                        self.__filter_file
+                    )
+                elif message.content.lower().startswith(
+                        ('!delete raid', '!remove raid')):
+                    await delete_raids(
+                        self, message, self.geofences, self.__all_areas,
+                        self.__filter_file, self.__locale
+                    )
+                elif message.content.lower().startswith(
+                        ('!delete egg', '!remove egg')):
+                    await delete_eggs(
+                        self, message, self.geofences, self.__all_areas,
+                        self.__filter_file, self.__locale
+                    )
                 elif message.content.lower().startswith('!set '):
                     await set_(
                         self, message, self.geofences, self.__all_areas,
@@ -606,6 +629,16 @@ class BotManager(discord.Client):
                     await deactivate(
                         self, message, self.geofences, self.__all_areas,
                         self.__filter_file
+                    )
+                elif message.content.lower().startswith('!alerts egg'):
+                    await alerts_eggs(
+                        self, message, self.__bot_number, self.geofences,
+                        self.__all_areas, self.__filter_file, self.__locale
+                    )
+                elif message.content.lower().startswith('!alerts raid'):
+                    await alerts_raids(
+                        self, message, self.__bot_number, self.geofences,
+                        self.__all_areas, self.__filter_file, self.__locale
                     )
                 elif message.content.lower() in ['!alerts', '!alerts pokemon']:
                     await alerts(

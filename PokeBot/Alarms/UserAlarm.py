@@ -181,8 +181,7 @@ class UserAlarm(Alarm):
                     message[3].get('content'),
                     embed=message[3].get('embeds')
                 )
-                if (destination.id in user_timestamps and
-                        message[3].get('embeds') is not None):
+                if destination.id in user_timestamps and message[0] == 2:
                     user_timestamps[destination.id].append(datetime.utcnow())
                 timestamps.append(datetime.utcnow())
             except Exception as e:
