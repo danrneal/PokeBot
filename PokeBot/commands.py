@@ -390,9 +390,8 @@ async def set_raids(client, message, geofences, all_areas, ex_parks,
                 set_count += 1
             except ValueError:
                 if 'ex' == command:
-
                     for lvl in range(1, 6):
-                        user_dict['eggs']['filters'].update({
+                        user_dict['raids']['filters'].update({
                             str(lvl): {
                                 "sponsored": True,
                                 "min_egg_lvl": lvl,

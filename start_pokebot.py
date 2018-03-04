@@ -293,20 +293,19 @@ def parse_settings(root_path, loop, Entry):
     config['PORT'] = args.port
     for arg in [
         args.filters, args.alarms, args.rules, args.rules, args.geofences,
-        args.gmaps_rev_geocode
+        args.gmaps_rev_geocode, args.gmaps_key, args.ex_parks
     ]:
         if len(arg) > 1:
             arg.pop(0)
-        size = len(arg)
-        if size != 1 and size != args.manager_count:
-            log.critical(
-                "Number of arguments must be either 1 for all managers or " +
-                "equal to Manager Count. Please provided the correct number " +
-                "of arguments.")
-            log.critical(arg)
-            sys.exit(1)
-    if len(args.gmaps_key) > 1:
-        args.gmaps_key.pop(0)
+        if arg not in [args.gmaps_key, args.ex_parks]:
+            size = len(arg)
+            if size != 1 and size != args.manager_count:
+                log.critical(
+                    "Number of arguments must be either 1 for all managers " +
+                    "or equal to Manager Count. Please provided the correct " +
+                    "number of arguments.")
+                log.critical(arg)
+                sys.exit(1)
     while len(args.manager_name) < args.manager_count:
         m_ct = len(args.manager_name)
         args.manager_name.append("Manager_{}".format(m_ct))
