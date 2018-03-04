@@ -320,7 +320,8 @@ async def dex(client, message):
             message.author.display_name))
 
 
-async def set_raids(client, message, geofences, all_areas, filter_file):
+async def set_raids(client, message, geofences, all_areas, ex_parks,
+                    filter_file):
     msg = message.content.lower().replace('!set raid ', '').replace(
         '!set raids ', '').replace('!set raid\n', '').replace(
         '!set raids\n', '').replace('%', '').replace(
@@ -389,69 +390,23 @@ async def set_raids(client, message, geofences, all_areas, filter_file):
                 set_count += 1
             except ValueError:
                 if 'ex' == command:
-                    user_dict['raids']['filters'].update({
-                        '1': {
-                            "sponsored": True,
-                            'min_raid_lvl': 1,
-                            'max_raid_lvl': 1,
-                            'is_missing_info': False
-                        },
-                        '1a': {
-                            "park_contains": [".*"],
-                            'min_raid_lvl': 1,
-                            'max_raid_lvl': 1,
-                            'is_missing_info': False
-                        },
-                        '2': {
-                            "sponsored": True,
-                            'min_raid_lvl': 2,
-                            'max_raid_lvl': 2,
-                            'is_missing_info': False
-                        },
-                        '2a': {
-                            "park_contains": [".*"],
-                            'min_raid_lvl': 2,
-                            'max_raid_lvl': 2,
-                            'is_missing_info': False
-                        },
-                        '3': {
-                            "sponsored": True,
-                            'min_raid_lvl': 3,
-                            'max_raid_lvl': 3,
-                            'is_missing_info': False
-                        },
-                        '3a': {
-                            "park_contains": [".*"],
-                            'min_raid_lvl': 3,
-                            'max_raid_lvl': 3,
-                            'is_missing_info': False
-                        },
-                        '4': {
-                            "sponsored": True,
-                            'min_raid_lvl': 4,
-                            'max_raid_lvl': 4,
-                            'is_missing_info': False
-                        },
-                        '4a': {
-                            "park_contains": [".*"],
-                            'min_raid_lvl': 4,
-                            'max_raid_lvl': 4,
-                            'is_missing_info': False
-                        },
-                        '5': {
-                            "sponsored": True,
-                            'min_raid_lvl': 5,
-                            'max_raid_lvl': 5,
-                            'is_missing_info': False
-                        },
-                        '5a': {
-                            "park_contains": [".*"],
-                            'min_raid_lvl': 5,
-                            'max_raid_lvl': 5,
-                            'is_missing_info': False
-                        }
-                    })
-                    set_count += 1
+
+                    for lvl in range(1, 6):
+                        user_dict['eggs']['filters'].update({
+                            str(lvl): {
+                                "sponsored": True,
+                                "min_egg_lvl": lvl,
+                                "max_egg_lvl": lvl,
+                                "is_missing_info": False
+                            },
+                            str(lvl) + 'a': {
+                                "park_contains": ex_parks,
+                                "min_egg_lvl": lvl,
+                                "max_egg_lvl": lvl,
+                                "is_missing_info": False
+                            }
+                        })
+                        set_count += 1
                 elif is_number(command) and 0 < int(command) < 6:
                     user_dict['raids']['filters'][command] = {
                         'min_raid_lvl': int(command),
@@ -471,7 +426,7 @@ async def set_raids(client, message, geofences, all_areas, filter_file):
                         'is_missing_info': False
                     }
                     user_dict['raids']['filters'][lvl + 'a'] = {
-                        "park_contains": [".*"],
+                        "park_contains": ex_parks,
                         'min_raid_lvl': int(lvl),
                         'max_raid_lvl': int(lvl),
                         'is_missing_info': False
@@ -512,7 +467,8 @@ async def set_raids(client, message, geofences, all_areas, filter_file):
         client.load_filter_file(get_path(filter_file))
 
 
-async def set_eggs(client, message, geofences, all_areas, filter_file):
+async def set_eggs(client, message, geofences, all_areas, ex_parks,
+                   filter_file):
     msg = message.content.lower().replace('!set egg ', '').replace(
         '!set eggs ', '').replace('!set egg\n', '').replace(
         '!set eggs\n', '').replace('%', '').replace(
@@ -562,69 +518,22 @@ async def set_eggs(client, message, geofences, all_areas, filter_file):
                 new_user = True
                 user_dict = user_filters[str(message.author.id)]
             if 'ex' == command:
-                user_dict['eggs']['filters'].update({
-                    '1': {
-                        "sponsored": True,
-                        'min_egg_lvl': 1,
-                        'max_egg_lvl': 1,
-                        'is_missing_info': False
-                    },
-                    '1a': {
-                        "park_contains": [".*"],
-                        'min_egg_lvl': 1,
-                        'max_egg_lvl': 1,
-                        'is_missing_info': False
-                    },
-                    '2': {
-                        "sponsored": True,
-                        'min_egg_lvl': 2,
-                        'max_egg_lvl': 2,
-                        'is_missing_info': False
-                    },
-                    '2a': {
-                        "park_contains": [".*"],
-                        'min_egg_lvl': 2,
-                        'max_egg_lvl': 2,
-                        'is_missing_info': False
-                    },
-                    '3': {
-                        "sponsored": True,
-                        'min_egg_lvl': 3,
-                        'max_egg_lvl': 3,
-                        'is_missing_info': False
-                    },
-                    '3a': {
-                        "park_contains": [".*"],
-                        'min_egg_lvl': 3,
-                        'max_egg_lvl': 3,
-                        'is_missing_info': False
-                    },
-                    '4': {
-                        "sponsored": True,
-                        'min_egg_lvl': 4,
-                        'max_egg_lvl': 4,
-                        'is_missing_info': False
-                    },
-                    '4a': {
-                        "park_contains": [".*"],
-                        'min_egg_lvl': 4,
-                        'max_egg_lvl': 4,
-                        'is_missing_info': False
-                    },
-                    '5': {
-                        "sponsored": True,
-                        'min_egg_lvl': 5,
-                        'max_egg_lvl': 5,
-                        'is_missing_info': False
-                    },
-                    '5a': {
-                        "park_contains": [".*"],
-                        'min_egg_lvl': 5,
-                        'max_egg_lvl': 5,
-                        'is_missing_info': False
-                    }
-                })
-                set_count += 1
+                for lvl in range(1, 6):
+                    user_dict['eggs']['filters'].update({
+                        str(lvl): {
+                            "sponsored": True,
+                            "min_egg_lvl": lvl,
+                            "max_egg_lvl": lvl,
+                            "is_missing_info": False
+                        },
+                        str(lvl) + 'a': {
+                            "park_contains": ex_parks,
+                            "min_egg_lvl": lvl,
+                            "max_egg_lvl": lvl,
+                            "is_missing_info": False
+                        }
+                    })
+                    set_count += 1
             elif is_number(command) and 0 < int(command) < 6:
                 user_dict['eggs']['filters'][command] = {
                     'min_egg_lvl': int(command),
@@ -644,7 +553,7 @@ async def set_eggs(client, message, geofences, all_areas, filter_file):
                     'is_missing_info': False
                 }
                 user_dict['eggs']['filters'][lvl + 'a'] = {
-                    "park_contains": [".*"],
+                    "park_contains": ex_parks,
                     'min_egg_lvl': int(lvl),
                     'max_egg_lvl': int(lvl),
                     'is_missing_info': False

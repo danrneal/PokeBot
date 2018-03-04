@@ -265,6 +265,12 @@ def parse_settings(root_path, loop, Entry):
         )
     )
     parser.add_argument(
+        '-exp', '--ex_parks',
+        action='append',
+        default=[".*"],
+        help='List of parks that get ex passes (default: [ ".*" ])'
+    )
+    parser.add_argument(
         '-mdm', '--max_dms',
         type=int,
         default=5,
@@ -347,6 +353,7 @@ def parse_settings(root_path, loop, Entry):
             alert_role=args.alert_role,
             muted_role=args.muted_role,
             all_areas=args.all_areas,
+            ex_parks=args.ex_parks,
             number_of_bots=len(args.bot_tokens)
         )
         if args.dm_gmaps_rev_geocode:

@@ -30,7 +30,7 @@ class BotManager(discord.Client):
 
     def __init__(self, name, bot_number, google_key, locale, cache_type,
                  filter_file, geofence_file, alarm_file, command_channels,
-                 alert_role, muted_role, all_areas, number_of_bots):
+                 alert_role, muted_role, all_areas, ex_parks, number_of_bots):
         super(BotManager, self).__init__()
         self.__name = str(name).lower()
         self.__bot_number = bot_number
@@ -58,6 +58,7 @@ class BotManager(discord.Client):
         self.__alert_role = alert_role
         self.__muted_role = muted_role
         self.__all_areas = all_areas
+        self.__ex_parks = ex_parks
         self.__number_of_bots = number_of_bots
         self.__queue = asyncio.Queue()
         log.info("----------- Manager '{}' successfully created.".format(
@@ -573,12 +574,12 @@ class BotManager(discord.Client):
                 elif message.content.lower().startswith('!set raid'):
                     await set_raids(
                         self, message, self.geofences, self.__all_areas,
-                        self.__filter_file
+                        self.__ex_parks, self.__filter_file
                     )
                 elif message.content.lower().startswith('!set egg'):
                     await set_eggs(
                         self, message, self.geofences, self.__all_areas,
-                        self.__filter_file
+                        self.__ex_parks, self.__filter_file
                     )
                 elif message.content.lower().startswith(
                         ('!delete raid', '!remove raid')):

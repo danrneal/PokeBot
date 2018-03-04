@@ -94,5 +94,6 @@
 # Miscellaneous
 ################
 #all_areas:	True					# Set to True to subscribe to all areas by default (default: False)
+#ex_parks: [ ".*" ]					# List of parks that get ex passes (default: [ ".*"])
 #max_dms: 5							# Max DMs to be sent to a user in a given time before pausing their alerts (default: 5)
 #dm_time_period: 60					# Time period to measure if user is exceeding dm limit before pausing their alerts in seconds (default: 60)
