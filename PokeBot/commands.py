@@ -391,7 +391,7 @@ async def set_raids(client, message, geofences, all_areas, filter_file):
                 if 'ex' == command:
                     user_dict['raids']['filters'].update({
                         '1': {
-                            "is_sponsor": True,
+                            "sponsored": True,
                             'min_raid_lvl': 1,
                             'max_raid_lvl': 1,
                             'is_missing_info': False
@@ -403,7 +403,7 @@ async def set_raids(client, message, geofences, all_areas, filter_file):
                             'is_missing_info': False
                         },
                         '2': {
-                            "is_sponsor": True,
+                            "sponsored": True,
                             'min_raid_lvl': 2,
                             'max_raid_lvl': 2,
                             'is_missing_info': False
@@ -415,7 +415,7 @@ async def set_raids(client, message, geofences, all_areas, filter_file):
                             'is_missing_info': False
                         },
                         '3': {
-                            "is_sponsor": True,
+                            "sponsored": True,
                             'min_raid_lvl': 3,
                             'max_raid_lvl': 3,
                             'is_missing_info': False
@@ -427,7 +427,7 @@ async def set_raids(client, message, geofences, all_areas, filter_file):
                             'is_missing_info': False
                         },
                         '4': {
-                            "is_sponsor": True,
+                            "sponsored": True,
                             'min_raid_lvl': 4,
                             'max_raid_lvl': 4,
                             'is_missing_info': False
@@ -439,7 +439,7 @@ async def set_raids(client, message, geofences, all_areas, filter_file):
                             'is_missing_info': False
                         },
                         '5': {
-                            "is_sponsor": True,
+                            "sponsored": True,
                             'min_raid_lvl': 5,
                             'max_raid_lvl': 5,
                             'is_missing_info': False
@@ -465,7 +465,7 @@ async def set_raids(client, message, geofences, all_areas, filter_file):
                       0 < int(command.replace('ex', '').strip()) < 6):
                     lvl = command.replace('ex', '').strip()
                     user_dict['raids']['filters'][lvl] = {
-                        "is_sponsor": True,
+                        "sponsored": True,
                         'min_raid_lvl': int(lvl),
                         'max_raid_lvl': int(lvl),
                         'is_missing_info': False
@@ -564,7 +564,7 @@ async def set_eggs(client, message, geofences, all_areas, filter_file):
             if 'ex' == command:
                 user_dict['eggs']['filters'].update({
                     '1': {
-                        "is_sponsor": True,
+                        "sponsored": True,
                         'min_egg_lvl': 1,
                         'max_egg_lvl': 1,
                         'is_missing_info': False
@@ -576,7 +576,7 @@ async def set_eggs(client, message, geofences, all_areas, filter_file):
                         'is_missing_info': False
                     },
                     '2': {
-                        "is_sponsor": True,
+                        "sponsored": True,
                         'min_egg_lvl': 2,
                         'max_egg_lvl': 2,
                         'is_missing_info': False
@@ -588,7 +588,7 @@ async def set_eggs(client, message, geofences, all_areas, filter_file):
                         'is_missing_info': False
                     },
                     '3': {
-                        "is_sponsor": True,
+                        "sponsored": True,
                         'min_egg_lvl': 3,
                         'max_egg_lvl': 3,
                         'is_missing_info': False
@@ -600,7 +600,7 @@ async def set_eggs(client, message, geofences, all_areas, filter_file):
                         'is_missing_info': False
                     },
                     '4': {
-                        "is_sponsor": True,
+                        "sponsored": True,
                         'min_egg_lvl': 4,
                         'max_egg_lvl': 4,
                         'is_missing_info': False
@@ -612,7 +612,7 @@ async def set_eggs(client, message, geofences, all_areas, filter_file):
                         'is_missing_info': False
                     },
                     '5': {
-                        "is_sponsor": True,
+                        "sponsored": True,
                         'min_egg_lvl': 5,
                         'max_egg_lvl': 5,
                         'is_missing_info': False
@@ -638,7 +638,7 @@ async def set_eggs(client, message, geofences, all_areas, filter_file):
                   0 < int(command.replace('ex', '').strip()) < 6):
                 lvl = command.replace('ex', '').strip()
                 user_dict['eggs']['filters'][lvl] = {
-                    "is_sponsor": True,
+                    "sponsored": True,
                     'min_egg_lvl': int(lvl),
                     'max_egg_lvl': int(lvl),
                     'is_missing_info': False

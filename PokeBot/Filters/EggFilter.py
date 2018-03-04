@@ -17,10 +17,10 @@ class EggFilter(BaseFilter):
             eval_func=operator.ge,
             limit=BaseFilter.parse_as_type(int, 'max_egg_lvl', data)
         )
-        self.is_sponsor = self.evaluate_attribute(
+        self.sponsored = self.evaluate_attribute(
             event_attribute='sponsor_id',
             eval_func=lambda y, x: (x > 0) == y,
-            limit=BaseFilter.parse_as_type(bool, 'is_sponsor', data)
+            limit=BaseFilter.parse_as_type(bool, 'sponsored', data)
         )
         self.park_contains = self.evaluate_attribute(
             event_attribute='park',
@@ -48,8 +48,8 @@ class EggFilter(BaseFilter):
             settings['min_lvl'] = self.min_lvl
         if self.max_lvl is not None:
             settings['max_lvl'] = self.max_lvl
-        if self.is_sponsor is not None:
-            settings['is_sponsor'] = self.is_sponsor
+        if self.sponsoredor is not None:
+            settings['sponsored'] = self.sponsored
         if self.park_contains is not None:
             settings['park_contains'] = self.park_contains
         if self.geofences is not None:
