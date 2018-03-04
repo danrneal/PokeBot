@@ -16,7 +16,8 @@ class MonFilter(BaseFilter):
             event_attribute='monster_id',
             eval_func=lambda d, v: not operator.contains(d, v),
             limit=BaseFilter.parse_as_set(
-                get_monster_id, 'ignore_monsters', data))
+                get_monster_id, 'monsters_exclude', data)
+        )
         self.min_lvl = self.evaluate_attribute(
             event_attribute='mon_lvl',
             eval_func=operator.le,

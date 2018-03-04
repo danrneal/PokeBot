@@ -13,6 +13,12 @@ class RaidFilter(BaseFilter):
             eval_func=operator.contains,
             limit=BaseFilter.parse_as_set(get_monster_id, 'monsters', data)
         )
+        self.exclude_mon_ids = self.evaluate_attribute(
+            event_attribute='mon_id',
+            eval_func=lambda d, v: not operator.contains(d, v),
+            limit=BaseFilter.parse_as_set(
+                get_monster_id, 'monsters_exclude', data)
+        )
         self.min_lvl = self.evaluate_attribute(
             event_attribute='raid_lvl',
             eval_func=operator.le,

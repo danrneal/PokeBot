@@ -14,7 +14,7 @@ class BaseFilter(object):
     def check_event(self, event):
         missing = False
         for check in self._check_list:
-            result = check(self, event)   
+            result = check(self, event)
             if result is False:
                 return False
             elif Unknown.is_(result):

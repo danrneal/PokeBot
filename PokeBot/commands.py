@@ -397,7 +397,7 @@ async def set_raids(client, message, geofences, all_areas, filter_file):
                             'is_missing_info': False
                         },
                         '1a': {
-                            "park_contains": [ ".*" ],
+                            "park_contains": [".*"],
                             'min_raid_lvl': 1,
                             'max_raid_lvl': 1,
                             'is_missing_info': False
@@ -409,7 +409,7 @@ async def set_raids(client, message, geofences, all_areas, filter_file):
                             'is_missing_info': False
                         },
                         '2a': {
-                            "park_contains": [ ".*" ],
+                            "park_contains": [".*"],
                             'min_raid_lvl': 2,
                             'max_raid_lvl': 2,
                             'is_missing_info': False
@@ -421,7 +421,7 @@ async def set_raids(client, message, geofences, all_areas, filter_file):
                             'is_missing_info': False
                         },
                         '3a': {
-                            "park_contains": [ ".*" ],
+                            "park_contains": [".*"],
                             'min_raid_lvl': 3,
                             'max_raid_lvl': 3,
                             'is_missing_info': False
@@ -433,7 +433,7 @@ async def set_raids(client, message, geofences, all_areas, filter_file):
                             'is_missing_info': False
                         },
                         '4a': {
-                            "park_contains": [ ".*" ],
+                            "park_contains": [".*"],
                             'min_raid_lvl': 4,
                             'max_raid_lvl': 4,
                             'is_missing_info': False
@@ -445,7 +445,7 @@ async def set_raids(client, message, geofences, all_areas, filter_file):
                             'is_missing_info': False
                         },
                         '5a': {
-                            "park_contains": [ ".*" ],
+                            "park_contains": [".*"],
                             'min_raid_lvl': 5,
                             'max_raid_lvl': 5,
                             'is_missing_info': False
@@ -471,7 +471,7 @@ async def set_raids(client, message, geofences, all_areas, filter_file):
                         'is_missing_info': False
                     }
                     user_dict['raids']['filters'][lvl + 'a'] = {
-                        "park_contains": [ ".*" ],
+                        "park_contains": [".*"],
                         'min_raid_lvl': int(lvl),
                         'max_raid_lvl': int(lvl),
                         'is_missing_info': False
@@ -493,7 +493,7 @@ async def set_raids(client, message, geofences, all_areas, filter_file):
                     })
                     log.info((
                         'Unrecognized arg passed from {}.'
-                    ).format(message.author.display_name))                        
+                    ).format(message.author.display_name))
         if set_count > 0:
             update_filters(user_filters, filter_file, f)
             embeds = discord.Embed(
@@ -570,7 +570,7 @@ async def set_eggs(client, message, geofences, all_areas, filter_file):
                         'is_missing_info': False
                     },
                     '1a': {
-                        "park_contains": [ ".*" ],
+                        "park_contains": [".*"],
                         'min_egg_lvl': 1,
                         'max_egg_lvl': 1,
                         'is_missing_info': False
@@ -582,7 +582,7 @@ async def set_eggs(client, message, geofences, all_areas, filter_file):
                         'is_missing_info': False
                     },
                     '2a': {
-                        "park_contains": [ ".*" ],
+                        "park_contains": [".*"],
                         'min_egg_lvl': 2,
                         'max_egg_lvl': 2,
                         'is_missing_info': False
@@ -594,7 +594,7 @@ async def set_eggs(client, message, geofences, all_areas, filter_file):
                         'is_missing_info': False
                     },
                     '3a': {
-                        "park_contains": [ ".*" ],
+                        "park_contains": [".*"],
                         'min_egg_lvl': 3,
                         'max_egg_lvl': 3,
                         'is_missing_info': False
@@ -606,7 +606,7 @@ async def set_eggs(client, message, geofences, all_areas, filter_file):
                         'is_missing_info': False
                     },
                     '4a': {
-                        "park_contains": [ ".*" ],
+                        "park_contains": [".*"],
                         'min_egg_lvl': 4,
                         'max_egg_lvl': 4,
                         'is_missing_info': False
@@ -618,7 +618,7 @@ async def set_eggs(client, message, geofences, all_areas, filter_file):
                         'is_missing_info': False
                     },
                     '5a': {
-                        "park_contains": [ ".*" ],
+                        "park_contains": [".*"],
                         'min_egg_lvl': 5,
                         'max_egg_lvl': 5,
                         'is_missing_info': False
@@ -644,7 +644,7 @@ async def set_eggs(client, message, geofences, all_areas, filter_file):
                     'is_missing_info': False
                 }
                 user_dict['eggs']['filters'][lvl + 'a'] = {
-                    "park_contains": [ ".*" ],
+                    "park_contains": [".*"],
                     'min_egg_lvl': int(lvl),
                     'max_egg_lvl': int(lvl),
                     'is_missing_info': False
@@ -666,7 +666,7 @@ async def set_eggs(client, message, geofences, all_areas, filter_file):
                 })
                 log.info((
                     'Unrecognized arg passed from {}.'
-                ).format(message.author.display_name))                        
+                ).format(message.author.display_name))
         if set_count > 0:
             update_filters(user_filters, filter_file, f)
             embeds = discord.Embed(
@@ -866,7 +866,7 @@ async def delete_raids(client, message, geofences, all_areas, filter_file,
 
 
 async def delete_eggs(client, message, geofences, all_areas, filter_file,
-                       locale):
+                      locale):
     msg = message.content.lower().replace('!delete egg ', '').replace(
         '!delete eggs ', '').replace('!delete egg\n', '').replace(
         '!delete eggs\n', '').replace('!remove egg ', '').replace(
@@ -1061,14 +1061,14 @@ async def set_(client, message, geofences, all_areas, filter_file, locale):
                 if (user_dict is not None and
                         '000' in user_dict['monsters']['filters']):
                     im = user_dict['monsters']['filters']['000'][
-                        'ignore_monsters']
+                        'monsters_exclude']
                 else:
                     im = []
                 command = command.replace('default', '').replace(
                     'all', '').strip()
                 input_ = [command.split()]
                 filters = [{
-                    'ignore_monsters': im,
+                    'monsters_exclude': im,
                     'min_iv': '0',
                     'min_cp': '0',
                     'min_lvl': '0',
@@ -1246,13 +1246,13 @@ async def set_(client, message, geofences, all_areas, filter_file, locale):
             if '000' in user_dict['monsters']['filters']:
                 for filt_name in user_dict['monsters']['filters']:
                     if (int(filt_name[:3]) not in user_dict['monsters'][
-                        'filters']['000']['ignore_monsters'] and
+                        'filters']['000']['monsters_exclude'] and
                             int(filt_name[:3]) > 0):
                         user_dict['monsters']['filters']['000'][
-                            'ignore_monsters'].append(int(filt_name[:3]))
+                            'monsters_exclude'].append(int(filt_name[:3]))
                         user_dict['monsters']['filters']['000'][
-                            'ignore_monsters'] = sorted(user_dict['monsters'][
-                                'filters']['000']['ignore_monsters'])
+                            'monsters_exclude'] = sorted(user_dict['monsters'][
+                                'filters']['000']['monsters_exclude'])
         if set_count > 0:
             update_filters(user_filters, filter_file, f)
             embeds = discord.Embed(
@@ -1323,13 +1323,13 @@ async def delete(client, message, geofences, all_areas, filter_file, locale):
                                 deleted = True
                     if ('000' in user_dict['monsters']['filters'] and
                         pokemon not in user_dict['monsters']['filters']['000'][
-                            'ignore_monsters']):
+                            'monsters_exclude']):
                         deleted = True
                         user_dict['monsters']['filters']['000'][
-                            'ignore_monsters'].append(pokemon)
+                            'monsters_exclude'].append(pokemon)
                         user_dict['monsters']['filters']['000'][
-                            'ignore_monsters'] = sorted(user_dict['monsters'][
-                                'filters']['000']['ignore_monsters'])
+                            'monsters_exclude'] = sorted(user_dict['monsters'][
+                                'filters']['000']['monsters_exclude'])
                         del_count += 1
                     elif deleted is False:
                         if pokemon == 0:
@@ -1481,11 +1481,11 @@ async def reset(client, message, geofences, all_areas, filter_file, locale):
                             reset = True
                     if ('000' in user_dict['monsters']['filters'] and
                         pokemon in user_dict['monsters']['filters']['000'][
-                            'ignore_monsters']):
+                            'monsters_exclude']):
                         reset = True
                         reset_count += 1
                         user_dict['monsters']['filters']['000'][
-                            'ignore_monsters'].remove(pokemon)
+                            'monsters_exclude'].remove(pokemon)
                     if reset is False:
                         embeds = discord.Embed(
                             description=(
@@ -1520,7 +1520,7 @@ async def reset(client, message, geofences, all_areas, filter_file, locale):
                                         reset_count += 1
                             if ('000' in user_dict['monsters']['filters']):
                                 user_dict['monsters']['filters']['000'][
-                                    'ignore_monsters'] = []
+                                    'monsters_exclude'] = []
                         else:
                             embeds = discord.Embed(
                                 description=(
@@ -2388,7 +2388,7 @@ async def alerts(client, message, bot_number, geofences, all_areas,
         for pokemon in range(721):
             if ('000' in user_dict['monsters']['filters'] and
                 pokemon not in user_dict['monsters']['filters']['000'][
-                    'ignore_monsters']):
+                    'monsters_exclude']):
                 continue
             elif '{:03}'.format(pokemon) not in user_dict['monsters'][
                     'filters']:
