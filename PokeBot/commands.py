@@ -394,14 +394,14 @@ async def set_raids(client, message, geofences, all_areas, ex_parks,
                         user_dict['raids']['filters'].update({
                             str(lvl): {
                                 "sponsored": True,
-                                "min_egg_lvl": lvl,
-                                "max_egg_lvl": lvl,
+                                "min_raid_lvl": lvl,
+                                "max_raid_lvl": lvl,
                                 "is_missing_info": False
                             },
                             str(lvl) + 'a': {
                                 "park_contains": ex_parks,
-                                "min_egg_lvl": lvl,
-                                "max_egg_lvl": lvl,
+                                "min_raid_lvl": lvl,
+                                "max_raid_lvl": lvl,
                                 "is_missing_info": False
                             }
                         })
